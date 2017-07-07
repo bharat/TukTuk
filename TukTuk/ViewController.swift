@@ -15,7 +15,9 @@ class ViewController: UIViewController {
     var songs: [String] = [
         "OldMacDonaldHadAFarm",
         "TwinkleTwinkleLittleStar",
-        "RowRowRowYourBoat"
+        "RowRowRowYourBoat",
+        "GongXiFaCai",
+        "XiaoXingXing"
     ]
 
     override func viewDidLoad() {

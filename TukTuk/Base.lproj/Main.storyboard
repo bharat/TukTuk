@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="30" width="375" height="607"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="yfs-4v-sfP">
-                                        <rect key="frame" x="8" y="8" width="375" height="608"/>
+                                        <rect key="frame" x="8" y="8" width="375" height="1016"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0p0-xx-sz6" userLabel="Old Macdonald Had a Farm">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
@@ -73,6 +73,36 @@
                                                     <action selector="musicButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wKC-88-fkY"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lWJ-Qe-AfR" userLabel="Gong Xi Fa Cai">
+                                                <rect key="frame" x="0.0" y="612" width="375" height="200"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="200" id="X0g-Lr-eUe"/>
+                                                </constraints>
+                                                <state key="normal" title="Button" image="Gong Xi Fa Cai"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
+                                                        <integer key="value" value="2"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="musicButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RXK-AN-KOT"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hA-ms-6BC" userLabel="Xiao Xing Xing">
+                                                <rect key="frame" x="0.0" y="816" width="375" height="200"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="200" id="6JU-1k-z80"/>
+                                                </constraints>
+                                                <state key="normal" title="Button" image="Xiao Xing Xing"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
+                                                        <integer key="value" value="2"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="musicButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Lq-2t-Ir9"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -109,8 +139,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Gong Xi Fa Cai" width="1040" height="789"/>
         <image name="Old MacDonald Had a Farm" width="1481" height="1219"/>
         <image name="Row Row Row Your Boat" width="480" height="308"/>
         <image name="Twinkle Twinkle Little Star" width="900" height="675"/>
+        <image name="Xiao Xing Xing" width="1920" height="1080"/>
     </resources>
 </document>

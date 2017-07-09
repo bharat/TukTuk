@@ -13,6 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -22,127 +23,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bO3-qx-WaQ">
-                                <rect key="frame" x="0.0" y="30" width="375" height="607"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="yfs-4v-sfP">
-                                        <rect key="frame" x="8" y="8" width="375" height="1016"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0p0-xx-sz6" userLabel="Old Macdonald Had a Farm">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="200" id="sk2-iM-Apa"/>
-                                                </constraints>
-                                                <state key="normal" title="Button" image="Old MacDonald Had a Farm"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
-                                                        <integer key="value" value="2"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="musicButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WfD-2f-elh"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dX7-u5-E3c" userLabel="Twinkle Twinkle Little Star">
-                                                <rect key="frame" x="0.0" y="204" width="375" height="200"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="200" id="b0H-dP-g6J"/>
-                                                </constraints>
-                                                <state key="normal" title="Button" image="Twinkle Twinkle Little Star"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
-                                                        <integer key="value" value="2"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="musicButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="obL-IX-3Hq"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgE-s0-ZIr" userLabel="Row, Row, Row Your Boat">
-                                                <rect key="frame" x="0.0" y="408" width="375" height="200"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="200" id="LVC-XI-cMo"/>
-                                                </constraints>
-                                                <state key="normal" title="Button" image="Row Row Row Your Boat"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
-                                                        <integer key="value" value="2"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="musicButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wKC-88-fkY"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lWJ-Qe-AfR" userLabel="Gong Xi Fa Cai">
-                                                <rect key="frame" x="0.0" y="612" width="375" height="200"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="200" id="X0g-Lr-eUe"/>
-                                                </constraints>
-                                                <state key="normal" title="Button" image="Gong Xi Fa Cai"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
-                                                        <integer key="value" value="2"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="musicButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RXK-AN-KOT"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hA-ms-6BC" userLabel="Xiao Xing Xing">
-                                                <rect key="frame" x="0.0" y="816" width="375" height="200"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="200" id="6JU-1k-z80"/>
-                                                </constraints>
-                                                <state key="normal" title="Button" image="Xiao Xing Xing"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
-                                                        <integer key="value" value="2"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="musicButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Lq-2t-Ir9"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="yfs-4v-sfP" secondAttribute="bottom" constant="51" id="3qp-LN-yy0"/>
-                                    <constraint firstItem="yfs-4v-sfP" firstAttribute="top" secondItem="bO3-qx-WaQ" secondAttribute="top" constant="8" id="8ac-0n-SH5"/>
-                                    <constraint firstItem="yfs-4v-sfP" firstAttribute="leading" secondItem="bO3-qx-WaQ" secondAttribute="leading" constant="8" id="At1-Ji-PaX"/>
-                                    <constraint firstAttribute="trailing" secondItem="yfs-4v-sfP" secondAttribute="trailing" priority="900" constant="-1168" id="GQa-4r-EDR"/>
-                                    <constraint firstItem="yfs-4v-sfP" firstAttribute="width" secondItem="bO3-qx-WaQ" secondAttribute="width" id="hfi-Wj-NVZ"/>
-                                </constraints>
-                            </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sFC-Tj-2VV">
-                                <rect key="frame" x="322" y="637" width="37" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6W-cQ-EmU">
+                                <rect key="frame" x="168.5" y="637" width="37" height="30"/>
                                 <state key="normal" title="Stop!"/>
                                 <connections>
-                                    <action selector="stop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GgL-Go-KXw"/>
+                                    <action selector="stopAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OHi-90-THS"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zzm-b8-ODV">
+                                <rect key="frame" x="16" y="20" width="343" height="617"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MusicCell" id="fln-iz-zAE" customClass="MusicCell" customModule="TukTuk" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="150"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fln-iz-zAE" id="w8R-Oy-OYN">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="psU-Pp-ATM"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Me8-fM-fK6"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="bO3-qx-WaQ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="6os-dH-utH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="sFC-Tj-2VV" secondAttribute="trailing" id="FtM-fA-f2w"/>
-                            <constraint firstItem="bO3-qx-WaQ" firstAttribute="bottom" secondItem="sFC-Tj-2VV" secondAttribute="top" id="JiQ-Du-02B"/>
-                            <constraint firstItem="bO3-qx-WaQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Jmk-g8-4BY"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="sFC-Tj-2VV" secondAttribute="bottom" id="Pkk-B2-ACG"/>
-                            <constraint firstItem="bO3-qx-WaQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fOJ-lF-MjR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Zzm-b8-ODV" secondAttribute="trailing" id="08B-dq-mjp"/>
+                            <constraint firstItem="m6W-cQ-EmU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HcB-Li-hfF"/>
+                            <constraint firstItem="Zzm-b8-ODV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="JkQ-Do-d6K"/>
+                            <constraint firstItem="Zzm-b8-ODV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="LKI-Rd-Avz"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="m6W-cQ-EmU" secondAttribute="bottom" id="Y6b-3E-S2j"/>
+                            <constraint firstItem="m6W-cQ-EmU" firstAttribute="top" secondItem="Zzm-b8-ODV" secondAttribute="bottom" id="oME-e0-g3t"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="musicTable" destination="Zzm-b8-ODV" id="RTU-qP-LeK"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+            <point key="canvasLocation" x="135.19999999999999" y="138.0809595202399"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Gong Xi Fa Cai" width="1040" height="789"/>
-        <image name="Old MacDonald Had a Farm" width="1481" height="1219"/>
-        <image name="Row Row Row Your Boat" width="480" height="308"/>
-        <image name="Twinkle Twinkle Little Star" width="900" height="675"/>
-        <image name="Xiao Xing Xing" width="1920" height="1080"/>
-    </resources>
 </document>

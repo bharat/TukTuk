@@ -9,24 +9,31 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
-    var player: AVAudioPlayer?
+struct Song {
+    var image: UIImage
+    var music: URL
+}
 
-    var songs: [String] = [
-        "OldMacDonaldHadAFarm",
-        "TwinkleTwinkleLittleStar",
-        "RowRowRowYourBoat",
-        "GongXiFaCai",
-        "XiaoXingXing"
-    ]
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var musicTable: UITableView!
+    var player: AVAudioPlayer?
+    var songs: [Song] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        let catalogUrl = Bundle.main.url(forResource: "catalog", withExtension: "txt", subdirectory: "Music")
+        let catalog = try! String(contentsOf: catalogUrl!, encoding: .utf8).components(separatedBy: "\n")
+        songs = []
+        for i in 0..<catalog.count/2 {
+            songs.append(Song(
+                image: UIImage(named: "Music/\(catalog[2*i])")!,
+                music: Bundle.main.url(forAuxiliaryExecutable: "Music/\(catalog[2*i+1])")!))
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        playAudio("welcome")
+        playAudio(Bundle.main.url(forAuxiliaryExecutable: "Music/welcome.mp3")!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,31 +41,48 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func playAudio(_ fileName: String) {
-        if let url = Bundle.main.url(forResource: fileName, withExtension: "mp3", subdirectory: "Music") {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try AVAudioSession.sharedInstance().setActive(true)
+    // MARK: UITableViewDelegate
 
-                player = try AVAudioPlayer(contentsOf: url)
-                guard let player = player else { return }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        playAudio(songs[indexPath.row].music)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
-                player.prepareToPlay()
-                player.play()
-            } catch let error {
-                print(error.localizedDescription)
-            }
+    // MARK: UITableViewDataSource
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return songs.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell")!
+
+        cell.backgroundView = UIImageView(image: songs[indexPath.row].image)
+        cell.backgroundView?.contentMode = .scaleAspectFill
+
+        return cell
+    }
+
+    // MARK: General
+
+    func playAudio(_ url: URL) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+
+            player.prepareToPlay()
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
 
-    @IBAction func stop(_ sender: Any) {
+    @IBAction func stopAudio(_ sender: Any) {
         if let player = player {
             player.stop()
         }
-    }
-
-    @IBAction func musicButton(_ sender: UIButton) {
-        playAudio(songs[sender.tag])
     }
 }
 

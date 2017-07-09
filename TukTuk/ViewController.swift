@@ -48,7 +48,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         tableView.beginUpdates()
         tableView.endUpdates()
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     // MARK: UITableViewDataSource
@@ -61,6 +60,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         cell.backgroundView = UIImageView(image: songs[indexPath.row].image)
         cell.backgroundView?.contentMode = .scaleAspectFill
+        cell.selectedBackgroundView = UIImageView(image: songs[indexPath.row].image)
+        cell.selectedBackgroundView?.contentMode = .scaleAspectFill
 
         return cell
     }

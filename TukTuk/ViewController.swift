@@ -22,18 +22,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let catalogUrl = Bundle.main.url(forResource: "catalog", withExtension: "txt", subdirectory: "Music")
+        let catalogUrl = Bundle.main.url(forAuxiliaryExecutable: "Meta/catalog.txt")
         let catalog = try! String(contentsOf: catalogUrl!, encoding: .utf8).components(separatedBy: "\n")
         songs = []
         for i in 0..<catalog.count/2 {
             songs.append(Song(
-                image: UIImage(named: "Music/\(catalog[2*i])")!,
-                music: Bundle.main.url(forAuxiliaryExecutable: "Music/\(catalog[2*i+1])")!))
+                image: UIImage(named: "Songs/\(catalog[2*i])")!,
+                music: Bundle.main.url(forAuxiliaryExecutable: "Songs/\(catalog[2*i+1])")!))
         }
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        playAudio(Bundle.main.url(forAuxiliaryExecutable: "Music/welcome.mp3")!)
+        playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -81,7 +81,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             try AVAudioSession.sharedInstance().setActive(true)
 
             player = try AVAudioPlayer(contentsOf: url)
-            guard let player = player else { return }
+            guard let player = player else {
+                return
+            }
 
             player.prepareToPlay()
             player.play()

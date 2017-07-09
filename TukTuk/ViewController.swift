@@ -45,6 +45,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         playAudio(songs[indexPath.row].music)
+
+        tableView.beginUpdates()
+        tableView.endUpdates()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
@@ -60,6 +63,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.backgroundView?.contentMode = .scaleAspectFill
 
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == tableView.indexPathForSelectedRow?.row {
+            return 300
+        } else {
+            return 150
+        }
     }
 
     // MARK: General

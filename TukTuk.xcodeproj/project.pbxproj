@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		209D1DB6996F487D912E2782 /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */; };
 		4FB989061F12F45A001F02CE /* Meta in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989041F12F45A001F02CE /* Meta */; };
 		4FB989071F12F45A001F02CE /* Songs in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989051F12F45A001F02CE /* Songs */; };
 		4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */; };
 		4FBD57AE1F098DEB00BDCDE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AD1F098DEB00BDCDE3 /* ViewController.swift */; };
 		4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */; };
-		4FBD57B31F098DEB00BDCDE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B21F098DEB00BDCDE3 /* Assets.xcassets */; };
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -23,9 +23,11 @@
 		4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FBD57AD1F098DEB00BDCDE3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4FBD57B01F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4FBD57B21F098DEB00BDCDE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FBD57B51F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FBD57B71F098DEB00BDCDE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D93CC645E3623C41C0DD219 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
+		9EE63FDA43874ED794474A36 /* Pods-TukTuk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.debug.xcconfig"; sourceTree = "<group>"; };
+		BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TukTuk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				209D1DB6996F487D912E2782 /* Pods_TukTuk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +47,8 @@
 			children = (
 				4FBD57AA1F098DEB00BDCDE3 /* TukTuk */,
 				4FBD57A91F098DEB00BDCDE3 /* Products */,
+				955B2461A91F60959C73B8BA /* Pods */,
+				FCC02217AF180E89B1A08AAF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,13 +66,29 @@
 				4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* ViewController.swift */,
 				4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */,
-				4FBD57B21F098DEB00BDCDE3 /* Assets.xcassets */,
 				4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */,
 				4FBD57B71F098DEB00BDCDE3 /* Info.plist */,
 				4FB989041F12F45A001F02CE /* Meta */,
 				4FB989051F12F45A001F02CE /* Songs */,
 			);
 			path = TukTuk;
+			sourceTree = "<group>";
+		};
+		955B2461A91F60959C73B8BA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9EE63FDA43874ED794474A36 /* Pods-TukTuk.debug.xcconfig */,
+				5D93CC645E3623C41C0DD219 /* Pods-TukTuk.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FCC02217AF180E89B1A08AAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FBD57BA1F098DEB00BDCDE3 /* Build configuration list for PBXNativeTarget "TukTuk" */;
 			buildPhases = (
+				72036C9405361C9306DA5C16 /* [CP] Check Pods Manifest.lock */,
 				4FBD57A41F098DEB00BDCDE3 /* Sources */,
 				4FBD57A51F098DEB00BDCDE3 /* Frameworks */,
 				4FBD57A61F098DEB00BDCDE3 /* Resources */,
+				D15C2A9A4846E04855A5E1F5 /* [CP] Embed Pods Frameworks */,
+				80936E05D0035BA7B346E388 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -131,7 +155,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */,
-				4FBD57B31F098DEB00BDCDE3 /* Assets.xcassets in Resources */,
 				4FB989071F12F45A001F02CE /* Songs in Resources */,
 				4FB989061F12F45A001F02CE /* Meta in Resources */,
 				4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */,
@@ -139,6 +162,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		72036C9405361C9306DA5C16 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		80936E05D0035BA7B346E388 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D15C2A9A4846E04855A5E1F5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4FBD57A41F098DEB00BDCDE3 /* Sources */ = {
@@ -267,6 +338,7 @@
 		};
 		4FBD57BB1F098DEB00BDCDE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9EE63FDA43874ED794474A36 /* Pods-TukTuk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = R6DR6B5C8B;
@@ -280,6 +352,7 @@
 		};
 		4FBD57BC1F098DEB00BDCDE3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D93CC645E3623C41C0DD219 /* Pods-TukTuk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = R6DR6B5C8B;

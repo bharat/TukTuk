@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import SwiftGifOrigin
 
 struct Song {
     var image: UIImage
@@ -16,8 +17,13 @@ struct Song {
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var musicTable: UITableView!
-    var player: AVAudioPlayer?
+    @IBOutlet weak var overlay: UIImageView!
+    @IBOutlet weak var stopButton: UIButton!
+
+    var audioPlayer: AVAudioPlayer?
+    var videoPlayer: AVPlayer?
     var songs: [Song] = []
+    weak var timer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +40,45 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidAppear(_ animated: Bool) {
         playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!)
+
+        /*
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) {
+            [weak self] _ in
+                self?.showSurprise()
+        }
+         */
+    }
+
+    func showSurprise() {
+        let url = Bundle.main.url(forAuxiliaryExecutable: "Meta/minions.mp4")
+        videoPlayer = AVPlayer(url: url!)
+        let videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
+        videoPlayerLayer.frame = overlay.bounds
+        overlay.layer.addSublayer(videoPlayerLayer)
+        videoPlayer?.play()
+        videoPlayer?.isMuted = true
+
+        let width: CGFloat = 240
+        let height: CGFloat = 135
+        let x = self.view.frame.width - width
+        let y = self.stopButton.frame.origin.y - height - 8
+        let duration = videoPlayer?.currentItem?.asset.duration.seconds
+
+        overlay.layer.frame = CGRect(x: x, y: y, width: width, height: height)
+
+        UIView.animate(withDuration: duration!, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            self.overlay.frame = CGRect(x: 0, y: y, width: width, height: height)
+        })
+
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.surpriseFinished), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: videoPlayer?.currentItem)
+    }
+
+    func surpriseFinished() {
+        self.overlay.isHidden = true
+    }
+
+    @IBAction func surpriseTapped(_ sender: Any) {
+        videoPlayer?.isMuted = !(videoPlayer?.isMuted)!
     }
 
     override func didReceiveMemoryWarning() {
@@ -81,8 +126,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
 
-            player = try AVAudioPlayer(contentsOf: url)
-            guard let player = player else {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            guard let player = audioPlayer else {
                 return
             }
 
@@ -94,7 +139,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     @IBAction func stopAudio(_ sender: Any) {
-        if let player = player {
+        if let player = audioPlayer {
             player.stop()
         }
     }

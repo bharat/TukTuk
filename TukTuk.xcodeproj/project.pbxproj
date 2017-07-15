@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		209D1DB6996F487D912E2782 /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */; };
+		4F6A7BDB1F1AD5AB00299152 /* Surprises in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BDA1F1AD5AB00299152 /* Surprises */; };
 		4FB989061F12F45A001F02CE /* Meta in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989041F12F45A001F02CE /* Meta */; };
 		4FB989071F12F45A001F02CE /* Songs in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989051F12F45A001F02CE /* Songs */; };
 		4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F6A7BDA1F1AD5AB00299152 /* Surprises */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Surprises; sourceTree = "<group>"; };
 		4FB989041F12F45A001F02CE /* Meta */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meta; sourceTree = "<group>"; };
 		4FB989051F12F45A001F02CE /* Songs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Songs; sourceTree = "<group>"; };
 		4FBD57A81F098DEB00BDCDE3 /* TukTuk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TukTuk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +72,7 @@
 				4FBD57B71F098DEB00BDCDE3 /* Info.plist */,
 				4FB989041F12F45A001F02CE /* Meta */,
 				4FB989051F12F45A001F02CE /* Songs */,
+				4F6A7BDA1F1AD5AB00299152 /* Surprises */,
 			);
 			path = TukTuk;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			files = (
 				4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */,
 				4FB989071F12F45A001F02CE /* Songs in Resources */,
+				4F6A7BDB1F1AD5AB00299152 /* Surprises in Resources */,
 				4FB989061F12F45A001F02CE /* Meta in Resources */,
 				4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */,
 			);

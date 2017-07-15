@@ -22,13 +22,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6W-cQ-EmU">
-                                <rect key="frame" x="168.5" y="637" width="37" height="30"/>
-                                <state key="normal" title="Stop!"/>
-                                <connections>
-                                    <action selector="stopAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OHi-90-THS"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="7Ly-tq-BV9" userLabel="Buttons Stack View">
+                                <rect key="frame" x="0.0" y="637" width="375" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6W-cQ-EmU" userLabel="Stop! Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="187.5" height="30"/>
+                                        <state key="normal" title="Stop!"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gor-Q6-Q2h"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-Wj-hJe" userLabel="Surprise Button">
+                                        <rect key="frame" x="187.5" y="0.0" width="187.5" height="30"/>
+                                        <state key="normal" title="Surprise!"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DcA-vR-iBL"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zzm-b8-ODV">
                                 <rect key="frame" x="16" y="20" width="343" height="617"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -48,39 +60,42 @@
                                 </connections>
                             </tableView>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FQ8-eh-nV9">
-                                <rect key="frame" x="67" y="269" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="119" y="502" width="240" height="135"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="DtM-Zg-71V"/>
+                                    <constraint firstAttribute="height" constant="135" id="eha-5p-NsW"/>
+                                </constraints>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="5lz-bs-3yb" appends="YES" id="Zzv-VD-OBI"/>
+                                    <outletCollection property="gestureRecognizers" destination="7it-0C-UJg" appends="YES" id="JW8-yF-L5E"/>
                                 </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Zzm-b8-ODV" secondAttribute="trailing" id="08B-dq-mjp"/>
-                            <constraint firstItem="m6W-cQ-EmU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HcB-Li-hfF"/>
                             <constraint firstItem="Zzm-b8-ODV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="JkQ-Do-d6K"/>
                             <constraint firstItem="Zzm-b8-ODV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="LKI-Rd-Avz"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="m6W-cQ-EmU" secondAttribute="bottom" id="Y6b-3E-S2j"/>
-                            <constraint firstItem="m6W-cQ-EmU" firstAttribute="top" secondItem="Zzm-b8-ODV" secondAttribute="bottom" id="oME-e0-g3t"/>
+                            <constraint firstItem="FQ8-eh-nV9" firstAttribute="bottom" secondItem="7Ly-tq-BV9" secondAttribute="top" id="OXX-f3-yQA"/>
+                            <constraint firstItem="7Ly-tq-BV9" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="R9c-Oi-Vnq"/>
+                            <constraint firstItem="7Ly-tq-BV9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bJi-X7-oRQ"/>
+                            <constraint firstItem="Zzm-b8-ODV" firstAttribute="bottom" secondItem="7Ly-tq-BV9" secondAttribute="top" id="gKN-Iy-KId"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Zzm-b8-ODV" secondAttribute="bottom" constant="30" id="had-nQ-1aK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FQ8-eh-nV9" secondAttribute="trailing" id="sAD-U7-plp"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="FQ8-eh-nV9"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
+                        <outlet property="buttons" destination="7Ly-tq-BV9" id="rpB-hX-ddr"/>
                         <outlet property="musicTable" destination="Zzm-b8-ODV" id="RTU-qP-LeK"/>
                         <outlet property="overlay" destination="FQ8-eh-nV9" id="Ze9-rl-3Qt"/>
-                        <outlet property="stopButton" destination="m6W-cQ-EmU" id="O8Y-fC-CNl"/>
+                        <outlet property="stopButton" destination="m6W-cQ-EmU" id="xbK-wO-igf"/>
+                        <outlet property="surpriseButton" destination="Bcl-Wj-hJe" id="e1C-Jr-ZOk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="5lz-bs-3yb">
+                <tapGestureRecognizer id="7it-0C-UJg">
                     <connections>
-                        <action selector="surpriseTapped:" destination="BYZ-38-t0r" id="mdY-3X-xlc"/>
+                        <action selector="surpriseTapped:" destination="BYZ-38-t0r" id="VpU-JE-u0j"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

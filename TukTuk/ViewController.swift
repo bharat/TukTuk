@@ -31,6 +31,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var videoPlayer: AVPlayer?
     var songs: [Song] = []
     var surprises: [Surprise] = []
+    var songPlayCount = 0
+    var audioDurationSinceLastSurpriseShown: TimeInterval = 0
     weak var timer: Timer?
 
     override func viewDidLoad() {
@@ -50,6 +52,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 surprises.append(Surprise(movie: Bundle.main.url(forAuxiliaryExecutable: "Surprises/\(s)")!))
         }
 
+        hideSurpriseButton()
         hideVideo()
     }
 
@@ -61,6 +64,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         switch(sender) {
         case surpriseButton:
             playVideo(surprises[Int(arc4random_uniform(UInt32(surprises.count)))].movie)
+            hideSurpriseButton()
 
         case stopButton:
             stopAudio()
@@ -84,6 +88,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         playAudio(songs[indexPath.row].music)
+        songPlayCount += 1
+        maybeShowSurprise()
 
         tableView.beginUpdates()
         tableView.endUpdates()
@@ -110,6 +116,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return 300
         } else {
             return 150
+        }
+    }
+
+    // MARK: Surprise
+
+    func hideSurpriseButton() {
+        surpriseButton.isHidden = true
+    }
+
+    func showSurpriseButton() {
+        surpriseButton.isHidden = false
+    }
+
+    func maybeShowSurprise() {
+        if audioDurationSinceLastSurpriseShown > 3600 {
+            showSurpriseButton()
+            audioDurationSinceLastSurpriseShown = 0
         }
     }
 
@@ -167,7 +190,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     func stopAudio() {
+        if let player = audioPlayer {
+            audioDurationSinceLastSurpriseShown += player.currentTime
+        }
+        print("audio duration: \(audioDurationSinceLastSurpriseShown)")
         audioPlayer?.stop()
+        audioPlayer = nil
     }
 }
 

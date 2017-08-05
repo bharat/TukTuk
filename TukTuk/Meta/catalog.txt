@@ -1,5 +1,3 @@
-ABC.jpg
-ABC.mp3
 Affen.jpg
 Affen.mp3
 AufDerMauer.jpg

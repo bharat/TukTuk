@@ -122,11 +122,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: Surprise
 
     func hideSurpriseButton() {
-        surpriseButton.isHidden = true
+        UIView.animate(withDuration: 1){
+            self.surpriseButton.isHidden = true
+        }
     }
 
     func showSurpriseButton() {
-        surpriseButton.isHidden = false
+        UIView.animate(withDuration: 1){
+            self.surpriseButton.isHidden = false
+        }
     }
 
     func maybeShowSurprise() {

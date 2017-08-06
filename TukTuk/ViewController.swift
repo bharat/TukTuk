@@ -63,6 +63,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidAppear(_ animated: Bool) {
         loadSurpriseCountdown()
+
+        Timer.scheduledTimer(timeInterval: 8, target: self, selector: (#selector(ViewController.playWelcomeAudio)), userInfo: nil, repeats: false)
+    }
+
+    func playWelcomeAudio() {
         playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!)
     }
 

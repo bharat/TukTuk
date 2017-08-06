@@ -26,14 +26,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var buttons: UIStackView!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var surpriseButton: UIButton!
+    @IBOutlet weak var surpriseTimerLabel: UILabel!
 
     var audioPlayer: AVAudioPlayer?
     var videoPlayer: AVPlayer?
     var songs: [Song] = []
     var surprises: [Surprise] = []
-    var songPlayCount = 0
-    var audioDurationSinceLastSurpriseShown: TimeInterval = 0
-    weak var timer: Timer?
+    var surpriseTimer: Timer?
+    var surpriseCountdown: TimeInterval = 0 {
+        didSet {
+            surpriseTimerLabel.text = "\(Int(surpriseCountdown))"
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,11 +56,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 surprises.append(Surprise(movie: Bundle.main.url(forAuxiliaryExecutable: "Surprises/\(s)")!))
         }
 
+
         hideSurpriseButton()
         hideVideo()
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        loadSurpriseCountdown()
         playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!)
     }
 
@@ -64,20 +70,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         switch(sender) {
         case surpriseButton:
             playVideo(surprises[Int(arc4random_uniform(UInt32(surprises.count)))].movie)
+            stopSurpriseTimer()
             hideSurpriseButton()
 
         case stopButton:
             stopAudio()
             stopVideo()
             hideVideo()
+            stopSurpriseTimer()
+            saveSurpriseCountdown()
 
         default:
             ()
         }
-    }
-
-    @IBAction func surpriseTapped(_ sender: Any) {
-        toggleMuteVideo()
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,8 +93,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         playAudio(songs[indexPath.row].music)
-        songPlayCount += 1
-        maybeShowSurprise()
+        startSurpriseTimer()
 
         tableView.beginUpdates()
         tableView.endUpdates()
@@ -120,9 +124,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     // MARK: Surprise
+    @IBAction func surpriseTapped(_ sender: Any) {
+        toggleMuteVideo()
+    }
+
+    func loadSurpriseCountdown() {
+        surpriseCountdown = UserDefaults.standard.double(forKey: "surpriseCountdown")
+        print("surprise countdown \(surpriseCountdown)")
+    }
 
     func hideSurpriseButton() {
-        UIView.animate(withDuration: 1){
+        UIView.animate(withDuration: 1) {
+            self.surpriseTimerLabel.isHidden = false
             self.surpriseButton.isHidden = true
         }
     }
@@ -130,14 +143,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func showSurpriseButton() {
         UIView.animate(withDuration: 1){
             self.surpriseButton.isHidden = false
+            self.surpriseTimerLabel.isHidden = true
         }
     }
 
     func maybeShowSurprise() {
-        if audioDurationSinceLastSurpriseShown > 3600 {
+        if surpriseCountdown <= 0 {
             showSurpriseButton()
-            audioDurationSinceLastSurpriseShown = 0
+            surpriseCountdown = 3600
         }
+    }
+
+    func startSurpriseTimer() {
+        surpriseTimer?.invalidate()
+        surpriseTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updateSurpriseCountdown)), userInfo: nil, repeats: true)
+    }
+
+    func updateSurpriseCountdown() {
+        if audioIsPlaying() {
+            surpriseCountdown -= 1
+        }
+    }
+
+    func stopSurpriseTimer() {
+        surpriseTimer?.invalidate()
+        surpriseTimer = nil
+    }
+
+    func saveSurpriseCountdown() {
+        print("saving surprise countdown \(surpriseCountdown)")
+        UserDefaults.standard.setValue(surpriseCountdown, forKey: "surpriseCountdown")
+        UserDefaults.standard.synchronize()
     }
 
     // MARK: Audio & Video
@@ -193,11 +229,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         overlay.isHidden = true
     }
 
+    func audioIsPlaying() -> Bool {
+        return audioPlayer?.isPlaying ?? false
+    }
+
     func stopAudio() {
-        if let player = audioPlayer {
-            audioDurationSinceLastSurpriseShown += player.currentTime
-        }
-        print("audio duration: \(audioDurationSinceLastSurpriseShown)")
         audioPlayer?.stop()
         audioPlayer = nil
     }

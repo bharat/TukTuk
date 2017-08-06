@@ -92,11 +92,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        playAudio(songs[indexPath.row].music)
-        startSurpriseTimer()
+        if videoIsPlaying() == false {
+            playAudio(songs[indexPath.row].music)
+            startSurpriseTimer()
 
-        tableView.beginUpdates()
-        tableView.endUpdates()
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
     }
 
     // MARK: UITableViewDataSource
@@ -147,13 +149,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
-    func maybeShowSurprise() {
-        if surpriseCountdown <= 0 {
-            showSurpriseButton()
-            surpriseCountdown = 3600
-        }
-    }
-
     func startSurpriseTimer() {
         surpriseTimer?.invalidate()
         surpriseTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updateSurpriseCountdown)), userInfo: nil, repeats: true)
@@ -162,6 +157,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func updateSurpriseCountdown() {
         if audioIsPlaying() {
             surpriseCountdown -= 1
+
+            if surpriseCountdown <= 0 {
+                showSurpriseButton()
+                surpriseCountdown = 3600
+            }
         }
     }
 
@@ -227,6 +227,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func hideVideo() {
         overlay.isHidden = true
+    }
+
+    func videoIsPlaying() -> Bool {
+        return videoPlayer != nil
     }
 
     func audioIsPlaying() -> Bool {

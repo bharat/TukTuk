@@ -1,3 +1,5 @@
+ABC.jpg
+ABC.mp3
 Affen.jpg
 Affen.mp3
 AufDerMauer.jpg
@@ -6,6 +8,8 @@ BackeBackeKuchen.jpg
 BackeBackeKuchen.mp3
 Bingo.jpg
 Bingo.mp3
+DownByTheBay.jpg
+DownByTheBay.mp3
 DreiChinesen.jpg
 DreiChinesen.mp3
 EsTanztEinBiBaButzemann.jpg
@@ -16,8 +20,14 @@ GongXiFaCai.jpg
 GongXiFaCai.mp3
 HeadAndShoulders.jpg
 HeadAndShoulders.mp3
+HoppeHoppeReiter.jpg
+HoppeHoppeReiter.mp3
 ItsyBitsSpider.mp3
 ItsyBitsySpider.mp3
+Kuckuck.jpg
+Kuckuck.mp3
+Mannlein.jpg
+Mannlein.mp3
 MaryHadALittleLamb.jpg
 MaryHadALittleLamb.mp3
 MeineOma.jpg

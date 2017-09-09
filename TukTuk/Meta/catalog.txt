@@ -8,6 +8,8 @@ BackeBackeKuchen.jpg
 BackeBackeKuchen.mp3
 Bingo.jpg
 Bingo.mp3
+DoeADeer.jpg
+DoeADeer.mp3
 DownByTheBay.jpg
 DownByTheBay.mp3
 DreiChinesen.jpg
@@ -36,6 +38,8 @@ OldMacDonaldHadAFarm.jpg
 OldMacDonaldHadAFarm.mp3
 RowRowRowYourBoat.jpg
 RowRowRowYourBoat.mp3
+SixLittleDucks.jpg
+SixLittleDucks.mp3
 ThisOldMan.jpg
 ThisOldMan.mp3
 Tigers.jpg

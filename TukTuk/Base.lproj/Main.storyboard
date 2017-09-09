@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -65,35 +65,21 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Me8-fM-fK6"/>
                                 </connections>
                             </tableView>
-                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FQ8-eh-nV9">
-                                <rect key="frame" x="119" y="502" width="240" height="135"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="DtM-Zg-71V"/>
-                                    <constraint firstAttribute="height" constant="135" id="eha-5p-NsW"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="7it-0C-UJg" appends="YES" id="JW8-yF-L5E"/>
-                                </connections>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Zzm-b8-ODV" secondAttribute="trailing" id="08B-dq-mjp"/>
                             <constraint firstItem="Zzm-b8-ODV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="JkQ-Do-d6K"/>
                             <constraint firstItem="Zzm-b8-ODV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="LKI-Rd-Avz"/>
-                            <constraint firstItem="FQ8-eh-nV9" firstAttribute="bottom" secondItem="7Ly-tq-BV9" secondAttribute="top" id="OXX-f3-yQA"/>
                             <constraint firstItem="7Ly-tq-BV9" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="R9c-Oi-Vnq"/>
                             <constraint firstItem="7Ly-tq-BV9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bJi-X7-oRQ"/>
                             <constraint firstItem="Zzm-b8-ODV" firstAttribute="bottom" secondItem="7Ly-tq-BV9" secondAttribute="top" id="gKN-Iy-KId"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Zzm-b8-ODV" secondAttribute="bottom" constant="30" id="had-nQ-1aK"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="FQ8-eh-nV9" secondAttribute="trailing" id="sAD-U7-plp"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="buttons" destination="7Ly-tq-BV9" id="rpB-hX-ddr"/>
                         <outlet property="musicTable" destination="Zzm-b8-ODV" id="RTU-qP-LeK"/>
-                        <outlet property="overlay" destination="FQ8-eh-nV9" id="Ze9-rl-3Qt"/>
                         <outlet property="stopButton" destination="m6W-cQ-EmU" id="xbK-wO-igf"/>
                         <outlet property="surpriseButton" destination="Bcl-Wj-hJe" id="e1C-Jr-ZOk"/>
                         <outlet property="surpriseTimerLabel" destination="sAS-h3-EvS" id="iqk-qq-yun"/>

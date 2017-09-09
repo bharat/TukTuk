@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import AVKit
 import SwiftGifOrigin
 
 struct Song {
@@ -21,15 +22,15 @@ struct Surprise {
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var musicTable: UITableView!
-    @IBOutlet weak var overlay: UIImageView!
-    
     @IBOutlet weak var buttons: UIStackView!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var surpriseButton: UIButton!
     @IBOutlet weak var surpriseTimerLabel: UILabel!
 
-    var audioPlayer: AVAudioPlayer?
-    var videoPlayer: AVPlayer?
+    var audioPlayer: AVAudioPlayer = AVAudioPlayer()
+    var videoPlayer: AVPlayer = AVPlayer()
+    var videoPlayerController: AVPlayerViewController = AVPlayerViewController()
+
     var songs: [Song] = []
     var surprises: [Surprise] = []
     var surpriseTimer: Timer?
@@ -42,6 +43,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Load the music catalog
         let catalogUrl = Bundle.main.url(forAuxiliaryExecutable: "Meta/catalog.txt")
         let catalog = try! String(contentsOf: catalogUrl!, encoding: .utf8).components(separatedBy: "\n")
         songs = []
@@ -51,37 +53,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 music: Bundle.main.url(forAuxiliaryExecutable: "Songs/\(catalog[2*i+1])")!))
         }
 
+        // Load the "surprise" video catalog
         for s in try! FileManager.default.contentsOfDirectory(
             atPath: Bundle.main.resourcePath! + "/Surprises") {
                 surprises.append(Surprise(movie: Bundle.main.url(forAuxiliaryExecutable: "Surprises/\(s)")!))
         }
 
-
         hideSurpriseButton()
-        hideVideo()
+        videoPlayerController.showsPlaybackControls = false
     }
 
     override func viewDidAppear(_ animated: Bool) {
         loadSurpriseCountdown()
 
-        Timer.scheduledTimer(timeInterval: 8, target: self, selector: (#selector(ViewController.playWelcomeAudio)), userInfo: nil, repeats: false)
-    }
-
-    func playWelcomeAudio() {
-        playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!)
+        playWelcomeAudio()
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
         case surpriseButton:
+            stopAudio()
             playVideo(surprises[Int(arc4random_uniform(UInt32(surprises.count)))].movie)
             stopSurpriseTimer()
             hideSurpriseButton()
 
         case stopButton:
             stopAudio()
-            stopVideo()
-            hideVideo()
             stopSurpriseTimer()
             saveSurpriseCountdown()
 
@@ -90,9 +87,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 
     // MARK: UITableViewDelegate
 
@@ -131,13 +125,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     // MARK: Surprise
-    @IBAction func surpriseTapped(_ sender: Any) {
-        toggleMuteVideo()
-    }
 
-    func loadSurpriseCountdown() {
-        surpriseCountdown = UserDefaults.standard.double(forKey: "surpriseCountdown")
-        print("surprise countdown \(surpriseCountdown)")
+    func showSurpriseButton() {
+        UIView.animate(withDuration: 1){
+            self.surpriseButton.isHidden = false
+            self.surpriseTimerLabel.isHidden = true
+        }
     }
 
     func hideSurpriseButton() {
@@ -147,16 +140,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
-    func showSurpriseButton() {
-        UIView.animate(withDuration: 1){
-            self.surpriseButton.isHidden = false
-            self.surpriseTimerLabel.isHidden = true
-        }
-    }
-
     func startSurpriseTimer() {
         surpriseTimer?.invalidate()
         surpriseTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updateSurpriseCountdown)), userInfo: nil, repeats: true)
+    }
+
+    func stopSurpriseTimer() {
+        surpriseTimer?.invalidate()
+        surpriseTimer = nil
+    }
+
+    func loadSurpriseCountdown() {
+        surpriseCountdown = UserDefaults.standard.double(forKey: "surpriseCountdown")
+        print("surprise countdown \(surpriseCountdown)")
     }
 
     func updateSurpriseCountdown() {
@@ -170,81 +166,69 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
-    func stopSurpriseTimer() {
-        surpriseTimer?.invalidate()
-        surpriseTimer = nil
-    }
-
     func saveSurpriseCountdown() {
         print("saving surprise countdown \(surpriseCountdown)")
         UserDefaults.standard.setValue(surpriseCountdown, forKey: "surpriseCountdown")
         UserDefaults.standard.synchronize()
     }
 
-    // MARK: Audio & Video
+    // MARK: Audio
 
-    func playAudio(_ url: URL) {
-        stopAudio()
-        stopVideo()
-        hideVideo()
+    func playWelcomeAudio() {
+        playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!,
+                  after: 8)
+    }
 
+    func playAudio(_ url: URL, after delay: TimeInterval = 0) {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
 
             audioPlayer = try AVAudioPlayer(contentsOf: url)
-            guard let player = audioPlayer else {
-                return
-            }
-
-            player.prepareToPlay()
-            player.play()
+            audioPlayer.prepareToPlay()
+            audioPlayer.play(atTime: audioPlayer.deviceCurrentTime + delay)
         } catch let error {
             print(error.localizedDescription)
         }
     }
 
-    func playVideo(_ url: URL) {
-        stopAudio()
-        stopVideo()
-
-        // Load a new one
-        videoPlayer = AVPlayer(url: url)
-        let videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
-        videoPlayerLayer.frame = overlay.bounds
-        overlay.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
-        overlay.layer.addSublayer(videoPlayerLayer)
-        videoPlayer?.play()
-        videoPlayer?.isMuted = false
-        overlay.isHidden = false
-
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.hideVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: videoPlayer?.currentItem)
-    }
-
-    func toggleMuteVideo() {
-        videoPlayer?.isMuted = !(videoPlayer?.isMuted)!
-    }
-
-    func stopVideo() {
-        videoPlayer?.pause()
-        videoPlayer = nil
-    }
-
-    func hideVideo() {
-        overlay.isHidden = true
-    }
-
-    func videoIsPlaying() -> Bool {
-        return videoPlayer != nil
-    }
-
     func audioIsPlaying() -> Bool {
-        return audioPlayer?.isPlaying ?? false
+        return audioPlayer.isPlaying
     }
 
     func stopAudio() {
-        audioPlayer?.stop()
-        audioPlayer = nil
+        audioPlayer.stop()
+    }
+
+    // MARK: Video
+
+    func playVideo(_ url: URL) {
+        let asset = AVAsset(url: url)
+        let playerItem = AVPlayerItem(asset: asset)
+        videoPlayer = AVPlayer(playerItem: playerItem)
+        videoPlayer.play()
+
+        videoPlayerController.player = videoPlayer
+        present(videoPlayerController, animated: true, completion: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.hideVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: videoPlayer.currentItem)
+    }
+
+    func stopVideo() {
+        videoPlayer.pause()
+    }
+
+    func hideVideo() {
+        videoPlayerController.dismiss(animated: true, completion: nil)
+    }
+
+    func videoIsPlaying() -> Bool {
+        if #available(iOS 10.0, *) {
+            return videoPlayer.timeControlStatus == .playing
+        } else {
+            // Fallback on earlier versions
+            return videoPlayer.rate == 0.0
+        }
     }
 }
 

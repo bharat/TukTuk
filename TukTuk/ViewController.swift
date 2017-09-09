@@ -27,7 +27,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var surpriseButton: UIButton!
     @IBOutlet weak var surpriseTimerLabel: UILabel!
 
-    var audioPlayer: AVAudioPlayer = AVAudioPlayer()
+    var audioPlayer: AVAudioPlayer?
     var videoPlayer: AVPlayer = AVPlayer()
     var videoPlayerController: AVPlayerViewController = AVPlayerViewController()
 
@@ -175,7 +175,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: Audio
 
     func playWelcomeAudio() {
-        playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!,
+        playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!)
                   after: 8)
     }
 
@@ -184,39 +184,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
 
-
-            let oldPlayer = audioPlayer
+            let old = audioPlayer
             audioPlayer = try AVAudioPlayer(contentsOf: url)
 
-            if delay == 0 && oldPlayer.isPlaying {
-                audioPlayer.volume = 0
-                audioPlayer.play()
-                crossfadeAudio(oldPlayer)
-            } else {
-                audioPlayer.play(atTime: audioPlayer.deviceCurrentTime + delay)
+            if let new = self.audioPlayer {
+                if delay > 0 {
+                    // no need yet to crossfade on delayed audio
+                    new.play(atTime: new.deviceCurrentTime + delay)
+                } else if let old = old {
+                    new.volume = 0
+                    crossfadeAudio(old: old, new: new)
+                }
+                new.play()
             }
         } catch let error {
             print(error.localizedDescription)
         }
     }
 
-    func crossfadeAudio(_ oldPlayer: AVAudioPlayer) {
-        if oldPlayer.volume > 0 || audioPlayer.volume < 1.0 {
-            oldPlayer.volume -= 0.1
-            audioPlayer.volume += 0.1
+    func crossfadeAudio(old: AVAudioPlayer, new: AVAudioPlayer) {
+        if new.volume < 1.0 {
+            old.volume -= 0.1
+            new.volume += 0.1
 
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-                self.crossfadeAudio(oldPlayer)
+                self.crossfadeAudio(old: old, new: new)
             }
         }
     }
 
     func audioIsPlaying() -> Bool {
-        return audioPlayer.isPlaying
+        return audioPlayer?.isPlaying ?? false
     }
 
     func stopAudio() {
-        audioPlayer.stop()
+        audioPlayer?.stop()
     }
 
     // MARK: Video

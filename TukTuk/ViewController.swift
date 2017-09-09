@@ -184,11 +184,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
 
+
+            let oldPlayer = audioPlayer
             audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer.prepareToPlay()
-            audioPlayer.play(atTime: audioPlayer.deviceCurrentTime + delay)
+
+            if delay == 0 && oldPlayer.isPlaying {
+                audioPlayer.volume = 0
+                audioPlayer.play()
+                crossfadeAudio(oldPlayer)
+            } else {
+                audioPlayer.play(atTime: audioPlayer.deviceCurrentTime + delay)
+            }
         } catch let error {
             print(error.localizedDescription)
+        }
+    }
+
+    func crossfadeAudio(_ oldPlayer: AVAudioPlayer) {
+        if oldPlayer.volume > 0 || audioPlayer.volume < 1.0 {
+            oldPlayer.volume -= 0.1
+            audioPlayer.volume += 0.1
+
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+                self.crossfadeAudio(oldPlayer)
+            }
         }
     }
 

@@ -27,6 +27,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var surpriseButton: UIButton!
     @IBOutlet weak var surpriseTimerLabel: UILabel!
 
+    var firstTapOverlay: UIView?
     var audioPlayer: AVAudioPlayer?
     var videoPlayer: AVPlayer = AVPlayer()
     var videoPlayerController: AVPlayerViewController = AVPlayerViewController()
@@ -43,30 +44,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Load the music catalog
-        let catalogUrl = Bundle.main.url(forAuxiliaryExecutable: "Meta/catalog.txt")
-        let catalog = try! String(contentsOf: catalogUrl!, encoding: .utf8).components(separatedBy: "\n")
-        songs = []
-        for i in 0..<catalog.count/2 {
-            songs.append(Song(
-                image: UIImage(named: "Songs/\(catalog[2*i])")!,
-                music: Bundle.main.url(forAuxiliaryExecutable: "Songs/\(catalog[2*i+1])")!))
-        }
-
-        // Load the "surprise" video catalog
-        for s in try! FileManager.default.contentsOfDirectory(
-            atPath: Bundle.main.resourcePath! + "/Surprises") {
-                surprises.append(Surprise(movie: Bundle.main.url(forAuxiliaryExecutable: "Surprises/\(s)")!))
-        }
-
+        loadCatalogs()
         hideSurpriseButton()
+        showWelcomeOverlay()
         videoPlayerController.showsPlaybackControls = false
     }
 
     override func viewDidAppear(_ animated: Bool) {
         loadSurpriseCountdown()
+    }
 
+    func showWelcomeOverlay() {
+        let welcomeImageView = UIImageView(frame: self.view.frame)
+        welcomeImageView.contentMode = .scaleAspectFill
+        welcomeImageView.image = #imageLiteral(resourceName: "Remy")
+
+        firstTapOverlay = UIView(frame: self.view.frame)
+        firstTapOverlay?.addSubview(welcomeImageView)
+        self.view.addSubview(firstTapOverlay!)
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.welcomeTheUser))
+        firstTapOverlay?.addGestureRecognizer(tap)
+    }
+
+    func welcomeTheUser() {
         playWelcomeAudio()
+
+        UIView.animate(withDuration: 3.0, animations: {
+            self.firstTapOverlay?.alpha = 0.0
+        }, completion: {
+            _ in
+            self.firstTapOverlay?.removeFromSuperview()
+            self.firstTapOverlay = nil
+        })
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
@@ -87,6 +97,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
+    // MARK: Catalogs
+
+    func loadCatalogs() {
+        // Load the music catalog
+        let catalogUrl = Bundle.main.url(forAuxiliaryExecutable: "Meta/catalog.txt")
+        let catalog = try! String(contentsOf: catalogUrl!, encoding: .utf8).components(separatedBy: "\n")
+        songs = []
+        for i in 0..<catalog.count/2 {
+            songs.append(Song(
+                image: UIImage(named: "Songs/\(catalog[2*i])")!,
+                music: Bundle.main.url(forAuxiliaryExecutable: "Songs/\(catalog[2*i+1])")!))
+        }
+
+        // Load the "surprise" video catalog
+        for s in try! FileManager.default.contentsOfDirectory(
+            atPath: Bundle.main.resourcePath! + "/Surprises") {
+                surprises.append(Surprise(movie: Bundle.main.url(forAuxiliaryExecutable: "Surprises/\(s)")!))
+        }
+    }
 
     // MARK: UITableViewDelegate
 
@@ -176,10 +205,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func playWelcomeAudio() {
         playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!)
-                  after: 8)
     }
 
-    func playAudio(_ url: URL, after delay: TimeInterval = 0) {
+    func playAudio(_ url: URL) {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
@@ -187,15 +215,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let old = audioPlayer
             audioPlayer = try AVAudioPlayer(contentsOf: url)
 
-            if let new = self.audioPlayer {
-                if delay > 0 {
-                    // no need yet to crossfade on delayed audio
-                    new.play(atTime: new.deviceCurrentTime + delay)
-                } else if let old = old {
+            if let new = audioPlayer {
+                new.play()
+
+                if let old = old {
                     new.volume = 0
                     crossfadeAudio(old: old, new: new)
                 }
-                new.play()
             }
         } catch let error {
             print(error.localizedDescription)

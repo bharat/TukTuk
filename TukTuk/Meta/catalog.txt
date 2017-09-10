@@ -8,6 +8,8 @@ BackeBackeKuchen.jpg
 BackeBackeKuchen.mp3
 Bingo.jpg
 Bingo.mp3
+DaXiao.jpg
+DaXiao.mp3
 DoeADeer.jpg
 DoeADeer.mp3
 DownByTheBay.jpg
@@ -28,6 +30,8 @@ ItsyBitsSpider.mp3
 ItsyBitsySpider.mp3
 Kuckuck.jpg
 Kuckuck.mp3
+LearnGreetings.jpg
+LearnGreetings.mp3
 Mannlein.jpg
 Mannlein.mp3
 MaryHadALittleLamb.jpg
@@ -36,8 +40,12 @@ MeineOma.jpg
 MeineOma.mp3
 OldMacDonaldHadAFarm.jpg
 OldMacDonaldHadAFarm.mp3
+Panda.jpg
+Panda.mp3
 RowRowRowYourBoat.jpg
 RowRowRowYourBoat.mp3
+School.jpg
+School.mp3
 SixLittleDucks.jpg
 SixLittleDucks.mp3
 ThisOldMan.jpg
@@ -46,5 +54,7 @@ Tigers.jpg
 Tigers.mp3
 TwinkleTwinkleLittleStar.jpg
 TwinkleTwinkleLittleStar.mp3
+WheelsOnTheBus.jpg
+WheelsOnTheBus.mp3
 XiaoXingXing.jpg
 XiaoXingXing.mp3

@@ -28,6 +28,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var surpriseTimerLabel: UILabel!
 
     var firstTapOverlay: UIView?
+    var welcomeImageView: UIImageView?
     var audioPlayer: AVAudioPlayer?
     var videoPlayer: AVPlayer = AVPlayer()
     var videoPlayerController: AVPlayerViewController = AVPlayerViewController()
@@ -55,12 +56,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     func showWelcomeOverlay() {
-        let welcomeImageView = UIImageView(frame: self.view.frame)
-        welcomeImageView.contentMode = .scaleAspectFill
-        welcomeImageView.image = #imageLiteral(resourceName: "Remy")
+        welcomeImageView = UIImageView(frame: self.view.frame)
+        welcomeImageView?.contentMode = .scaleAspectFill
+        welcomeImageView?.image = #imageLiteral(resourceName: "Welcome")
 
         firstTapOverlay = UIView(frame: self.view.frame)
-        firstTapOverlay?.addSubview(welcomeImageView)
+        firstTapOverlay?.addSubview(welcomeImageView!)
         self.view.addSubview(firstTapOverlay!)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.welcomeTheUser))
@@ -70,13 +71,73 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func welcomeTheUser() {
         playWelcomeAudio()
 
-        UIView.animate(withDuration: 3.0, animations: {
-            self.firstTapOverlay?.alpha = 0.0
-        }, completion: {
-            _ in
-            self.firstTapOverlay?.removeFromSuperview()
-            self.firstTapOverlay = nil
-        })
+        guard let overlay = self.firstTapOverlay else {
+            return
+        }
+
+        let easeInOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        let easeLinear = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+
+        CATransaction.begin()
+        let first = CAKeyframeAnimation(keyPath: "transform.scale")
+        first.fillMode = kCAFillModeForwards
+        first.isRemovedOnCompletion = false
+        first.beginTime = 0.0
+        first.duration = 1.0
+        first.values =   [1.0, 0.35, 0.425, 0.3875, 0.40625, 0.3969, 0.4]
+        first.keyTimes = [0.0, 0.6,  0.7,   0.8,    0.9,     0.95,   1.0]
+        first.timingFunctions = [easeInOut, easeInOut, easeInOut, easeInOut, easeInOut]
+        overlay.layer.add(first, forKey: nil)
+
+        CATransaction.setCompletionBlock {
+            // Move the anchor point to the top left, so that the rotation effect looks like 
+            // it's falling down on the right side. This will move the overlay, so make sure
+            // that we recenter it.
+            overlay.layer.anchorPoint = CGPoint(x: 0, y: 0)
+            overlay.center = CGPoint(x: overlay.center.x / 2, y: overlay.center.y / 2)
+
+            let second = CAKeyframeAnimation(keyPath: "transform.rotation.z")
+            second.fillMode = kCAFillModeForwards
+            second.isRemovedOnCompletion = false
+            second.beginTime = 1.0
+            second.duration = 4.0
+
+            let t = Float.pi / 4
+            let k = Float.pi / 8
+
+            second.values = [
+                0.0,
+                t + 2.56 * k,
+                t - 1.28 * k,
+                t + 0.64 * k,
+                t - 0.32 * k,
+                t + 0.16 * k,
+                t - 0.08 * k,
+                t + 0.04 * k,
+                t - 0.02 * k,
+                t + 0.01 * k,
+                t
+            ]
+            second.keyTimes = (0...10).map { (Double($0) * 0.1) as NSNumber }
+            second.timingFunctions = [CAMediaTimingFunction](repeating: easeInOut, count: 10)
+
+            let third = CAKeyframeAnimation(keyPath: "position.y")
+            third.fillMode = kCAFillModeForwards
+            third.isRemovedOnCompletion = false
+            third.beginTime = second.beginTime + second.duration + 0.25
+            third.duration = 1.0
+            third.values = [overlay.frame.origin.y, self.view.frame.height * 2]
+            third.keyTimes = [0.0, 1.0]
+            third.timingFunctions = [easeLinear]
+
+            let group = CAAnimationGroup()
+            group.duration = third.beginTime + third.duration
+            group.fillMode = kCAFillModeForwards
+            group.isRemovedOnCompletion = false
+            group.animations = [second, third]
+            self.firstTapOverlay?.layer.add(group, forKey:nil)
+        }
+        CATransaction.commit()
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {

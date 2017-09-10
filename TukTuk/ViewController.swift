@@ -68,8 +68,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         firstTapOverlay?.addSubview(welcomeImageView!)
         self.view.addSubview(firstTapOverlay!)
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.welcomeTheUser))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleWelcomeTap(sender:)))
         firstTapOverlay?.addGestureRecognizer(tap)
+    }
+
+    func handleWelcomeTap(sender: UITapGestureRecognizer) {
+        self.firstTapOverlay?.removeGestureRecognizer(sender)
+        welcomeTheUser()
     }
 
     func welcomeTheUser() {
@@ -84,6 +89,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         CATransaction.begin()
         CATransaction.setCompletionBlock {
+            CATransaction.begin()
+            CATransaction.setCompletionBlock {
+                self.firstTapOverlay?.removeFromSuperview()
+            }
+
             // Move the anchor point to the top left, so that the rotation effect looks like 
             // it's falling down on the right side. This will move the overlay, so make sure
             // that we recenter it.
@@ -130,6 +140,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             group.isRemovedOnCompletion = false
             group.animations = [second, third]
             self.firstTapOverlay?.layer.add(group, forKey:nil)
+            CATransaction.commit()
         }
 
         let first = CAKeyframeAnimation(keyPath: "transform.scale")

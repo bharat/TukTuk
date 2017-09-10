@@ -106,22 +106,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             second.beginTime = 0.25
             second.duration = 4.0
 
-            let t = Float.pi / 4
-            let k = Float.pi / 8
-
-            second.values = [
-                0.0,
-                t + 2.56 * k,
-                t - 1.28 * k,
-                t + 0.64 * k,
-                t - 0.32 * k,
-                t + 0.16 * k,
-                t - 0.08 * k,
-                t + 0.04 * k,
-                t - 0.02 * k,
-                t + 0.01 * k,
-                t
-            ]
+            let t = Float.pi / 7
+            let k = Float.pi / 9
+            second.values = [0.0] +
+                [2.56, -1.28, 0.64, -0.32, 0.16, -0.08, 0.04, -0.02, 0.01].map { t + $0 * k } +
+                [t]
             second.keyTimes = (0...10).map { (Double($0) * 0.1) as NSNumber }
             second.timingFunctions = [CAMediaTimingFunction](repeating: easeInOut, count: 10)
 

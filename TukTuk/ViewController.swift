@@ -103,8 +103,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let second = CAKeyframeAnimation(keyPath: "transform.rotation.z")
             second.fillMode = kCAFillModeForwards
             second.isRemovedOnCompletion = false
-            second.beginTime = 0.25
-            second.duration = 4.0
+            second.beginTime = 0.1
+            second.duration = 3.5
 
             let t = Float.pi / 7
             let k = Float.pi / 9

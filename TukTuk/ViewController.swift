@@ -58,7 +58,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func showWelcomeOverlay() {
         welcomeImageView = UIImageView(frame: self.view.frame)
         welcomeImageView?.contentMode = .scaleAspectFill
+        welcomeImageView?.clipsToBounds = true
         welcomeImageView?.image = #imageLiteral(resourceName: "Welcome")
+        welcomeImageView?.layer.borderWidth = 8
+        welcomeImageView?.layer.borderColor = UIColor.black.cgColor
+        welcomeImageView?.layer.cornerRadius = 0
 
         firstTapOverlay = UIView(frame: self.view.frame)
         firstTapOverlay?.addSubview(welcomeImageView!)
@@ -79,27 +83,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let easeLinear = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
 
         CATransaction.begin()
-        let first = CAKeyframeAnimation(keyPath: "transform.scale")
-        first.fillMode = kCAFillModeForwards
-        first.isRemovedOnCompletion = false
-        first.beginTime = 0.0
-        first.duration = 1.0
-        first.values =   [1.0, 0.35, 0.425, 0.3875, 0.40625, 0.3969, 0.4]
-        first.keyTimes = [0.0, 0.6,  0.7,   0.8,    0.9,     0.95,   1.0]
-        first.timingFunctions = [easeInOut, easeInOut, easeInOut, easeInOut, easeInOut]
-        overlay.layer.add(first, forKey: nil)
-
         CATransaction.setCompletionBlock {
             // Move the anchor point to the top left, so that the rotation effect looks like 
             // it's falling down on the right side. This will move the overlay, so make sure
             // that we recenter it.
             overlay.layer.anchorPoint = CGPoint(x: 0, y: 0)
-            overlay.center = CGPoint(x: overlay.center.x / 2, y: overlay.center.y / 2)
+            overlay.center = CGPoint(x: overlay.center.x * 0.6, y: overlay.center.y * 0.6)
 
             let second = CAKeyframeAnimation(keyPath: "transform.rotation.z")
             second.fillMode = kCAFillModeForwards
             second.isRemovedOnCompletion = false
-            second.beginTime = 1.0
+            second.beginTime = 0.25
             second.duration = 4.0
 
             let t = Float.pi / 4
@@ -124,7 +118,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let third = CAKeyframeAnimation(keyPath: "position.y")
             third.fillMode = kCAFillModeForwards
             third.isRemovedOnCompletion = false
-            third.beginTime = second.beginTime + second.duration + 0.25
+            third.beginTime = second.beginTime + second.duration
             third.duration = 1.0
             third.values = [overlay.frame.origin.y, self.view.frame.height * 2]
             third.keyTimes = [0.0, 1.0]
@@ -137,6 +131,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             group.animations = [second, third]
             self.firstTapOverlay?.layer.add(group, forKey:nil)
         }
+
+        let first = CAKeyframeAnimation(keyPath: "transform.scale")
+        first.fillMode = kCAFillModeForwards
+        first.isRemovedOnCompletion = false
+        first.beginTime = 0.0
+        first.duration = 1.0
+        first.values =   [1.0, 0.35, 0.425, 0.3875, 0.40625, 0.3969, 0.4]
+        first.keyTimes = [0.0, 0.5,  0.6,   0.7,    0.8,     0.9,    1.0]
+        first.timingFunctions = [easeInOut, easeInOut, easeInOut, easeInOut, easeInOut]
+        overlay.layer.add(first, forKey: nil)
         CATransaction.commit()
     }
 

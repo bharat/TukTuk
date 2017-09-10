@@ -115,9 +115,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return
         }
 
+        // Animate away the welcome image. Shrink it down to 40% of its size in the
+        // center of the screen, then do a "hinge" animation where the top right corner
+        // releases and it falls down around the top left corner, then the whole image
+        // falls off the bottom of the page.
         let easeInOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         let easeLinear = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             CATransaction.begin()
@@ -353,7 +356,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return videoPlayer.timeControlStatus == .playing
         } else {
             // Fallback on earlier versions
-            return videoPlayer.rate == 0.0
+            return videoPlayer.rate != 0.0
         }
     }
 }

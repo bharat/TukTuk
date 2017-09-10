@@ -55,6 +55,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         loadSurpriseCountdown()
     }
 
+
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        switch(sender) {
+        case surpriseButton:
+            stopAudio()
+            playVideo(surprises[Int(arc4random_uniform(UInt32(surprises.count)))].movie)
+            disableStopButton()
+            stopSurpriseTimer()
+            hideSurpriseButton()
+
+        case stopButton:
+            stopAudio()
+            disableStopButton()
+            stopSurpriseTimer()
+            saveSurpriseCountdown()
+
+        default:
+            ()
+        }
+    }
+
+    func enableStopButton() {
+        stopButton.isEnabled = true
+    }
+
+    func disableStopButton() {
+        stopButton.isEnabled = false
+    }
+
+    // MARK: Welcome
+
     func showWelcomeOverlay() {
         welcomeImageView = UIImageView(frame: self.view.frame)
         welcomeImageView?.contentMode = .scaleAspectFill
@@ -144,24 +175,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         CATransaction.commit()
     }
 
-    @IBAction func buttonTapped(_ sender: UIButton) {
-        switch(sender) {
-        case surpriseButton:
-            stopAudio()
-            playVideo(surprises[Int(arc4random_uniform(UInt32(surprises.count)))].movie)
-            stopSurpriseTimer()
-            hideSurpriseButton()
-
-        case stopButton:
-            stopAudio()
-            stopSurpriseTimer()
-            saveSurpriseCountdown()
-
-        default:
-            ()
-        }
-    }
-
     // MARK: Catalogs
 
     func loadCatalogs() {
@@ -187,6 +200,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if videoIsPlaying() == false {
             playAudio(songs[indexPath.row].music)
+            enableStopButton()
             startSurpriseTimer()
 
             tableView.beginUpdates()

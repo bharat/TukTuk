@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 import AVKit
-import SwiftGifOrigin
 
 struct Song {
     var image: UIImage
@@ -103,7 +102,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         firstTapOverlay?.addGestureRecognizer(tap)
     }
 
-    func handleWelcomeTap(sender: UITapGestureRecognizer) {
+    @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         self.firstTapOverlay?.removeGestureRecognizer(sender)
         welcomeTheUser()
     }
@@ -266,7 +265,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print("surprise countdown \(surpriseCountdown)")
     }
 
-    func updateSurpriseCountdown() {
+    @objc func updateSurpriseCountdown() {
         if audioIsPlaying() {
             surpriseCountdown -= 1
 
@@ -347,7 +346,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         videoPlayer.pause()
     }
 
-    func hideVideo() {
+    @objc func hideVideo() {
         videoPlayerController.dismiss(animated: true, completion: nil)
     }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EasyAnimation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let defaultValue = ["surpriseCountdown": 3600.0]
         UserDefaults.standard.register(defaults: defaultValue)
+
+        EasyAnimation.enable()
         return true
     }
 

@@ -104,12 +104,54 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         self.firstTapOverlay?.removeGestureRecognizer(sender)
-        welcomeTheUser()
+        playWelcomeAudio()
+        // hingeAnimation()
+        zoomAnimation()
     }
 
-    func welcomeTheUser() {
-        playWelcomeAudio()
+    func zoomAnimation() {
+        guard let overlay = self.firstTapOverlay?.subviews.first else {
+            return
+        }
 
+        UIView.animate(withDuration: 3.5, delay: 0.0, options: [ .curveEaseIn ],
+            animations: {
+                // Transform into a circle in the left center
+                overlay.layer.borderWidth = 5.0
+                overlay.layer.frame = CGRect(x: 0, y: self.view.frame.height / 2 - 100, width: 200, height: 200)
+                overlay.layer.cornerRadius = 100
+
+                // And do one full rotation
+                overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
+            }
+        ) {
+            // accelerating spin
+            _ in
+            UIView.animateAndChain(withDuration: 0.5, delay: 0.0, options: [ .curveLinear ], animations: { overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi * 2, 0, 0, 1) }, completion: nil)
+            .animate(withDuration: 0.4, delay: 0.0, options: [ .curveLinear ], animations: { overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1) }, completion: nil)
+            .animate(withDuration: 0.3, delay: 0.0, options: [ .curveLinear ], animations: { overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi * 2, 0, 0, 1) }) {
+                _ in
+                let spin = CABasicAnimation(keyPath: "transform.rotation")
+                spin.fromValue = 0.0
+                spin.toValue = CGFloat.pi * 2
+                spin.isRemovedOnCompletion = false
+                spin.repeatDuration = 0.5
+                spin.duration = 0.3
+                overlay.layer.add(spin, forKey: nil)
+
+                let zoom = CABasicAnimation(keyPath: "position.x")
+                zoom.fromValue = 100
+                zoom.duration = 0.5
+                // zoom.beginTime = CACurrentMediaTime() + 0.5
+                zoom.toValue = self.view.frame.width + 100
+                zoom.isRemovedOnCompletion = false
+                zoom.fillMode = kCAFillModeForwards
+                overlay.layer.add(zoom, forKey: nil)
+            }
+        }
+    }
+
+    func hingeAnimation() {
         guard let overlay = self.firstTapOverlay else {
             return
         }

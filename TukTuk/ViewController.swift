@@ -105,8 +105,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         self.firstTapOverlay?.removeGestureRecognizer(sender)
         playWelcomeAudio()
-        // hingeAnimation()
-        zoomAnimation()
+
+        // Pick a random animation
+        let animations = [
+            self.hingeAnimation,
+            self.zoomAnimation
+        ]
+        let animation = animations[Int(arc4random_uniform(UInt32(animations.count)))]
+        animation()
     }
 
     func zoomAnimation() {

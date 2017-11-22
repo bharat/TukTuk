@@ -9,8 +9,10 @@
 import Foundation
 import UIKit
 
-class Animation {
-    static func zoom(overlay: UIView, completion: @escaping ()->()) {
+typealias Animation = (UIView, @escaping()->()) -> ()
+
+class Animations {
+    static func rollAway(overlay: UIView, completion: @escaping ()->()) {
         UIView.animateAndChain(withDuration: 3.5, delay: 0.0, options: [ .curveEaseIn ], animations: {
             // Transform into a circle in the left center
             overlay.layer.borderWidth = 5.0

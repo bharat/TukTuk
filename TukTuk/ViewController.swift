@@ -26,11 +26,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var surpriseButton: UIButton!
     @IBOutlet weak var surpriseTimerLabel: UILabel!
 
-    var firstTapOverlay: UIView?
-    var welcomeImageView: UIImageView?
+    var welcomeOverlay = UIView()
+    var welcomeImageView = UIImageView()
     var audioPlayer: AVAudioPlayer?
-    var videoPlayer: AVPlayer = AVPlayer()
-    var videoPlayerController: AVPlayerViewController = AVPlayerViewController()
+    var videoPlayer = AVPlayer()
+    var videoPlayerController = AVPlayerViewController()
 
     var songs: [Song] = []
     var surprises: [Surprise] = []
@@ -87,35 +87,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func showWelcomeOverlay() {
         welcomeImageView = UIImageView(frame: self.view.frame)
-        welcomeImageView?.contentMode = .scaleAspectFill
-        welcomeImageView?.clipsToBounds = true
-        welcomeImageView?.image = #imageLiteral(resourceName: "Welcome")
-        welcomeImageView?.layer.borderWidth = 8
-        welcomeImageView?.layer.borderColor = UIColor.black.cgColor
-        welcomeImageView?.layer.cornerRadius = 0
+        welcomeImageView.contentMode = .scaleAspectFill
+        welcomeImageView.clipsToBounds = true
+        welcomeImageView.image = #imageLiteral(resourceName: "Welcome")
+        welcomeImageView.layer.borderWidth = 8
+        welcomeImageView.layer.borderColor = UIColor.black.cgColor
+        welcomeImageView.layer.cornerRadius = 0
 
-        firstTapOverlay = UIView(frame: self.view.frame)
-        firstTapOverlay?.addSubview(welcomeImageView!)
-        self.view.addSubview(firstTapOverlay!)
+        welcomeOverlay = UIView(frame: self.view.frame)
+        welcomeOverlay.addSubview(welcomeImageView)
+        self.view.addSubview(welcomeOverlay)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleWelcomeTap(sender:)))
-        firstTapOverlay?.addGestureRecognizer(tap)
+        welcomeOverlay.addGestureRecognizer(tap)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
-        self.firstTapOverlay?.removeGestureRecognizer(sender)
+        self.welcomeOverlay.removeGestureRecognizer(sender)
         playWelcomeAudio()
 
-        if let imageView = self.firstTapOverlay?.subviews.first {
-            // Pick a random animation
-            let animations: [(UIView, @escaping ()->()) -> ()] = [
-                Animation.hinge,
-                Animation.zoom
-            ]
-            let animation = animations[Int(arc4random_uniform(UInt32(animations.count)))]
-            animation(imageView) {
-                self.firstTapOverlay?.removeFromSuperview()
-            }
+        // Pick a random animation
+        let animations: [Animation] = [
+            Animations.hinge,
+            Animations.rollAway
+        ]
+        let animation = animations[Int(arc4random_uniform(UInt32(animations.count)))]
+        animation(welcomeImageView) {
+            self.welcomeOverlay.removeFromSuperview()
         }
     }
 

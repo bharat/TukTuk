@@ -17,7 +17,7 @@ class Animation {
             overlay.layer.frame = CGRect(x: 0, y: overlay.superview!.frame.height / 2 - 100, width: 200, height: 200)
             overlay.layer.cornerRadius = 100
 
-            // While doingone full rotation
+            // While doing one full rotation
             overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
 
             // Then spin and accelerate
@@ -30,10 +30,8 @@ class Animation {
         }, completion: nil)
         .animate(withDuration: 0.3, delay: 0.0, options: [ .curveLinear ], animations: {
             overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi * 2, 0, 0, 1)
-        }) {
+        }) { _ in
             // Then zoom off to the right
-            _ in
-
             CATransaction.begin()
             CATransaction.setCompletionBlock {
                 completion()

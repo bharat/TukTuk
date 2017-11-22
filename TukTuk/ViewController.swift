@@ -108,15 +108,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         if let imageView = self.firstTapOverlay?.subviews.first {
             // Pick a random animation
-            let animations: [(UIView) -> Void] = [
+            let animations: [(UIView, @escaping ()->()) -> ()] = [
                 Animation.hinge,
                 Animation.zoom
             ]
             let animation = animations[Int(arc4random_uniform(UInt32(animations.count)))]
-            animation(imageView)
+            animation(imageView) {
+                self.firstTapOverlay?.removeFromSuperview()
+            }
         }
     }
-
 
     // MARK: Catalogs
 

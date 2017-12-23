@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+    
 typealias Animation = (UIView, @escaping()->()) -> ()
 
 class Animations {

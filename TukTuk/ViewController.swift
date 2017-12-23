@@ -107,12 +107,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         playWelcomeAudio()
 
         // Pick a random animation
-        let animations: [Animation] = [
-            Animations.hinge,
-            Animations.rollAway
-        ]
-        let animation = animations[Int(arc4random_uniform(UInt32(animations.count)))]
-        animation(welcomeImageView) {
+        Animations.random(view: welcomeImageView) {
             self.welcomeOverlay.removeFromSuperview()
         }
     }
@@ -211,7 +206,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
             if surpriseCountdown <= 0 {
                 showSurpriseButton()
-                surpriseCountdown = 3600
+                surpriseCountdown = 1800
             }
         }
     }

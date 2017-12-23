@@ -12,26 +12,46 @@ import UIKit
 typealias Animation = (UIView, @escaping()->()) -> ()
 
 class Animations {
-    static func rollAway(overlay: UIView, completion: @escaping ()->()) {
+    static func random(view: UIView, completion: @escaping ()->()) {
+        let animations: [Animation] = [
+            Animations.hinge,
+            Animations.rollAway,
+//            Animations.spiralIn
+        ]
+        let animation = animations[Int(arc4random_uniform(UInt32(animations.count)))]
+        animation(view) {
+            completion()
+        }
+    }
+
+    static func spiralIn(view: UIView, completion: @escaping ()->()) {
+        let sv = view.superview!
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: [ .curveEaseIn ], animations: {
+            view.layer.borderWidth = 5.0
+            view.layer.frame = CGRect(x: sv.frame.width / 3 - 100, y: sv.frame.height / 3 - 100, width: 200, height: 200)
+            }, completion: nil)
+    }
+
+    static func rollAway(view: UIView, completion: @escaping ()->()) {
         UIView.animateAndChain(withDuration: 3.5, delay: 0.0, options: [ .curveEaseIn ], animations: {
             // Transform into a circle in the left center
-            overlay.layer.borderWidth = 5.0
-            overlay.layer.frame = CGRect(x: 0, y: overlay.superview!.frame.height / 2 - 100, width: 200, height: 200)
-            overlay.layer.cornerRadius = 100
+            view.layer.borderWidth = 5.0
+            view.layer.frame = CGRect(x: 0, y: view.superview!.frame.height / 2 - 100, width: 200, height: 200)
+            view.layer.cornerRadius = 100
 
             // While doing one full rotation
-            overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
+            view.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
 
             // Then spin and accelerate
         }, completion: nil)
         .animate(withDuration: 0.5, delay: 0.0, options: [ .curveLinear ], animations: {
-            overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi * 2, 0, 0, 1)
+            view.layer.transform = CATransform3DMakeRotation(CGFloat.pi * 2, 0, 0, 1)
         }, completion: nil)
         .animate(withDuration: 0.4, delay: 0.0, options: [ .curveLinear ], animations: {
-            overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
+            view.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
         }, completion: nil)
         .animate(withDuration: 0.3, delay: 0.0, options: [ .curveLinear ], animations: {
-            overlay.layer.transform = CATransform3DMakeRotation(CGFloat.pi * 2, 0, 0, 1)
+            view.layer.transform = CATransform3DMakeRotation(CGFloat.pi * 2, 0, 0, 1)
         }) { _ in
             // Then zoom off to the right
             CATransaction.begin()
@@ -44,20 +64,20 @@ class Animations {
             spin.isRemovedOnCompletion = false
             spin.repeatDuration = 0.5
             spin.duration = 0.3
-            overlay.layer.add(spin, forKey: nil)
+            view.layer.add(spin, forKey: nil)
 
             let zoom = CABasicAnimation(keyPath: "position.x")
             zoom.fromValue = 100
             zoom.duration = 0.5
-            zoom.toValue = overlay.superview!.frame.width + 100
+            zoom.toValue = view.superview!.frame.width + 100
             zoom.isRemovedOnCompletion = false
             zoom.fillMode = kCAFillModeForwards
-            overlay.layer.add(zoom, forKey: nil)
+            view.layer.add(zoom, forKey: nil)
             CATransaction.commit()
         }
     }
 
-    static func hinge(overlay: UIView, completion: @escaping ()->()) {
+    static func hinge(view: UIView, completion: @escaping ()->()) {
         // Animate away the welcome image. Shrink it down to 40% of its size in the
         // center of the screen, then do a "hinge" animation where the top right corner
         // releases and it falls down around the top left corner, then the whole image
@@ -74,8 +94,8 @@ class Animations {
             // Move the anchor point to the top left, so that the rotation effect looks like
             // it's falling down on the right side. This will move the overlay, so make sure
             // that we recenter it.
-            overlay.layer.anchorPoint = CGPoint(x: 0, y: 0)
-            overlay.center = CGPoint(x: overlay.center.x * 0.6, y: overlay.center.y * 0.6)
+            view.layer.anchorPoint = CGPoint(x: 0, y: 0)
+            view.center = CGPoint(x: view.center.x * 0.6, y: view.center.y * 0.6)
 
             let second = CAKeyframeAnimation(keyPath: "transform.rotation.z")
             second.fillMode = kCAFillModeForwards
@@ -96,7 +116,7 @@ class Animations {
             third.isRemovedOnCompletion = false
             third.beginTime = second.beginTime + second.duration
             third.duration = 1.0
-            third.values = [overlay.frame.origin.y, overlay.superview!.frame.height * 2]
+            third.values = [view.frame.origin.y, view.superview!.frame.height * 2]
             third.keyTimes = [0.0, 1.0]
             third.timingFunctions = [easeLinear]
 
@@ -105,7 +125,7 @@ class Animations {
             group.fillMode = kCAFillModeForwards
             group.isRemovedOnCompletion = false
             group.animations = [second, third]
-            overlay.layer.add(group, forKey:nil)
+            view.layer.add(group, forKey:nil)
             CATransaction.commit()
         }
 
@@ -117,7 +137,7 @@ class Animations {
         first.values =   [1.0, 0.35, 0.425, 0.3875, 0.40625, 0.3969, 0.4]
         first.keyTimes = [0.0, 0.5,  0.6,   0.7,    0.8,     0.9,    1.0]
         first.timingFunctions = [easeInOut, easeInOut, easeInOut, easeInOut, easeInOut]
-        overlay.layer.add(first, forKey: nil)
+        view.layer.add(first, forKey: nil)
         CATransaction.commit()
     }
 }

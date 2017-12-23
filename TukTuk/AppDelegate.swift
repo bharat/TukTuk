@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        let defaultValue = ["surpriseCountdown": 3600.0]
+        let defaultValue = ["surpriseCountdown": 1800]
         UserDefaults.standard.register(defaults: defaultValue)
 
         EasyAnimation.enable()

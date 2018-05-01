@@ -14,6 +14,10 @@ class SurpriseTableViewController: UITableViewController {
     var surprises: [Surprise] = []
     var songVC: SongViewController?
 
+    @IBAction func dismiss(_ sender: Any) {
+        presentingViewController?.dismiss(animated: true)
+    }
+
     // MARK: UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return surprises.count

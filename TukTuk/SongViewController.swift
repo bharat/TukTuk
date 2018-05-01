@@ -86,6 +86,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let surpriseTVC = storyboard?.instantiateViewController(withIdentifier: "SurpriseTableVC") as! SurpriseTableViewController
+        surpriseTVC.surprises = self.surprises
         surpriseTVC.preferredContentSize = CGSize(width: 0, height: 360)
         return surpriseTVC
     }
@@ -293,11 +294,29 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func videoIsPlaying() -> Bool {
-        if #available(iOS 10.0, *) {
-            return videoPlayer.timeControlStatus == .playing
+        return videoPlayerController.isPlaying
+    }
+}
+
+extension AVPlayerViewController {
+    var isPlaying: Bool {
+        get {
+            guard let player = player else { return false }
+            if #available(iOS 10.0, *) {
+                return player.timeControlStatus == .playing
+            } else {
+                // Fallback on earlier versions
+                return player.rate != 0.0
+            }
+        }
+    }
+
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let player = player else { return }
+        if self.isPlaying {
+            player.pause()
         } else {
-            // Fallback on earlier versions
-            return videoPlayer.rate != 0.0
+            player.play()
         }
     }
 }

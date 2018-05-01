@@ -10,16 +10,7 @@ import UIKit
 import AVFoundation
 import AVKit
 
-struct Song {
-    var image: UIImage
-    var music: URL
-}
-
-struct Surprise {
-    var movie: URL
-}
-
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     @IBOutlet weak var musicTable: UITableView!
     @IBOutlet weak var buttons: UIStackView!
     @IBOutlet weak var stopButton: UIButton!
@@ -48,12 +39,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         hideSurpriseButton()
         showWelcomeOverlay()
         videoPlayerController.showsPlaybackControls = false
+
+        registerForPreviewing(with: self, sourceView: stopButton)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         loadSurpriseCountdown()
     }
-
 
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
@@ -83,6 +75,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         stopButton.isEnabled = false
     }
 
+    // MARK: Secret debug interface
+
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        let surpriseTVC = storyboard?.instantiateViewController(withIdentifier: "SurpriseTableVC") as! SurpriseTableViewController
+        surpriseTVC.surprises = surprises
+        surpriseTVC.songVC = self
+        show(surpriseTVC, sender: self)
+    }
+
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let surpriseTVC = storyboard?.instantiateViewController(withIdentifier: "SurpriseTableVC") as! SurpriseTableViewController
+        surpriseTVC.preferredContentSize = CGSize(width: 0, height: 360)
+        return surpriseTVC
+    }
+
     // MARK: Welcome
 
     func showWelcomeOverlay() {
@@ -98,7 +105,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         welcomeOverlay.addSubview(welcomeImageView)
         self.view.addSubview(welcomeOverlay)
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleWelcomeTap(sender:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SongViewController.handleWelcomeTap(sender:)))
         welcomeOverlay.addGestureRecognizer(tap)
     }
 
@@ -128,7 +135,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Load the "surprise" video catalog
         for s in try! FileManager.default.contentsOfDirectory(
             atPath: Bundle.main.resourcePath! + "/Surprises") {
-                surprises.append(Surprise(movie: Bundle.main.url(forAuxiliaryExecutable: "Surprises/\(s)")!))
+                surprises.append(Surprise(title: s, movie: Bundle.main.url(forAuxiliaryExecutable: "Surprises/\(s)")!))
         }
     }
 
@@ -187,7 +194,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func startSurpriseTimer() {
         surpriseTimer?.invalidate()
-        surpriseTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updateSurpriseCountdown)), userInfo: nil, repeats: true)
+        surpriseTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(SongViewController.updateSurpriseCountdown)), userInfo: nil, repeats: true)
     }
 
     func stopSurpriseTimer() {
@@ -274,7 +281,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         videoPlayerController.player = videoPlayer
         present(videoPlayerController, animated: true, completion: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.hideVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: videoPlayer.currentItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(SongViewController.hideVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: videoPlayer.currentItem)
     }
 
     func stopVideo() {

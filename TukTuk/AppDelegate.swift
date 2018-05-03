@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaultValue = ["surpriseCountdown": 1800]
         UserDefaults.standard.register(defaults: defaultValue)
 
+        UIApplication.shared.isIdleTimerDisabled = true
+
         EasyAnimation.enable()
         return true
     }

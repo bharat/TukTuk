@@ -220,7 +220,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func saveSurpriseCountdown() {
-        print("saving surprise countdown \(surpriseCountdown)")
         UserDefaults.standard.setValue(surpriseCountdown, forKey: "surpriseCountdown")
         UserDefaults.standard.synchronize()
     }

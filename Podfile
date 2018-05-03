@@ -3,5 +3,5 @@ use_frameworks!
 
 target 'TukTuk' do
   pod 'EasyAnimation'
-  pod 'FLEX', '~> 2.0', :configurations => ['Debug']
+  pod 'FLEX', :configurations => ['Debug'], :git => 'https://github.com/bharat/FLEX.git'
 end

@@ -4,12 +4,21 @@ PODS:
 
 DEPENDENCIES:
   - EasyAnimation
-  - FLEX (~> 2.0)
+  - FLEX (from `https://github.com/bharat/FLEX.git`)
+
+EXTERNAL SOURCES:
+  FLEX:
+    :git: https://github.com/bharat/FLEX.git
+
+CHECKOUT OPTIONS:
+  FLEX:
+    :commit: 386d6ae06ac772633f06ebda3d26e6750ab30d1f
+    :git: https://github.com/bharat/FLEX.git
 
 SPEC CHECKSUMS:
   EasyAnimation: 977ef673efe8ce62447807eedb380a77b189dc80
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
 
-PODFILE CHECKSUM: e880461d32db223b6932205bf94e900e5208349a
+PODFILE CHECKSUM: 0c6ad55cbaeb0c2410e523aad67f6ca5f2824836
 
 COCOAPODS: 1.3.1

@@ -16,7 +16,7 @@ class Animations {
         let animations: [Animation] = [
             Animations.hinge,
             Animations.rollAway,
-//            Animations.spiralIn
+            Animations.wordPop
         ]
         let animation = animations[Int(arc4random_uniform(UInt32(animations.count)))]
         animation(view) {
@@ -24,12 +24,61 @@ class Animations {
         }
     }
 
-    static func spiralIn(view: UIView, completion: @escaping ()->()) {
-        let sv = view.superview!
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: [ .curveEaseIn ], animations: {
-            view.layer.borderWidth = 5.0
-            view.layer.frame = CGRect(x: sv.frame.width / 3 - 100, y: sv.frame.height / 3 - 100, width: 200, height: 200)
-            }, completion: nil)
+    static func wordPop(view: UIView, completion: @escaping ()->()) {
+        let cadence: [(words: String, duration: CFTimeInterval)] = [
+            ("Hi,\nRemy!",                           1.0),
+            ("Welcome\nto\nTukTuk!",                 1.0),
+            ("You can\nlisten to some\nmusic here!", 2.0),
+            ("Woohoooooo!",                          1.0)
+        ]
+        var labels: [UILabel] = []
+
+        // Create and place labels. We start with a big label and scale it down so that
+        // when we scale it back up again it doesn't have jagged edges.
+        cadence.forEach {
+            (text, _) in
+            let label = UILabel()
+            label.numberOfLines = text.filter { $0 == "\n" }.count + 1
+            label.textAlignment = .center
+            label.textColor = .white
+            label.text = text
+            label.font = .boldSystemFont(ofSize: 70)
+            label.sizeToFit()
+            label.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+            label.alpha = 0
+            label.center = view.center
+            view.addSubview(label)
+            labels.append(label)
+        }
+
+        var anim = UIView.animateAndChain(withDuration: 0, delay: 0, options: .curveEaseOut, animations: {}, completion: nil)
+
+        // Let the text sit for a bit, then animate it away by having it grow and change color while fading out.
+        let colors: [UIColor] = [.red, .green, .blue, .yellow, .gray]
+        cadence.enumerated().forEach {
+            (i, tuple) in
+            let label = labels[i]
+            anim = anim.animate(withDuration: 0, animations: {
+                label.alpha = 1.0
+            })
+            .animate(withDuration: 0.5, delay: tuple.duration - 0.5, options: .curveEaseIn, animations: {
+                label.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                label.alpha = 0.2
+                label.textColor = colors[Int(arc4random_uniform(UInt32(colors.count)))]
+            }, completion: {
+                (_) in
+                label.isHidden = true
+                label.removeFromSuperview()
+            })
+        }
+
+        anim.animate(withDuration: 1.0, animations: {
+            view.frame.origin.y = view.superview!.frame.height
+            view.alpha = 0
+        }, completion: {
+            (_) in
+            view.removeFromSuperview()
+        })
     }
 
     static func rollAway(view: UIView, completion: @escaping ()->()) {

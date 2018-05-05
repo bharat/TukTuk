@@ -64,8 +64,8 @@ class WordPop: Animation {
             view.frame.origin.y = view.superview!.frame.height
             view.alpha = 0
         }, completion: {
-            (_) in
-            view.removeFromSuperview()
+            _ in
+            completion()
         })
     }
 }

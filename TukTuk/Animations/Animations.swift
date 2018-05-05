@@ -19,8 +19,8 @@ class Animations {
     static var all: [Animation] = [
         Hinge(),
         RollAway(),
-//        WordPop(),
-//        FaceBalls()
+        WordPop(),
+        FaceBalls()
     ]
 
     static var random: Animation {

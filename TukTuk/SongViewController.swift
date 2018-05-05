@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 import AVKit
-import PeekPop
 
 class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     @IBOutlet weak var musicTable: UITableView!
@@ -42,7 +41,12 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         showWelcomeOverlay()
         videoPlayerController.showsPlaybackControls = false
 
+        // 3DTouch or a long press on the stop button will bring up an interface where you can
+        // start a surprise video
         registerForPreviewing(with: self, sourceView: stopButton)
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleSurpriseLongPress(gesture:)))
+        long.minimumPressDuration = 5.0
+        stopButton.addGestureRecognizer(long)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -79,26 +83,46 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         stopButton.isEnabled = false
     }
 
-    // MARK: Secret debug interfaces
+    // MARK: Secret parent interfaces
+
+    func showWelcomeAnimationChooser() {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
+        previewTVC.titles = Animations.all.map { $0.title }
+        previewTVC.completion = { index in
+            self.presetWelcome = Animations.all[index]
+        }
+        show(previewTVC, sender: self)
+    }
+
+    func showSurpriseChooser() {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
+        previewTVC.titles = self.surprises.map { $0.title }
+        previewTVC.completion = { index in
+            self.stopAudio()
+            self.playVideo(self.surprises[index].movie)
+        }
+        show(previewTVC, sender: self)
+    }
+
+    @objc func handleWelcomeLongPress(gesture: UIGestureRecognizer) {
+        if gesture.state == .began {
+            showWelcomeAnimationChooser()
+        }
+    }
+
+    @objc func handleSurpriseLongPress(gesture: UIGestureRecognizer) {
+        if gesture.state == .began {
+            showSurpriseChooser()
+        }
+    }
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-
         switch(previewingContext.sourceView) {
         case welcomeOverlay:
-            previewTVC.titles = Animations.all.map { $0.title }
-            previewTVC.completion = { index in
-                self.presetWelcome = Animations.all[index]
-            }
-            show(previewTVC, sender: self)
+            showWelcomeAnimationChooser()
             break
         case stopButton:
-            previewTVC.titles = self.surprises.map { $0.title }
-            previewTVC.completion = { index in
-                self.stopAudio()
-                self.playVideo(self.surprises[index].movie)
-            }
-            show(previewTVC, sender: self)
+            showSurpriseChooser()
         default:
             break
         }
@@ -137,13 +161,18 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         let tap = UITapGestureRecognizer(target: self, action: #selector(SongViewController.handleWelcomeTap(sender:)))
         welcomeOverlay.addGestureRecognizer(tap)
 
+        // 3DTouch or a long press on the welcome image will bring up an interface where you can
+        // choose which animation will play
         registerForPreviewing(with: self, sourceView: welcomeOverlay)
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleWelcomeLongPress(gesture:)))
+        long.minimumPressDuration = 5.0
+        welcomeOverlay.addGestureRecognizer(long)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         self.welcomeOverlay.removeGestureRecognizer(sender)
 
-        // Run a random welcome animation
+        // Run a random welcome animation, or a preset if specified
         welcome(animation: presetWelcome ?? Animations.random)
     }
 

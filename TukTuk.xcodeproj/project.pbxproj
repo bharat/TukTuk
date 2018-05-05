@@ -21,6 +21,7 @@
 		4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */; };
 		4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */; };
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
+		4FDB4A70209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		4FBD57B01F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4FBD57B51F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FBD57B71F098DEB00BDCDE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewControllerExtension.swift; sourceTree = "<group>"; };
 		5D93CC645E3623C41C0DD219 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
 		9EE63FDA43874ED794474A36 /* Pods-TukTuk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.debug.xcconfig"; sourceTree = "<group>"; };
 		BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TukTuk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +82,7 @@
 				4F71E985209D2C2600E0BBDB /* Images */,
 				4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
+				4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift */,
 				4F8E435420982633000B935B /* Song.swift */,
 				4F8E435220982613000B935B /* Surprise.swift */,
 				4F8E43502097B32B000B935B /* SurpriseTableViewController.swift */,
@@ -254,6 +257,7 @@
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F8E435320982613000B935B /* Surprise.swift in Sources */,
+				4FDB4A70209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift in Sources */,
 				4F84C38F1FC51AC40093801B /* Animations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -85,59 +85,57 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: Secret parent interfaces
 
-    func showWelcomeAnimationChooser() {
+    func welcomeAnimationChooser() -> PreviewingTableViewController {
         let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        previewTVC.titles = Animations.all.map { $0.title }
+        previewTVC.tableTitle = "Choose the welcome animation"
+        previewTVC.rowTitles = Animations.all.map { $0.title }
         previewTVC.completion = { index in
             self.presetWelcome = Animations.all[index]
         }
-        show(previewTVC, sender: self)
+        return previewTVC
     }
 
-    func showSurpriseChooser() {
+    func surpriseChooser() -> PreviewingTableViewController {
         let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        previewTVC.titles = self.surprises.map { $0.title }
+        previewTVC.tableTitle = "Which video should we play?"
+        previewTVC.rowTitles = self.surprises.map { $0.title }
         previewTVC.completion = { index in
             self.stopAudio()
             self.playVideo(self.surprises[index].movie)
         }
-        show(previewTVC, sender: self)
+        return previewTVC
     }
 
     @objc func handleWelcomeLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            showWelcomeAnimationChooser()
+            show(welcomeAnimationChooser(), sender: self)
         }
     }
 
     @objc func handleSurpriseLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            showSurpriseChooser()
+            show(surpriseChooser(), sender: self)
         }
     }
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         switch(previewingContext.sourceView) {
         case welcomeOverlay:
-            showWelcomeAnimationChooser()
+            show(welcomeAnimationChooser(), sender: self)
             break
         case stopButton:
-            showSurpriseChooser()
+            show(surpriseChooser(), sender: self)
         default:
             break
         }
     }
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-
         switch(previewingContext.sourceView) {
         case welcomeOverlay:
-            previewTVC.titles = Animations.all.map { $0.title }
-            return previewTVC
+            return welcomeAnimationChooser()
         case stopButton:
-            previewTVC.titles = self.surprises.map { $0.title }
-            return previewTVC
+            return surpriseChooser()
         default:
             return nil
         }

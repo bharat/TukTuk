@@ -11,8 +11,15 @@ import Foundation
 import UIKit
 
 class PreviewingTableViewController: UITableViewController {
-    var titles: [String] = []
+    @IBOutlet weak var titleLabel: UILabel!
+
+    var tableTitle: String = ""
+    var rowTitles: [String] = []
     var completion: (Int) -> (Void) = { _ in }
+
+    override func viewDidLoad() {
+        titleLabel.text = tableTitle
+    }
 
     @IBAction func dismiss(_ sender: Any) {
         presentingViewController?.dismiss(animated: true)
@@ -20,13 +27,13 @@ class PreviewingTableViewController: UITableViewController {
 
     // MARK: UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titles.count
+        return rowTitles.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SurpriseCell")!
 
-        cell.textLabel?.text = titles[indexPath.row]
+        cell.textLabel?.text = rowTitles[indexPath.row]
         return cell
     }
 

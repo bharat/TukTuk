@@ -15,10 +15,10 @@ protocol Animation {
 
 class Animations {
     static var all: [Animation] = [
-        FaceBalls(),
+        Hinge(),
         RollAway(),
-        WordPop(),
-        FaceBalls()
+//        WordPop(),
+//        FaceBalls()
     ]
 
     static var random: Animation {

@@ -10,6 +10,7 @@
 		209D1DB6996F487D912E2782 /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */; };
 		4F6A7BDB1F1AD5AB00299152 /* Surprises in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BDA1F1AD5AB00299152 /* Surprises */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
+		4F71E986209D2C2600E0BBDB /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 4F71E985209D2C2600E0BBDB /* Images */; };
 		4F84C38F1FC51AC40093801B /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F84C38E1FC51AC40093801B /* Animations.swift */; };
 		4F8E43512097B32B000B935B /* SurpriseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* SurpriseTableViewController.swift */; };
 		4F8E435320982613000B935B /* Surprise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E435220982613000B935B /* Surprise.swift */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		4F6A7BDA1F1AD5AB00299152 /* Surprises */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Surprises; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4F71E985209D2C2600E0BBDB /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		4F84C38E1FC51AC40093801B /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		4F8E43502097B32B000B935B /* SurpriseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurpriseTableViewController.swift; sourceTree = "<group>"; };
 		4F8E435220982613000B935B /* Surprise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surprise.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 		4FBD57AA1F098DEB00BDCDE3 /* TukTuk */ = {
 			isa = PBXGroup;
 			children = (
+				4F71E985209D2C2600E0BBDB /* Images */,
 				4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
 				4F8E435420982633000B935B /* Song.swift */,
@@ -175,6 +178,7 @@
 			files = (
 				4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */,
 				4FB989071F12F45A001F02CE /* Songs in Resources */,
+				4F71E986209D2C2600E0BBDB /* Images in Resources */,
 				4F6A7BDB1F1AD5AB00299152 /* Surprises in Resources */,
 				4FB989061F12F45A001F02CE /* Meta in Resources */,
 				4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */,

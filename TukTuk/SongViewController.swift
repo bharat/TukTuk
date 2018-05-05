@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import AVKit
+import PeekPop
 
 class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     @IBOutlet weak var musicTable: UITableView!
@@ -19,6 +20,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var welcomeOverlay = UIView()
     var welcomeImageView = UIImageView()
+    var presetWelcome: Animation?
     var audioPlayer: AVAudioPlayer?
     var videoPlayer = AVPlayer()
     var videoPlayerController = AVPlayerViewController()
@@ -86,7 +88,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         case welcomeOverlay:
             previewTVC.titles = Animations.all.map { $0.title }
             previewTVC.completion = { index in
-                self.welcome(animation: Animations.all[index])
+                self.presetWelcome = Animations.all[index]
             }
             show(previewTVC, sender: self)
             break
@@ -142,7 +144,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.welcomeOverlay.removeGestureRecognizer(sender)
 
         // Run a random welcome animation
-        welcome(animation: Animations.random)
+        welcome(animation: presetWelcome ?? Animations.random)
     }
 
     func welcome(animation: Animation) {

@@ -51,7 +51,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch(sender) {
         case surpriseButton:
             stopAudio()
-            playVideo(surprises[Int(arc4random_uniform(UInt32(surprises.count)))].movie)
+            if let surprise = surprises.random {
+                playVideo(surprise.movie)
+            }
             disableStopButton()
             stopSurpriseTimer()
             hideSurpriseButton()
@@ -114,8 +116,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.welcomeOverlay.removeGestureRecognizer(sender)
         playWelcomeAudio()
 
-        // Pick a random animation
-        Animations.random(view: welcomeImageView) {
+        // Run a random welcome animation
+        Animations.random.animate(view: welcomeImageView) {
             self.welcomeOverlay.removeFromSuperview()
         }
     }

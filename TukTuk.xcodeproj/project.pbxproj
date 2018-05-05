@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		209D1DB6996F487D912E2782 /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */; };
+		4F1F17C7209E112C00483499 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C6209E112C00483499 /* Collection.swift */; };
+		4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C9209E150F00483499 /* FaceBalls.swift */; };
+		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
+		4F1F17CE209E15B000483499 /* RollAway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CD209E15B000483499 /* RollAway.swift */; };
+		4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CF209E15BB00483499 /* Hinge.swift */; };
 		4F6A7BDB1F1AD5AB00299152 /* Surprises in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BDA1F1AD5AB00299152 /* Surprises */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
 		4F71E986209D2C2600E0BBDB /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 4F71E985209D2C2600E0BBDB /* Images */; };
@@ -21,10 +26,15 @@
 		4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */; };
 		4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */; };
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
-		4FDB4A70209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift */; };
+		4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F1F17C6209E112C00483499 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		4F1F17C9209E150F00483499 /* FaceBalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBalls.swift; sourceTree = "<group>"; };
+		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
+		4F1F17CD209E15B000483499 /* RollAway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollAway.swift; sourceTree = "<group>"; };
+		4F1F17CF209E15BB00483499 /* Hinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hinge.swift; sourceTree = "<group>"; };
 		4F6A7BDA1F1AD5AB00299152 /* Surprises */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Surprises; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F71E985209D2C2600E0BBDB /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
@@ -40,7 +50,7 @@
 		4FBD57B01F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4FBD57B51F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FBD57B71F098DEB00BDCDE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewControllerExtension.swift; sourceTree = "<group>"; };
+		4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewController.swift; sourceTree = "<group>"; };
 		5D93CC645E3623C41C0DD219 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
 		9EE63FDA43874ED794474A36 /* Pods-TukTuk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.debug.xcconfig"; sourceTree = "<group>"; };
 		BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TukTuk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +68,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F1F17C5209E10E100483499 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */,
+				4F1F17C6209E112C00483499 /* Collection.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4F1F17C8209E14DF00483499 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				4F84C38E1FC51AC40093801B /* Animations.swift */,
+				4F1F17CF209E15BB00483499 /* Hinge.swift */,
+				4F1F17CD209E15B000483499 /* RollAway.swift */,
+				4F1F17CB209E159F00483499 /* WordPop.swift */,
+				4F1F17C9209E150F00483499 /* FaceBalls.swift */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		4FBD579F1F098DEB00BDCDE3 = {
 			isa = PBXGroup;
 			children = (
@@ -79,18 +110,18 @@
 		4FBD57AA1F098DEB00BDCDE3 /* TukTuk */ = {
 			isa = PBXGroup;
 			children = (
-				4F71E985209D2C2600E0BBDB /* Images */,
+				4F1F17C8209E14DF00483499 /* Animations */,
 				4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
-				4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift */,
 				4F8E435420982633000B935B /* Song.swift */,
 				4F8E435220982613000B935B /* Surprise.swift */,
 				4F8E43502097B32B000B935B /* SurpriseTableViewController.swift */,
-				4F84C38E1FC51AC40093801B /* Animations.swift */,
 				4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */,
 				4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */,
 				4FBD57B71F098DEB00BDCDE3 /* Info.plist */,
 				4F6A7BE21F1AE9B300299152 /* Assets.xcassets */,
+				4F1F17C5209E10E100483499 /* Extensions */,
+				4F71E985209D2C2600E0BBDB /* Images */,
 				4FB989041F12F45A001F02CE /* Meta */,
 				4FB989051F12F45A001F02CE /* Songs */,
 				4F6A7BDA1F1AD5AB00299152 /* Surprises */,
@@ -252,13 +283,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1F17CE209E15B000483499 /* RollAway.swift in Sources */,
 				4F8E435520982633000B935B /* Song.swift in Sources */,
+				4F1F17CC209E159F00483499 /* WordPop.swift in Sources */,
 				4F8E43512097B32B000B935B /* SurpriseTableViewController.swift in Sources */,
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F8E435320982613000B935B /* Surprise.swift in Sources */,
-				4FDB4A70209D7E3D00900DE7 /* AVPlayerViewControllerExtension.swift in Sources */,
+				4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */,
 				4F84C38F1FC51AC40093801B /* Animations.swift in Sources */,
+				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
+				4F1F17C7209E112C00483499 /* Collection.swift in Sources */,
+				4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

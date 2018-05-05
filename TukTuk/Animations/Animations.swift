@@ -10,6 +10,8 @@ import Foundation
 import UIKit
     
 protocol Animation {
+    var title: String { get }
+    
     func animate(view: UIView, completion: @escaping ()->())
 }
 

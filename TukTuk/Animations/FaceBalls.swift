@@ -10,6 +10,8 @@ import Foundation
 import SpriteKit
 
 class FaceBalls: Animation {
+    var title: String = "Face Balls"
+
     func animate(view: UIView, completion: @escaping ()->()) {
         let images = (1...8).map { i in "Images/Remy_\(i).png" }
 

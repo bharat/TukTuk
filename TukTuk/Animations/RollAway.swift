@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class RollAway: Animation {
+    var title: String = "Roll Away"
+
     func animate(view: UIView, completion: @escaping ()->()) {
         UIView.animateAndChain(withDuration: 3.5, delay: 0.0, options: [ .curveEaseIn ], animations: {
             // Transform into a circle in the left center

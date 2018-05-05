@@ -10,9 +10,9 @@ import Foundation
 
 import UIKit
 
-class SurpriseTableViewController: UITableViewController {
-    var surprises: [Surprise] = []
-    var songVC: SongViewController?
+class PreviewingTableViewController: UITableViewController {
+    var titles: [String] = []
+    var completion: (Int) -> (Void) = { _ in }
 
     @IBAction func dismiss(_ sender: Any) {
         presentingViewController?.dismiss(animated: true)
@@ -20,13 +20,13 @@ class SurpriseTableViewController: UITableViewController {
 
     // MARK: UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return surprises.count
+        return titles.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SurpriseCell")!
 
-        cell.textLabel?.text = surprises[indexPath.row].title
+        cell.textLabel?.text = titles[indexPath.row]
         return cell
     }
 
@@ -34,7 +34,7 @@ class SurpriseTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.dismiss(animated: true) {
-            self.songVC?.playVideo(self.surprises[indexPath.row].movie)
+            self.completion(indexPath.row)
         }
     }
 }

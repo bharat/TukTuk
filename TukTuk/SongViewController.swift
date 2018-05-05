@@ -80,29 +80,38 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Secret debug interfaces
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
+
         switch(previewingContext.sourceView) {
         case welcomeOverlay:
+            previewTVC.titles = Animations.all.map { $0.title }
+            previewTVC.completion = { index in
+                self.welcome(animation: Animations.all[index])
+            }
+            show(previewTVC, sender: self)
             break
         case stopButton:
-            let surpriseTVC = storyboard?.instantiateViewController(withIdentifier: "SurpriseTableVC") as! SurpriseTableViewController
-            surpriseTVC.surprises = surprises
-            surpriseTVC.songVC = self
-            show(surpriseTVC, sender: self)
+            previewTVC.titles = self.surprises.map { $0.title }
+            previewTVC.completion = { index in
+                self.stopAudio()
+                self.playVideo(self.surprises[index].movie)
+            }
+            show(previewTVC, sender: self)
         default:
             break
         }
     }
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
 
         switch(previewingContext.sourceView) {
         case welcomeOverlay:
-            return nil
+            previewTVC.titles = Animations.all.map { $0.title }
+            return previewTVC
         case stopButton:
-            let surpriseTVC = storyboard?.instantiateViewController(withIdentifier: "SurpriseTableVC") as! SurpriseTableViewController
-            surpriseTVC.surprises = self.surprises
-            surpriseTVC.preferredContentSize = CGSize(width: 0, height: 360)
-            return surpriseTVC
+            previewTVC.titles = self.surprises.map { $0.title }
+            return previewTVC
         default:
             return nil
         }
@@ -131,10 +140,15 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         self.welcomeOverlay.removeGestureRecognizer(sender)
-        playWelcomeAudio()
 
         // Run a random welcome animation
-        Animations.random.animate(view: welcomeImageView) {
+        welcome(animation: Animations.random)
+    }
+
+    func welcome(animation: Animation) {
+        playWelcomeAudio()
+
+        animation.animate(view: welcomeImageView) {
             self.welcomeOverlay.removeFromSuperview()
         }
     }

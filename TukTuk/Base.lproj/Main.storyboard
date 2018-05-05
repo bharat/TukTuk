@@ -23,24 +23,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="7Ly-tq-BV9" userLabel="Buttons Stack View">
-                                <rect key="frame" x="0.0" y="637" width="375" height="30"/>
+                                <rect key="frame" x="0.0" y="570" width="600" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6W-cQ-EmU" userLabel="Stop! Button">
-                                        <rect key="frame" x="0.0" y="0.0" width="125" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
                                         <state key="normal" title="Stop!"/>
                                         <connections>
                                             <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gor-Q6-Q2h"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-Wj-hJe" userLabel="Surprise Button">
-                                        <rect key="frame" x="125" y="0.0" width="125" height="30"/>
+                                        <rect key="frame" x="200" y="0.0" width="200" height="30"/>
                                         <state key="normal" title="Surprise!"/>
                                         <connections>
                                             <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DcA-vR-iBL"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAS-h3-EvS">
-                                        <rect key="frame" x="250" y="0.0" width="125" height="30"/>
+                                        <rect key="frame" x="400" y="0.0" width="200" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.24767230308219179" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -48,14 +48,14 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zzm-b8-ODV">
-                                <rect key="frame" x="16" y="20" width="343" height="617"/>
+                                <rect key="frame" x="20" y="20" width="560" height="550"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MusicCell" id="fln-iz-zAE">
-                                        <rect key="frame" x="0.0" y="28" width="343" height="150"/>
+                                        <rect key="frame" x="0.0" y="28" width="560" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fln-iz-zAE" id="w8R-Oy-OYN">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="149.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="149.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -94,10 +94,10 @@
             </objects>
             <point key="canvasLocation" x="135.19999999999999" y="138.0809595202399"/>
         </scene>
-        <!--Surprise Table View Controller-->
+        <!--Previewing Table View Controller-->
         <scene sceneID="w4r-rn-H1T">
             <objects>
-                <tableViewController storyboardIdentifier="SurpriseTableVC" id="GzK-Ec-XCz" customClass="SurpriseTableViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PreviewTableVC" id="GzK-Ec-XCz" customClass="PreviewingTableViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ekl-uv-BqI" userLabel="Surprise Table">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

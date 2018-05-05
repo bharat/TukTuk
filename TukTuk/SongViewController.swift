@@ -77,20 +77,35 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         stopButton.isEnabled = false
     }
 
-    // MARK: Secret debug interface
+    // MARK: Secret debug interfaces
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        let surpriseTVC = storyboard?.instantiateViewController(withIdentifier: "SurpriseTableVC") as! SurpriseTableViewController
-        surpriseTVC.surprises = surprises
-        surpriseTVC.songVC = self
-        show(surpriseTVC, sender: self)
+        switch(previewingContext.sourceView) {
+        case welcomeOverlay:
+            break
+        case stopButton:
+            let surpriseTVC = storyboard?.instantiateViewController(withIdentifier: "SurpriseTableVC") as! SurpriseTableViewController
+            surpriseTVC.surprises = surprises
+            surpriseTVC.songVC = self
+            show(surpriseTVC, sender: self)
+        default:
+            break
+        }
     }
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        let surpriseTVC = storyboard?.instantiateViewController(withIdentifier: "SurpriseTableVC") as! SurpriseTableViewController
-        surpriseTVC.surprises = self.surprises
-        surpriseTVC.preferredContentSize = CGSize(width: 0, height: 360)
-        return surpriseTVC
+
+        switch(previewingContext.sourceView) {
+        case welcomeOverlay:
+            return nil
+        case stopButton:
+            let surpriseTVC = storyboard?.instantiateViewController(withIdentifier: "SurpriseTableVC") as! SurpriseTableViewController
+            surpriseTVC.surprises = self.surprises
+            surpriseTVC.preferredContentSize = CGSize(width: 0, height: 360)
+            return surpriseTVC
+        default:
+            return nil
+        }
     }
 
     // MARK: Welcome
@@ -110,6 +125,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(SongViewController.handleWelcomeTap(sender:)))
         welcomeOverlay.addGestureRecognizer(tap)
+
+        registerForPreviewing(with: self, sourceView: welcomeOverlay)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {

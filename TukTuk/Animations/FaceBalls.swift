@@ -13,7 +13,7 @@ class FaceBalls: Animation {
     var title: String = "Face Balls"
 
     func animate(view: UIView, completion: @escaping ()->()) {
-        let images = (1...8).map { i in "Images/Remy_\(i).png" }
+        let images = (1...8).map { "Images/Remy_\($0).png" }
 
         let skView = SKView(frame: view.frame)
         skView.allowsTransparency = true
@@ -59,8 +59,7 @@ class FaceBalls: Animation {
             UIView.animate(withDuration: 1.0, animations: {
                 view.frame.origin.y = view.superview!.frame.height
                 view.alpha = 0
-            }, completion: {
-                _ in
+            }, completion: { _ in
                 completion()
             })
         }

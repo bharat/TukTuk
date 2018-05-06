@@ -20,7 +20,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     var welcomeOverlay = UIView()
     var welcomeImageView = UIImageView()
     var presetWelcome: Animation?
-    var audioPlayer: AVAudioPlayer?
+    var audio = Audio.default
     var videoPlayer = AVPlayer()
     var videoPlayerController = AVPlayerViewController()
 
@@ -55,7 +55,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
         case surpriseButton:
-            stopAudio()
+            audio.stop()
             if let surprise = Catalog.default.surprises.random {
                 playVideo(surprise.movie)
             }
@@ -64,7 +64,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             hideSurpriseButton()
 
         case stopButton:
-            stopAudio()
+            audio.stop()
             disableStopButton()
             stopSurpriseTimer()
             saveSurpriseCountdown()
@@ -136,7 +136,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         previewTVC.tableTitle = "Which video should we play?"
         previewTVC.rowTitles = surprises.map { $0.title }
         previewTVC.completion = { index in
-            self.stopAudio()
+            self.audio.stop()
             self.playVideo(surprises[index].movie)
         }
         return previewTVC
@@ -176,7 +176,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func welcome(animation: Animation) {
-        playWelcomeAudio()
+        audio.play(Catalog.default.welcomeSong)
 
         animation.animate(view: welcomeImageView) {
             self.welcomeOverlay.removeFromSuperview()
@@ -187,7 +187,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if videoIsPlaying() == false {
-            playAudio(Catalog.default.songs[indexPath.row].music)
+            audio.play(Catalog.default.songs[indexPath.row].music)
             enableStopButton()
             startSurpriseTimer()
 
@@ -253,7 +253,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     @objc func updateSurpriseCountdown() {
-        if audioIsPlaying() {
+        if audio.isPlaying {
             surpriseCountdown -= 1
 
             if surpriseCountdown <= 0 {
@@ -266,52 +266,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     func saveSurpriseCountdown() {
         UserDefaults.standard.setValue(surpriseCountdown, forKey: "surpriseCountdown")
         UserDefaults.standard.synchronize()
-    }
-
-    // MARK: Audio
-
-    func playWelcomeAudio() {
-        playAudio(Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!)
-    }
-
-    func playAudio(_ url: URL) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-            try AVAudioSession.sharedInstance().setActive(true)
-
-            let old = audioPlayer
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-
-            if let new = audioPlayer {
-                new.play()
-
-                if let old = old {
-                    new.volume = 0
-                    crossfadeAudio(old: old, new: new)
-                }
-            }
-        } catch let error {
-            print(error.localizedDescription)
-        }
-    }
-
-    func crossfadeAudio(old: AVAudioPlayer, new: AVAudioPlayer) {
-        if new.volume < 1.0 {
-            old.volume -= 0.1
-            new.volume += 0.1
-
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-                self.crossfadeAudio(old: old, new: new)
-            }
-        }
-    }
-
-    func audioIsPlaying() -> Bool {
-        return audioPlayer?.isPlaying ?? false
-    }
-
-    func stopAudio() {
-        audioPlayer?.stop()
     }
 
     // MARK: Video

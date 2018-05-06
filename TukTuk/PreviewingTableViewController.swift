@@ -15,7 +15,7 @@ class PreviewingTableViewController: UITableViewController {
 
     var tableTitle: String = ""
     var rowTitles: [String] = []
-    var completion: (Int) -> (Void) = { _ in }
+    var completion: (Int) -> (Void) = { index in }
 
     override func viewDidLoad() {
         titleLabel.text = tableTitle

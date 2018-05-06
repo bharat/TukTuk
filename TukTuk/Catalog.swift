@@ -20,6 +20,10 @@ class Catalog {
     var songs: [Song] = []
     var surprises: [Surprise] = []
 
+    var welcomeSong: URL {
+        return Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!
+    }
+
     private init() {
         // Load the music catalog
         let catalogUrl = Bundle.main.url(forAuxiliaryExecutable: "Meta/catalog.txt")

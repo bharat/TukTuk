@@ -24,8 +24,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     var videoPlayer = AVPlayer()
     var videoPlayerController = AVPlayerViewController()
 
-    var songs: [Song] = []
-    var surprises: [Surprise] = []
     var surpriseTimer: Timer?
     var surpriseCountdown: TimeInterval = 0 {
         didSet {
@@ -33,10 +31,11 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
+    // MARK: UIViewController
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadCatalogs()
         hideSurpriseButton()
         showWelcomeOverlay()
         videoPlayerController.showsPlaybackControls = false
@@ -57,7 +56,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch(sender) {
         case surpriseButton:
             stopAudio()
-            if let surprise = surprises.random {
+            if let surprise = Catalog.default.surprises.random {
                 playVideo(surprise.movie)
             }
             disableStopButton()
@@ -84,27 +83,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     // MARK: Secret parent interfaces
-
-    func welcomeAnimationChooser() -> PreviewingTableViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        previewTVC.tableTitle = "Choose the welcome animation"
-        previewTVC.rowTitles = Animations.all.map { $0.title }
-        previewTVC.completion = { index in
-            self.presetWelcome = Animations.all[index]
-        }
-        return previewTVC
-    }
-
-    func surpriseChooser() -> PreviewingTableViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        previewTVC.tableTitle = "Which video should we play?"
-        previewTVC.rowTitles = self.surprises.map { $0.title }
-        previewTVC.completion = { index in
-            self.stopAudio()
-            self.playVideo(self.surprises[index].movie)
-        }
-        return previewTVC
-    }
 
     @objc func handleWelcomeLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
@@ -139,6 +117,29 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         default:
             return nil
         }
+    }
+
+    func welcomeAnimationChooser() -> PreviewingTableViewController {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
+        previewTVC.tableTitle = "Choose the welcome animation"
+        previewTVC.rowTitles = Animations.all.map { $0.title }
+        previewTVC.completion = { index in
+            self.presetWelcome = Animations.all[index]
+        }
+        return previewTVC
+    }
+
+    func surpriseChooser() -> PreviewingTableViewController {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
+        let surprises = Catalog.default.surprises
+
+        previewTVC.tableTitle = "Which video should we play?"
+        previewTVC.rowTitles = surprises.map { $0.title }
+        previewTVC.completion = { index in
+            self.stopAudio()
+            self.playVideo(surprises[index].movie)
+        }
+        return previewTVC
     }
 
     // MARK: Welcome
@@ -182,31 +183,11 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    // MARK: Catalogs
-
-    func loadCatalogs() {
-        // Load the music catalog
-        let catalogUrl = Bundle.main.url(forAuxiliaryExecutable: "Meta/catalog.txt")
-        let catalog = try! String(contentsOf: catalogUrl!, encoding: .utf8).components(separatedBy: "\n")
-        songs = []
-        for i in 0..<catalog.count/2 {
-            songs.append(Song(
-                image: UIImage(named: "Songs/\(catalog[2*i])")!,
-                music: Bundle.main.url(forAuxiliaryExecutable: "Songs/\(catalog[2*i+1])")!))
-        }
-
-        // Load the "surprise" video catalog
-        for s in try! FileManager.default.contentsOfDirectory(
-            atPath: Bundle.main.resourcePath! + "/Surprises") {
-                surprises.append(Surprise(title: s, movie: Bundle.main.url(forAuxiliaryExecutable: "Surprises/\(s)")!))
-        }
-    }
-
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if videoIsPlaying() == false {
-            playAudio(songs[indexPath.row].music)
+            playAudio(Catalog.default.songs[indexPath.row].music)
             enableStopButton()
             startSurpriseTimer()
 
@@ -217,11 +198,12 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return songs.count
+        return Catalog.default.songs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell")!
+        let songs = Catalog.default.songs
 
         cell.backgroundView = UIImageView(image: songs[indexPath.row].image)
         cell.backgroundView?.contentMode = .scaleAspectFill

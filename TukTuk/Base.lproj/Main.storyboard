@@ -92,7 +92,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="135.19999999999999" y="138.0809595202399"/>
+            <point key="canvasLocation" x="383" y="135"/>
         </scene>
         <!--Previewing Table View Controller-->
         <scene sceneID="w4r-rn-H1T">
@@ -139,6 +139,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0E-X3-5zA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1114" y="137"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="uEy-Jd-0Zg">
+            <objects>
+                <viewController storyboardIdentifier="VideoVC" id="mhi-fB-92p" customClass="VideoViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kP6-VP-jo9"/>
+                        <viewControllerLayoutGuide type="bottom" id="TR7-Nc-8nL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ihc-c1-kP5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tn0-wD-wFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1882" y="135"/>
         </scene>
     </scenes>
 </document>

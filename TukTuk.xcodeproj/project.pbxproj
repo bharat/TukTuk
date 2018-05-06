@@ -19,6 +19,7 @@
 		4F84C38F1FC51AC40093801B /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F84C38E1FC51AC40093801B /* Animations.swift */; };
 		4F8A2A9A209F6E0A000C2CA5 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2A99209F6E0A000C2CA5 /* Catalog.swift */; };
 		4F8A2A9C209F730E000C2CA5 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2A9B209F730E000C2CA5 /* Audio.swift */; };
+		4F8A2A9F209F7A47000C2CA5 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2A9E209F7A47000C2CA5 /* VideoViewController.swift */; };
 		4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */; };
 		4F8E435320982613000B935B /* Surprise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E435220982613000B935B /* Surprise.swift */; };
 		4FB989061F12F45A001F02CE /* Meta in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989041F12F45A001F02CE /* Meta */; };
@@ -42,6 +43,7 @@
 		4F84C38E1FC51AC40093801B /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		4F8A2A99209F6E0A000C2CA5 /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		4F8A2A9B209F730E000C2CA5 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		4F8A2A9E209F7A47000C2CA5 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewingTableViewController.swift; sourceTree = "<group>"; };
 		4F8E435220982613000B935B /* Surprise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surprise.swift; sourceTree = "<group>"; };
 		4FB989041F12F45A001F02CE /* Meta */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meta; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				4F1F17C8209E14DF00483499 /* Animations */,
 				4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
+				4F8A2A9E209F7A47000C2CA5 /* VideoViewController.swift */,
 				4F8A2A9B209F730E000C2CA5 /* Audio.swift */,
 				4F8A2A99209F6E0A000C2CA5 /* Catalog.swift */,
 				4F8E435220982613000B935B /* Surprise.swift */,
@@ -291,6 +294,7 @@
 				4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */,
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
 				4F8A2A9A209F6E0A000C2CA5 /* Catalog.swift in Sources */,
+				4F8A2A9F209F7A47000C2CA5 /* VideoViewController.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F8E435320982613000B935B /* Surprise.swift in Sources */,
 				4F8A2A9C209F730E000C2CA5 /* Audio.swift in Sources */,

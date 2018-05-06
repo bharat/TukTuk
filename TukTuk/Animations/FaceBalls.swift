@@ -23,7 +23,7 @@ class FaceBalls: Animation {
         scene.backgroundColor = .clear
         skView.presentScene(scene)
 
-        images.enumerated().forEach {
+        images.enumerated().shuffled().forEach {
             (i, imageName) in
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25 * Double(i)) {
@@ -37,7 +37,7 @@ class FaceBalls: Animation {
                 sprite.physicsBody = SKPhysicsBody(circleOfRadius: 50)
                 sprite.physicsBody?.usesPreciseCollisionDetection = true
                 sprite.physicsBody?.restitution = 0.9
-                sprite.position = CGPoint(x: scene.frame.width * 0.4 + (CGFloat(i) * 20.0), y: scene.frame.height)
+                sprite.position = CGPoint(x: scene.frame.width * 0.4 + [-40, -20, 0, 20, 40].random!, y: scene.frame.height)
                 sprite.zRotation = 45.0
                 scene.addChild(sprite)
             }

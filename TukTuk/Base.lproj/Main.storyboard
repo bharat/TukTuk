@@ -140,23 +140,13 @@
             </objects>
             <point key="canvasLocation" x="1114" y="137"/>
         </scene>
-        <!--Video View Controller-->
-        <scene sceneID="uEy-Jd-0Zg">
+        <!--AV Player View Controller-->
+        <scene sceneID="cms-45-WlU">
             <objects>
-                <viewController storyboardIdentifier="VideoVC" id="mhi-fB-92p" customClass="VideoViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="kP6-VP-jo9"/>
-                        <viewControllerLayoutGuide type="bottom" id="TR7-Nc-8nL"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ihc-c1-kP5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tn0-wD-wFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <avPlayerViewController storyboardIdentifier="VideoVC" showsPlaybackControls="NO" videoGravity="AVLayerVideoGravityResizeAspect" id="DBP-DD-Ftp" customClass="VideoViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WWw-RS-gnY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1882" y="135"/>
+            <point key="canvasLocation" x="1855" y="134"/>
         </scene>
     </scenes>
 </document>

@@ -52,13 +52,13 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
         case surpriseButton:
+            audio.stop()
             if let surprise = Catalog.default.surprises.random {
-                audio.stop()
                 playVideo(surprise.movie)
-                disableStopButton()
-                stopSurpriseTimer()
-                hideSurpriseButton()
             }
+            disableStopButton()
+            stopSurpriseTimer()
+            hideSurpriseButton()
 
         case stopButton:
             audio.stop()
@@ -263,9 +263,13 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         UserDefaults.standard.synchronize()
     }
 
+    // MARK: MOVE ME SOMEWHERE
+
     func playVideo(_ movie: URL) {
         let videoVC = storyboard?.instantiateViewController(withIdentifier: "VideoVC") as! VideoViewController
         videoVC.movie = movie
+
+        audio.stop()
         show(videoVC, sender: self)
     }
 }

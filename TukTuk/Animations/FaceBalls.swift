@@ -27,7 +27,7 @@ class FaceBalls: Animation {
             (i, imageName) in
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25 * Double(i)) {
-                let face = SKShapeNode(circleOfRadius: 50)
+                let face = SKShapeNode(circleOfRadius: 50 + [-16, -8, 0, 8, 16].random!)
                 face.lineWidth = 1
                 face.fillColor = .white
                 face.fillTexture = SKTexture(imageNamed: imageName)
@@ -36,7 +36,7 @@ class FaceBalls: Animation {
                 let sprite: SKSpriteNode = SKSpriteNode(texture: texture)
                 sprite.physicsBody = SKPhysicsBody(circleOfRadius: 50)
                 sprite.physicsBody?.usesPreciseCollisionDetection = true
-                sprite.physicsBody?.restitution = 0.9
+                sprite.physicsBody?.restitution = 0.9 + [-0.05, 0, 0.05].random!
                 sprite.position = CGPoint(x: scene.frame.width * 0.4 + [-40, -20, 0, 20, 40].random!, y: scene.frame.height)
                 sprite.zRotation = 45.0
                 scene.addChild(sprite)

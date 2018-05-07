@@ -10,7 +10,6 @@ import Foundation
 import AVKit
 
 class Audio {
-    static var `default` = Audio()
     var audioPlayer: AVAudioPlayer?
 
     var isPlaying: Bool {

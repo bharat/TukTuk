@@ -13,9 +13,6 @@ class Audio {
     static var `default` = Audio()
     var audioPlayer: AVAudioPlayer?
 
-    private init() {
-    }
-
     var isPlaying: Bool {
         return audioPlayer?.isPlaying ?? false
     }

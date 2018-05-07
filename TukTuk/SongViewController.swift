@@ -21,6 +21,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     var welcomeImageView = UIImageView()
     var presetWelcome: Animation?
     var audio = Audio.default
+    var videoPlayer = AVPlayer()
+    var videoPlayerController = AVPlayerViewController()
 
     var surpriseTimer: Timer?
     var surpriseCountdown: TimeInterval = 0 {
@@ -36,6 +38,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         hideSurpriseButton()
         showWelcomeOverlay()
+        videoPlayerController.showsPlaybackControls = false
 
         // 3DTouch or a long press on the stop button will bring up an interface where you can
         // start a surprise video
@@ -183,12 +186,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        audio.play(Catalog.default.songs[indexPath.row].music)
-        enableStopButton()
-        startSurpriseTimer()
+        if videoIsPlaying() == false {
+            audio.play(Catalog.default.songs[indexPath.row].music)
+            enableStopButton()
+            startSurpriseTimer()
 
-        tableView.beginUpdates()
-        tableView.endUpdates()
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
     }
 
     // MARK: UITableViewDataSource
@@ -263,14 +268,30 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         UserDefaults.standard.synchronize()
     }
 
-    // MARK: MOVE ME SOMEWHERE
+    // MARK: Video
 
-    func playVideo(_ movie: URL) {
-        let videoVC = storyboard?.instantiateViewController(withIdentifier: "VideoVC") as! VideoViewController
-        videoVC.movie = movie
+    func playVideo(_ url: URL) {
+        let asset = AVAsset(url: url)
+        let playerItem = AVPlayerItem(asset: asset)
+        videoPlayer = AVPlayer(playerItem: playerItem)
+        videoPlayer.play()
 
-        audio.stop()
-        show(videoVC, sender: self)
+        videoPlayerController.player = videoPlayer
+        present(videoPlayerController, animated: true, completion: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(SongViewController.hideVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: videoPlayer.currentItem)
+    }
+
+    func stopVideo() {
+        videoPlayer.pause()
+    }
+
+    @objc func hideVideo() {
+        videoPlayerController.dismiss(animated: true, completion: nil)
+    }
+
+    func videoIsPlaying() -> Bool {
+        return videoPlayerController.isPlaying
     }
 }
 

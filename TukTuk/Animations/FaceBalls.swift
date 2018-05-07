@@ -27,26 +27,27 @@ class FaceBalls: Animation {
             (i, imageName) in
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25 * Double(i)) {
-                let face = SKShapeNode(circleOfRadius: 50 + [-16, -8, 0, 8, 16].random!)
+                let radius: CGFloat = 30 + [10, 20, 30].random!
+                let face = SKShapeNode(circleOfRadius: radius)
                 face.lineWidth = 1
                 face.fillColor = .white
                 face.fillTexture = SKTexture(imageNamed: imageName)
                 let texture = skView.texture(from: face)
 
                 let sprite: SKSpriteNode = SKSpriteNode(texture: texture)
-                sprite.physicsBody = SKPhysicsBody(circleOfRadius: 50)
+                sprite.physicsBody = SKPhysicsBody(circleOfRadius: radius)
                 sprite.physicsBody?.usesPreciseCollisionDetection = true
                 sprite.physicsBody?.restitution = 0.9 + [-0.05, 0, 0.05].random!
                 sprite.position = CGPoint(x: scene.frame.width * 0.4 + [-40, -20, 0, 20, 40].random!, y: scene.frame.height)
-                sprite.zRotation = 45.0
+                sprite.zRotation = 45.0 * [-1, 1].random!
                 scene.addChild(sprite)
             }
         }
 
-        var splinePoints = [CGPoint(x: 0, y: scene.frame.height * 0.75),
+        var splinePoints = [CGPoint(x: 0, y: scene.frame.height),
                             CGPoint(x: scene.frame.width * 0.1, y: 70),
                             CGPoint(x: scene.frame.width * 0.9, y: 70),
-                            CGPoint(x: scene.frame.width, y: scene.frame.height * 0.75)]
+                            CGPoint(x: scene.frame.width, y: scene.frame.height)]
         let ground = SKShapeNode(splinePoints: &splinePoints,
                                  count: splinePoints.count)
         ground.lineWidth = 3

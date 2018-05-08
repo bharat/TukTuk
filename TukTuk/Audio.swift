@@ -10,7 +10,11 @@ import Foundation
 import AVKit
 
 class Audio {
+    static var instance = Audio()
     var audioPlayer: AVAudioPlayer?
+
+    private init() {
+    }
 
     var isPlaying: Bool {
         return audioPlayer?.isPlaying ?? false

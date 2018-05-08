@@ -10,6 +10,7 @@ import Foundation
 import AVKit
 
 class Video {
+    static var instance = Video()
     var playerVC = AVPlayerViewController()
     var player = AVPlayer()
 
@@ -17,7 +18,7 @@ class Video {
         return playerVC.isPlaying
     }
 
-    init() {
+    private init() {
         playerVC.showsPlaybackControls = false
     }
 

@@ -60,12 +60,9 @@ class WordPop: Animation {
                 })
         }
 
-        anim.animate(withDuration: 1.0, animations: {
-            view.frame.origin.y = view.superview!.frame.height
-            view.alpha = 0
-        }, completion: {
-            _ in
+        // Hack to put this at the end of the chain
+        anim.animate(withDuration: 0, animations: {}) { _ in
             completion()
-        })
+        }
     }
 }

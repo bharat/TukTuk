@@ -57,12 +57,7 @@ class FaceBalls: Animation {
         scene.addChild(ground)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
-            UIView.animate(withDuration: 1.0, animations: {
-                view.frame.origin.y = view.superview!.frame.height
-                view.alpha = 0
-            }, completion: { _ in
-                completion()
-            })
+            completion()
         }
     }
 }

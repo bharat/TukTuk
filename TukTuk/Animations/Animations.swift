@@ -11,11 +11,12 @@ import UIKit
     
 protocol Animation {
     var title: String { get }
-    
     func animate(view: UIView, completion: @escaping ()->())
 }
 
 class Animations {
+
+    // TODO: change this to Animation.Type so that we're not initializing all of them needlessly
     static var all: [Animation] = [
         Hinge(),
         RollAway(),

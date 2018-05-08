@@ -17,12 +17,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var surpriseButton: UIButton!
     @IBOutlet weak var surpriseTimerLabel: UILabel!
 
-    var welcomeOverlay = UIView()
-    var welcomeImageView = UIImageView()
-    var presetWelcome: Animation?
-    var audio = Audio()
-    var video = Video()
-
     var surpriseTimer: Timer?
     var surpriseCountdown: TimeInterval = 0 {
         didSet {
@@ -34,9 +28,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         hideSurpriseButton()
-        showWelcomeOverlay()
 
         // 3DTouch or a long press on the stop button will bring up an interface where you can
         // start a surprise video
@@ -53,16 +45,16 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
         case surpriseButton:
-            audio.stop()
+            Audio.instance.stop()
             if let surprise = Catalog.default.surprises.random {
-                video.play(surprise.movie, from: self)
+                Video.instance.play(surprise.movie, from: self)
             }
             disableStopButton()
             stopSurpriseTimer()
             hideSurpriseButton()
 
         case stopButton:
-            audio.stop()
+            Audio.instance.stop()
             disableStopButton()
             stopSurpriseTimer()
             saveSurpriseCountdown()
@@ -82,12 +74,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: Secret parent interfaces
 
-    @objc func handleWelcomeLongPress(gesture: UIGestureRecognizer) {
-        if gesture.state == .began {
-            show(welcomeAnimationChooser(), sender: self)
-        }
-    }
-
     @objc func handleSurpriseLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
             show(surpriseChooser(), sender: self)
@@ -96,9 +82,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         switch(previewingContext.sourceView) {
-        case welcomeOverlay:
-            show(welcomeAnimationChooser(), sender: self)
-            break
         case stopButton:
             show(surpriseChooser(), sender: self)
         default:
@@ -108,23 +91,11 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         switch(previewingContext.sourceView) {
-        case welcomeOverlay:
-            return welcomeAnimationChooser()
         case stopButton:
             return surpriseChooser()
         default:
             return nil
         }
-    }
-
-    func welcomeAnimationChooser() -> PreviewingTableViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        previewTVC.tableTitle = "Choose the welcome animation"
-        previewTVC.rowTitles = Animations.all.map { $0.title }
-        previewTVC.completion = { index in
-            self.presetWelcome = Animations.all[index]
-        }
-        return previewTVC
     }
 
     func surpriseChooser() -> PreviewingTableViewController {
@@ -134,58 +105,17 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         previewTVC.tableTitle = "Which video should we play?"
         previewTVC.rowTitles = surprises.map { $0.title }
         previewTVC.completion = { index in
-            self.audio.stop()
-            self.video.play(surprises[index].movie, from: self)
+            Audio.instance.stop()
+            Video.instance.play(surprises[index].movie, from: self)
         }
         return previewTVC
-    }
-
-    // MARK: Welcome
-
-    func showWelcomeOverlay() {
-        welcomeImageView = UIImageView(frame: self.view.frame)
-        welcomeImageView.contentMode = .scaleAspectFill
-        welcomeImageView.clipsToBounds = true
-        welcomeImageView.image = #imageLiteral(resourceName: "Welcome")
-        welcomeImageView.layer.borderWidth = 8
-        welcomeImageView.layer.borderColor = UIColor.black.cgColor
-        welcomeImageView.layer.cornerRadius = 0
-
-        welcomeOverlay = UIView(frame: self.view.frame)
-        welcomeOverlay.addSubview(welcomeImageView)
-        self.view.addSubview(welcomeOverlay)
-
-        let tap = UITapGestureRecognizer(target: self, action: #selector(SongViewController.handleWelcomeTap(sender:)))
-        welcomeOverlay.addGestureRecognizer(tap)
-
-        // 3DTouch or a long press on the welcome image will bring up an interface where you can
-        // choose which animation will play
-        registerForPreviewing(with: self, sourceView: welcomeOverlay)
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleWelcomeLongPress(gesture:)))
-        long.minimumPressDuration = 5.0
-        welcomeOverlay.addGestureRecognizer(long)
-    }
-
-    @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
-        self.welcomeOverlay.removeGestureRecognizer(sender)
-
-        // Run a random welcome animation, or a preset if specified
-        welcome(animation: presetWelcome ?? Animations.random)
-    }
-
-    func welcome(animation: Animation) {
-        audio.play(Catalog.default.welcomeSong)
-
-        animation.animate(view: welcomeImageView) {
-            self.welcomeOverlay.removeFromSuperview()
-        }
     }
 
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if video.isPlaying == false {
-            audio.play(Catalog.default.songs[indexPath.row].music)
+        if Video.instance.isPlaying == false {
+            Audio.instance.play(Catalog.default.songs[indexPath.row].music)
             enableStopButton()
             startSurpriseTimer()
 
@@ -251,7 +181,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     @objc func updateSurpriseCountdown() {
-        if audio.isPlaying {
+        if Audio.instance.isPlaying {
             surpriseCountdown -= 1
 
             if surpriseCountdown <= 0 {

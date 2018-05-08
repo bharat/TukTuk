@@ -46,7 +46,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch(sender) {
         case surpriseButton:
             Audio.instance.stop()
-            if let surprise = Catalog.default.surprises.random {
+            if let surprise = Catalog.instance.surprises.random {
                 Video.instance.play(surprise.movie, from: self)
             }
             disableStopButton()
@@ -76,7 +76,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if Video.instance.isPlaying == false {
-            Audio.instance.play(Catalog.default.songs[indexPath.row].music)
+            Audio.instance.play(Catalog.instance.songs[indexPath.row].music)
             enableStopButton()
             startSurpriseTimer()
 
@@ -86,13 +86,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     // MARK: UITableViewDataSource
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Catalog.default.songs.count
+        return Catalog.instance.songs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell")!
-        let songs = Catalog.default.songs
+        let songs = Catalog.instance.songs
 
         cell.backgroundView = UIImageView(image: songs[indexPath.row].image)
         cell.backgroundView?.contentMode = .scaleAspectFill
@@ -182,7 +183,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func surpriseChooser() -> PreviewingTableViewController {
         let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        let surprises = Catalog.default.surprises
+        let surprises = Catalog.instance.surprises
 
         previewTVC.tableTitle = "Which video should we play?"
         previewTVC.rowTitles = surprises.map { $0.title }

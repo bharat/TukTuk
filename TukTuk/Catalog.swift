@@ -15,7 +15,7 @@ struct Song {
 }
 
 class Catalog {
-    static var `default` = Catalog()
+    static var instance = Catalog()
 
     var songs: [Song] = []
     var surprises: [Surprise] = []

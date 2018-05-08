@@ -72,45 +72,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         stopButton.isEnabled = false
     }
 
-    // MARK: Secret parent interfaces
-
-    @objc func handleSurpriseLongPress(gesture: UIGestureRecognizer) {
-        if gesture.state == .began {
-            show(surpriseChooser(), sender: self)
-        }
-    }
-
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        switch(previewingContext.sourceView) {
-        case stopButton:
-            show(surpriseChooser(), sender: self)
-        default:
-            break
-        }
-    }
-
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        switch(previewingContext.sourceView) {
-        case stopButton:
-            return surpriseChooser()
-        default:
-            return nil
-        }
-    }
-
-    func surpriseChooser() -> PreviewingTableViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        let surprises = Catalog.default.surprises
-
-        previewTVC.tableTitle = "Which video should we play?"
-        previewTVC.rowTitles = surprises.map { $0.title }
-        previewTVC.completion = { index in
-            Audio.instance.stop()
-            Video.instance.play(surprises[index].movie, from: self)
-        }
-        return previewTVC
-    }
-
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -195,6 +156,41 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         UserDefaults.standard.setValue(surpriseCountdown, forKey: "surpriseCountdown")
         UserDefaults.standard.synchronize()
     }
+    @objc func handleSurpriseLongPress(gesture: UIGestureRecognizer) {
+        if gesture.state == .began {
+            show(surpriseChooser(), sender: self)
+        }
+    }
 
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        switch(previewingContext.sourceView) {
+        case stopButton:
+            show(surpriseChooser(), sender: self)
+        default:
+            break
+        }
+    }
+
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        switch(previewingContext.sourceView) {
+        case stopButton:
+            return surpriseChooser()
+        default:
+            return nil
+        }
+    }
+
+    func surpriseChooser() -> PreviewingTableViewController {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
+        let surprises = Catalog.default.surprises
+
+        previewTVC.tableTitle = "Which video should we play?"
+        previewTVC.rowTitles = surprises.map { $0.title }
+        previewTVC.completion = { index in
+            Audio.instance.stop()
+            Video.instance.play(surprises[index].movie, from: self)
+        }
+        return previewTVC
+    }
 }
 

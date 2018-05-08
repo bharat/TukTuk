@@ -10,7 +10,10 @@ import Foundation
 import UIKit
 
 class WordPop: Animation {
-    var title: String = "Word Pop"
+    static var title: String = "Word Pop"
+
+    required init() {
+    }
 
     func animate(view: UIView, completion: @escaping ()->()) {
         let cadence: [(words: String, duration: CFTimeInterval)] = [

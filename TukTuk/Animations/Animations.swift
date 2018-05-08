@@ -10,21 +10,21 @@ import Foundation
 import UIKit
     
 protocol Animation {
-    var title: String { get }
+    static var title: String { get }
+
+    init()
     func animate(view: UIView, completion: @escaping ()->())
 }
 
 class Animations {
-
-    // TODO: change this to Animation.Type so that we're not initializing all of them needlessly
-    static var all: [Animation] = [
-        Hinge(),
-        RollAway(),
-        WordPop(),
-        FaceBalls()
+    static var all: [Animation.Type] = [
+        Hinge.self,
+        RollAway.self,
+        WordPop.self,
+        FaceBalls.self
     ]
 
     static var random: Animation {
-        return all.random!
+        return all.random!.init()
     }
 }

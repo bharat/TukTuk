@@ -70,7 +70,7 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         previewTVC.tableTitle = "Choose the welcome animation"
         previewTVC.rowTitles = Animations.all.map { $0.title }
         previewTVC.completion = { index in
-            self.preferred = Animations.all[index]
+            self.preferred = Animations.all[index].init()
         }
         return previewTVC
     }

@@ -10,7 +10,10 @@ import Foundation
 import UIKit
 
 class RollAway: Animation {
-    var title: String = "Roll Away"
+    static var title: String = "Roll Away"
+
+    required init() {
+    }
 
     func animate(view: UIView, completion: @escaping ()->()) {
         UIView.animateAndChain(withDuration: 3.5, delay: 0.0, options: [ .curveEaseIn ], animations: {

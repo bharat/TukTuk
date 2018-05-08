@@ -10,7 +10,10 @@ import Foundation
 import SpriteKit
 
 class FaceBalls: Animation {
-    var title: String = "Face Balls"
+    static var title: String = "Face Balls"
+
+    required init() {
+    }
 
     func animate(view: UIView, completion: @escaping ()->()) {
         let images = (1...8).map { "Images/Remy_\($0).png" }

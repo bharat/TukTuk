@@ -10,7 +10,10 @@ import Foundation
 import UIKit
 
 class Hinge: Animation {
-    var title: String = "Hinge"
+    static var title: String = "Hinge"
+
+    required init() {
+    }
 
     func animate(view: UIView, completion: @escaping ()->()) {
         // Animate away the welcome image. Shrink it down to 40% of its size in the

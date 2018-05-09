@@ -14,14 +14,20 @@ struct Song {
     var music: URL
 }
 
+struct Movie {
+    var title: String
+    var video: URL
+}
+
+// TODO: this class needs to be refactored
 class Catalog {
     static var instance = Catalog()
 
     var songs: [Song] = []
-    var surprises: [Surprise] = []
+    var surprises: [Movie] = []
 
     var welcomeSong: URL {
-        return Bundle.main.url(forAuxiliaryExecutable: "Meta/welcome.mp3")!
+        return Bundle.main.url(forAuxiliaryExecutable: "Welcome/welcome.mp3")!
     }
 
     private init() {
@@ -37,8 +43,8 @@ class Catalog {
 
         // Load the "surprise" video catalog
         for s in try! FileManager.default.contentsOfDirectory(
-            atPath: Bundle.main.resourcePath! + "/Surprises") {
-                surprises.append(Surprise(title: s, movie: Bundle.main.url(forAuxiliaryExecutable: "Surprises/\(s)")!))
+            atPath: Bundle.main.resourcePath! + "/Movies") {
+                surprises.append(Movie(title: s, video: Bundle.main.url(forAuxiliaryExecutable: "Movies/\(s)")!))
         }
     }
 

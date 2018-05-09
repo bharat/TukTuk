@@ -47,7 +47,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         case surpriseButton:
             Audio.instance.stop()
             if let surprise = Catalog.instance.surprises.random {
-                Video.instance.play(surprise.movie, from: self)
+                Video.instance.play(surprise.video, from: self)
             }
             disableStopButton()
             stopSurpriseTimer()
@@ -189,9 +189,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         previewTVC.rowTitles = surprises.map { $0.title }
         previewTVC.completion = { index in
             Audio.instance.stop()
-            Video.instance.play(surprises[index].movie, from: self)
+            Video.instance.play(surprises[index].video, from: self)
         }
         return previewTVC
     }
 }
-

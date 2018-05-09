@@ -13,7 +13,7 @@
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
 		4F1F17CE209E15B000483499 /* RollAway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CD209E15B000483499 /* RollAway.swift */; };
 		4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CF209E15BB00483499 /* Hinge.swift */; };
-		4F6A7BDB1F1AD5AB00299152 /* Surprises in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BDA1F1AD5AB00299152 /* Surprises */; };
+		4F6A7BDB1F1AD5AB00299152 /* Movies in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BDA1F1AD5AB00299152 /* Movies */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
 		4F71E986209D2C2600E0BBDB /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 4F71E985209D2C2600E0BBDB /* Images */; };
 		4F84C38F1FC51AC40093801B /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F84C38E1FC51AC40093801B /* Animations.swift */; };
@@ -24,7 +24,7 @@
 		4F8A2AA920A0D550000C2CA5 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AA820A0D550000C2CA5 /* Video.swift */; };
 		4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */; };
 		4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */; };
-		4F8E435320982613000B935B /* Surprise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E435220982613000B935B /* Surprise.swift */; };
+		4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90EB2720A372F000F8EE87 /* Thor.swift */; };
 		4FB989061F12F45A001F02CE /* Meta in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989041F12F45A001F02CE /* Meta */; };
 		4FB989071F12F45A001F02CE /* Songs in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989051F12F45A001F02CE /* Songs */; };
 		4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */; };
@@ -40,7 +40,7 @@
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
 		4F1F17CD209E15B000483499 /* RollAway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollAway.swift; sourceTree = "<group>"; };
 		4F1F17CF209E15BB00483499 /* Hinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hinge.swift; sourceTree = "<group>"; };
-		4F6A7BDA1F1AD5AB00299152 /* Surprises */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Surprises; sourceTree = "<group>"; };
+		4F6A7BDA1F1AD5AB00299152 /* Movies */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Movies; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F71E985209D2C2600E0BBDB /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		4F84C38E1FC51AC40093801B /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
@@ -51,7 +51,7 @@
 		4F8A2AA820A0D550000C2CA5 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewingTableViewController.swift; sourceTree = "<group>"; };
-		4F8E435220982613000B935B /* Surprise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Surprise.swift; sourceTree = "<group>"; };
+		4F90EB2720A372F000F8EE87 /* Thor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thor.swift; sourceTree = "<group>"; };
 		4FB989041F12F45A001F02CE /* Meta */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meta; sourceTree = "<group>"; };
 		4FB989051F12F45A001F02CE /* Songs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Songs; sourceTree = "<group>"; };
 		4FBD57A81F098DEB00BDCDE3 /* TukTuk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TukTuk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +101,14 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		4F90EB2620A372C200F8EE87 /* Surprises */ = {
+			isa = PBXGroup;
+			children = (
+				4F90EB2720A372F000F8EE87 /* Thor.swift */,
+			);
+			path = Surprises;
+			sourceTree = "<group>";
+		};
 		4FBD579F1F098DEB00BDCDE3 = {
 			isa = PBXGroup;
 			children = (
@@ -124,13 +132,13 @@
 			children = (
 				4F1F17C8209E14DF00483499 /* Animations */,
 				4F1F17C5209E10E100483499 /* Extensions */,
+				4F90EB2620A372C200F8EE87 /* Surprises */,
 				4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
 				4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */,
 				4F8A2AA820A0D550000C2CA5 /* Video.swift */,
 				4F8A2A9B209F730E000C2CA5 /* Audio.swift */,
 				4F8A2A99209F6E0A000C2CA5 /* Catalog.swift */,
-				4F8E435220982613000B935B /* Surprise.swift */,
 				4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */,
 				4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */,
 				4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */,
@@ -139,7 +147,7 @@
 				4F71E985209D2C2600E0BBDB /* Images */,
 				4FB989041F12F45A001F02CE /* Meta */,
 				4FB989051F12F45A001F02CE /* Songs */,
-				4F6A7BDA1F1AD5AB00299152 /* Surprises */,
+				4F6A7BDA1F1AD5AB00299152 /* Movies */,
 			);
 			path = TukTuk;
 			sourceTree = "<group>";
@@ -228,7 +236,7 @@
 				4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */,
 				4FB989071F12F45A001F02CE /* Songs in Resources */,
 				4F71E986209D2C2600E0BBDB /* Images in Resources */,
-				4F6A7BDB1F1AD5AB00299152 /* Surprises in Resources */,
+				4F6A7BDB1F1AD5AB00299152 /* Movies in Resources */,
 				4FB989061F12F45A001F02CE /* Meta in Resources */,
 				4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */,
 				4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */,
@@ -307,9 +315,9 @@
 				4F8A2AA7209FDB9C000C2CA5 /* MutableCollection.swift in Sources */,
 				4F8A2A9A209F6E0A000C2CA5 /* Catalog.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
-				4F8E435320982613000B935B /* Surprise.swift in Sources */,
 				4F8A2A9C209F730E000C2CA5 /* Audio.swift in Sources */,
 				4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */,
+				4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */,
 				4F84C38F1FC51AC40093801B /* Animations.swift in Sources */,
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
 				4F8A2AA920A0D550000C2CA5 /* Video.swift in Sources */,

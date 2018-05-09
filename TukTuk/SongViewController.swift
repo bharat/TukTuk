@@ -40,6 +40,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidAppear(_ animated: Bool) {
         loadSurpriseCountdown()
+
+        let surprise = Thor()
+        surprise.play(on: self.view)
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {

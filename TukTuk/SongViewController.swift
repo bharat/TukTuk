@@ -49,8 +49,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch(sender) {
         case videoButton:
             AudioPlayer.instance.stop()
-            if let surprise = Catalog.instance.videos.random {
-                VideoPlayer.instance.play(surprise.video, from: self)
+            if let video = Catalog.instance.videos.random {
+                VideoPlayer.instance.play(video.video, from: self)
             }
             disableStopButton()
             stopVideoTimer()

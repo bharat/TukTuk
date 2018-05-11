@@ -96,7 +96,7 @@ class Thor: Surprise {
         }
 
         func thud() {
-            Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorHammerLandingThud.mp3")!)
+            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorHammerLandingThud.mp3")!)
         }
     }
 
@@ -124,14 +124,14 @@ class Thor: Surprise {
 
         func flyIn() {
             run(SKAction.move(to: CGPoint(x: 120, y: scene!.frame.height - size.height - 20), duration: 1.0))
-            Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorILostMyHammer.mp3")!)
+            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorILostMyHammer.mp3")!)
         }
 
         func grabHammer() {
             texture = SKTexture(imageNamed: "thor_grab_hammer")
             size = CGSize(width: texture!.size().width * 0.5, height: texture!.size().height * 0.5)
 
-            Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorIAmTheGodOfThunder.mp3")!)
+            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorIAmTheGodOfThunder.mp3")!)
 
             run(SKAction.group([
                     SKAction.move(to: CGPoint(x: scene!.frame.width * 0.5, y: scene!.frame.height * 0.5), duration: 2.0),
@@ -149,12 +149,12 @@ class Thor: Surprise {
                 self.thorScene.finish()
             }
 
-            Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorThankYou.mp3")!)
+            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorThankYou.mp3")!)
 
         }
 
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorIReallyWishIHadMyHammer.mp3")!)
+            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorIReallyWishIHadMyHammer.mp3")!)
         }
     }
 
@@ -198,7 +198,7 @@ class Thor: Surprise {
             physicsWorld.contactDelegate = self
             physicsWorld.gravity = CGVector(dx: 0, dy: -2)
 
-            Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorHammerFallingWhistle.mp3")!)
+            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorHammerFallingWhistle.mp3")!)
         }
 
         func finish() {

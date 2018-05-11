@@ -39,12 +39,13 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         welcomeImageView.addGestureRecognizer(long)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        self.performSegue(withIdentifier: "SongViewController", sender: self)
-    }
+    // DEBUG - turn this on to skip the welcome
+    // override func viewDidAppear(_ animated: Bool) {
+    //     self.performSegue(withIdentifier: "SongViewController", sender: self)
+    // }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
-        Audio.instance.play(Catalog.instance.welcomeSong)
+        AudioPlayer.instance.play(Catalog.instance.welcomeSong)
 
         // Run a random welcome animation, or a preset if specified
         let animation = preferred ?? Animations.random

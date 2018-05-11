@@ -1,5 +1,5 @@
 //
-//  Video.swift
+//  VideoPlayer.swift
 //  TukTuk
 //
 //  Created by Bharat Mediratta on 5/7/18.
@@ -9,8 +9,8 @@
 import Foundation
 import AVKit
 
-class Video {
-    static var instance = Video()
+class VideoPlayer {
+    static var instance = VideoPlayer()
     var playerVC = AVPlayerViewController()
     var player = AVPlayer()
 
@@ -31,7 +31,7 @@ class Video {
         playerVC.player = player
         sender.present(playerVC, animated: true, completion: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(Video.hide), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayer.hide), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
     }
 
     func stop() {

@@ -14,7 +14,7 @@ struct Song {
     var music: URL
 }
 
-struct Movie {
+struct Video {
     var title: String
     var video: URL
 }
@@ -24,7 +24,7 @@ class Catalog {
     static var instance = Catalog()
 
     var songs: [Song] = []
-    var surprises: [Movie] = []
+    var videos: [Video] = []
 
     var welcomeSong: URL {
         return Bundle.main.url(forAuxiliaryExecutable: "Welcome/welcome.mp3")!
@@ -43,8 +43,8 @@ class Catalog {
 
         // Load the "surprise" video catalog
         for s in try! FileManager.default.contentsOfDirectory(
-            atPath: Bundle.main.resourcePath! + "/Movies") {
-                surprises.append(Movie(title: s, video: Bundle.main.url(forAuxiliaryExecutable: "Movies/\(s)")!))
+            atPath: Bundle.main.resourcePath! + "/Videos") {
+                videos.append(Video(title: s, video: Bundle.main.url(forAuxiliaryExecutable: "Videos/\(s)")!))
         }
     }
 

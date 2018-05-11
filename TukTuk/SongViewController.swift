@@ -14,13 +14,13 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var musicTable: UITableView!
     @IBOutlet weak var buttons: UIStackView!
     @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var surpriseButton: UIButton!
-    @IBOutlet weak var surpriseTimerLabel: UILabel!
+    @IBOutlet weak var videoButton: UIButton!
+    @IBOutlet weak var videoTimerLabel: UILabel!
 
-    var surpriseTimer: Timer?
-    var surpriseCountdown: TimeInterval = 0 {
+    var videoTimer: Timer?
+    var videoCountdown: TimeInterval = 0 {
         didSet {
-            surpriseTimerLabel.text = "\(Int(surpriseCountdown))"
+            videoTimerLabel.text = "\(Int(videoCountdown))"
         }
     }
 
@@ -28,18 +28,18 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        hideSurpriseButton()
+        hideVideoButton()
 
         // 3DTouch or a long press on the stop button will bring up an interface where you can
         // start a surprise video
         registerForPreviewing(with: self, sourceView: stopButton)
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleSurpriseLongPress(gesture:)))
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleVideoLongPress(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        loadSurpriseCountdown()
+        loadVideoCountdown()
 
         let surprise = Thor()
         surprise.play(on: self.view)
@@ -47,20 +47,20 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
-        case surpriseButton:
-            Audio.instance.stop()
-            if let surprise = Catalog.instance.surprises.random {
-                Video.instance.play(surprise.video, from: self)
+        case videoButton:
+            AudioPlayer.instance.stop()
+            if let surprise = Catalog.instance.videos.random {
+                VideoPlayer.instance.play(surprise.video, from: self)
             }
             disableStopButton()
-            stopSurpriseTimer()
-            hideSurpriseButton()
+            stopVideoTimer()
+            hideVideoButton()
 
         case stopButton:
-            Audio.instance.stop()
+            AudioPlayer.instance.stop()
             disableStopButton()
-            stopSurpriseTimer()
-            saveSurpriseCountdown()
+            stopVideoTimer()
+            saveVideoCountdown()
 
         default:
             ()
@@ -78,10 +78,10 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if Video.instance.isPlaying == false {
-            Audio.instance.play(Catalog.instance.songs[indexPath.row].music, withCrossFade: true)
+        if VideoPlayer.instance.isPlaying == false {
+            AudioPlayer.instance.play(Catalog.instance.songs[indexPath.row].music, withCrossFade: true)
             enableStopButton()
-            startSurpriseTimer()
+            startVideoTimer()
 
             tableView.beginUpdates()
             tableView.endUpdates()
@@ -114,62 +114,63 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    // MARK: Surprise
+    // MARK: Video
 
-    func showSurpriseButton() {
+    func showVideoButton() {
         UIView.animate(withDuration: 1){
-            self.surpriseButton.isHidden = false
-            self.surpriseTimerLabel.isHidden = true
+            self.videoButton.isHidden = false
+            self.videoTimerLabel.isHidden = true
         }
     }
 
-    func hideSurpriseButton() {
+    func hideVideoButton() {
         UIView.animate(withDuration: 1) {
-            self.surpriseTimerLabel.isHidden = false
-            self.surpriseButton.isHidden = true
+            self.videoTimerLabel.isHidden = false
+            self.videoButton.isHidden = true
         }
     }
 
-    func startSurpriseTimer() {
-        surpriseTimer?.invalidate()
-        surpriseTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(SongViewController.updateSurpriseCountdown)), userInfo: nil, repeats: true)
+    func startVideoTimer() {
+        videoTimer?.invalidate()
+        videoTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(SongViewController.updateVideoCountdown)), userInfo: nil, repeats: true)
     }
 
-    func stopSurpriseTimer() {
-        surpriseTimer?.invalidate()
-        surpriseTimer = nil
+    func stopVideoTimer() {
+        videoTimer?.invalidate()
+        videoTimer = nil
     }
 
-    func loadSurpriseCountdown() {
-        surpriseCountdown = UserDefaults.standard.double(forKey: "surpriseCountdown")
-        print("surprise countdown \(surpriseCountdown)")
+    func loadVideoCountdown() {
+        videoCountdown = UserDefaults.standard.double(forKey: "videoCountdown")
+        print("video countdown \(videoCountdown)")
     }
 
-    @objc func updateSurpriseCountdown() {
-        if Audio.instance.isPlaying {
-            surpriseCountdown -= 1
+    @objc func updateVideoCountdown() {
+        if AudioPlayer.instance.isPlaying {
+            videoCountdown -= 1
 
-            if surpriseCountdown <= 0 {
-                showSurpriseButton()
-                surpriseCountdown = 1800
+            if videoCountdown <= 0 {
+                showVideoButton()
+                videoCountdown = 1800
             }
         }
     }
 
-    func saveSurpriseCountdown() {
-        UserDefaults.standard.setValue(surpriseCountdown, forKey: "surpriseCountdown")
+    func saveVideoCountdown() {
+        UserDefaults.standard.setValue(videoCountdown, forKey: "videoCountdown")
         UserDefaults.standard.synchronize()
     }
-    @objc func handleSurpriseLongPress(gesture: UIGestureRecognizer) {
+
+    @objc func handleVideoLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            show(surpriseChooser(), sender: self)
+            show(videoChooser(), sender: self)
         }
     }
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         switch(previewingContext.sourceView) {
         case stopButton:
-            show(surpriseChooser(), sender: self)
+            show(videoChooser(), sender: self)
         default:
             break
         }
@@ -178,21 +179,21 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         switch(previewingContext.sourceView) {
         case stopButton:
-            return surpriseChooser()
+            return videoChooser()
         default:
             return nil
         }
     }
 
-    func surpriseChooser() -> PreviewingTableViewController {
+    func videoChooser() -> PreviewingTableViewController {
         let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        let surprises = Catalog.instance.surprises
+        let videos = Catalog.instance.videos
 
         previewTVC.tableTitle = "Which video should we play?"
-        previewTVC.rowTitles = surprises.map { $0.title }
+        previewTVC.rowTitles = videos.map { $0.title }
         previewTVC.completion = { index in
-            Audio.instance.stop()
-            Video.instance.play(surprises[index].video, from: self)
+            AudioPlayer.instance.stop()
+            VideoPlayer.instance.play(videos[index].video, from: self)
         }
         return previewTVC
     }

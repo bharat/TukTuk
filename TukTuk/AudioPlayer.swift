@@ -9,8 +9,8 @@
 import Foundation
 import AVKit
 
-class Audio {
-    static var instance = Audio()
+class AudioPlayer {
+    static var instance = AudioPlayer()
     var audioPlayer: AVAudioPlayer?
 
     private init() {

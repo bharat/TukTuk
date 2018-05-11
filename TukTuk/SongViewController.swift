@@ -40,9 +40,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidAppear(_ animated: Bool) {
         loadVideoCountdown()
-
-        let surprise = Thor()
-        surprise.play(on: self.view)
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
@@ -79,6 +76,12 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if VideoPlayer.instance.isPlaying == false {
+            if Array(1...120).random! == 1 {
+                let minigame = Thor()
+                minigame.play(on: self.view)
+                return
+            }
+
             AudioPlayer.instance.play(Catalog.instance.songs[indexPath.row].music, withCrossFade: true)
             enableStopButton()
             startVideoTimer()

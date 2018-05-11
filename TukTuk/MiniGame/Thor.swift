@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class Thor: Surprise {
+class Thor: MiniGame {
     enum Collisions: UInt32 {
         case floor  = 1
         case hammer = 2
@@ -134,7 +134,7 @@ class Thor: Surprise {
             AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorIAmTheGodOfThunder.mp3")!)
 
             run(SKAction.group([
-                    SKAction.move(to: CGPoint(x: scene!.frame.width * 0.5, y: scene!.frame.height * 0.5), duration: 2.0),
+                    SKAction.move(to: CGPoint(x: scene!.frame.width * 0.1, y: scene!.frame.height * 0.5), duration: 2.0),
                     SKAction.scale(by: 1.5, duration: 4.0)])) {
                 self.flyAway()
             }
@@ -145,8 +145,9 @@ class Thor: Surprise {
             size = CGSize(width: texture!.size().width * 0.75, height: texture!.size().height * 0.75)
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.run(SKAction.moveTo(x: self.scene!.frame.width * 2.0, duration: 0.5))
-                self.thorScene.finish()
+                self.run(SKAction.moveTo(x: self.scene!.frame.width * 2.0, duration: 1.0 )) {
+                    self.thorScene.finish()
+                }
             }
 
             AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorThankYou.mp3")!)

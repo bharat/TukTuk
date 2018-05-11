@@ -1,5 +1,5 @@
 //
-//  Surprise.swift
+//  MiniGame.swift
 //  TukTuk
 //
 //  Created by Bharat Mediratta on 5/10/18.
@@ -9,6 +9,6 @@
 import Foundation
 import UIKit
 
-protocol Surprise {
+protocol MiniGame {
     func play(on view: UIView)
 }

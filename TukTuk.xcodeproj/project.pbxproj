@@ -16,6 +16,7 @@
 		4F6A7BDB1F1AD5AB00299152 /* Movies in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BDA1F1AD5AB00299152 /* Movies */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
 		4F71E986209D2C2600E0BBDB /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 4F71E985209D2C2600E0BBDB /* Images */; };
+		4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */; };
 		4F84C38F1FC51AC40093801B /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F84C38E1FC51AC40093801B /* Animations.swift */; };
 		4F8A2A9A209F6E0A000C2CA5 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2A99209F6E0A000C2CA5 /* Catalog.swift */; };
 		4F8A2A9C209F730E000C2CA5 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2A9B209F730E000C2CA5 /* Audio.swift */; };
@@ -26,6 +27,7 @@
 		4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */; };
 		4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90EB2720A372F000F8EE87 /* Thor.swift */; };
 		4F90EC6620A3B1FC00F8EE87 /* Welcome in Resources */ = {isa = PBXBuildFile; fileRef = 4F90EC6520A3B1FB00F8EE87 /* Welcome */; };
+		4F90EC6920A3CA6D00F8EE87 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 4F90EC6820A3CA6D00F8EE87 /* Sounds */; };
 		4FB989061F12F45A001F02CE /* Meta in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989041F12F45A001F02CE /* Meta */; };
 		4FB989071F12F45A001F02CE /* Songs in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989051F12F45A001F02CE /* Songs */; };
 		4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */; };
@@ -44,6 +46,7 @@
 		4F6A7BDA1F1AD5AB00299152 /* Movies */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Movies; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F71E985209D2C2600E0BBDB /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		4F84C38E1FC51AC40093801B /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		4F8A2A99209F6E0A000C2CA5 /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		4F8A2A9B209F730E000C2CA5 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
@@ -54,6 +57,7 @@
 		4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewingTableViewController.swift; sourceTree = "<group>"; };
 		4F90EB2720A372F000F8EE87 /* Thor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thor.swift; sourceTree = "<group>"; };
 		4F90EC6520A3B1FB00F8EE87 /* Welcome */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Welcome; sourceTree = "<group>"; };
+		4F90EC6820A3CA6D00F8EE87 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		4FB989041F12F45A001F02CE /* Meta */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meta; sourceTree = "<group>"; };
 		4FB989051F12F45A001F02CE /* Songs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Songs; sourceTree = "<group>"; };
 		4FBD57A81F098DEB00BDCDE3 /* TukTuk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TukTuk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +91,7 @@
 				4F8A2AA4209FDB9C000C2CA5 /* Sequence.swift */,
 				4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */,
 				4F1F17C6209E112C00483499 /* Collection.swift */,
+				4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 				4FBD57B71F098DEB00BDCDE3 /* Info.plist */,
 				4F6A7BE21F1AE9B300299152 /* Assets.xcassets */,
 				4F71E985209D2C2600E0BBDB /* Images */,
+				4F90EC6820A3CA6D00F8EE87 /* Sounds */,
 				4FB989041F12F45A001F02CE /* Meta */,
 				4FB989051F12F45A001F02CE /* Songs */,
 				4F6A7BDA1F1AD5AB00299152 /* Movies */,
@@ -239,6 +245,7 @@
 				4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */,
 				4FB989071F12F45A001F02CE /* Songs in Resources */,
 				4F71E986209D2C2600E0BBDB /* Images in Resources */,
+				4F90EC6920A3CA6D00F8EE87 /* Sounds in Resources */,
 				4F90EC6620A3B1FC00F8EE87 /* Welcome in Resources */,
 				4F6A7BDB1F1AD5AB00299152 /* Movies in Resources */,
 				4FB989061F12F45A001F02CE /* Meta in Resources */,
@@ -314,6 +321,7 @@
 				4F1F17CC209E159F00483499 /* WordPop.swift in Sources */,
 				4F8A2AA6209FDB9C000C2CA5 /* Sequence.swift in Sources */,
 				4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */,
+				4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */,
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
 				4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */,
 				4F8A2AA7209FDB9C000C2CA5 /* MutableCollection.swift in Sources */,

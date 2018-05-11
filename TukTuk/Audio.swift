@@ -54,5 +54,6 @@ class Audio {
 
     func stop() {
         audioPlayer?.stop()
+        audioPlayer = nil
     }
 }

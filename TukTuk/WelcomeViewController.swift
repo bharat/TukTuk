@@ -39,6 +39,10 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         welcomeImageView.addGestureRecognizer(long)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        self.performSegue(withIdentifier: "SongViewController", sender: self)
+    }
+
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         Audio.instance.play(Catalog.instance.welcomeSong)
 

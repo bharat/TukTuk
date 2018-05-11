@@ -28,14 +28,20 @@ class Thor: Surprise {
 
         let scene = Scene(size: view.frame.size)
         skView.presentScene(scene)
+
+        scene.completion = {
+            effectView.removeFromSuperview()
+        }
     }
 
-    class Hammer: SKSpriteNode {
-        var touchCount = 0
-
+    class ThorSKSpriteNode: SKSpriteNode {
         var thorScene: Scene {
             return scene as! Scene
         }
+    }
+
+    class Hammer: ThorSKSpriteNode {
+        var touchCount = 0
 
         init() {
             let texture = SKTexture(imageNamed: "thor_hammer")
@@ -47,6 +53,7 @@ class Thor: Surprise {
 
             setScale(0.5)
             zRotation = -0.5
+            run(SKAction.rotate(byAngle: -0.5, duration: 1.0))
             isUserInteractionEnabled = true
         }
 
@@ -93,12 +100,8 @@ class Thor: Surprise {
         }
     }
 
-    class Thor: SKSpriteNode {
+    class Thor: ThorSKSpriteNode {
         var touchCount = 0
-
-        var thorScene: Scene {
-            return scene as! Scene
-        }
 
         var handPosition: CGPoint {
             // Approximate the top left quadrant
@@ -143,9 +146,11 @@ class Thor: Surprise {
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.run(SKAction.moveTo(x: self.scene!.frame.width * 2.0, duration: 0.5))
+                self.thorScene.finish()
             }
 
             Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorThankYou.mp3")!)
+
         }
 
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -156,6 +161,7 @@ class Thor: Surprise {
     class Scene: SKScene, SKPhysicsContactDelegate {
         var thor = Thor()
         var hammer = Hammer()
+        var completion: () -> () = {}
 
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
@@ -186,7 +192,7 @@ class Thor: Surprise {
             thor.position = CGPoint(x: -100, y: height+100)
             addChild(thor)
 
-            hammer.position = CGPoint(x: width - hammer.size.width - 10, y: height + 100)
+            hammer.position = CGPoint(x: width * 0.5, y: height + 100)
             addChild(hammer)
 
             physicsWorld.contactDelegate = self
@@ -195,7 +201,8 @@ class Thor: Surprise {
             Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorHammerFallingWhistle.mp3")!)
         }
 
-        func didEnd(_ contact: SKPhysicsContact) {
+        func finish() {
+            completion()
         }
 
         func didBegin(_ contact: SKPhysicsContact) {

@@ -79,7 +79,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if Video.instance.isPlaying == false {
-            Audio.instance.play(Catalog.instance.songs[indexPath.row].music)
+            Audio.instance.play(Catalog.instance.songs[indexPath.row].music, withCrossFade: true)
             enableStopButton()
             startSurpriseTimer()
 

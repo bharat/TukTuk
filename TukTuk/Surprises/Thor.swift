@@ -9,10 +9,6 @@
 import Foundation
 import SpriteKit
 
-protocol Surprise {
-    func play(on view: UIView)
-}
-
 class Thor: Surprise {
     enum Collisions: UInt32 {
         case floor  = 1
@@ -93,7 +89,6 @@ class Thor: Surprise {
         }
 
         func thud() {
-            Audio.instance.stop()
             Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorHammerLandingThud.mp3")!)
         }
     }
@@ -126,7 +121,6 @@ class Thor: Surprise {
 
         func flyIn() {
             run(SKAction.move(to: CGPoint(x: 120, y: scene!.frame.height - size.height - 20), duration: 1.0))
-            Audio.instance.stop()
             Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorILostMyHammer.mp3")!)
         }
 
@@ -134,7 +128,6 @@ class Thor: Surprise {
             texture = SKTexture(imageNamed: "thor_grab_hammer")
             size = CGSize(width: texture!.size().width * 0.5, height: texture!.size().height * 0.5)
 
-            Audio.instance.stop()
             Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorIAmTheGodOfThunder.mp3")!)
 
             run(SKAction.group([
@@ -152,12 +145,10 @@ class Thor: Surprise {
                 self.run(SKAction.moveTo(x: self.scene!.frame.width * 2.0, duration: 0.5))
             }
 
-            Audio.instance.stop()
             Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorThankYou.mp3")!)
         }
 
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            Audio.instance.stop()
             Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorIReallyWishIHadMyHammer.mp3")!)
         }
     }
@@ -179,14 +170,18 @@ class Thor: Surprise {
             let width = view.frame.width
             let height = view.frame.height
 
-            let ground = SKShapeNode(rect: CGRect(x: 0, y: 0, width: width, height: 1))
-            ground.lineWidth = 1
-            ground.strokeColor = .clear
-            ground.physicsBody = SKPhysicsBody(edgeChainFrom: ground.path!)
-            ground.physicsBody?.categoryBitMask = Collisions.floor.rawValue
-            ground.physicsBody?.restitution = 0
-            ground.physicsBody?.isDynamic = false
-            addChild(ground)
+            var points = [CGPoint(x: 0, y: height),
+                          CGPoint(x: 0, y: 0),
+                          CGPoint(x: width, y: 0),
+                          CGPoint(x: width, y: height)]
+            let border = SKShapeNode(points: &points, count: points.count)
+            border.lineWidth = 1
+            border.strokeColor = .clear
+            border.physicsBody = SKPhysicsBody(edgeChainFrom: border.path!)
+            border.physicsBody?.categoryBitMask = Collisions.floor.rawValue
+            border.physicsBody?.restitution = 0
+            border.physicsBody?.isDynamic = false
+            addChild(border)
 
             thor.position = CGPoint(x: -100, y: height+100)
             addChild(thor)
@@ -195,7 +190,7 @@ class Thor: Surprise {
             addChild(hammer)
 
             physicsWorld.contactDelegate = self
-            physicsWorld.gravity = CGVector(dx: 0, dy: -1)
+            physicsWorld.gravity = CGVector(dx: 0, dy: -2)
 
             Audio.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorHammerFallingWhistle.mp3")!)
         }

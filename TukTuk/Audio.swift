@@ -20,7 +20,7 @@ class Audio {
         return audioPlayer?.isPlaying ?? false
     }
 
-    func play(_ url: URL) {
+    func play(_ url: URL, withCrossFade: Bool = false) {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
@@ -32,8 +32,12 @@ class Audio {
                 new.play()
 
                 if let old = old {
-                    new.volume = 0
-                    crossfade(from: old, to: new)
+                    if withCrossFade {
+                        new.volume = 0
+                        crossFade(from: old, to: new)
+                    } else {
+                        old.volume = 0
+                    }
                 }
             }
         } catch let error {
@@ -41,13 +45,13 @@ class Audio {
         }
     }
 
-    func crossfade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
+    func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
         if new.volume < 1.0 {
             old.volume -= 0.1
             new.volume += 0.1
 
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-                self.crossfade(from: old, to: new)
+                self.crossFade(from: old, to: new)
             }
         }
     }

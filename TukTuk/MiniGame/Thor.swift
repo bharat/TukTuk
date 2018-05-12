@@ -64,7 +64,7 @@ class Thor: MiniGame {
             physicsBody?.contactTestBitMask = Collisions.floor.rawValue
 
             setScale(0.5)
-            zRotation = -0.5
+            zRotation = -0.3
             run(SKAction.rotate(byAngle: -0.5, duration: 1.0))
             isUserInteractionEnabled = true
         }
@@ -90,13 +90,14 @@ class Thor: MiniGame {
         }
 
         override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-            guard touchCount > 3 else { return }
-            guard scene != nil else { return }
+            guard touchCount > 3, let view = scene?.view else {
+                return
+            }
 
             // Y-axis is inverted so we have to translate the position on drag
             for touch in touches {
-                let touchLocation = touch.location(in: scene!.view!)
-                position = CGPoint(x: touchLocation.x, y: scene!.view!.frame.height - touchLocation.y)
+                let touchLocation = touch.location(in: view)
+                position = CGPoint(x: touchLocation.x, y: view.frame.height - touchLocation.y)
 
                 zRotation += 0.1
 
@@ -135,18 +136,24 @@ class Thor: MiniGame {
         }
 
         func flyIn() {
-            run(SKAction.move(to: CGPoint(x: 120, y: scene!.frame.height - size.height - 20), duration: 1.0))
+            guard let scene = scene else { return }
+
+            run(SKAction.move(to: CGPoint(x: 120, y: scene.frame.height - size.height - 20), duration: 1.0))
             AudioPlayer.play(ILostMyHammer)
         }
 
         func grabHammer() {
             texture = SKTexture(imageNamed: "thor_grab_hammer")
-            size = CGSize(width: texture!.size().width * 0.5, height: texture!.size().height * 0.5)
+            guard let texture = texture, let frame = scene?.frame else {
+                return
+            }
+
+            size = CGSize(width: texture.size().width * 0.5, height: texture.size().height * 0.5)
 
             AudioPlayer.play(IAmTheGodOfThunder)
 
             run(SKAction.group([
-                    SKAction.move(to: CGPoint(x: scene!.frame.width * 0.1, y: scene!.frame.height * 0.5), duration: 2.0),
+                    SKAction.move(to: CGPoint(x: frame.width * 0.1, y: frame.height * 0.5), duration: 2.0),
                     SKAction.scale(by: 1.5, duration: 4.0)])) {
                 self.flyAway()
             }
@@ -154,16 +161,19 @@ class Thor: MiniGame {
 
         func flyAway() {
             texture = SKTexture(imageNamed: "thor_fly_away")
-            size = CGSize(width: texture!.size().width * 0.75, height: texture!.size().height * 0.75)
+            guard let texture = texture else {
+                return
+            }
+
+            size = CGSize(width: texture.size().width * 0.75, height: texture.size().height * 0.75)
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.run(SKAction.moveTo(x: self.scene!.frame.width * 2.0, duration: 1.0 )) {
+                self.run(SKAction.moveTo(x: self.frame.width * 2.0, duration: 1.0 )) {
                     self.thorScene.finish()
                 }
             }
 
             AudioPlayer.play(ThankYou)
-
         }
 
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

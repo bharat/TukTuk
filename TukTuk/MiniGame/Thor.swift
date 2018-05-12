@@ -10,10 +10,15 @@ import Foundation
 import SpriteKit
 
 class Thor: MiniGame {
+    static var title = "Thor lost his hammer!"
+    
     enum Collisions: UInt32 {
         case floor  = 1
         case hammer = 2
         case thor   = 4
+    }
+
+    required init() {
     }
 
     func play(on view: UIView) {

@@ -10,12 +10,18 @@ import Foundation
 
 import UIKit
 
+struct PreviewGroup {
+    var title: String
+    var id: String
+    var data: [String]
+}
+
 class PreviewingTableViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
 
     var tableTitle: String = ""
-    var rowTitles: [String] = []
-    var completion: (Int) -> (Void) = { index in }
+    var groups: [PreviewGroup] = []
+    var completion: (String, Int) -> (Void) = { (id, index) in }
 
     override func viewDidLoad() {
         titleLabel.text = tableTitle
@@ -26,14 +32,22 @@ class PreviewingTableViewController: UITableViewController {
     }
 
     // MARK: UITableViewDataSource
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return groups.count
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return groups[section].title
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rowTitles.count
+        return groups[section].data.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SurpriseCell")!
 
-        cell.textLabel?.text = rowTitles[indexPath.row]
+        cell.textLabel?.text = groups[indexPath.section].data[indexPath.row]
         return cell
     }
 
@@ -41,7 +55,7 @@ class PreviewingTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.dismiss(animated: true) {
-            self.completion(indexPath.row)
+            self.completion(self.groups[indexPath.section].id, indexPath.row)
         }
     }
 }

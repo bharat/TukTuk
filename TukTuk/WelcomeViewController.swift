@@ -73,8 +73,10 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
     func animationChooser() -> PreviewingTableViewController {
         let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
         previewTVC.tableTitle = "Choose the welcome animation"
-        previewTVC.rowTitles = Animations.all.map { $0.title }
-        previewTVC.completion = { index in
+        previewTVC.groups = [
+            PreviewGroup(title: "Animations", id: "animation", data: Animations.all.map { $0.title })
+        ]
+        previewTVC.completion = { id, index in
             self.preferred = Animations.all[index].init()
         }
         return previewTVC

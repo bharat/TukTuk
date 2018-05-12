@@ -166,14 +166,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @objc func handleVideoLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            show(videoChooser(), sender: self)
+            show(videoAndMiniGameChooser(), sender: self)
         }
     }
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         switch(previewingContext.sourceView) {
         case stopButton:
-            show(videoChooser(), sender: self)
+            show(videoAndMiniGameChooser(), sender: self)
         default:
             break
         }
@@ -182,21 +182,31 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         switch(previewingContext.sourceView) {
         case stopButton:
-            return videoChooser()
+            return videoAndMiniGameChooser()
         default:
             return nil
         }
     }
 
-    func videoChooser() -> PreviewingTableViewController {
+    func videoAndMiniGameChooser() -> PreviewingTableViewController {
         let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        let videos = Catalog.instance.videos
 
         previewTVC.tableTitle = "Which video should we play?"
-        previewTVC.rowTitles = videos.map { $0.title }
-        previewTVC.completion = { index in
-            AudioPlayer.instance.stop()
-            VideoPlayer.instance.play(videos[index].video, from: self)
+        previewTVC.groups = [
+            PreviewGroup(title: "Videos", id: "video", data: Catalog.instance.videos.map { $0.title }),
+            PreviewGroup(title: "Mini Games", id: "minigame", data: MiniGames.all.map { $0.title })
+        ]
+        previewTVC.completion = { id, index in
+            switch(id) {
+            case "video":
+                VideoPlayer.instance.play(Catalog.instance.videos[index].video, from: self)
+
+            case "minigame":
+                MiniGames.all[index].init().play(on: self.view)
+
+            default:
+                ()
+            }
         }
         return previewTVC
     }

@@ -18,6 +18,13 @@ class Thor: MiniGame {
         case thor   = 4
     }
 
+    static var HammerFallingWhistle     = Catalog.sound(from: "ThorHammerFallingWhistle.mp3")
+    static var HammerLandingThud        = Catalog.sound(from: "ThorHammerLandingThud.mp3")
+    static var IReallyWishIHadMyHammer  = Catalog.sound(from: "ThorIReallyWishIHadMyHammer.mp3")
+    static var ThankYou                 = Catalog.sound(from: "ThorThankYou.mp3")
+    static var ILostMyHammer            = Catalog.sound(from: "ThorILostMyHammer.mp3")
+    static var IAmTheGodOfThunder       = Catalog.sound(from: "ThorIAmTheGodOfThunder.mp3")
+
     required init() {
     }
 
@@ -101,7 +108,7 @@ class Thor: MiniGame {
         }
 
         func thud() {
-            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorHammerLandingThud.mp3")!)
+            AudioPlayer.play(HammerLandingThud)
         }
     }
 
@@ -129,14 +136,14 @@ class Thor: MiniGame {
 
         func flyIn() {
             run(SKAction.move(to: CGPoint(x: 120, y: scene!.frame.height - size.height - 20), duration: 1.0))
-            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorILostMyHammer.mp3")!)
+            AudioPlayer.play(ILostMyHammer)
         }
 
         func grabHammer() {
             texture = SKTexture(imageNamed: "thor_grab_hammer")
             size = CGSize(width: texture!.size().width * 0.5, height: texture!.size().height * 0.5)
 
-            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorIAmTheGodOfThunder.mp3")!)
+            AudioPlayer.play(IAmTheGodOfThunder)
 
             run(SKAction.group([
                     SKAction.move(to: CGPoint(x: scene!.frame.width * 0.1, y: scene!.frame.height * 0.5), duration: 2.0),
@@ -155,12 +162,12 @@ class Thor: MiniGame {
                 }
             }
 
-            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorThankYou.mp3")!)
+            AudioPlayer.play(ThankYou)
 
         }
 
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorIReallyWishIHadMyHammer.mp3")!)
+            AudioPlayer.play(IReallyWishIHadMyHammer)
         }
     }
 
@@ -204,7 +211,7 @@ class Thor: MiniGame {
             physicsWorld.contactDelegate = self
             physicsWorld.gravity = CGVector(dx: 0, dy: -2)
 
-            AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Sounds/ThorHammerFallingWhistle.mp3")!)
+            AudioPlayer.play(HammerFallingWhistle)
         }
 
         func finish() {

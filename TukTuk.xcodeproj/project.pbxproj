@@ -28,7 +28,6 @@
 		4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */; };
 		4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */; };
 		4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90EB2720A372F000F8EE87 /* Thor.swift */; };
-		4F90EC6620A3B1FC00F8EE87 /* Welcome in Resources */ = {isa = PBXBuildFile; fileRef = 4F90EC6520A3B1FB00F8EE87 /* Welcome */; };
 		4F90EC6920A3CA6D00F8EE87 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 4F90EC6820A3CA6D00F8EE87 /* Sounds */; };
 		4FB989061F12F45A001F02CE /* Meta in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989041F12F45A001F02CE /* Meta */; };
 		4FB989071F12F45A001F02CE /* Songs in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989051F12F45A001F02CE /* Songs */; };
@@ -60,7 +59,6 @@
 		4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewingTableViewController.swift; sourceTree = "<group>"; };
 		4F90EB2720A372F000F8EE87 /* Thor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thor.swift; sourceTree = "<group>"; };
-		4F90EC6520A3B1FB00F8EE87 /* Welcome */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Welcome; sourceTree = "<group>"; };
 		4F90EC6820A3CA6D00F8EE87 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		4FB989041F12F45A001F02CE /* Meta */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meta; sourceTree = "<group>"; };
 		4FB989051F12F45A001F02CE /* Songs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Songs; sourceTree = "<group>"; };
@@ -162,7 +160,6 @@
 				4FB989041F12F45A001F02CE /* Meta */,
 				4FB989051F12F45A001F02CE /* Songs */,
 				4F6A7BDA1F1AD5AB00299152 /* Videos */,
-				4F90EC6520A3B1FB00F8EE87 /* Welcome */,
 			);
 			path = TukTuk;
 			sourceTree = "<group>";
@@ -252,7 +249,6 @@
 				4FB989071F12F45A001F02CE /* Songs in Resources */,
 				4F71E986209D2C2600E0BBDB /* Images in Resources */,
 				4F90EC6920A3CA6D00F8EE87 /* Sounds in Resources */,
-				4F90EC6620A3B1FC00F8EE87 /* Welcome in Resources */,
 				4F6A7BDB1F1AD5AB00299152 /* Videos in Resources */,
 				4FB989061F12F45A001F02CE /* Meta in Resources */,
 				4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */,

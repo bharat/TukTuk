@@ -11,10 +11,10 @@ import UIKit
 
 struct Song {
     var image: UIImage
-    var music: URL
+    var audio: URL
 }
 
-struct Video {
+struct Movie {
     var title: String
     var video: URL
 }
@@ -24,25 +24,29 @@ class Catalog {
     static var instance = Catalog()
 
     var songs: [Song] = []
-    var videos: [Video] = []
+    var videos: [Movie] = []
 
     private init() {
-        // Load the music catalog
-        let catalogUrl = Bundle.main.url(forAuxiliaryExecutable: "Meta/catalog.txt")
-        let catalog = try! String(contentsOf: catalogUrl!, encoding: .utf8).components(separatedBy: "\n")
+        let catalogUrl = url(from: "Meta/catalog.txt")
+        let catalog = try! String(contentsOf: catalogUrl, encoding: .utf8).components(separatedBy: "\n")
         songs = []
         for i in 0..<catalog.count/2 {
             songs.append(Song(
                 image: UIImage(named: "Songs/\(catalog[2*i])")!,
-                music: Bundle.main.url(forAuxiliaryExecutable: "Songs/\(catalog[2*i+1])")!))
+                audio: url(from: "Songs/\(catalog[2*i+1])")))
         }
 
-        // Load the "surprise" video catalog
         for s in try! FileManager.default.contentsOfDirectory(
             atPath: Bundle.main.resourcePath! + "/Videos") {
-                videos.append(Video(title: s, video: Bundle.main.url(forAuxiliaryExecutable: "Videos/\(s)")!))
+                videos.append(Movie(title: s, video: url(from: "Videos/\(s)")))
         }
     }
 
+    static func sound(from fileName: String) -> URL {
+        return instance.url(from: "Sounds/\(fileName)")
+    }
 
+    func url(from: String) -> URL {
+        return Bundle.main.url(forAuxiliaryExecutable: from)!
+    }
 }

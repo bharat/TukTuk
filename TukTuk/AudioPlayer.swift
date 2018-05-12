@@ -11,16 +11,13 @@ import AVKit
 
 class AudioPlayer {
     static var instance = AudioPlayer()
-    var audioPlayer: AVAudioPlayer?
+    static var audioPlayer: AVAudioPlayer?
 
-    private init() {
-    }
-
-    var isPlaying: Bool {
+    static var isPlaying: Bool {
         return audioPlayer?.isPlaying ?? false
     }
 
-    func play(_ url: URL, withCrossFade: Bool = false) {
+    static func play(_ url: URL, withCrossFade: Bool = false) {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
@@ -45,7 +42,7 @@ class AudioPlayer {
         }
     }
 
-    func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
+    static func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
         if new.volume < 1.0 {
             old.volume -= 0.1
             new.volume += 0.1
@@ -56,7 +53,7 @@ class AudioPlayer {
         }
     }
 
-    func stop() {
+    static func stop() {
         audioPlayer?.stop()
         audioPlayer = nil
     }

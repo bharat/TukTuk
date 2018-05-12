@@ -16,7 +16,7 @@ class RollAway: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
-        AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Welcome/welcome.mp3")!)
+        AudioPlayer.play(Catalog.sound(from: "Welcome.mp3"))
 
         UIView.animateAndChain(withDuration: 3.5, delay: 0.0, options: [ .curveEaseIn ], animations: {
             // Transform into a circle in the left center

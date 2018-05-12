@@ -10,35 +10,32 @@ import Foundation
 import AVKit
 
 class VideoPlayer {
-    static var instance = VideoPlayer()
-    var playerVC = AVPlayerViewController()
-    var player = AVPlayer()
+    static var playerVC = AVPlayerViewController()
+    static var player = AVPlayer()
 
-    var isPlaying: Bool {
+    static var isPlaying: Bool {
         return playerVC.isPlaying
     }
 
-    private init() {
-        playerVC.showsPlaybackControls = false
-    }
+    static func play(_ url: URL, from sender: UIViewController) {
+        VideoPlayer.playerVC.showsPlaybackControls = false
 
-    func play(_ url: URL, from sender: UIViewController) {
         let asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
-        player = AVPlayer(playerItem: playerItem)
-        player.play()
+        VideoPlayer.player = AVPlayer(playerItem: playerItem)
+        VideoPlayer.player.play()
 
-        playerVC.player = player
-        sender.present(playerVC, animated: true, completion: nil)
+        VideoPlayer.playerVC.player = VideoPlayer.player
+        sender.present(VideoPlayer.playerVC, animated: true, completion: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayer.hide), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayer.hide), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: VideoPlayer.player.currentItem)
     }
 
-    func stop() {
+    static func stop() {
         player.pause()
     }
 
-    @objc func hide() {
+    @objc static func hide() {
         playerVC.dismiss(animated: true, completion: nil)
     }
 

@@ -16,7 +16,7 @@ class FaceBalls: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
-        AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Welcome/welcome.mp3")!)
+        AudioPlayer.play(Catalog.sound(from: "Welcome.mp3"))
 
         let images = (1...8).map { "Images/Remy_\($0).png" }
 

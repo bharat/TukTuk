@@ -45,16 +45,16 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
         case videoButton:
-            AudioPlayer.instance.stop()
+            AudioPlayer.stop()
             if let video = Catalog.instance.videos.random {
-                VideoPlayer.instance.play(video.video, from: self)
+                VideoPlayer.play(video.video, from: self)
             }
             disableStopButton()
             stopVideoTimer()
             hideVideoButton()
 
         case stopButton:
-            AudioPlayer.instance.stop()
+            AudioPlayer.stop()
             disableStopButton()
             stopVideoTimer()
             saveVideoCountdown()
@@ -75,14 +75,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if VideoPlayer.instance.isPlaying == false {
+        if VideoPlayer.isPlaying == false {
             if Array(1...120).random! == 1 {
                 let minigame = Thor()
                 minigame.play(on: self.view)
                 return
             }
 
-            AudioPlayer.instance.play(Catalog.instance.songs[indexPath.row].music, withCrossFade: true)
+            AudioPlayer.play(Catalog.instance.songs[indexPath.row].audio, withCrossFade: true)
             enableStopButton()
             startVideoTimer()
 
@@ -149,7 +149,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     @objc func updateVideoCountdown() {
-        if AudioPlayer.instance.isPlaying {
+        if AudioPlayer.isPlaying {
             videoCountdown -= 1
 
             if videoCountdown <= 0 {
@@ -199,7 +199,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         previewTVC.completion = { id, index in
             switch(id) {
             case "video":
-                VideoPlayer.instance.play(Catalog.instance.videos[index].video, from: self)
+                VideoPlayer.play(Catalog.instance.videos[index].video, from: self)
 
             case "minigame":
                 MiniGames.all[index].init().play(on: self.view)

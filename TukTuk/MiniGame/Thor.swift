@@ -93,7 +93,7 @@ class Thor: MiniGame {
 
                 zRotation += 0.1
 
-                if thorScene.thor.handPosition.distance(to: position) < 20 {
+                if thorScene.thor.handPosition.distance(to: position) < 40 {
                     thorScene.thor.grabHammer()
                     removeFromParent()
                 }

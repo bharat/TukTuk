@@ -39,18 +39,17 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         welcomeImageView.addGestureRecognizer(long)
     }
 
-    // DEBUG - turn this on to skip the welcome
-    // override func viewDidAppear(_ animated: Bool) {
-    //     self.performSegue(withIdentifier: "SongViewController", sender: self)
-    // }
-
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
-        self.view.removeGestureRecognizer(sender)
+        sender.isEnabled = false
 
         // Run a random welcome animation, or a preset if specified
         let animation = preferred ?? Animations.random
         animation.animate(view: self.welcomeImageView) {
             self.performSegue(withIdentifier: "SongViewController", sender: self)
+
+            // It's useful to re-enable this since in the simulator you can hit escape
+            // and go back to the welcome view and run the animation again
+            sender.isEnabled = true
         }
     }
 

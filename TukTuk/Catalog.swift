@@ -26,10 +26,6 @@ class Catalog {
     var songs: [Song] = []
     var videos: [Video] = []
 
-    var welcomeSong: URL {
-        return Bundle.main.url(forAuxiliaryExecutable: "Welcome/welcome.mp3")!
-    }
-
     private init() {
         // Load the music catalog
         let catalogUrl = Bundle.main.url(forAuxiliaryExecutable: "Meta/catalog.txt")

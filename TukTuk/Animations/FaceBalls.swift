@@ -16,6 +16,8 @@ class FaceBalls: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
+        AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Welcome/welcome.mp3")!)
+
         let images = (1...8).map { "Images/Remy_\($0).png" }
 
         let skView = SKView(frame: view.frame)
@@ -26,7 +28,7 @@ class FaceBalls: Animation {
         scene.backgroundColor = .clear
         skView.presentScene(scene)
 
-        images.enumerated().shuffled().forEach {
+        images.shuffled().enumerated().forEach {
             (i, imageName) in
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25 * Double(i)) {
@@ -60,6 +62,7 @@ class FaceBalls: Animation {
         scene.addChild(ground)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
+            skView.removeFromSuperview()
             completion()
         }
     }

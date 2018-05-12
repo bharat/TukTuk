@@ -16,6 +16,8 @@ class Hinge: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
+        AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Welcome/welcome.mp3")!)
+
         // Animate away the welcome image. Shrink it down to 40% of its size in the
         // center of the screen, then do a "hinge" animation where the top right corner
         // releases and it falls down around the top left corner, then the whole image

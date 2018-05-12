@@ -16,6 +16,8 @@ class WordPop: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
+        AudioPlayer.instance.play(Bundle.main.url(forAuxiliaryExecutable: "Welcome/welcome.mp3")!)
+
         let cadence: [(words: String, duration: CFTimeInterval)] = [
             ("Hi,\nRemy!",                           1.0),
             ("Welcome\nto\nTukTuk!",                 1.0),

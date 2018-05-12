@@ -45,7 +45,7 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
     // }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
-        AudioPlayer.instance.play(Catalog.instance.welcomeSong)
+        self.view.removeGestureRecognizer(sender)
 
         // Run a random welcome animation, or a preset if specified
         let animation = preferred ?? Animations.random

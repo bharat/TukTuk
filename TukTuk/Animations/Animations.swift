@@ -21,10 +21,16 @@ class Animations {
         Hinge.self,
         RollAway.self,
         WordPop.self,
-        FaceBalls.self
+        FaceBalls.self,
+        None.self
     ]
 
     static var random: Animation {
-        return all.random!.init()
+        while true {
+            let anim = all.random!
+            if anim != None.self {
+                return anim.init()
+            }
+        }
     }
 }

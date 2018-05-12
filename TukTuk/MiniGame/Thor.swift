@@ -99,9 +99,13 @@ class Thor: MiniGame {
                 let touchLocation = touch.location(in: view)
                 position = CGPoint(x: touchLocation.x, y: view.frame.height - touchLocation.y)
 
-                zRotation += 0.1
+                let distance = thorScene.thor.handPosition.distance(to: position)
 
-                if thorScene.thor.handPosition.distance(to: position) < 40 {
+                // Rotate the hammer the closer the hammer moves to Thor's hand so that when
+                // it gets to his hand it's in roughly the right orientation, which is about 1.8 radians
+                zRotation = (440 - distance) / 400 * 1.8
+
+                if distance < 40 {
                     thorScene.thor.grabHammer()
                     removeFromParent()
                 }

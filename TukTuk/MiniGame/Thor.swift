@@ -103,7 +103,7 @@ class Thor: MiniGame {
 
                 // Rotate the hammer the closer the hammer moves to Thor's hand so that when
                 // it gets to his hand it's in roughly the right orientation, which is about 1.8 radians
-                zRotation = (440 - distance) / 400 * 1.8
+                zRotation = (440 - distance) / 400 * 1.1
 
                 if distance < 40 {
                     thorScene.thor.grabHammer()

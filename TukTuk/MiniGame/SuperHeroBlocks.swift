@@ -56,18 +56,27 @@ import SceneKit
             }
         }
 
+        var save: SCNVector4?
         @objc func panHeroBlock(gesture: UIPanGestureRecognizer) {
             let point = gesture.location(in: sceneView)
             let hits = sceneView.hitTest(point, options: nil)
 
             if let node = hits.first?.node {
-                // Stop spinning
-                node.removeAllActions()
+                switch gesture.state {
+                case .began:
+                    node.removeAllActions()
+                    save = node.rotation
 
-                let currentPivot = node.pivot
-                let changePivot = SCNMatrix4Invert(node.transform)
-                node.pivot = SCNMatrix4Mult(changePivot, currentPivot)
-                node.transform = SCNMatrix4Identity
+                case .changed:
+                    let new = gesture.translation(in: sceneView)
+                    if let save = save {
+                        node.rotation.x = Float(new.x) - save.x
+                        node.rotation.y = Float(new.y) - save.y
+                    }
+
+                default:
+                    ()
+                }
             }
         }
     }

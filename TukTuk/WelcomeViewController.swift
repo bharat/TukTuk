@@ -39,6 +39,10 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         welcomeImageView.addGestureRecognizer(long)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        SuperHeroBlocks().play(on: self.view)
+    }
+
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false
 

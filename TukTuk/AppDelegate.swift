@@ -11,7 +11,7 @@ import EasyAnimation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
+    var window: UIWindow? = DebugWindow()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -40,3 +40,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+class DebugWindow: UIWindow {
+    override func sendEvent(_ event: UIEvent) {
+        print("Event: \(event)")
+        if let touch = event.allTouches?.first {
+            let point = touch.location(in: self)
+            if let view = hitTest(point, with: event) {
+                print("Touch: \(view)")
+            }
+        }
+
+        super.sendEvent(event)
+    }
+}

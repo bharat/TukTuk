@@ -25,7 +25,7 @@ class Animations {
         None.self
     ]
 
-    static var random: Animation {
+    static func random() -> Animation {
         while true {
             let anim = all.random!
             if anim != None.self {

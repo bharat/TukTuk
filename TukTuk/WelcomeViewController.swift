@@ -40,14 +40,14 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        SuperHeroBlocks().play(on: self.view)
+        show(SuperHeroBlocks().vc(), sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false
 
         // Run a random welcome animation, or a preset if specified
-        let animation = preferred ?? Animations.random
+        let animation = preferred ?? Animations.random()
         animation.animate(view: self.welcomeImageView) {
             self.performSegue(withIdentifier: "SongViewController", sender: self)
 

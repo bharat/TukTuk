@@ -11,9 +11,9 @@ import UIKit
 
 protocol MiniGame {
     static var title: String { get }
-    
+
     init()
-    func play(on view: UIView)
+    func vc() -> UIViewController
 }
 
 class MiniGames {
@@ -21,5 +21,8 @@ class MiniGames {
         Thor.self,
         SuperHeroBlocks.self
     ]
-}
 
+    static func random() -> MiniGame {
+        return all.random!.init()
+    }
+}

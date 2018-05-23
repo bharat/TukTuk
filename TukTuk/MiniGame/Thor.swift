@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import UIKit
 import SpriteKit
 
 class Thor: MiniGame {
     static var title = "Thor lost his hammer!"
-    
+
     enum Collisions: UInt32 {
         case floor  = 1
         case hammer = 2
@@ -28,21 +29,27 @@ class Thor: MiniGame {
     required init() {
     }
 
-    func play(on view: UIView) {
-        let effect = UIBlurEffect(style: .light)
-        let effectView = UIVisualEffectView(effect: effect)
-        effectView.frame = view.frame
-        view.addSubview(effectView)
+    func vc() -> UIViewController {
+        return ThorUIViewController()
+    }
 
-        let skView = SKView(frame: view.frame)
-        skView.allowsTransparency = true
-        effectView.contentView.addSubview(skView)
+    class ThorUIViewController: UIViewController {
+        override func viewDidAppear(_ animated: Bool) {
+            let effect = UIBlurEffect(style: .light)
+            let effectView = UIVisualEffectView(effect: effect)
+            effectView.frame = view.frame
+            view.addSubview(effectView)
 
-        let scene = Scene(size: view.frame.size)
-        skView.presentScene(scene)
+            let skView = SKView(frame: view.frame)
+            skView.allowsTransparency = true
+            effectView.contentView.addSubview(skView)
 
-        scene.completion = {
-            effectView.removeFromSuperview()
+            let scene = Scene(size: view.frame.size)
+            skView.presentScene(scene)
+
+            scene.completion = {
+                effectView.removeFromSuperview()
+            }
         }
     }
 

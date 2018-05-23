@@ -10,59 +10,65 @@ import Foundation
 import UIKit
 import SceneKit
 
-class SuperHeroBlocks: MiniGame {
+ class SuperHeroBlocks: MiniGame {
     static var title = "Super-hero blocks!"
-
-    var heroBlocks: [SCNNode] = []
-    var sceneView: SCNView!
 
     required init() {
     }
 
-    func play(on view: UIView) {
-        let effect = UIBlurEffect(style: .light)
-        let effectView = UIVisualEffectView(effect: effect)
-        effectView.frame = view.frame
-        view.addSubview(effectView)
-
-        let scene = Scene()
-        heroBlocks = scene.addHeroBlocks()
-
-        sceneView = SCNView(frame: view.frame)
-        sceneView.backgroundColor = UIColor.lightGray
-        sceneView.autoenablesDefaultLighting = true
-        sceneView.allowsCameraControl = false
-        sceneView.scene = scene
-        sceneView.gestureRecognizers = [
-            UITapGestureRecognizer(target: self, action: #selector(tapHeroBlock(gesture:))),
-            UIPanGestureRecognizer(target: self, action: #selector(panHeroBlock(gesture:)))
-        ]
-
-        effectView.contentView.addSubview(sceneView)
+    func vc() -> UIViewController {
+        return SuperHeroBlocksUIViewController()
     }
 
-    @objc func tapHeroBlock(gesture: UITapGestureRecognizer) {
-        let point = gesture.location(in: sceneView)
-        let hits = sceneView.hitTest(point, options: nil)
+    class SuperHeroBlocksUIViewController: UIViewController {
+        var heroBlocks: [SCNNode] = []
+        var sceneView: SCNView!
 
-        if let node = hits.first?.node {
-            // Stop spinning
-            node.removeAllActions()
+        override func viewDidAppear(_ animated: Bool) {
+            let effect = UIBlurEffect(style: .light)
+            let effectView = UIVisualEffectView(effect: effect)
+            effectView.frame = view.frame
+            view.addSubview(effectView)
+
+            let scene = Scene()
+            heroBlocks = scene.addHeroBlocks()
+
+            sceneView = SCNView(frame: view.frame)
+            sceneView.backgroundColor = UIColor.lightGray
+            sceneView.autoenablesDefaultLighting = true
+            sceneView.allowsCameraControl = false
+            sceneView.scene = scene
+            sceneView.gestureRecognizers = [
+                UITapGestureRecognizer(target: self, action: #selector(tapHeroBlock(gesture:))),
+                UIPanGestureRecognizer(target: self, action: #selector(panHeroBlock(gesture:)))
+            ]
+
+            effectView.contentView.addSubview(sceneView)
         }
-    }
 
-    @objc func panHeroBlock(gesture: UIPanGestureRecognizer) {
-        let point = gesture.location(in: sceneView)
-        let hits = sceneView.hitTest(point, options: nil)
+        @objc func tapHeroBlock(gesture: UITapGestureRecognizer) {
+            let point = gesture.location(in: sceneView)
+            let hits = sceneView.hitTest(point, options: nil)
 
-        if let node = hits.first?.node {
-            // Stop spinning
-            node.removeAllActions()
+            if let node = hits.first?.node {
+                // Stop spinning
+                node.removeAllActions()
+            }
+        }
 
-            let currentPivot = node.pivot
-            let changePivot = SCNMatrix4Invert(node.transform)
-            node.pivot = SCNMatrix4Mult(changePivot, currentPivot)
-            node.transform = SCNMatrix4Identity
+        @objc func panHeroBlock(gesture: UIPanGestureRecognizer) {
+            let point = gesture.location(in: sceneView)
+            let hits = sceneView.hitTest(point, options: nil)
+
+            if let node = hits.first?.node {
+                // Stop spinning
+                node.removeAllActions()
+
+                let currentPivot = node.pivot
+                let changePivot = SCNMatrix4Invert(node.transform)
+                node.pivot = SCNMatrix4Mult(changePivot, currentPivot)
+                node.transform = SCNMatrix4Identity
+            }
         }
     }
 

@@ -56,29 +56,110 @@ import SceneKit
             }
         }
 
-        var save: SCNVector4?
+//        var startAngles: SCNVector3!
+//        var startPoint: CGPoint!
+//        var save: SCNVector4!
+        var currentAngle: Float = 0.0
+        var startX: CGFloat = 0.0
         @objc func panHeroBlock(gesture: UIPanGestureRecognizer) {
-            let point = gesture.location(in: sceneView)
-            let hits = sceneView.hitTest(point, options: nil)
+            let translation = gesture.location(in: sceneView)
+            let hits = sceneView.hitTest(translation, options: nil)
 
             if let node = hits.first?.node {
+                var newAngle = Float(translation.x) * .pi / 180.0
+
                 switch gesture.state {
                 case .began:
-                    node.removeAllActions()
-                    save = node.rotation
+                    startX = translation.x
 
                 case .changed:
-                    let new = gesture.translation(in: sceneView)
-                    if let save = save {
-                        node.rotation.x = Float(new.x) - save.x
-                        node.rotation.y = Float(new.y) - save.y
-                    }
+                    newAngle += currentAngle
+                    let deltaX = translation.x - startX
+
+                    print("deltaX: \(deltaX), newAngle is now \(newAngle)")
+                    node.transform = SCNMatrix4MakeRotation(newAngle, 0, node.rotation.y, 0)
+
+                case .ended:
+                    currentAngle = newAngle
+                    print("currentAngle is now \(currentAngle)")
 
                 default:
                     ()
                 }
+
+
+//                switch gesture.state {
+//                case .began:
+//                    startAngles = node.eulerAngles
+//                    startPoint = translation
+//
+//                case .changed:
+//                    let xDelta = Float(translation.x - startPoint.x)
+//                    let yDelta = Float(translation.y - startPoint.y)
+//                    let newX = xDelta * .pi / 180.0
+//                    let newY = yDelta * .pi / 180.0
+//
+//                    let eX = startAngles.x + newX
+//                    let eY = startAngles.y + newY
+//
+//                    node.eulerAngles = SCNVector3(eY, eX, 0)
+//                    print("point: \(xDelta), \(yDelta) \(newX), \(newY) \t\t angle delta: \(eX), \(eY)")
+//
+//                default:
+//                    ()
+//                }
+
+//                if gesture.state == .ended {
+//                    xAngle += newX
+//                    yAngle += newY
+//                }
             }
         }
+
+//        var save: SCNVector4?
+//        @objc func panHeroBlock(gesture: UIPanGestureRecognizer) {
+//            let point = gesture.location(in: sceneView)
+//            let hits = sceneView.hitTest(point, options: nil)
+//
+//            if let node = hits.first?.node {
+//                let translation = gesture.translation(in: sceneView)
+//                let x = Float(translation.x)
+//                let y = Float(-translation.y)
+//
+//                let anglePan = sqrt(pow(x,2)+pow(y,2)) * Float.pi/180.0
+//
+//                var rotationVector = SCNVector4()
+//                rotationVector.x = -y
+//                rotationVector.y = x
+//                rotationVector.z = 0
+//                rotationVector.w = anglePan
+//
+//                node.rotation = rotationVector
+
+//                if gesture.state == .ended {
+//                    let currentPivot = node.pivot
+//                    let changePivot = SCNMatrix4Invert(node.transform)
+//                    node.pivot = SCNMatrix4Mult(changePivot, currentPivot)
+//                    node.transform = SCNMatrix4Identity
+//                }
+
+//                switch gesture.state {
+//                case .began:
+//                    node.removeAllActions()
+//                    save = node.rotation
+//
+//                case .changed:
+//                    let new = gesture.translation(in: sceneView)
+//                    if let save = save {
+//                        node.rotation.x = Float(new.x) - save.x
+//                        node.rotation.y = Float(new.y) - save.y
+//                    }
+//
+//                default:
+//                    ()
+//                }
+//            }
+//        }
     }
 
     class Scene: SCNScene {
@@ -114,7 +195,8 @@ import SceneKit
             }
 
             var heroes: [SCNNode] = []
-            for yLoc in ([-3.0, -1.0, 1.0, 3.0].map { $0 * Float(box.height) }) {
+            // for yLoc in ([-3.0, -1.0, 1.0, 3.0].map { $0 * Float(box.height) }) {
+            for yLoc in ([-1.0].map { $0 * Float(box.height) }) {
                 let hero = SCNNode(geometry: box)
                 hero.position = SCNVector3(x: 0, y: yLoc, z: 20)
                 rootNode.addChildNode(hero)

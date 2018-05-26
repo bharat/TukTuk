@@ -11,15 +11,15 @@ import UIKit
 
 protocol MiniGame {
     static var title: String { get }
-
+    var uivc: UIViewController { get }
+    
     init()
-    func vc() -> UIViewController
 }
 
 class MiniGames {
     static var all: [MiniGame.Type] = [
         Thor.self,
-        SuperHeroBlocks.self
+        HeroBlocks.self
     ]
 
     static func random() -> MiniGame {

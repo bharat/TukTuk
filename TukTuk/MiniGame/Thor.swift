@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import SpriteKit
 
-class Thor: MiniGame {
+final class Thor: MiniGame {
     static var title = "Thor lost his hammer!"
+    var uivc: UIViewController = UIVC()
 
     enum Collisions: UInt32 {
         case floor  = 1
@@ -26,14 +27,7 @@ class Thor: MiniGame {
     static var ILostMyHammer            = Catalog.sound(from: "ThorILostMyHammer.mp3")
     static var IAmTheGodOfThunder       = Catalog.sound(from: "ThorIAmTheGodOfThunder.mp3")
 
-    required init() {
-    }
-
-    func vc() -> UIViewController {
-        return ThorUIViewController()
-    }
-
-    class ThorUIViewController: UIViewController {
+    class UIVC: UIViewController {
         override func viewDidAppear(_ animated: Bool) {
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)

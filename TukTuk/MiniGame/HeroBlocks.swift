@@ -1,5 +1,5 @@
 //
-//  SuperHeroBlocks.swift
+//  HeroBlocks.swift
 //  TukTuk
 //
 //  Created by Bharat Mediratta on 5/14/18.
@@ -10,17 +10,11 @@ import Foundation
 import UIKit
 import SceneKit
 
- class SuperHeroBlocks: MiniGame {
+final class HeroBlocks: MiniGame {
     static var title = "Super-Hero blocks!"
+    var uivc: UIViewController = UIVC()
 
-    required init() {
-    }
-
-    func vc() -> UIViewController {
-        return SuperHeroBlocksUIViewController()
-    }
-    
-    class SuperHeroBlocksUIViewController: UIViewController {
+    class UIVC: UIViewController {
         var sceneView: SCNView!
         
         override func viewDidAppear(_ animated: Bool) {
@@ -29,7 +23,7 @@ import SceneKit
             effectView.frame = view.frame
             view.addSubview(effectView)
             
-            let scene = HeroScene()
+            let scene = HeroBlocks.Scene()
             sceneView = SCNView(frame: view.frame)
             sceneView.backgroundColor = UIColor.lightGray
             sceneView.autoenablesDefaultLighting = true
@@ -79,7 +73,7 @@ import SceneKit
         }
     }
     
-    class HeroScene: SCNScene {
+    class Scene: SCNScene {
         var blocks: [Block] = []
 
         override init() {

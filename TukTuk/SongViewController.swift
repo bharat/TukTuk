@@ -75,7 +75,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if VideoPlayer.isPlaying == false {
             if Array(1...120).random == 1 {
-                show(Thor().vc(), sender: self)
+                show(Thor().uivc, sender: self)
                 return
             }
 
@@ -199,7 +199,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
                 VideoPlayer.play(Catalog.instance.videos[index].video, from: self)
 
             case "minigame":
-                self.show(MiniGames.random().vc(), sender: self)
+                self.show(MiniGames.random().uivc, sender: self)
 
             default:
                 ()

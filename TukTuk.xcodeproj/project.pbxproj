@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		209D1DB6996F487D912E2782 /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */; };
-		4F08093320AA5A9500CF8767 /* SuperHeroBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* SuperHeroBlocks.swift */; };
+		4F08093320AA5A9500CF8767 /* HeroBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* HeroBlocks.swift */; };
 		4F1F17C7209E112C00483499 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C6209E112C00483499 /* Collection.swift */; };
 		4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C9209E150F00483499 /* FaceBalls.swift */; };
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
@@ -16,7 +16,6 @@
 		4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CF209E15BB00483499 /* Hinge.swift */; };
 		4F6A7BDB1F1AD5AB00299152 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BDA1F1AD5AB00299152 /* Videos */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
-		4F71E986209D2C2600E0BBDB /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 4F71E985209D2C2600E0BBDB /* Images */; };
 		4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */; };
 		4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F81D5F520A6776D00CB68D8 /* MiniGames.swift */; };
 		4F81D5F820A7600C00CB68D8 /* None.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F81D5F720A7600C00CB68D8 /* None.swift */; };
@@ -41,7 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4F08093220AA5A9500CF8767 /* SuperHeroBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperHeroBlocks.swift; sourceTree = "<group>"; };
+		4F08093220AA5A9500CF8767 /* HeroBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroBlocks.swift; sourceTree = "<group>"; };
 		4F1F17C6209E112C00483499 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		4F1F17C9209E150F00483499 /* FaceBalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBalls.swift; sourceTree = "<group>"; };
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
@@ -49,7 +48,6 @@
 		4F1F17CF209E15BB00483499 /* Hinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hinge.swift; sourceTree = "<group>"; };
 		4F6A7BDA1F1AD5AB00299152 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4F71E985209D2C2600E0BBDB /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		4F81D5F520A6776D00CB68D8 /* MiniGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGames.swift; sourceTree = "<group>"; };
 		4F81D5F720A7600C00CB68D8 /* None.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = None.swift; sourceTree = "<group>"; };
@@ -121,7 +119,7 @@
 			children = (
 				4F81D5F520A6776D00CB68D8 /* MiniGames.swift */,
 				4F90EB2720A372F000F8EE87 /* Thor.swift */,
-				4F08093220AA5A9500CF8767 /* SuperHeroBlocks.swift */,
+				4F08093220AA5A9500CF8767 /* HeroBlocks.swift */,
 			);
 			path = MiniGame;
 			sourceTree = "<group>";
@@ -161,7 +159,6 @@
 				4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */,
 				4FBD57B71F098DEB00BDCDE3 /* Info.plist */,
 				4F6A7BE21F1AE9B300299152 /* Assets.xcassets */,
-				4F71E985209D2C2600E0BBDB /* Images */,
 				4F90EC6820A3CA6D00F8EE87 /* Sounds */,
 				4FB989041F12F45A001F02CE /* Meta */,
 				4FB989051F12F45A001F02CE /* Songs */,
@@ -252,7 +249,6 @@
 			files = (
 				4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */,
 				4FB989071F12F45A001F02CE /* Songs in Resources */,
-				4F71E986209D2C2600E0BBDB /* Images in Resources */,
 				4F90EC6920A3CA6D00F8EE87 /* Sounds in Resources */,
 				4F6A7BDB1F1AD5AB00299152 /* Videos in Resources */,
 				4FB989061F12F45A001F02CE /* Meta in Resources */,
@@ -322,7 +318,7 @@
 				4F8A2AA7209FDB9C000C2CA5 /* MutableCollection.swift in Sources */,
 				4F8A2A9A209F6E0A000C2CA5 /* Catalog.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
-				4F08093320AA5A9500CF8767 /* SuperHeroBlocks.swift in Sources */,
+				4F08093320AA5A9500CF8767 /* HeroBlocks.swift in Sources */,
 				4F8A2A9C209F730E000C2CA5 /* AudioPlayer.swift in Sources */,
 				4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */,
 				4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */,

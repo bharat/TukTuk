@@ -199,7 +199,6 @@
 				4FBD57A51F098DEB00BDCDE3 /* Frameworks */,
 				4FBD57A61F098DEB00BDCDE3 /* Resources */,
 				D15C2A9A4846E04855A5E1F5 /* [CP] Embed Pods Frameworks */,
-				80936E05D0035BA7B346E388 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -281,21 +280,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		80936E05D0035BA7B346E388 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D15C2A9A4846E04855A5E1F5 /* [CP] Embed Pods Frameworks */ = {

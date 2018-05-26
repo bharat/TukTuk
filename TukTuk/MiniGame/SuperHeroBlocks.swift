@@ -87,7 +87,7 @@ import SceneKit
             
             let camera = SCNNode()
             camera.camera = SCNCamera()
-            camera.position = SCNVector3(x: 5, y: -50, z: 125)
+            camera.position = SCNVector3(x: 0, y: 0, z: 100)
             rootNode.addChildNode(camera)
 
             let box = SCNBox(width: 10.0, height: 10.0, length: 10.0, chamferRadius: 1)
@@ -98,20 +98,20 @@ import SceneKit
                 return material
             }
             
-            for yLoc in ([-3.0, -1.0, 1.0, 3.0].map { $0 * Float(box.height) }) {
-                let hero = Block(geometry: box)
-                hero.position = SCNVector3(x: 0, y: yLoc, z: 20)
-                rootNode.addChildNode(hero)
-                blocks.append(hero)
+            let yDest:  [Float] = [-3.0, -1.0, 1.0, 3.0].map { $0 * Float(box.height) }
+            for i in 0...3 {
+                let block = Block(geometry: box)
+                block.position = SCNVector3(x: 0, y: 0, z: 100.0)
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 * Double(i)) {
+                    block.runAction(SCNAction.move(to: SCNVector3(x: 0, y: yDest[i], z: 20), duration: 3.0))
+                    block.entice()
+                }
+
+                rootNode.addChildNode(block)
+                blocks.append(block)
             }
             
-            camera.runAction(SCNAction.move(to: SCNVector3(x: 0, y: 0, z: 100), duration: 2.0))
-
-            // For some reason, putting this in the camera.runAction() completion doesn't work
-            // The code fires, but the nodes don't run the animation until I click them.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                self.blocks.forEach { $0.entice() }
-            }
         }
         
         required init(coder: NSCoder) {
@@ -124,7 +124,13 @@ import SceneKit
             let hits = sceneView.hitTest(point, options: nil)
             
             if let block = hits.first?.node as? Block {
-                while block.show(Hero.all.random) == false { }
+                while true {
+                    let rnd = Hero.all.random
+                    if rnd != block.visible {
+                        block.show(rnd)
+                        break
+                    }
+                }
             }
         }
     }
@@ -133,9 +139,10 @@ import SceneKit
         var visible: Hero = .Spiderman
         
         enum Pace: TimeInterval {
-            case fastPace   = 0.125
-            case normalPace = 0.25
-            case slowPace   = 0.50
+            case fastPace     = 0.125
+            case normalPace   = 0.25
+            case slowPace     = 0.50
+            case verySlowPace = 3.0
         }
         
         init(geometry: SCNGeometry?) {
@@ -147,17 +154,14 @@ import SceneKit
             fatalError("init(coder:) has not been implemented")
         }
         
-        func show(_ hero: Hero, at pace: Pace = .normalPace) -> Bool {
+        func show(_ hero: Hero, at pace: Pace = .normalPace) {
             removeAllActions()
             
             if hero != visible {
                 let rot = hero.rotation
                 runAction(SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: pace.rawValue))
                 visible = hero
-                return true
             }
-            
-            return false
         }
         
         func entice() {
@@ -165,12 +169,12 @@ import SceneKit
             let rot = visible.rotation
             runAction(
                 SCNAction.sequence([
-                    SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: Pace.slowPace.rawValue),
+                    SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: Pace.verySlowPace.rawValue),
                     SCNAction.repeatForever(SCNAction.sequence([
                             SCNAction.rotateBy(x: 0, y: 0, z: -0.08, duration: 0.025),
                             SCNAction.rotateBy(x: 0, y: 0, z:  0.16, duration: 0.050),
                             SCNAction.rotateBy(x: 0, y: 0, z: -0.08, duration: 0.025),
-                            SCNAction.wait(duration: [0.5, 0.75, 1.0].random),
+                            SCNAction.wait(duration: [0.25, 0.50, 0.75].random),
                             ])),
                 ])
             )

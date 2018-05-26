@@ -20,6 +20,42 @@ import SceneKit
         return SuperHeroBlocksUIViewController()
     }
 
+    enum Hero: Int {
+        case Spiderman      = 0
+        case Batman         = 1
+        case IronMan        = 2
+        case CaptainAmerica = 3
+        case Hulk           = 4
+        case Flash          = 5
+        
+        static var all: [Hero]  = [.Spiderman, .Batman, .IronMan, .CaptainAmerica, .Hulk, .Flash]
+        
+        var rotation: (x: CGFloat, y: CGFloat) {
+            switch self {
+            case .Spiderman:        return (x: 0.0,       y: 0.0     )
+            case .Batman:           return (x: 0.0,       y: .pi / -2)
+            case .IronMan:          return (x: 0.0,       y: .pi     )
+            case .CaptainAmerica:   return (x: 0.0,       y: .pi / 2 )
+            case .Hulk:             return (x: .pi / 2,   y: 0.0     )
+            case .Flash:            return (x: .pi / -2,  y: 0.0     )
+            }
+        }
+        
+        var image: UIImage? {
+            var (x, y) = (0, 0)
+            switch self {
+            case .Spiderman:        (x, y) = (3,   28 )
+            case .Batman:           (x, y) = (185, 20 )
+            case .IronMan:          (x, y) = (186, 264)
+            case .CaptainAmerica:   (x, y) = (380, 269)
+            case .Hulk:             (x, y) = (0,   525)
+            case .Flash:            (x, y) = (381, 516)
+            }
+            
+            return UIImage(named: "hero_faces")?.crop(to: CGRect(x: x, y: y, width: 200, height: 200))
+        }
+    }
+    
     class SuperHeroBlocksUIViewController: UIViewController {
         var heroBlocks: [SCNNode] = []
         var sceneView: SCNView!
@@ -55,11 +91,7 @@ import SceneKit
             }
         }
     }
-    
-    struct Hero {
-        
-    }
-    
+
     class Block: SCNNode {
         var visibleFace = 0
         
@@ -78,16 +110,8 @@ import SceneKit
         }
         
         func show(face: Int) {
-            let rot = [
-                [0.0,       0.0,       0.0],  // Spiderman
-                [0.0,       .pi / -2,  0.0],  // Batman
-                [0.0,       .pi,       0.0],  // Iron Man
-                [0.0,       .pi / 2,   0.0],  // Captain America
-                [.pi / 2,   0.0,       0.0],  // Hulk
-                [.pi / -2,  0.0,       0.0],  // Flash
-                ][face]
-
-            runAction(SCNAction.rotateTo(x: CGFloat(rot[0]), y: CGFloat(rot[1]), z: CGFloat(rot[2]), duration: 0.25))
+            let rot = Hero.all[face].rotation
+            runAction(SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: 0.25))
         }
         
         func stopWiggling() {
@@ -123,16 +147,9 @@ import SceneKit
         func addHeroBlocks() -> [Block] {
             let box = SCNBox(width: 10.0, height: 10.0, length: 10.0, chamferRadius: 1)
 
-            box.materials = [
-                CGRect(x: 3,   y: 28,  width: 200, height: 200),   // Spiderman
-                CGRect(x: 185, y: 20,  width: 200, height: 200),   // Batman
-                CGRect(x: 186, y: 264, width: 200, height: 200),   // Iron Man
-                CGRect(x: 380, y: 269, width: 200, height: 200),   // Captain America
-                CGRect(x: 0,   y: 525, width: 200, height: 200),   // Hulk
-                CGRect(x: 381, y: 516, width: 200, height: 200),   // Flash
-            ].map {
+            box.materials = Hero.all.map {
                 let material = SCNMaterial()
-                material.diffuse.contents = UIImage(named: "hero_faces")?.crop(to: $0)
+                material.diffuse.contents = $0.image
                 return material
             }
 
@@ -143,7 +160,7 @@ import SceneKit
                 rootNode.addChildNode(hero)
                 heroes.append(hero)
                 
-                hero.show(face: 0)
+                hero.show(face: Hero.all.random!.rawValue)
                 hero.wiggle()
             }
             return heroes

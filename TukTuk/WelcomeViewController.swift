@@ -21,7 +21,7 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         welcomeImageView = UIImageView(frame: view.frame)
         welcomeImageView.contentMode = .scaleAspectFill
         welcomeImageView.clipsToBounds = true
-        welcomeImageView.image = #imageLiteral(resourceName: "Welcome_Bharat_and_Bettina")
+        welcomeImageView.image = #imageLiteral(resourceName: "Welcome_BharatAndBettina")
         welcomeImageView.layer.borderWidth = 8
         welcomeImageView.layer.borderColor = UIColor.black.cgColor
         welcomeImageView.layer.cornerRadius = 0
@@ -39,9 +39,9 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         welcomeImageView.addGestureRecognizer(long)
     }
 
-//    override func viewDidAppear(_ animated: Bool) {
-//        show(SuperHeroBlocks().vc(), sender: self)
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        show(HeroBlocks().uivc, sender: self)
+    }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false

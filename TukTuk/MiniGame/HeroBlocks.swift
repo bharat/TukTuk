@@ -38,41 +38,53 @@ final class HeroBlocks: MiniGame {
     }
 
     enum Hero: Int {
-        case Spiderman      = 0
-        case Batman         = 1
+        case CaptainAmerica = 0
+        case HawkEye        = 1
         case IronMan        = 2
-        case CaptainAmerica = 3
-        case Hulk           = 4
-        case Flash          = 5
+        case Hulk           = 3
+        case Thor           = 4
+        case BlackWidow     = 5
         
-        static var all: [Hero]  = [.Spiderman, .Batman, .IronMan, .CaptainAmerica, .Hulk, .Flash]
+        static var all: [Hero]  = [.CaptainAmerica, .HawkEye, .IronMan, .Hulk, .Thor, .BlackWidow]
         
         var rotation: (x: CGFloat, y: CGFloat) {
             switch self {
-            case .Spiderman:        return (x: 0.0,       y: 0.0     )
-            case .Batman:           return (x: 0.0,       y: .pi / -2)
+            case .CaptainAmerica:   return (x: 0.0,       y: 0.0     )
+            case .HawkEye:          return (x: 0.0,       y: .pi / -2)
             case .IronMan:          return (x: 0.0,       y: .pi     )
-            case .CaptainAmerica:   return (x: 0.0,       y: .pi / 2 )
-            case .Hulk:             return (x: .pi / 2,   y: 0.0     )
-            case .Flash:            return (x: .pi / -2,  y: 0.0     )
+            case .Hulk:             return (x: 0.0,       y: .pi / 2 )
+            case .Thor:             return (x: .pi / 2,   y: 0.0     )
+            case .BlackWidow:       return (x: .pi / -2,  y: 0.0     )
             }
         }
         
         var image: UIImage? {
-            var (x, y) = (0, 0)
             switch self {
-            case .Spiderman:        (x, y) = (3,   28 )
-            case .Batman:           (x, y) = (185, 20 )
-            case .IronMan:          (x, y) = (186, 264)
-            case .CaptainAmerica:   (x, y) = (380, 269)
-            case .Hulk:             (x, y) = (0,   525)
-            case .Flash:            (x, y) = (381, 516)
+            case .CaptainAmerica:   return #imageLiteral(resourceName: "Hero_CaptainAmerica")
+            case .HawkEye:          return #imageLiteral(resourceName: "Hero_HawkEye")
+            case .IronMan:          return #imageLiteral(resourceName: "Hero_IronMan")
+            case .Hulk:             return #imageLiteral(resourceName: "Hero_Hulk")
+            case .Thor:             return #imageLiteral(resourceName: "Hero_Thor")
+            case .BlackWidow:       return #imageLiteral(resourceName: "Hero_BlackWidow")
             }
-            
-            return UIImage(named: "hero_faces")?.crop(to: CGRect(x: x, y: y, width: 200, height: 200))
+        }
+        
+        var sound: URL {
+            switch self {
+            case .CaptainAmerica:   return Catalog.sound(from: "HeroBlocks_CaptainAmerica.mp3")
+            case .HawkEye:          return Catalog.sound(from: "HeroBlocks_HawkEye.mp3")
+            case .IronMan:          return Catalog.sound(from: "HeroBlocks_IronMan.mp3")
+            case .Hulk:             return Catalog.sound(from: "HeroBlocks_Hulk.mp3")
+            case .Thor:             return Catalog.sound(from: "HeroBlocks_Thor.mp3")
+            case .BlackWidow:       return Catalog.sound(from: "HeroBlocks_BlackWidow.mp3")
+            }
         }
     }
     
+    static var RotateClick          = Catalog.sound(from: "HeroBlocks_RotateClick.mp3")
+    static var AvengersAssemble     = Catalog.sound(from: "HeroBlocks_AvengersAssemble.mp3")
+    static var ChooseAnAvenger      = Catalog.sound(from: "HeroBlocks_ChooseAnAvenger.mp3")
+
     class Scene: SCNScene {
         var blocks: [Block] = []
 
@@ -93,12 +105,14 @@ final class HeroBlocks: MiniGame {
             }
             
             let yDest:  [Float] = [-3.0, -1.0, 1.0, 3.0].map { $0 * Float(box.height) }
+            
+            AudioPlayer.play(AvengersAssemble)
             for i in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 100.0)
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 * Double(i)) {
-                    block.runAction(SCNAction.move(to: SCNVector3(x: 0, y: yDest[i], z: 20), duration: 3.0))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 * Double(i)) {
+                    block.runAction(SCNAction.move(to: SCNVector3(x: 0, y: yDest[i], z: 20), duration: 5.0))
                     block.entice()
                 }
 
@@ -106,6 +120,9 @@ final class HeroBlocks: MiniGame {
                 blocks.append(block)
             }
             
+            DispatchQueue.main.asyncAfter(deadline: .now() + 11.0) {
+                AudioPlayer.play(ChooseAnAvenger)
+            }
         }
         
         required init(coder: NSCoder) {
@@ -130,7 +147,7 @@ final class HeroBlocks: MiniGame {
     }
 
     class Block: SCNNode {
-        var visible: Hero = .Spiderman
+        var visible: Hero = .CaptainAmerica
         
         enum Pace: TimeInterval {
             case fastPace     = 0.125
@@ -153,7 +170,10 @@ final class HeroBlocks: MiniGame {
             
             if hero != visible {
                 let rot = hero.rotation
-                runAction(SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: pace.rawValue))
+                AudioPlayer.play(RotateClick)
+                runAction(SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: pace.rawValue)) {
+                    AudioPlayer.play(hero.sound)
+                }
                 visible = hero
             }
         }

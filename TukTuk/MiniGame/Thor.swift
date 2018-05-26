@@ -57,7 +57,7 @@ final class Thor: MiniGame {
         var touchCount = 0
 
         init() {
-            let texture = SKTexture(imageNamed: "thor_hammer")
+            let texture = SKTexture(image: #imageLiteral(resourceName: "Thor_Hammer"))
             super.init(texture: texture, color: .clear, size: texture.size())
             physicsBody = SKPhysicsBody(rectangleOf: size)
             physicsBody?.restitution = 0
@@ -127,7 +127,7 @@ final class Thor: MiniGame {
         }
 
         init() {
-            let texture = SKTexture(imageNamed: "thor_summoning_hammer")
+            let texture = SKTexture(image: #imageLiteral(resourceName: "Thor_SummoningHammer"))
             super.init(texture: texture, color: .clear, size: texture.size())
             physicsBody?.isDynamic = false
             physicsBody?.categoryBitMask = Collisions.thor.rawValue
@@ -148,7 +148,7 @@ final class Thor: MiniGame {
         }
 
         func grabHammer() {
-            texture = SKTexture(imageNamed: "thor_grab_hammer")
+            texture = SKTexture(image: #imageLiteral(resourceName: "Thor_GrabHammer"))
             guard let texture = texture, let frame = scene?.frame else {
                 return
             }
@@ -165,7 +165,7 @@ final class Thor: MiniGame {
         }
 
         func flyAway() {
-            texture = SKTexture(imageNamed: "thor_fly_away")
+            texture = SKTexture(image: #imageLiteral(resourceName: "Thor_FlyAway"))
             guard let texture = texture else {
                 return
             }

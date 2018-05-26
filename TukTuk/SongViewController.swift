@@ -46,9 +46,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch(sender) {
         case videoButton:
             AudioPlayer.stop()
-            if let video = Catalog.instance.videos.random {
-                VideoPlayer.play(video.video, from: self)
-            }
+            VideoPlayer.play(Catalog.instance.videos.random.video, from: self)
             disableStopButton()
             stopVideoTimer()
             hideVideoButton()
@@ -76,7 +74,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if VideoPlayer.isPlaying == false {
-            if Array(1...120).random! == 1 {
+            if Array(1...120).random == 1 {
                 show(Thor().vc(), sender: self)
                 return
             }

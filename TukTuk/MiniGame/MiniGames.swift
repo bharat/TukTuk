@@ -23,6 +23,6 @@ class MiniGames {
     ]
 
     static func random() -> MiniGame {
-        return all.random!.init()
+        return all.random.init()
     }
 }

@@ -24,16 +24,27 @@ final class HeroBlocks: MiniGame {
             view.addSubview(effectView)
             
             let scene = HeroBlocks.Scene()
+            scene.completion = { hero in
+                VideoPlayer.play(hero.movie, from: self) {
+                    self.dismiss(animated: animated)
+                }
+            }
+            
+            let gesture = UITapGestureRecognizer(target: scene, action: #selector(scene.tapHeroBlock(gesture:)))
+            gesture.isEnabled = false
+            
             sceneView = SCNView(frame: view.frame)
             sceneView.backgroundColor = UIColor.lightGray
-            sceneView.autoenablesDefaultLighting = true
+            sceneView.autoenablesDefaultLighting = false
             sceneView.allowsCameraControl = false
             sceneView.scene = scene
-            sceneView.gestureRecognizers = [
-                UITapGestureRecognizer(target: scene, action: #selector(scene.tapHeroBlock(gesture:)))
-            ]
-            
+            sceneView.gestureRecognizers = [ gesture ]
             effectView.contentView.addSubview(sceneView)
+            
+            // Ugh. This is a terrible way to make sure that the user doesn't pre-click
+            DispatchQueue.main.asyncAfter(deadline: .now() + 11.0) {
+                gesture.isEnabled = true
+            }
         }
     }
 
@@ -79,32 +90,51 @@ final class HeroBlocks: MiniGame {
             case .BlackWidow:       return Catalog.sound(from: "HeroBlocks_BlackWidow.mp3")
             }
         }
+        
+        var movie: URL {
+            return Catalog.instance.videos[0].video
+        }
     }
     
     static var RotateClick          = Catalog.sound(from: "HeroBlocks_RotateClick.mp3")
     static var AvengersAssemble     = Catalog.sound(from: "HeroBlocks_AvengersAssemble.mp3")
     static var ChooseAnAvenger      = Catalog.sound(from: "HeroBlocks_ChooseAnAvenger.mp3")
 
+    enum Pace: TimeInterval {
+        case fastPace     = 0.125
+        case normalPace   = 0.25
+        case slowPace     = 0.50
+        case verySlowPace = 5.0
+    }
+    
     class Scene: SCNScene {
         var blocks: [Block] = []
+        var completion: (Hero) -> () = {_ in }
 
         override init() {
             super.init()
             
             let camera = SCNNode()
             camera.camera = SCNCamera()
+            camera.camera?.zFar = 400.0
             camera.position = SCNVector3(x: 0, y: 0, z: 100)
             rootNode.addChildNode(camera)
+            
+            let omniLight = SCNNode()
+            omniLight.light = SCNLight()
+            omniLight.light!.type = .omni
+            omniLight.light!.color = UIColor(white: 1.0, alpha: 1.0)
+            omniLight.position = SCNVector3Make(0, 0, 100)
+            rootNode.addChildNode(omniLight)
 
             let box = SCNBox(width: 10.0, height: 10.0, length: 10.0, chamferRadius: 1)
-            
             box.materials = Hero.all.map {
                 let material = SCNMaterial()
                 material.diffuse.contents = $0.image
                 return material
             }
             
-            let yDest:  [Float] = [-3.0, -1.0, 1.0, 3.0].map { $0 * Float(box.height) }
+            let yDest:  [Float] = [3.0, 1.0, -1.0, -3.0].map { $0 * Float(box.height) }
             
             AudioPlayer.play(AvengersAssemble)
             for i in 0...3 {
@@ -112,8 +142,8 @@ final class HeroBlocks: MiniGame {
                 block.position = SCNVector3(x: 0, y: 0, z: 100.0)
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 * Double(i)) {
-                    block.runAction(SCNAction.move(to: SCNVector3(x: 0, y: yDest[i], z: 20), duration: 5.0))
-                    block.entice()
+                    block.runAction(SCNAction.move(to: SCNVector3(x: 0, y: yDest[i], z: 20), duration: Pace.verySlowPace.rawValue))
+                    block.heroicArrival()
                 }
 
                 rootNode.addChildNode(block)
@@ -135,6 +165,9 @@ final class HeroBlocks: MiniGame {
             let hits = sceneView.hitTest(point, options: nil)
             
             if let block = hits.first?.node as? Block {
+                // stop all wiggling
+                blocks.forEach { $0.stop() }
+                
                 while true {
                     let rnd = Hero.all.random
                     if rnd != block.visible {
@@ -142,19 +175,32 @@ final class HeroBlocks: MiniGame {
                         break
                     }
                 }
+
+                // If they're all the same, we're ready for the next phase
+                if (blocks.filter { $0.visible == blocks[0].visible }.count) == blocks.count {
+                    DispatchQueue.main.async {
+                        self.selectHero(self.blocks[0].visible)
+                    }
+                    gesture.isEnabled = false
+                }
+            }
+        }
+        
+        func selectHero(_ hero: Hero) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                for (i, block) in self.blocks.enumerated() {
+                    block.runAction(SCNAction.move(by: SCNVector3(0, 0, -500), duration: 2.0 + 0.5 * TimeInterval(i)))
+                }
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                self.completion(hero)
             }
         }
     }
 
     class Block: SCNNode {
         var visible: Hero = .CaptainAmerica
-        
-        enum Pace: TimeInterval {
-            case fastPace     = 0.125
-            case normalPace   = 0.25
-            case slowPace     = 0.50
-            case verySlowPace = 3.0
-        }
         
         init(geometry: SCNGeometry?) {
             super.init()
@@ -178,8 +224,8 @@ final class HeroBlocks: MiniGame {
             }
         }
         
-        func entice() {
-            let visible = Hero.all.random
+        func heroicArrival() {
+            visible = Hero.all.random
             let rot = visible.rotation
             runAction(
                 SCNAction.sequence([
@@ -192,7 +238,10 @@ final class HeroBlocks: MiniGame {
                             ])),
                 ])
             )
-
+        }
+        
+        func stop() {
+            removeAllActions()
         }
     }
 }

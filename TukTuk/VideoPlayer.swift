@@ -12,12 +12,14 @@ import AVKit
 class VideoPlayer {
     static var playerVC = AVPlayerViewController()
     static var player = AVPlayer()
+    static var completion = {}
 
     static var isPlaying: Bool {
         return playerVC.isPlaying
     }
 
-    static func play(_ url: URL, from sender: UIViewController) {
+    static func play(_ url: URL, from sender: UIViewController, completion: @escaping () -> () = {}) {
+        VideoPlayer.completion = completion
         VideoPlayer.playerVC.showsPlaybackControls = false
 
         let asset = AVAsset(url: url)
@@ -36,7 +38,7 @@ class VideoPlayer {
     }
 
     @objc static func hide() {
-        playerVC.dismiss(animated: true, completion: nil)
+        playerVC.dismiss(animated: true, completion: VideoPlayer.completion)
     }
 
 }

@@ -11,7 +11,7 @@ import UIKit
 import SceneKit
 
 final class AvengersBlocks: MiniGame {
-    static var title = "Super-Hero blocks!"
+    static var title = "Avengers blocks!"
     var uivc: UIViewController = UIVC()
 
     class UIVC: UIViewController {
@@ -81,12 +81,12 @@ final class AvengersBlocks: MiniGame {
         
         var sound: URL {
             switch self {
-            case .CaptainAmerica:   return Catalog.sound(from: "HeroBlocks_CaptainAmerica.mp3")
-            case .HawkEye:          return Catalog.sound(from: "HeroBlocks_HawkEye.mp3")
-            case .IronMan:          return Catalog.sound(from: "HeroBlocks_IronMan.mp3")
-            case .Hulk:             return Catalog.sound(from: "HeroBlocks_Hulk.mp3")
-            case .Thor:             return Catalog.sound(from: "HeroBlocks_Thor.mp3")
-            case .BlackWidow:       return Catalog.sound(from: "HeroBlocks_BlackWidow.mp3")
+            case .CaptainAmerica:   return Catalog.sound("AvengersBlocks_CaptainAmerica.mp3")
+            case .HawkEye:          return Catalog.sound("AvengersBlocks_HawkEye.mp3")
+            case .IronMan:          return Catalog.sound("AvengersBlocks_IronMan.mp3")
+            case .Hulk:             return Catalog.sound("AvengersBlocks_Hulk.mp3")
+            case .Thor:             return Catalog.sound("AvengersBlocks_Thor.mp3")
+            case .BlackWidow:       return Catalog.sound("AvengersBlocks_BlackWidow.mp3")
             }
         }
         
@@ -95,9 +95,9 @@ final class AvengersBlocks: MiniGame {
         }
     }
     
-    static var RotateClick          = Catalog.sound(from: "HeroBlocks_RotateClick.mp3")
-    static var AvengersAssemble     = Catalog.sound(from: "HeroBlocks_AvengersAssemble.mp3")
-    static var ChooseAnAvenger      = Catalog.sound(from: "HeroBlocks_ChooseAnAvenger.mp3")
+    static var RotateClick          = Catalog.sound("AvengersBlocks_RotateClick.mp3")
+    static var AvengersAssemble     = Catalog.sound("AvengersBlocks_AvengersAssemble.mp3")
+    static var ChooseAnAvenger      = Catalog.sound("AvengersBlocks_ChooseAnAvenger.mp3")
 
     enum Pace: TimeInterval {
         case fastPace     = 0.125

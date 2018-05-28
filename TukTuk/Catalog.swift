@@ -42,7 +42,7 @@ class Catalog {
         }
     }
 
-    static func sound(from fileName: String) -> URL {
+    static func sound(_ fileName: String) -> URL {
         return instance.url(from: "Sounds/\(fileName)")
     }
 

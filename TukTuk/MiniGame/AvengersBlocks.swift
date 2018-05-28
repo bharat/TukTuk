@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SceneKit
 
-final class HeroBlocks: MiniGame {
+final class AvengersBlocks: MiniGame {
     static var title = "Super-Hero blocks!"
     var uivc: UIViewController = UIVC()
 
@@ -23,7 +23,7 @@ final class HeroBlocks: MiniGame {
             effectView.frame = view.frame
             view.addSubview(effectView)
             
-            let scene = HeroBlocks.Scene()
+            let scene = AvengersBlocks.Scene()
             scene.completion = { hero in
                 VideoPlayer.play(hero.movie, from: self) {
                     self.dismiss(animated: animated)
@@ -176,18 +176,20 @@ final class HeroBlocks: MiniGame {
                 AudioPlayer.play(RotateClick)
                 while true {
                     let rnd = Hero.all.random
-                    if rnd != block.visible {
-                        block.show(rnd)
+                    if rnd != block.hero {
+                        block.show(rnd) {
+                            AudioPlayer.play(block.hero.sound)
+                        }
                         break
                     }
                 }
 
 
                 // If they're all the same, we're ready for the next phase
-                if (blocks.filter { $0.visible == blocks[0].visible }.count) == blocks.count {
+                if (blocks.filter { $0.hero == blocks[0].hero }.count) == blocks.count {
                     gesture.isEnabled = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        self.selectHero(self.blocks[0].visible)
+                        self.selectHero(self.blocks[0].hero)
                     }
                 }
             }
@@ -205,7 +207,7 @@ final class HeroBlocks: MiniGame {
     }
 
     class Block: SCNNode {
-        var visible: Hero = .CaptainAmerica
+        var hero: Hero = .CaptainAmerica
         
         init(geometry: SCNGeometry?) {
             super.init()
@@ -216,21 +218,21 @@ final class HeroBlocks: MiniGame {
             fatalError("init(coder:) has not been implemented")
         }
         
-        func show(_ hero: Hero, at pace: Pace = .normalPace) {
+        func show(_ new: Hero, at pace: Pace = .normalPace, completion: @escaping () -> () = {}) {
             removeAllActions()
-            
-            if hero != visible {
+
+            if hero != new {
+                hero = new
                 let rot = hero.rotation
                 runAction(SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: pace.rawValue)) {
-                    AudioPlayer.play(hero.sound)
+                    completion()
                 }
-                visible = hero
             }
         }
         
         func heroicArrival() {
-            visible = Hero.all.random
-            let rot = visible.rotation
+            hero = Hero.all.random
+            let rot = hero.rotation
             runAction(
                 SCNAction.sequence([
                     SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: Pace.verySlowPace.rawValue),

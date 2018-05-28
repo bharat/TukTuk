@@ -136,6 +136,8 @@ final class HeroBlocks: MiniGame {
             for _ in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 120.0)
+                block.show(Hero.all.random)
+
                 rootNode.addChildNode(block)
                 blocks.append(block)
             }
@@ -152,7 +154,7 @@ final class HeroBlocks: MiniGame {
                 }
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 11.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 9.0) {
                 AudioPlayer.play(ChooseAnAvenger)
                 completion()
             }
@@ -171,6 +173,7 @@ final class HeroBlocks: MiniGame {
                 // stop all wiggling
                 blocks.forEach { $0.stop() }
                 
+                AudioPlayer.play(RotateClick)
                 while true {
                     let rnd = Hero.all.random
                     if rnd != block.visible {
@@ -179,21 +182,20 @@ final class HeroBlocks: MiniGame {
                     }
                 }
 
+
                 // If they're all the same, we're ready for the next phase
                 if (blocks.filter { $0.visible == blocks[0].visible }.count) == blocks.count {
-                    DispatchQueue.main.async {
+                    gesture.isEnabled = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         self.selectHero(self.blocks[0].visible)
                     }
-                    gesture.isEnabled = false
                 }
             }
         }
         
         func selectHero(_ hero: Hero) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                for (i, block) in self.blocks.enumerated() {
-                    block.runAction(SCNAction.move(by: SCNVector3(0, 0, -500), duration: 2.0 + 0.5 * TimeInterval(i)))
-                }
+            for (i, block) in self.blocks.enumerated() {
+                block.runAction(SCNAction.move(by: SCNVector3(0, 0, -500), duration: 2.0 + 0.5 * TimeInterval(i)))
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
@@ -219,7 +221,6 @@ final class HeroBlocks: MiniGame {
             
             if hero != visible {
                 let rot = hero.rotation
-                AudioPlayer.play(RotateClick)
                 runAction(SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: pace.rawValue)) {
                     AudioPlayer.play(hero.sound)
                 }

@@ -11,38 +11,35 @@ import AVKit
 
 class AudioPlayer {
     static var instance = AudioPlayer()
-    static var audioPlayer: AVAudioPlayer?
-
-    static var isPlaying: Bool {
-        return audioPlayer?.isPlaying ?? false
-    }
-
-    static func play(_ url: URL, withCrossFade: Bool = false) {
+    static var player: AVAudioPlayer?
+    static var timer: Timer?
+    
+    static func play(_ url: URL, tick: @escaping () -> () = {}) {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
 
-            let old = audioPlayer
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            let old = player
+            player = try AVAudioPlayer(contentsOf: url)
 
-            if let new = audioPlayer {
+            if let old = old, let new = player {
                 new.play()
-
-                if let old = old {
-                    if withCrossFade {
-                        new.volume = 0
-                        crossFade(from: old, to: new)
-                    } else {
-                        old.volume = 0
-                    }
+                new.volume = 0
+                crossFade(from: old, to: new)
+                
+                if timer == nil {
+                    timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in tick()})
                 }
+            } else {
+                player?.play()
+                player?.volume = 1.0
             }
         } catch let error {
             print(error.localizedDescription)
         }
     }
 
-    static func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
+    private static func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
         if new.volume < 1.0 {
             old.volume -= 0.1
             new.volume += 0.1
@@ -52,9 +49,12 @@ class AudioPlayer {
             }
         }
     }
-
+    
     static func stop() {
-        audioPlayer?.stop()
-        audioPlayer = nil
+        player?.stop()
+        player = nil
+        
+        timer?.invalidate()
+        timer = nil
     }
 }

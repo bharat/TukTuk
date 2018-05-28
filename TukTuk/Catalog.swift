@@ -37,13 +37,17 @@ class Catalog {
         }
 
         for s in try! FileManager.default.contentsOfDirectory(
-            atPath: Bundle.main.resourcePath! + "/Videos") {
+            atPath: Bundle.main.resourcePath! + "/Videos/Normal") {
                 videos.append(Movie(title: s, video: url(from: "Videos/\(s)")))
         }
     }
 
     static func sound(_ fileName: String) -> URL {
         return instance.url(from: "Sounds/\(fileName)")
+    }
+
+    static func video(_ fileName: String) -> URL {
+        return instance.url(from: "Videos/\(fileName)")
     }
 
     func url(from: String) -> URL {

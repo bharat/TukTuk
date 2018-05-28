@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		209D1DB6996F487D912E2782 /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */; };
-		4F08093320AA5A9500CF8767 /* AvengersBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersBlocks.swift */; };
+		4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */; };
 		4F1F17C7209E112C00483499 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C6209E112C00483499 /* Collection.swift */; };
 		4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C9209E150F00483499 /* FaceBalls.swift */; };
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
@@ -40,7 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4F08093220AA5A9500CF8767 /* AvengersBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersBlocks.swift; sourceTree = "<group>"; };
+		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
 		4F1F17C6209E112C00483499 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		4F1F17C9209E150F00483499 /* FaceBalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBalls.swift; sourceTree = "<group>"; };
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 			children = (
 				4F81D5F520A6776D00CB68D8 /* MiniGames.swift */,
 				4F90EB2720A372F000F8EE87 /* Thor.swift */,
-				4F08093220AA5A9500CF8767 /* AvengersBlocks.swift */,
+				4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */,
 			);
 			path = MiniGame;
 			sourceTree = "<group>";
@@ -334,7 +334,7 @@
 				4F8A2AA7209FDB9C000C2CA5 /* MutableCollection.swift in Sources */,
 				4F8A2A9A209F6E0A000C2CA5 /* Catalog.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
-				4F08093320AA5A9500CF8767 /* AvengersBlocks.swift in Sources */,
+				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
 				4F8A2A9C209F730E000C2CA5 /* AudioPlayer.swift in Sources */,
 				4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */,
 				4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */,

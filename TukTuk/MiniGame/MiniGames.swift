@@ -19,7 +19,7 @@ protocol MiniGame {
 class MiniGames {
     static var all: [MiniGame.Type] = [
         Thor.self,
-        AvengersBlocks.self
+        AvengersAssemble.self
     ]
 
     static func random() -> MiniGame {

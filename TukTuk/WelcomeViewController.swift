@@ -40,7 +40,7 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        show(AvengersBlocks().uivc, sender: self)
+        show(AvengersAssemble().uivc, sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {

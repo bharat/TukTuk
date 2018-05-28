@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SceneKit
 
-final class AvengersBlocks: MiniGame {
+final class AvengersAssemble: MiniGame {
     static var title = "Avengers blocks!"
     var uivc: UIViewController = UIVC()
 
@@ -23,7 +23,7 @@ final class AvengersBlocks: MiniGame {
             effectView.frame = view.frame
             view.addSubview(effectView)
             
-            let scene = AvengersBlocks.Scene()
+            let scene = AvengersAssemble.Scene()
             scene.completion = { hero in
                 VideoPlayer.play(hero.movie, from: self) {
                     self.dismiss(animated: animated)
@@ -81,12 +81,12 @@ final class AvengersBlocks: MiniGame {
         
         var sound: URL {
             switch self {
-            case .CaptainAmerica:   return Catalog.sound("AvengersBlocks/CaptainAmerica.mp3")
-            case .HawkEye:          return Catalog.sound("AvengersBlocks/HawkEye.mp3")
-            case .IronMan:          return Catalog.sound("AvengersBlocks/IronMan.mp3")
-            case .Hulk:             return Catalog.sound("AvengersBlocks/Hulk.mp3")
-            case .Thor:             return Catalog.sound("AvengersBlocks/Thor.mp3")
-            case .BlackWidow:       return Catalog.sound("AvengersBlocks/BlackWidow.mp3")
+            case .CaptainAmerica:   return Catalog.sound("AvengersAssemble/CaptainAmerica.mp3")
+            case .HawkEye:          return Catalog.sound("AvengersAssemble/HawkEye.mp3")
+            case .IronMan:          return Catalog.sound("AvengersAssemble/IronMan.mp3")
+            case .Hulk:             return Catalog.sound("AvengersAssemble/Hulk.mp3")
+            case .Thor:             return Catalog.sound("AvengersAssemble/Thor.mp3")
+            case .BlackWidow:       return Catalog.sound("AvengersAssemble/BlackWidow.mp3")
             }
         }
         
@@ -95,9 +95,9 @@ final class AvengersBlocks: MiniGame {
         }
     }
     
-    static var RotateClick          = Catalog.sound("AvengersBlocks/RotateClick.mp3")
-    static var AvengersAssemble     = Catalog.sound("AvengersBlocks/AvengersAssemble.mp3")
-    static var ChooseAnAvenger      = Catalog.sound("AvengersBlocks/ChooseAnAvenger.mp3")
+    static var RotateClick          = Catalog.sound("AvengersAssemble/RotateClick.mp3")
+    static var Assemble             = Catalog.sound("AvengersAssemble/Assemble.mp3")
+    static var ChooseAnAvenger      = Catalog.sound("AvengersAssemble/ChooseAnAvenger.mp3")
 
     enum Pace: TimeInterval {
         case fastPace     = 0.125
@@ -144,7 +144,7 @@ final class AvengersBlocks: MiniGame {
         }
 
         func start(completion: @escaping () -> ()) {
-            AudioPlayer.play(AvengersAssemble)
+            AudioPlayer.play(Assemble)
 
             let yDest:  [Float] = [3.0, 1.0, -1.0, -3.0].map { $0 * 10 }
             for (i, block) in blocks.enumerated() {

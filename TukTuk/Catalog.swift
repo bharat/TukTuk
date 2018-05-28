@@ -38,7 +38,7 @@ class Catalog {
 
         for s in try! FileManager.default.contentsOfDirectory(
             atPath: Bundle.main.resourcePath! + "/Videos/Normal") {
-                videos.append(Movie(title: s, video: url(from: "Videos/\(s)")))
+                videos.append(Movie(title: s, video: url(from: "Videos/Normal/\(s)")))
         }
     }
 

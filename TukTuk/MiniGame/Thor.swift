@@ -20,12 +20,12 @@ final class Thor: MiniGame {
         case thor   = 4
     }
 
-    static var HammerFallingWhistle     = Catalog.sound(from: "ThorHammerFallingWhistle.mp3")
-    static var HammerLandingThud        = Catalog.sound(from: "ThorHammerLandingThud.mp3")
-    static var IReallyWishIHadMyHammer  = Catalog.sound(from: "ThorIReallyWishIHadMyHammer.mp3")
-    static var ThankYou                 = Catalog.sound(from: "ThorThankYou.mp3")
-    static var ILostMyHammer            = Catalog.sound(from: "ThorILostMyHammer.mp3")
-    static var IAmTheGodOfThunder       = Catalog.sound(from: "ThorIAmTheGodOfThunder.mp3")
+    static var HammerFallingWhistle     = Catalog.sound(from: "Thor_HammerFallingWhistle.mp3")
+    static var HammerLandingThud        = Catalog.sound(from: "Thor_HammerLandingThud.mp3")
+    static var IReallyWishIHadMyHammer  = Catalog.sound(from: "Thor_IReallyWishIHadMyHammer.mp3")
+    static var ThankYou                 = Catalog.sound(from: "Thor_ThankYou.mp3")
+    static var ILostMyHammer            = Catalog.sound(from: "Thor_ILostMyHammer.mp3")
+    static var IAmTheGodOfThunder       = Catalog.sound(from: "Thor_IAmTheGodOfThunder.mp3")
 
     class UIVC: UIViewController {
         override func viewDidAppear(_ animated: Bool) {

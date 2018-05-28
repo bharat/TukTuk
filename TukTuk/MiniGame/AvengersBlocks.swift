@@ -70,12 +70,12 @@ final class AvengersBlocks: MiniGame {
         
         var image: UIImage? {
             switch self {
-            case .CaptainAmerica:   return #imageLiteral(resourceName: "Hero_CaptainAmerica")
-            case .HawkEye:          return #imageLiteral(resourceName: "Hero_HawkEye")
-            case .IronMan:          return #imageLiteral(resourceName: "Hero_IronMan")
-            case .Hulk:             return #imageLiteral(resourceName: "Hero_Hulk")
-            case .Thor:             return #imageLiteral(resourceName: "Hero_Thor")
-            case .BlackWidow:       return #imageLiteral(resourceName: "Hero_BlackWidow")
+            case .CaptainAmerica:   return #imageLiteral(resourceName: "Avenger_CaptainAmerica")
+            case .HawkEye:          return #imageLiteral(resourceName: "Avenger_HawkEye")
+            case .IronMan:          return #imageLiteral(resourceName: "Avenger_IronMan")
+            case .Hulk:             return #imageLiteral(resourceName: "Avenger_Hulk")
+            case .Thor:             return #imageLiteral(resourceName: "Avenger_Thor")
+            case .BlackWidow:       return #imageLiteral(resourceName: "Avenger_BlackWidow")
             }
         }
         

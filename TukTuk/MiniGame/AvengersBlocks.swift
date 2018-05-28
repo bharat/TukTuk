@@ -81,12 +81,12 @@ final class AvengersBlocks: MiniGame {
         
         var sound: URL {
             switch self {
-            case .CaptainAmerica:   return Catalog.sound("AvengersBlocks_CaptainAmerica.mp3")
-            case .HawkEye:          return Catalog.sound("AvengersBlocks_HawkEye.mp3")
-            case .IronMan:          return Catalog.sound("AvengersBlocks_IronMan.mp3")
-            case .Hulk:             return Catalog.sound("AvengersBlocks_Hulk.mp3")
-            case .Thor:             return Catalog.sound("AvengersBlocks_Thor.mp3")
-            case .BlackWidow:       return Catalog.sound("AvengersBlocks_BlackWidow.mp3")
+            case .CaptainAmerica:   return Catalog.sound("AvengersBlocks/CaptainAmerica.mp3")
+            case .HawkEye:          return Catalog.sound("AvengersBlocks/HawkEye.mp3")
+            case .IronMan:          return Catalog.sound("AvengersBlocks/IronMan.mp3")
+            case .Hulk:             return Catalog.sound("AvengersBlocks/Hulk.mp3")
+            case .Thor:             return Catalog.sound("AvengersBlocks/Thor.mp3")
+            case .BlackWidow:       return Catalog.sound("AvengersBlocks/BlackWidow.mp3")
             }
         }
         
@@ -95,9 +95,9 @@ final class AvengersBlocks: MiniGame {
         }
     }
     
-    static var RotateClick          = Catalog.sound("AvengersBlocks_RotateClick.mp3")
-    static var AvengersAssemble     = Catalog.sound("AvengersBlocks_AvengersAssemble.mp3")
-    static var ChooseAnAvenger      = Catalog.sound("AvengersBlocks_ChooseAnAvenger.mp3")
+    static var RotateClick          = Catalog.sound("AvengersBlocks/RotateClick.mp3")
+    static var AvengersAssemble     = Catalog.sound("AvengersBlocks/AvengersAssemble.mp3")
+    static var ChooseAnAvenger      = Catalog.sound("AvengersBlocks/ChooseAnAvenger.mp3")
 
     enum Pace: TimeInterval {
         case fastPace     = 0.125

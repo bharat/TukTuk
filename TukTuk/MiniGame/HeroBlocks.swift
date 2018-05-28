@@ -40,9 +40,8 @@ final class HeroBlocks: MiniGame {
             sceneView.scene = scene
             sceneView.gestureRecognizers = [ gesture ]
             effectView.contentView.addSubview(sceneView)
-            
-            // Ugh. This is a terrible way to make sure that the user doesn't pre-click
-            DispatchQueue.main.asyncAfter(deadline: .now() + 11.0) {
+
+            scene.start() {
                 gesture.isEnabled = true
             }
         }
@@ -133,25 +132,29 @@ final class HeroBlocks: MiniGame {
                 material.diffuse.contents = $0.image
                 return material
             }
-            
-            let yDest:  [Float] = [3.0, 1.0, -1.0, -3.0].map { $0 * Float(box.height) }
-            
-            AudioPlayer.play(AvengersAssemble)
-            for i in 0...3 {
-                let block = Block(geometry: box)
-                block.position = SCNVector3(x: 0, y: 0, z: 100.0)
 
+            for _ in 0...3 {
+                let block = Block(geometry: box)
+                block.position = SCNVector3(x: 0, y: 0, z: 120.0)
+                rootNode.addChildNode(block)
+                blocks.append(block)
+            }
+        }
+
+        func start(completion: @escaping () -> ()) {
+            AudioPlayer.play(AvengersAssemble)
+
+            let yDest:  [Float] = [3.0, 1.0, -1.0, -3.0].map { $0 * 10 }
+            for (i, block) in blocks.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 * Double(i)) {
                     block.runAction(SCNAction.move(to: SCNVector3(x: 0, y: yDest[i], z: 20), duration: Pace.verySlowPace.rawValue))
                     block.heroicArrival()
                 }
-
-                rootNode.addChildNode(block)
-                blocks.append(block)
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 11.0) {
                 AudioPlayer.play(ChooseAnAvenger)
+                completion()
             }
         }
         

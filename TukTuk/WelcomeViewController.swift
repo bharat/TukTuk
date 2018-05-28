@@ -39,10 +39,6 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         welcomeImageView.addGestureRecognizer(long)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        show(AvengersAssemble().uivc, sender: self)
-    }
-
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false
 

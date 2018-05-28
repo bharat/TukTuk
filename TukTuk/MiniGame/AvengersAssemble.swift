@@ -25,7 +25,7 @@ final class AvengersAssemble: MiniGame {
             
             let scene = AvengersAssemble.Scene()
             scene.completion = { hero in
-                VideoPlayer.play(hero.movie, from: self) {
+                VideoPlayer.play(hero.video, from: self) {
                     self.dismiss(animated: animated)
                 }
             }
@@ -34,7 +34,7 @@ final class AvengersAssemble: MiniGame {
             gesture.isEnabled = false
             
             sceneView = SCNView(frame: view.frame)
-            sceneView.backgroundColor = UIColor.lightGray
+            sceneView.backgroundColor = .black
             sceneView.autoenablesDefaultLighting = false
             sceneView.allowsCameraControl = false
             sceneView.scene = scene
@@ -90,14 +90,22 @@ final class AvengersAssemble: MiniGame {
             }
         }
         
-        var movie: URL {
-            return Catalog.instance.videos[0].video
+        var video: URL {
+            switch self {
+            case .CaptainAmerica:   return Catalog.video("AvengersAssemble/Thor.mp4")
+            case .HawkEye:          return Catalog.video("AvengersAssemble/Thor.mp4")
+            case .IronMan:          return Catalog.video("AvengersAssemble/Thor.mp4")
+            case .Hulk:             return Catalog.video("AvengersAssemble/Thor.mp4")
+            case .Thor:             return Catalog.video("AvengersAssemble/Thor.mp4")
+            case .BlackWidow:       return Catalog.video("AvengersAssemble/Thor.mp4")
+            }
         }
     }
-    
+
     static var RotateClick          = Catalog.sound("AvengersAssemble/RotateClick.mp3")
     static var Assemble             = Catalog.sound("AvengersAssemble/Assemble.mp3")
     static var ChooseAnAvenger      = Catalog.sound("AvengersAssemble/ChooseAnAvenger.mp3")
+    static var Tada                 = Catalog.sound("AvengersAssemble/Tada.mp3")
 
     enum Pace: TimeInterval {
         case fastPace     = 0.125
@@ -196,11 +204,14 @@ final class AvengersAssemble: MiniGame {
         }
         
         func selectHero(_ hero: Hero) {
+            AudioPlayer.play(Tada)
             for (i, block) in self.blocks.enumerated() {
-                block.runAction(SCNAction.move(by: SCNVector3(0, 0, -500), duration: 2.0 + 0.5 * TimeInterval(i)))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25 * Double(i)) {
+                    block.runAction(SCNAction.move(by: SCNVector3(0, 0, -500), duration: 1.0))
+                }
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.completion(hero)
             }
         }

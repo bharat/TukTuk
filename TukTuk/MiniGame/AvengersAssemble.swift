@@ -16,8 +16,11 @@ final class AvengersAssemble: MiniGame {
 
     class UIVC: UIViewController {
         var sceneView: SCNView!
-        
-        override func viewDidAppear(_ animated: Bool) {
+
+        override func viewDidLoad() {
+            // If we put this in viewDidAppear it will 
+            AudioPlayer.play(Assemble)
+
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
             effectView.frame = view.frame
@@ -26,7 +29,7 @@ final class AvengersAssemble: MiniGame {
             let scene = AvengersAssemble.Scene()
             scene.completion = { hero in
                 VideoPlayer.play(hero.video, from: self) {
-                    self.dismiss(animated: animated)
+                    self.dismiss(animated: true)
                 }
             }
             
@@ -152,8 +155,6 @@ final class AvengersAssemble: MiniGame {
         }
 
         func start(completion: @escaping () -> ()) {
-            AudioPlayer.play(Assemble)
-
             let yDest:  [Float] = [3.0, 1.0, -1.0, -3.0].map { $0 * 10 }
             for (i, block) in blocks.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 * Double(i)) {

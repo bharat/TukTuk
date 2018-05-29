@@ -18,7 +18,6 @@ final class AvengersAssemble: MiniGame {
         var sceneView: SCNView!
 
         override func viewDidLoad() {
-            // If we put this in viewDidAppear it will 
             AudioPlayer.play(Assemble)
 
             let effect = UIBlurEffect(style: .light)
@@ -50,13 +49,13 @@ final class AvengersAssemble: MiniGame {
         }
     }
 
-    enum Hero: Int {
-        case CaptainAmerica = 0
-        case HawkEye        = 1
-        case IronMan        = 2
-        case Hulk           = 3
-        case Thor           = 4
-        case BlackWidow     = 5
+    enum Hero: String {
+        case CaptainAmerica = "CaptainAmerica"
+        case HawkEye        = "HawkEye"
+        case IronMan        = "IronMan"
+        case Hulk           = "Hulk"
+        case Thor           = "Thor"
+        case BlackWidow     = "BlackWidow"
         
         static var all: [Hero]  = [.CaptainAmerica, .HawkEye, .IronMan, .Hulk, .Thor, .BlackWidow]
         
@@ -72,36 +71,15 @@ final class AvengersAssemble: MiniGame {
         }
         
         var image: UIImage? {
-            switch self {
-            case .CaptainAmerica:   return #imageLiteral(resourceName: "Avenger_CaptainAmerica")
-            case .HawkEye:          return #imageLiteral(resourceName: "Avenger_HawkEye")
-            case .IronMan:          return #imageLiteral(resourceName: "Avenger_IronMan")
-            case .Hulk:             return #imageLiteral(resourceName: "Avenger_Hulk")
-            case .Thor:             return #imageLiteral(resourceName: "Avenger_Thor")
-            case .BlackWidow:       return #imageLiteral(resourceName: "Avenger_BlackWidow")
-            }
+            return UIImage(named: "Avenger_\(rawValue)")
         }
         
         var sound: URL {
-            switch self {
-            case .CaptainAmerica:   return Catalog.sound("AvengersAssemble/CaptainAmerica.mp3")
-            case .HawkEye:          return Catalog.sound("AvengersAssemble/HawkEye.mp3")
-            case .IronMan:          return Catalog.sound("AvengersAssemble/IronMan.mp3")
-            case .Hulk:             return Catalog.sound("AvengersAssemble/Hulk.mp3")
-            case .Thor:             return Catalog.sound("AvengersAssemble/Thor.mp3")
-            case .BlackWidow:       return Catalog.sound("AvengersAssemble/BlackWidow.mp3")
-            }
+            return Catalog.sound("AvengersAssemble/\(rawValue).mp3")
         }
         
         var video: URL {
-            switch self {
-            case .CaptainAmerica:   return Catalog.video("AvengersAssemble/Thor.mp4")
-            case .HawkEye:          return Catalog.video("AvengersAssemble/Thor.mp4")
-            case .IronMan:          return Catalog.video("AvengersAssemble/Thor.mp4")
-            case .Hulk:             return Catalog.video("AvengersAssemble/Thor.mp4")
-            case .Thor:             return Catalog.video("AvengersAssemble/Thor.mp4")
-            case .BlackWidow:       return Catalog.video("AvengersAssemble/Thor.mp4")
-            }
+            return Catalog.video("AvengersAssemble/\(rawValue).mp4")
         }
     }
 
@@ -111,10 +89,11 @@ final class AvengersAssemble: MiniGame {
     static var Tada                 = Catalog.sound("AvengersAssemble/Tada.mp3")
 
     enum Pace: TimeInterval {
-        case fastPace     = 0.125
-        case normalPace   = 0.25
-        case slowPace     = 0.50
-        case verySlowPace = 5.0
+        case immediate  = 0.0
+        case fast       = 0.125
+        case normal     = 0.25
+        case slow       = 0.50
+        case verySlow   = 5.0
     }
     
     class Scene: SCNScene {
@@ -147,7 +126,7 @@ final class AvengersAssemble: MiniGame {
             for _ in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 120.0)
-                block.show(Hero.all.random)
+                block.show(Hero.all.random, pace: .immediate)
 
                 rootNode.addChildNode(block)
                 blocks.append(block)
@@ -155,11 +134,12 @@ final class AvengersAssemble: MiniGame {
         }
 
         func start(completion: @escaping () -> ()) {
-            let yDest:  [Float] = [3.0, 1.0, -1.0, -3.0].map { $0 * 10 }
+            let yDest: [Float] = [30.0, 10.0, -10.0, -30.0]
             for (i, block) in blocks.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 * Double(i)) {
-                    block.runAction(SCNAction.move(to: SCNVector3(x: 0, y: yDest[i], z: 20), duration: Pace.verySlowPace.rawValue))
-                    block.heroicArrival()
+                    block.heroicArrival(of: Hero.all.random, at: SCNVector3(x: 0, y: yDest[i], z: 20)) {
+                        block.entice()
+                    }
                 }
             }
             
@@ -180,7 +160,7 @@ final class AvengersAssemble: MiniGame {
             
             if let block = hits.first?.node as? Block {
                 // stop all wiggling
-                blocks.forEach { $0.stop() }
+                blocks.forEach { $0.stopEnticing() }
                 
                 AudioPlayer.play(RotateClick)
                 while true {
@@ -230,37 +210,52 @@ final class AvengersAssemble: MiniGame {
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-        
-        func show(_ new: Hero, at pace: Pace = .normalPace, completion: @escaping () -> () = {}) {
-            removeAllActions()
+
+        func show(_ new: Hero, pace: Pace = .normal, completion: @escaping () -> () = {}) {
+            removeAction(forKey: "show")
 
             if hero != new {
                 hero = new
                 let rot = hero.rotation
-                runAction(SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: pace.rawValue)) {
-                    completion()
-                }
+                runAction(SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: pace.rawValue),
+                          forKey: "show",
+                          completionHandler: completion)
             }
         }
-        
-        func heroicArrival() {
-            hero = Hero.all.random
+
+        func heroicArrival(of hero: Hero, at dest: SCNVector3, completion: @escaping () -> ()) {
+            self.hero = hero
             let rot = hero.rotation
+
             runAction(
-                SCNAction.sequence([
-                    SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: Pace.verySlowPace.rawValue),
-                    SCNAction.repeatForever(SCNAction.sequence([
-                            SCNAction.rotateBy(x: 0, y: 0, z: -0.08, duration: 0.025),
-                            SCNAction.rotateBy(x: 0, y: 0, z:  0.16, duration: 0.050),
-                            SCNAction.rotateBy(x: 0, y: 0, z: -0.08, duration: 0.025),
-                            SCNAction.wait(duration: [0.25, 0.50, 0.75].random),
-                            ])),
-                ])
+                SCNAction.group([
+                    SCNAction.move(to: dest, duration: Pace.verySlow.rawValue),
+                    SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: Pace.verySlow.rawValue),
+                    ]),
+                completionHandler: completion
             )
         }
-        
-        func stop() {
-            removeAllActions()
+
+        func entice() {
+            runAction(
+                SCNAction.repeatForever(
+                    SCNAction.sequence([
+                        SCNAction.repeat(
+                            SCNAction.sequence([
+                                SCNAction.rotateBy(x: 0, y: 0, z: -0.08, duration: 0.025),
+                                SCNAction.rotateBy(x: 0, y: 0, z:  0.16, duration: 0.050),
+                                SCNAction.rotateBy(x: 0, y: 0, z: -0.08, duration: 0.025),
+                                ]),
+                            count: 3),
+                        SCNAction.wait(duration: [1.0, 2.0, 3.0].random),
+                        ])
+                    ),
+                forKey: "entice"
+            )
+        }
+
+        func stopEnticing() {
+            removeAction(forKey: "entice")
         }
     }
 }

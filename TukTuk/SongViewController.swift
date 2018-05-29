@@ -17,6 +17,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var videoButton: UIButton!
     @IBOutlet weak var videoTimerLabel: UILabel!
 
+    var preferredVideo: URL?
+    var preferredMiniGame: MiniGame?
+
     var videoCountdown: TimeInterval = 0 {
         didSet {
             videoTimerLabel.text = "\(Int(videoCountdown))"
@@ -58,7 +61,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch(sender) {
         case videoButton:
             AudioPlayer.stop()
-            VideoPlayer.play(Catalog.instance.videos.random.video, from: self)
+            let video = preferredVideo ?? Catalog.instance.videos.random.video
+            VideoPlayer.play(video, from: self)
+            preferredVideo = nil
             disableStopButton()
 
         case stopButton:
@@ -84,8 +89,10 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if VideoPlayer.isPlaying == false {
-            if Array(1...120).random == 1 {
-                show(MiniGames.random().uivc, sender: self)
+            if preferredMiniGame != nil || Array(1...60).random == 1 {
+                let miniGame = preferredMiniGame ?? MiniGames.random()
+                show(miniGame.uivc, sender: self)
+                preferredMiniGame = nil
                 return
             }
 
@@ -162,11 +169,11 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         previewTVC.completion = { id, index in
             switch(id) {
             case "video":
-                
-                VideoPlayer.play(Catalog.instance.videos[index].video, from: self)
+                self.videoCountdown = 0
+                self.preferredVideo = Catalog.instance.videos[index].video
 
             case "minigame":
-                self.show(MiniGames.all[index].init().uivc, sender: self)
+                self.preferredMiniGame = MiniGames.all[index].init()
 
             default:
                 ()

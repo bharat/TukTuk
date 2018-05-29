@@ -26,7 +26,7 @@ final class AvengersAssemble: MiniGame {
             view.addSubview(effectView)
             
             let scene = AvengersAssemble.Scene()
-            scene.completion = { hero in
+            scene.sceneComplete = { hero in
                 VideoPlayer.play(hero.video, from: self) {
                     self.dismiss(animated: true)
                 }
@@ -98,7 +98,7 @@ final class AvengersAssemble: MiniGame {
     
     class Scene: SCNScene {
         var blocks: [Block] = []
-        var completion: (Hero) -> () = {_ in }
+        var sceneComplete: (Hero) -> () = {_ in }
 
         override init() {
             super.init()
@@ -177,24 +177,20 @@ final class AvengersAssemble: MiniGame {
                 // If they're all the same, we're ready for the next phase
                 if (blocks.map { $0.hero }).allTheSame() {
                     gesture.isEnabled = false
-                    self.selectHero(self.blocks[0].hero)
+                    self.select(hero: self.blocks[0].hero, from: block)
                 }
             }
         }
         
-        func selectHero(_ hero: Hero) {
+        func select(hero: Hero, from block: Block) {
             AudioPlayer.play(Tada)
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                for (i, block) in self.blocks.enumerated() {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25 * Double(i)) {
-                        block.runAction(SCNAction.move(by: SCNVector3(0, 0, -500), duration: 1.0))
-                    }
-                }
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self.completion(hero)
-                }
+            blocks.filter { $0 != block }.forEach {
+                $0.runAction(SCNAction.fadeOut(duration: 1.0))
+            }
+            
+            block.runAction(SCNAction.move(to: SCNVector3(0, 0, 100), duration: 2.0)) {
+                self.sceneComplete(hero)
             }
         }
     }

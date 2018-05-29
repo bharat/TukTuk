@@ -28,6 +28,7 @@
 		4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AA820A0D550000C2CA5 /* VideoPlayer.swift */; };
 		4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */; };
 		4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */; };
+		4F90205B20BDAEB3000E4311 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90205A20BDAEB3000E4311 /* Array.swift */; };
 		4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90EB2720A372F000F8EE87 /* Thor.swift */; };
 		4F90EC6920A3CA6D00F8EE87 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 4F90EC6820A3CA6D00F8EE87 /* Sounds */; };
 		4FB989061F12F45A001F02CE /* Meta in Resources */ = {isa = PBXBuildFile; fileRef = 4FB989041F12F45A001F02CE /* Meta */; };
@@ -60,6 +61,7 @@
 		4F8A2AA820A0D550000C2CA5 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewingTableViewController.swift; sourceTree = "<group>"; };
+		4F90205A20BDAEB3000E4311 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		4F90EB2720A372F000F8EE87 /* Thor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thor.swift; sourceTree = "<group>"; };
 		4F90EC6820A3CA6D00F8EE87 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		4FB989041F12F45A001F02CE /* Meta */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meta; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				4F1F17C6209E112C00483499 /* Collection.swift */,
 				4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */,
 				4F89557820B47B8600E37E53 /* UIImage.swift */,
+				4F90205A20BDAEB3000E4311 /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				4F1F17CC209E159F00483499 /* WordPop.swift in Sources */,
 				4F8A2AA6209FDB9C000C2CA5 /* Sequence.swift in Sources */,
 				4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */,
+				4F90205B20BDAEB3000E4311 /* Array.swift in Sources */,
 				4F81D5F820A7600C00CB68D8 /* None.swift in Sources */,
 				4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */,
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,

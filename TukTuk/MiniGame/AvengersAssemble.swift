@@ -195,25 +195,26 @@ final class AvengersAssemble: MiniGame {
 
 
                 // If they're all the same, we're ready for the next phase
-                if (blocks.filter { $0.hero == blocks[0].hero }.count) == blocks.count {
+                if (blocks.map { $0.hero }).allTheSame() {
                     gesture.isEnabled = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        self.selectHero(self.blocks[0].hero)
-                    }
+                    self.selectHero(self.blocks[0].hero)
                 }
             }
         }
         
         func selectHero(_ hero: Hero) {
             AudioPlayer.play(Tada)
-            for (i, block) in self.blocks.enumerated() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25 * Double(i)) {
-                    block.runAction(SCNAction.move(by: SCNVector3(0, 0, -500), duration: 1.0))
-                }
-            }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                self.completion(hero)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                for (i, block) in self.blocks.enumerated() {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25 * Double(i)) {
+                        block.runAction(SCNAction.move(by: SCNVector3(0, 0, -500), duration: 1.0))
+                    }
+                }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    self.completion(hero)
+                }
             }
         }
     }

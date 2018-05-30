@@ -230,8 +230,10 @@ final class AvengersAssemble: MiniGame {
 
                     // If they're all the same, we're ready for the next phase
                     if (blocks.map { $0.hero }).allTheSame() {
-                        gesture.isEnabled = false
-                        self.select(hero: self.blocks[0].hero, from: block)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Pace.normal.rawValue) {
+                            gesture.isEnabled = false
+                            self.select(hero: self.blocks[0].hero, from: block)
+                        }
                     }
                 }
             }
@@ -247,7 +249,7 @@ final class AvengersAssemble: MiniGame {
             block.runAction(SCNAction.sequence([
                 SCNAction.wait(duration: 1.0),
                 SCNAction.group([
-                    SCNAction.move(to: SCNVector3(0, 0, 100), duration: 2.0),
+                    SCNAction.move(to: SCNVector3(0, 0, 90), duration: 2.0),
                     SCNAction.rotateBy(x: 0, y: 0, z: 2 * .pi, duration: 2.0),
                     ]),
                 ])) {
@@ -306,7 +308,7 @@ final class AvengersAssemble: MiniGame {
                                 SCNAction.rotateBy(x: 0, y: 0, z: -0.08, duration: 0.025),
                                 ]),
                             count: 3),
-                        SCNAction.wait(duration: [1.0, 2.0, 3.0].random),
+                        SCNAction.wait(duration: [5.0, 8.0, 10.0].random),
                         ])
                     ),
                 forKey: "entice"

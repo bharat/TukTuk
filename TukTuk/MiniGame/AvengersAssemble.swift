@@ -205,8 +205,11 @@ final class AvengersAssemble: MiniGame {
             }
             
             block.runAction(SCNAction.sequence([
-                SCNAction.wait(duration: 0.5),
-                SCNAction.move(to: SCNVector3(0, 0, 100), duration: 2.0),
+                SCNAction.wait(duration: 1.0),
+                SCNAction.group([
+                    SCNAction.move(to: SCNVector3(0, 0, 100), duration: 2.0),
+                    SCNAction.rotateBy(x: 0, y: 0, z: 2 * .pi, duration: 2.0),
+                    ]),
                 ])) {
                     DispatchQueue.main.async {
                         self.sceneComplete(hero)
@@ -227,16 +230,29 @@ final class AvengersAssemble: MiniGame {
             fatalError("init(coder:) has not been implemented")
         }
 
-        func show(_ new: Hero, pace: Pace = .normal, completion: @escaping () -> () = {}) {
-            removeAction(forKey: "show")
-
-            if hero != new {
-                hero = new
-                let rot = hero.rotation
-                runAction(SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: pace.rawValue),
-                          forKey: "show",
-                          completionHandler: completion)
+        func show(_ new: Hero, pace: Pace = .normal) {
+            if new == hero {
+                return
             }
+
+            removeAction(forKey: "show")
+            var action: SCNAction
+
+            // Special case a couple of transitions to force the shortest rotation. It's probably
+            // possible to generalize this approach, but this is fairly straightforward
+            switch (hero, new) {
+            case (.IronMan, .Hawkeye):
+                action = SCNAction.rotateBy(x: 0, y: .pi / 2, z: 0, duration: pace.rawValue)
+
+            case (.Hawkeye, .IronMan):
+                action = SCNAction.rotateBy(x: 0, y: .pi / -2, z: 0, duration: pace.rawValue)
+
+            default:
+                action = SCNAction.rotateTo(x: new.rotation.x, y: new.rotation.y, z: 0, duration: pace.rawValue)
+            }
+
+            hero = new
+            runAction(action, forKey: "show")
         }
 
         func heroicArrival(of hero: Hero, at dest: SCNVector3, completion: @escaping () -> ()) {

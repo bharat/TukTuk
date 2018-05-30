@@ -89,7 +89,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if VideoPlayer.isPlaying == false {
-            if preferredMiniGame != nil || Array(1...60).random == 1 {
+            if preferredMiniGame != nil || Array(1...30).random == 1 {
                 let miniGame = preferredMiniGame ?? MiniGames.random()
                 show(miniGame.uivc, sender: self)
                 preferredMiniGame = nil

@@ -15,8 +15,6 @@ final class AvengersAssemble: MiniGame {
     var uivc: UIViewController = UIVC()
 
     class UIVC: UIViewController {
-        var sceneView: SCNView!
-
         override func viewDidLoad() {
             AudioPlayer.play(Assemble)
 
@@ -31,45 +29,61 @@ final class AvengersAssemble: MiniGame {
                     self.dismiss(animated: true)
                 }
             }
-            
-            let gesture = UITapGestureRecognizer(target: scene, action: #selector(scene.tapHeroBlock(gesture:)))
-            gesture.isEnabled = false
-            
-            sceneView = SCNView(frame: view.frame)
+
+            let sceneView = SCNView(frame: view.frame)
             sceneView.backgroundColor = .black
             sceneView.autoenablesDefaultLighting = false
             sceneView.allowsCameraControl = false
             sceneView.scene = scene
-            sceneView.gestureRecognizers = [ gesture ]
+            sceneView.gestureRecognizers =
+                [UISwipeGestureRecognizerDirection.left, .right, .up, .down].map {
+                    let gesture = UISwipeGestureRecognizer(target: scene, action: #selector(scene.swipeBlock(gesture:)))
+                    gesture.direction = $0
+                    gesture.isEnabled = false
+                    return gesture
+                }
+
             effectView.contentView.addSubview(sceneView)
 
             scene.start() {
-                gesture.isEnabled = true
+                sceneView.gestureRecognizers?.forEach { $0.isEnabled = true }
             }
         }
     }
 
     enum Hero: String {
         case CaptainAmerica = "CaptainAmerica"
-        case HawkEye        = "HawkEye"
+        case Hawkeye        = "Hawkeye"
         case IronMan        = "IronMan"
         case Hulk           = "Hulk"
         case Thor           = "Thor"
         case BlackWidow     = "BlackWidow"
         
-        static var all: [Hero]  = [.CaptainAmerica, .HawkEye, .IronMan, .Hulk, .Thor, .BlackWidow]
+        static var all: [Hero]  = [.CaptainAmerica, .Hawkeye, .IronMan, .Hulk, .Thor, .BlackWidow]
         
         var rotation: (x: CGFloat, y: CGFloat) {
             switch self {
             case .CaptainAmerica:   return (x: 0.0,       y: 0.0     )
-            case .HawkEye:          return (x: 0.0,       y: .pi / -2)
+            case .Hawkeye:          return (x: 0.0,       y: .pi / -2)
             case .IronMan:          return (x: 0.0,       y: .pi     )
             case .Hulk:             return (x: 0.0,       y: .pi / 2 )
             case .Thor:             return (x: .pi / 2,   y: 0.0     )
             case .BlackWidow:       return (x: .pi / -2,  y: 0.0     )
             }
         }
-        
+
+        // Left, Right, Up, Down relative heroes
+        var ordinal: [Hero] {
+            switch self {
+            case .CaptainAmerica:   return [.Hulk, .Hawkeye, .Thor, .BlackWidow]
+            case .Hawkeye:          return [.CaptainAmerica, .IronMan, .Thor, .BlackWidow]
+            case .IronMan:          return [.Hawkeye, .Hulk, .Thor, .BlackWidow]
+            case .Hulk:             return [.IronMan, .CaptainAmerica, .Thor, .BlackWidow]
+            case .Thor:             return [.IronMan, .CaptainAmerica, .Hawkeye, .Hulk]
+            case .BlackWidow:       return [.Hulk, .Hawkeye, .CaptainAmerica, .IronMan]
+            }
+        }
+
         var image: UIImage? {
             return UIImage(named: "Avenger_\(rawValue)")
         }
@@ -152,8 +166,8 @@ final class AvengersAssemble: MiniGame {
         required init(coder: NSCoder) {
             fatalError("Not yet implemented")
         }
-        
-        @objc func tapHeroBlock(gesture: UITapGestureRecognizer) {
+
+        @objc func swipeBlock(gesture: UISwipeGestureRecognizer) {
             let sceneView = gesture.view as! SCNView
             let point = gesture.location(in: sceneView)
             let hits = sceneView.hitTest(point, options: nil)
@@ -161,23 +175,24 @@ final class AvengersAssemble: MiniGame {
             if let block = hits.first?.node as? Block {
                 // stop all wiggling
                 blocks.forEach { $0.stopEnticing() }
-                
+
                 AudioPlayer.play(RotateClick)
-                while true {
-                    let rnd = Hero.all.random
-                    if rnd != block.hero {
-                        block.show(rnd) {
-                            AudioPlayer.play(block.hero.sound)
-                        }
-                        break
+
+                if gesture.state == .ended {
+                    switch gesture.direction {
+                    case .right:    block.show(block.hero.ordinal[0])
+                    case .left:     block.show(block.hero.ordinal[1])
+                    case .up:       block.show(block.hero.ordinal[3])
+                    case .down:     block.show(block.hero.ordinal[2])
+                    default:        ()
                     }
-                }
+                    AudioPlayer.play(block.hero.sound)
 
-
-                // If they're all the same, we're ready for the next phase
-                if (blocks.map { $0.hero }).allTheSame() {
-                    gesture.isEnabled = false
-                    self.select(hero: self.blocks[0].hero, from: block)
+                    // If they're all the same, we're ready for the next phase
+                    if (blocks.map { $0.hero }).allTheSame() {
+                        gesture.isEnabled = false
+                        self.select(hero: self.blocks[0].hero, from: block)
+                    }
                 }
             }
         }
@@ -189,8 +204,13 @@ final class AvengersAssemble: MiniGame {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))
             }
             
-            block.runAction(SCNAction.move(to: SCNVector3(0, 0, 100), duration: 2.0)) {
-                self.sceneComplete(hero)
+            block.runAction(SCNAction.sequence([
+                SCNAction.wait(duration: 0.5),
+                SCNAction.move(to: SCNVector3(0, 0, 100), duration: 2.0),
+                ])) {
+                    DispatchQueue.main.async {
+                        self.sceneComplete(hero)
+                    }
             }
         }
     }

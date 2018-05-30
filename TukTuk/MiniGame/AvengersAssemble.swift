@@ -11,7 +11,7 @@ import UIKit
 import SceneKit
 
 final class AvengersAssemble: MiniGame {
-    static var title = "Avengers blocks!"
+    static var title = "Avengers Assemble!"
     var uivc: UIViewController = UIVC()
 
     class UIVC: UIViewController {
@@ -51,6 +51,21 @@ final class AvengersAssemble: MiniGame {
         }
     }
 
+    enum Pace: TimeInterval {
+        case immediate  = 0.0
+        case veryFast   = 0.05
+        case fast       = 0.125
+        case normal     = 0.25
+        case slow       = 0.50
+        case verySlow   = 5.0
+    }
+
+    typealias Turn = (
+        to: Hero,
+        x: CGFloat,
+        y: CGFloat
+    )
+
     enum Hero: String {
         case CaptainAmerica = "CaptainAmerica"
         case Hawkeye        = "Hawkeye"
@@ -72,15 +87,47 @@ final class AvengersAssemble: MiniGame {
             }
         }
 
-        // Left, Right, Up, Down relative heroes
-        var ordinal: [Hero] {
+        // Map out the exact transitions here instead of just relying on rotation because
+        // SCNNode.rotate has a weird rotation artifact. Specifically, if you try to rotate
+        // past 270 degrees it counter-rotates to get you there. If we map out the transitions
+        // by hand we don't have that issue.
+        var transitions: (left: Turn, right: Turn, up: Turn, down: Turn) {
             switch self {
-            case .CaptainAmerica:   return [.Hulk, .Hawkeye, .Thor, .BlackWidow]
-            case .Hawkeye:          return [.CaptainAmerica, .IronMan, .Thor, .BlackWidow]
-            case .IronMan:          return [.Hawkeye, .Hulk, .Thor, .BlackWidow]
-            case .Hulk:             return [.IronMan, .CaptainAmerica, .Thor, .BlackWidow]
-            case .Thor:             return [.IronMan, .CaptainAmerica, .Hawkeye, .Hulk]
-            case .BlackWidow:       return [.Hulk, .Hawkeye, .CaptainAmerica, .IronMan]
+            case .CaptainAmerica:
+                return ((.Hulk,                0,  .pi/2),
+                        (.Hawkeye,             0, -.pi/2),
+                        (.Thor,            .pi/2,      0),
+                        (.BlackWidow,     -.pi/2,      0))
+
+            case .Hawkeye:
+                return ((.CaptainAmerica,      0,  .pi/2),
+                        (.IronMan,             0, -.pi/2),
+                        (.Thor,            .pi/2,  .pi/2),
+                        (.BlackWidow,     -.pi/2,  .pi/2))
+
+            case .IronMan:
+                return ((.Hawkeye,             0,  .pi/2),
+                        (.Hulk,                0, -.pi/2),
+                        (.Thor,            .pi/2,  .pi  ),
+                        (.BlackWidow,     -.pi/2,  .pi  ))
+
+            case .Hulk:
+                return ((.IronMan,             0,  .pi/2),
+                        (.CaptainAmerica,      0, -.pi/2),
+                        (.Thor,            .pi/2, -.pi/2),
+                        (.BlackWidow,     -.pi/2, -.pi/2))
+
+            case .Thor:
+                return ((.Hulk,           -.pi/2,  .pi/2),
+                        (.Hawkeye,        -.pi/2, -.pi/2),
+                        (.IronMan,        -.pi/2,  .pi  ),
+                        (.CaptainAmerica, -.pi/2,      0))
+
+            case .BlackWidow:
+                return ((.Hulk,            .pi/2,  .pi/2),
+                        (.Hawkeye,         .pi/2, -.pi/2),
+                        (.CaptainAmerica,  .pi/2,      0),
+                        (.IronMan,         .pi/2,  .pi  ))
             }
         }
 
@@ -102,14 +149,6 @@ final class AvengersAssemble: MiniGame {
     static var ChooseAnAvenger      = Catalog.sound("AvengersAssemble/ChooseAnAvenger.mp3")
     static var Tada                 = Catalog.sound("AvengersAssemble/Tada.mp3")
 
-    enum Pace: TimeInterval {
-        case immediate  = 0.0
-        case fast       = 0.125
-        case normal     = 0.25
-        case slow       = 0.50
-        case verySlow   = 5.0
-    }
-    
     class Scene: SCNScene {
         var blocks: [Block] = []
         var sceneComplete: (Hero) -> () = {_ in }
@@ -140,7 +179,7 @@ final class AvengersAssemble: MiniGame {
             for _ in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 120.0)
-                block.show(Hero.all.random, pace: .immediate)
+                block.show(Hero.all.random)
 
                 rootNode.addChildNode(block)
                 blocks.append(block)
@@ -179,11 +218,12 @@ final class AvengersAssemble: MiniGame {
                 AudioPlayer.play(RotateClick)
 
                 if gesture.state == .ended {
+                    let transition = block.hero.transitions
                     switch gesture.direction {
-                    case .right:    block.show(block.hero.ordinal[0])
-                    case .left:     block.show(block.hero.ordinal[1])
-                    case .up:       block.show(block.hero.ordinal[3])
-                    case .down:     block.show(block.hero.ordinal[2])
+                    case .right:    block.turn(transition.left)
+                    case .left:     block.turn(transition.right)
+                    case .up:       block.turn(transition.down)
+                    case .down:     block.turn(transition.up)
                     default:        ()
                     }
                     AudioPlayer.play(block.hero.sound)
@@ -230,29 +270,16 @@ final class AvengersAssemble: MiniGame {
             fatalError("init(coder:) has not been implemented")
         }
 
-        func show(_ new: Hero, pace: Pace = .normal) {
-            if new == hero {
-                return
-            }
-
+        func show(_ new: Hero) {
             removeAction(forKey: "show")
-            var action: SCNAction
-
-            // Special case a couple of transitions to force the shortest rotation. It's probably
-            // possible to generalize this approach, but this is fairly straightforward
-            switch (hero, new) {
-            case (.IronMan, .Hawkeye):
-                action = SCNAction.rotateBy(x: 0, y: .pi / 2, z: 0, duration: pace.rawValue)
-
-            case (.Hawkeye, .IronMan):
-                action = SCNAction.rotateBy(x: 0, y: .pi / -2, z: 0, duration: pace.rawValue)
-
-            default:
-                action = SCNAction.rotateTo(x: new.rotation.x, y: new.rotation.y, z: 0, duration: pace.rawValue)
-            }
-
+            runAction(SCNAction.rotateTo(x: new.rotation.x, y: new.rotation.y, z: 0, duration: 0),
+                      forKey: "show")
             hero = new
-            runAction(action, forKey: "show")
+        }
+
+        func turn(_ turn: Turn, pace: Pace = .normal) {
+            runAction(SCNAction.rotateBy(x: turn.x, y: turn.y, z: 0, duration: pace.rawValue))
+            hero = turn.to
         }
 
         func heroicArrival(of hero: Hero, at dest: SCNVector3, completion: @escaping () -> ()) {

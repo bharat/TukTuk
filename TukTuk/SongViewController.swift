@@ -25,11 +25,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             videoTimerLabel.text = "\(Int(videoCountdown))"
 
             if videoCountdown == 0 {
-                if videoButton.isHidden {
-                    UIView.animate(withDuration: 1) {
-                        self.videoTimerLabel.isHidden = true
-                        self.videoButton.isHidden = false
-                    }
+                UIView.animate(withDuration: 1) {
+                    self.videoTimerLabel.isHidden = true
+                    self.videoButton.isHidden = false
                 }
             } else {
                 if !videoButton.isHidden {
@@ -51,6 +49,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         let long = UILongPressGestureRecognizer(target: self, action: #selector(handleVideoLongPress(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
+
+        videoButton.isHidden = true
     }
 
     override func viewDidAppear(_ animated: Bool) {

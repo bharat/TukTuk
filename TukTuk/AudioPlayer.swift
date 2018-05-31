@@ -26,13 +26,13 @@ class AudioPlayer {
                 new.play()
                 new.volume = 0
                 crossFade(from: old, to: new)
-                
-                if timer == nil {
-                    timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in tick()})
-                }
             } else {
                 player?.play()
                 player?.volume = 1.0
+            }
+
+            if timer == nil {
+                timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in tick()})
             }
         } catch let error {
             print(error.localizedDescription)

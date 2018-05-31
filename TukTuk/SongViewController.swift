@@ -22,9 +22,13 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var videoCountdown: TimeInterval = 0 {
         didSet {
+            if videoCountdown < 0 {
+                videoCountdown = 0
+            }
+
             videoTimerLabel.text = "\(Int(videoCountdown))"
 
-            if videoCountdown == 0 {
+            if videoCountdown <= 0 {
                 UIView.animate(withDuration: 1) {
                     self.videoTimerLabel.isHidden = true
                     self.videoButton.isHidden = false
@@ -62,6 +66,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         case videoButton:
             AudioPlayer.stop()
             let video = preferredVideo ?? Catalog.instance.videos.random.video
+            videoCountdown = 1800
             VideoPlayer.play(video, from: self)
             preferredVideo = nil
             disableStopButton()
@@ -69,12 +74,13 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         case stopButton:
             AudioPlayer.stop()
             disableStopButton()
-            UserDefaults.standard.setValue(videoCountdown, forKey: "videoCountdown")
-            UserDefaults.standard.synchronize()
 
         default:
             ()
         }
+
+        UserDefaults.standard.setValue(videoCountdown, forKey: "videoCountdown")
+        UserDefaults.standard.synchronize()
     }
 
     func enableStopButton() {
@@ -89,7 +95,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if VideoPlayer.isPlaying == false {
-            if preferredMiniGame != nil || Array(1...30).random == 1 {
+            if preferredMiniGame != nil || Array(1...60).random == 1 {
                 let miniGame = preferredMiniGame ?? MiniGames.random()
                 show(miniGame.uivc, sender: self)
                 preferredMiniGame = nil

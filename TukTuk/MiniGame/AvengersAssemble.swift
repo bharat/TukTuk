@@ -14,43 +14,6 @@ final class AvengersAssemble: MiniGame {
     static var title = "Avengers Assemble!"
     var uivc: UIViewController = UIVC()
 
-    class UIVC: UIViewController {
-        override func viewDidLoad() {
-            AudioPlayer.play(Assemble)
-
-            let effect = UIBlurEffect(style: .light)
-            let effectView = UIVisualEffectView(effect: effect)
-            effectView.frame = view.frame
-            view.addSubview(effectView)
-            
-            let scene = AvengersAssemble.Scene()
-            scene.sceneComplete = { hero in
-                VideoPlayer.play(hero.video, from: self) {
-                    self.dismiss(animated: true)
-                }
-            }
-
-            let sceneView = SCNView(frame: view.frame)
-            sceneView.backgroundColor = .black
-            sceneView.autoenablesDefaultLighting = false
-            sceneView.allowsCameraControl = false
-            sceneView.scene = scene
-            sceneView.gestureRecognizers =
-                [UISwipeGestureRecognizerDirection.left, .right, .up, .down].map {
-                    let gesture = UISwipeGestureRecognizer(target: scene, action: #selector(scene.swipeBlock(gesture:)))
-                    gesture.direction = $0
-                    gesture.isEnabled = false
-                    return gesture
-                }
-
-            effectView.contentView.addSubview(sceneView)
-
-            scene.start() {
-                sceneView.gestureRecognizers?.forEach { $0.isEnabled = true }
-            }
-        }
-    }
-
     enum Pace: TimeInterval {
         case immediate  = 0.0
         case veryFast   = 0.05
@@ -58,87 +21,52 @@ final class AvengersAssemble: MiniGame {
         case normal     = 0.25
         case slow       = 0.50
         case verySlow   = 5.0
+
+        var duration: TimeInterval {
+            return rawValue
+        }
     }
 
-    typealias Turn = (
-        to: Hero,
-        x: CGFloat,
-        y: CGFloat
-    )
-
     enum Hero: String {
-        case CaptainAmerica = "CaptainAmerica"
-        case Hawkeye        = "Hawkeye"
-        case IronMan        = "IronMan"
-        case Hulk           = "Hulk"
-        case Thor           = "Thor"
-        case BlackWidow     = "BlackWidow"
-        
+        case CaptainAmerica
+        case Hawkeye
+        case IronMan
+        case Hulk
+        case Thor
+        case BlackWidow
+
         static var all: [Hero]  = [.CaptainAmerica, .Hawkeye, .IronMan, .Hulk, .Thor, .BlackWidow]
-        
+
         var rotation: (x: CGFloat, y: CGFloat) {
             switch self {
-            case .CaptainAmerica:   return (x: 0.0,       y: 0.0     )
-            case .Hawkeye:          return (x: 0.0,       y: .pi / -2)
-            case .IronMan:          return (x: 0.0,       y: .pi     )
-            case .Hulk:             return (x: 0.0,       y: .pi / 2 )
-            case .Thor:             return (x: .pi / 2,   y: 0.0     )
-            case .BlackWidow:       return (x: .pi / -2,  y: 0.0     )
+            case .CaptainAmerica:   return (     0.0,  0.0     )
+            case .Hawkeye:          return (     0.0,  -.pi / 2)
+            case .IronMan:          return (     0.0,   .pi    )
+            case .Hulk:             return (     0.0,   .pi / 2)
+            case .Thor:             return ( .pi / 2,  0.0     )
+            case .BlackWidow:       return (-.pi / 2,  0.0     )
             }
         }
 
-        // Map out the exact transitions here instead of just relying on rotation because
-        // SCNNode.rotate has a weird rotation artifact. Specifically, if you try to rotate
-        // past 270 degrees it counter-rotates to get you there. If we map out the transitions
-        // by hand we don't have that issue.
-        var transitions: (left: Turn, right: Turn, up: Turn, down: Turn) {
+        var neighbor: (left: Hero, right: Hero, up: Hero, down: Hero) {
             switch self {
-            case .CaptainAmerica:
-                return ((.Hulk,                0,  .pi/2),
-                        (.Hawkeye,             0, -.pi/2),
-                        (.Thor,            .pi/2,      0),
-                        (.BlackWidow,     -.pi/2,      0))
-
-            case .Hawkeye:
-                return ((.CaptainAmerica,      0,  .pi/2),
-                        (.IronMan,             0, -.pi/2),
-                        (.Thor,            .pi/2,  .pi/2),
-                        (.BlackWidow,     -.pi/2,  .pi/2))
-
-            case .IronMan:
-                return ((.Hawkeye,             0,  .pi/2),
-                        (.Hulk,                0, -.pi/2),
-                        (.Thor,            .pi/2,  .pi  ),
-                        (.BlackWidow,     -.pi/2,  .pi  ))
-
-            case .Hulk:
-                return ((.IronMan,             0,  .pi/2),
-                        (.CaptainAmerica,      0, -.pi/2),
-                        (.Thor,            .pi/2, -.pi/2),
-                        (.BlackWidow,     -.pi/2, -.pi/2))
-
-            case .Thor:
-                return ((.Hulk,           -.pi/2,  .pi/2),
-                        (.Hawkeye,        -.pi/2, -.pi/2),
-                        (.IronMan,        -.pi/2,  .pi  ),
-                        (.CaptainAmerica, -.pi/2,      0))
-
-            case .BlackWidow:
-                return ((.Hulk,            .pi/2,  .pi/2),
-                        (.Hawkeye,         .pi/2, -.pi/2),
-                        (.CaptainAmerica,  .pi/2,      0),
-                        (.IronMan,         .pi/2,  .pi  ))
+            case .CaptainAmerica:   return (.Hulk, .Hawkeye, .Thor, .BlackWidow)
+            case .Hawkeye:          return (.CaptainAmerica, .IronMan, .Thor, .BlackWidow)
+            case .IronMan:          return (.Hawkeye, .Hulk, .Thor, .BlackWidow)
+            case .Hulk:             return (.IronMan, .CaptainAmerica, .Thor, .BlackWidow)
+            case .Thor:             return (.Hulk, .Hawkeye, .IronMan, .CaptainAmerica)
+            case .BlackWidow:       return (.Hulk, .Hawkeye, .CaptainAmerica, .IronMan)
             }
         }
 
         var image: UIImage? {
             return UIImage(named: "Avenger_\(rawValue)")
         }
-        
+
         var sound: URL {
             return Catalog.sound("AvengersAssemble/\(rawValue).mp3")
         }
-        
+
         var video: URL {
             return Catalog.video("AvengersAssemble/\(rawValue).mp4")
         }
@@ -148,13 +76,49 @@ final class AvengersAssemble: MiniGame {
     static var ChooseAnAvenger      = Catalog.sound("AvengersAssemble/ChooseAnAvenger.mp3")
     static var Tada                 = Catalog.sound("AvengersAssemble/Tada.mp3")
 
+    class UIVC: UIViewController {
+        override func viewDidLoad() {
+            AudioPlayer.play(Assemble)
+
+            let effect = UIBlurEffect(style: .light)
+            let effectView = UIVisualEffectView(effect: effect)
+            effectView.frame = view.frame
+            view.addSubview(effectView)
+
+            let scene = AvengersAssemble.Scene()
+            scene.completion = { hero in
+                VideoPlayer.play(hero.video, from: self) {
+                    self.dismiss(animated: true)
+                }
+            }
+
+            let sceneView = SCNView(frame: view.frame)
+            sceneView.scene = scene
+            sceneView.backgroundColor = .black
+            sceneView.autoenablesDefaultLighting = false
+            sceneView.allowsCameraControl = false
+            sceneView.gestureRecognizers =
+                [UISwipeGestureRecognizerDirection.left, .right, .up, .down].map {
+                    let gesture = UISwipeGestureRecognizer(target: sceneView.scene, action: #selector(scene.swipeBlock(gesture:)))
+                    gesture.direction = $0
+                    gesture.isEnabled = false
+                    return gesture
+                }
+            effectView.contentView.addSubview(sceneView)
+
+            scene.start() {
+                sceneView.gestureRecognizers?.forEach { $0.isEnabled = true }
+            }
+        }
+    }
+
     class Scene: SCNScene {
         var blocks: [Block] = []
-        var sceneComplete: (Hero) -> () = {_ in }
+        var completion: (Hero) -> () = { _ in }
 
         override init() {
             super.init()
-            
+
             let camera = SCNNode()
             camera.camera = SCNCamera()
             camera.camera?.zFar = 400.0
@@ -178,7 +142,7 @@ final class AvengersAssemble: MiniGame {
             for _ in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 120.0)
-                block.show(Hero.all.random)
+                block.show(Hero.all.random, pace: .immediate)
 
                 rootNode.addChildNode(block)
                 blocks.append(block)
@@ -215,21 +179,23 @@ final class AvengersAssemble: MiniGame {
                 blocks.forEach { $0.stopEnticing() }
 
                 if gesture.state == .ended {
-                    let transition = block.hero.transitions
+                    var new: Hero
                     switch gesture.direction {
-                    case .right:    block.turn(transition.left)
-                    case .left:     block.turn(transition.right)
-                    case .up:       block.turn(transition.down)
-                    case .down:     block.turn(transition.up)
-                    default:        ()
+                    case .right:    new = block.hero.neighbor.left
+                    case .left:     new = block.hero.neighbor.right
+                    case .up:       new = block.hero.neighbor.down
+                    case .down:     new = block.hero.neighbor.up
+                    default:        new = .CaptainAmerica
                     }
-                    AudioPlayer.play(block.hero.sound)
 
-                    // If they're all the same, we're ready for the next phase
-                    if (blocks.map { $0.hero }).allTheSame() {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Pace.normal.rawValue) {
-                            gesture.isEnabled = false
-                            self.select(hero: self.blocks[0].hero, from: block)
+                    AudioPlayer.play(new.sound)
+                    block.show(new) {
+                        // If they're all the same, we're ready for the next phase
+                        if (self.blocks.map { $0.hero }).allTheSame() {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + Pace.normal.duration) {
+                                gesture.isEnabled = false
+                                self.select(hero: self.blocks[0].hero, from: block)
+                            }
                         }
                     }
                 }
@@ -251,7 +217,7 @@ final class AvengersAssemble: MiniGame {
                     ]),
                 ])) {
                     DispatchQueue.main.async {
-                        self.sceneComplete(hero)
+                        self.completion(hero)
                     }
             }
         }
@@ -269,16 +235,19 @@ final class AvengersAssemble: MiniGame {
             fatalError("init(coder:) has not been implemented")
         }
 
-        func show(_ new: Hero) {
-            removeAction(forKey: "show")
-            runAction(SCNAction.rotateTo(x: new.rotation.x, y: new.rotation.y, z: 0, duration: 0),
-                      forKey: "show")
-            hero = new
-        }
+        func show(_ new: Hero, pace: Pace = .normal, completion: @escaping () -> () = {}) {
+            guard action(forKey: "show") == nil else { return }
 
-        func turn(_ turn: Turn, pace: Pace = .normal) {
-            runAction(SCNAction.rotateBy(x: turn.x, y: turn.y, z: 0, duration: pace.rawValue))
-            hero = turn.to
+            // Rotate through the initial face so that we get the right vertical orientation
+            let x = Hero.CaptainAmerica.rotation.y - hero.rotation.x + new.rotation.x
+            let y = Hero.CaptainAmerica.rotation.y - hero.rotation.y + new.rotation.y
+
+            runAction(
+                SCNAction.rotateBy(x: x, y: y, z: 0, duration: pace.duration),
+                forKey: "show") {
+                    self.hero = new
+                    completion()
+            }
         }
 
         func heroicArrival(of hero: Hero, at dest: SCNVector3, completion: @escaping () -> ()) {
@@ -287,8 +256,8 @@ final class AvengersAssemble: MiniGame {
 
             runAction(
                 SCNAction.group([
-                    SCNAction.move(to: dest, duration: Pace.verySlow.rawValue),
-                    SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: Pace.verySlow.rawValue),
+                    SCNAction.move(to: dest, duration: Pace.verySlow.duration),
+                    SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: Pace.verySlow.duration),
                     ]),
                 completionHandler: completion
             )

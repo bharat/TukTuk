@@ -250,14 +250,12 @@ final class AvengersAssemble: MiniGame {
             }
         }
 
-        func heroicArrival(of hero: Hero, at dest: SCNVector3, completion: @escaping () -> ()) {
-            self.hero = hero
-            let rot = hero.rotation
-
+        func heroicArrival(of new: Hero, at dest: SCNVector3, completion: @escaping () -> ()) {
+            hero = new
             runAction(
                 SCNAction.group([
                     SCNAction.move(to: dest, duration: Pace.verySlow.duration),
-                    SCNAction.rotateTo(x: rot.x, y: rot.y, z: 0, duration: Pace.verySlow.duration),
+                    SCNAction.rotateTo(x: hero.rotation.x, y: hero.rotation.y, z: 0, duration: Pace.verySlow.duration),
                     ]),
                 completionHandler: completion
             )
@@ -269,9 +267,9 @@ final class AvengersAssemble: MiniGame {
                     SCNAction.sequence([
                         SCNAction.repeat(
                             SCNAction.sequence([
-                                SCNAction.rotateBy(x: 0, y: 0, z: -0.08, duration: 0.025),
-                                SCNAction.rotateBy(x: 0, y: 0, z:  0.16, duration: 0.050),
-                                SCNAction.rotateBy(x: 0, y: 0, z: -0.08, duration: 0.025),
+                                SCNAction.rotateBy(x: 0, y: -0.32, z: 0, duration: 0.025),
+                                SCNAction.rotateBy(x: 0, y:  0.64, z: 0, duration: 0.050),
+                                SCNAction.rotateBy(x: 0, y: -0.32, z: 0, duration: 0.025),
                                 ]),
                             count: 3),
                         SCNAction.wait(duration: [5.0, 8.0, 10.0].random),

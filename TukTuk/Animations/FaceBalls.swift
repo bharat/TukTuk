@@ -50,8 +50,8 @@ class FaceBalls: Animation {
         }
 
         var splinePoints = [CGPoint(x: 0, y: scene.frame.height),
-                            CGPoint(x: scene.frame.width * 0.1, y: 70),
-                            CGPoint(x: scene.frame.width * 0.9, y: 70),
+                            CGPoint(x: scene.frame.width * 0.1, y: 100),
+                            CGPoint(x: scene.frame.width * 0.9, y: 100),
                             CGPoint(x: scene.frame.width, y: scene.frame.height)]
         let ground = SKShapeNode(splinePoints: &splinePoints,
                                  count: splinePoints.count)

@@ -116,6 +116,10 @@ final class AvengersAssemble: MiniGame {
         var blocks: [Block] = []
         var completion: (Hero) -> () = { _ in }
 
+        required init(coder: NSCoder) {
+            fatalError("Not yet implemented")
+        }
+
         override init() {
             super.init()
 
@@ -142,8 +146,6 @@ final class AvengersAssemble: MiniGame {
             for _ in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 120.0)
-                block.show(Hero.all.random, pace: .immediate)
-
                 rootNode.addChildNode(block)
                 blocks.append(block)
             }
@@ -153,22 +155,22 @@ final class AvengersAssemble: MiniGame {
             let yDest: [Float] = [30.0, 10.0, -10.0, -30.0]
             for (i, block) in blocks.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 * Double(i)) {
-                    block.heroicArrival(of: Hero.all.random, at: SCNVector3(x: 0, y: yDest[i], z: 20)) {
-                        block.entice()
+                    block.show(Hero.all.random, pace: .verySlow)
+                    block.runAction(SCNAction.move(to: SCNVector3(x: 0, y: yDest[i], z: 20), duration: Pace.verySlow.duration)) {
                     }
                 }
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 9.0) {
+                self.blocks.forEach {
+                    $0.enticing = true
+                }
+
                 AudioPlayer.play(ChooseAnAvenger)
                 completion()
             }
         }
         
-        required init(coder: NSCoder) {
-            fatalError("Not yet implemented")
-        }
-
         @objc func swipeBlock(gesture: UISwipeGestureRecognizer) {
             let sceneView = gesture.view as! SCNView
             let point = gesture.location(in: sceneView)
@@ -176,7 +178,7 @@ final class AvengersAssemble: MiniGame {
             
             if let block = hits.first?.node as? Block {
                 // stop all wiggling
-                blocks.forEach { $0.stopEnticing() }
+                blocks.forEach { $0.enticing = false }
 
                 if gesture.state == .ended {
                     var new: Hero
@@ -192,8 +194,13 @@ final class AvengersAssemble: MiniGame {
                     block.show(new) {
                         // If they're all the same, we're ready for the next phase
                         if (self.blocks.map { $0.hero }).allTheSame() {
+                            DispatchQueue.main.async {
+                                sceneView.gestureRecognizers?.forEach {
+                                    $0.isEnabled = false
+                                }
+                            }
+
                             DispatchQueue.main.asyncAfter(deadline: .now() + Pace.normal.duration) {
-                                gesture.isEnabled = false
                                 self.select(hero: self.blocks[0].hero, from: block)
                             }
                         }
@@ -225,6 +232,13 @@ final class AvengersAssemble: MiniGame {
 
     class Block: SCNNode {
         var hero: Hero = .CaptainAmerica
+        var enticing: Bool = false {
+            didSet {
+                if enticing && !oldValue {
+                    enticeLoop()
+                }
+            }
+        }
         
         init(geometry: SCNGeometry?) {
             super.init()
@@ -239,8 +253,15 @@ final class AvengersAssemble: MiniGame {
             guard action(forKey: "show") == nil else { return }
 
             // Rotate through the initial face so that we get the right vertical orientation
-            let x = Hero.CaptainAmerica.rotation.y - hero.rotation.x + new.rotation.x
-            let y = Hero.CaptainAmerica.rotation.y - hero.rotation.y + new.rotation.y
+            let x = (Hero.CaptainAmerica.rotation.x - hero.rotation.x + new.rotation.x)
+            var y = (Hero.CaptainAmerica.rotation.y - hero.rotation.y + new.rotation.y)
+
+            // Avoid rotating over .pi, which would cause the rotation code to flip directions
+            switch y {
+            case _ where y < -.pi:  y = .pi / 2
+            case _ where y > .pi:   y = -.pi / 2
+            default:                ()
+            }
 
             runAction(
                 SCNAction.rotateBy(x: x, y: y, z: 0, duration: pace.duration),
@@ -250,37 +271,27 @@ final class AvengersAssemble: MiniGame {
             }
         }
 
-        func heroicArrival(of new: Hero, at dest: SCNVector3, completion: @escaping () -> ()) {
-            hero = new
-            runAction(
-                SCNAction.group([
-                    SCNAction.move(to: dest, duration: Pace.verySlow.duration),
-                    SCNAction.rotateTo(x: hero.rotation.x, y: hero.rotation.y, z: 0, duration: Pace.verySlow.duration),
-                    ]),
-                completionHandler: completion
-            )
-        }
+        func enticeLoop() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + [8, 9, 10, 11, 12].random) {
+                // We use this approach instead of removeAction(forKey:) to avoid stopping
+                // mid-action and leaving the block misaligned.
+                if !self.enticing {
+                    return
+                }
 
-        func entice() {
-            runAction(
-                SCNAction.repeatForever(
+                let dir: CGFloat = [1.0, -1.0].random
+                self.runAction(
                     SCNAction.sequence([
-                        SCNAction.repeat(
-                            SCNAction.sequence([
-                                SCNAction.rotateBy(x: 0, y: -0.32, z: 0, duration: 0.025),
-                                SCNAction.rotateBy(x: 0, y:  0.64, z: 0, duration: 0.050),
-                                SCNAction.rotateBy(x: 0, y: -0.32, z: 0, duration: 0.025),
-                                ]),
-                            count: 3),
-                        SCNAction.wait(duration: [5.0, 8.0, 10.0].random),
+                        SCNAction.rotateBy(x: 0, y: dir * -0.8, z: 0, duration: 0.5),
+                        SCNAction.rotateBy(x: 0, y: dir *  0.8, z: 0, duration: 0.1),
+                        SCNAction.rotateBy(x: 0, y: dir *  0.2, z: 0, duration: 0.05),
+                        SCNAction.rotateBy(x: 0, y: dir * -0.4, z: 0, duration: 0.1),
+                        SCNAction.rotateBy(x: 0, y: dir *  0.2, z: 0, duration: 0.05),
                         ])
-                    ),
-                forKey: "entice"
-            )
-        }
-
-        func stopEnticing() {
-            removeAction(forKey: "entice")
+                ) {
+                    self.enticeLoop()
+                }
+            }
         }
     }
 }

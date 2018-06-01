@@ -50,6 +50,8 @@ IchGehMitMeiner.jpg
 IchGehMitMeiner.mp3
 ItsyBitsSpider.mp3
 ItsyBitsySpider.mp3
+KimHsieh.jpg
+KimHsieh.mp3
 KopfSchultern.jpg
 KopfSchultern.mp3
 Kuckuck.jpg
@@ -60,6 +62,8 @@ LearnGreetings.jpg
 LearnGreetings.mp3
 Lulala.jpg
 Lulala.mp4
+MandarinSong.jpg
+MandarinSong.mp3
 Mannlein.jpg
 Mannlein.mp3
 MaryHadALittleLamb.jpg

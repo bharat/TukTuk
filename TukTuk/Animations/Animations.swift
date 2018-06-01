@@ -22,6 +22,7 @@ class Animations {
         RollAway.self,
         WordPop.self,
         FaceBalls.self,
+        FaceSquares.self,
         None.self
     ]
 

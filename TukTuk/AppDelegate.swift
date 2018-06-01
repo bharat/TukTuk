@@ -11,11 +11,11 @@ import EasyAnimation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow? = DebugWindow()
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        let defaultValue = ["surpriseCountdown": 1800]
+        let defaultValue = ["videoCountdown": 2400]
         UserDefaults.standard.register(defaults: defaultValue)
 
         UIApplication.shared.isIdleTimerDisabled = true
@@ -38,18 +38,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
     }
-}
-
-class DebugWindow: UIWindow {
-//    override func sendEvent(_ event: UIEvent) {
-//        print("Event: \(event)")
-//        if let touch = event.allTouches?.first {
-//            let point = touch.location(in: self)
-//            if let view = hitTest(point, with: event) {
-//                print("Touch: \(view)")
-//            }
-//        }
-//
-//        super.sendEvent(event)
-//    }
 }

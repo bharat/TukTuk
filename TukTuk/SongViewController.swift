@@ -66,7 +66,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         case videoButton:
             AudioPlayer.stop()
             let video = preferredVideo ?? Catalog.instance.videos.random.video
-            videoCountdown = 1800
+            videoCountdown = 2400
             VideoPlayer.play(video, from: self)
             preferredVideo = nil
             disableStopButton()

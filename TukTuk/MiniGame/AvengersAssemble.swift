@@ -146,6 +146,7 @@ final class AvengersAssemble: MiniGame {
             for _ in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 120.0)
+                block.show(Hero.all.random, pace: .immediate)
                 rootNode.addChildNode(block)
                 blocks.append(block)
             }
@@ -177,7 +178,6 @@ final class AvengersAssemble: MiniGame {
             let hits = sceneView.hitTest(point, options: nil)
             
             if let block = hits.first?.node as? Block {
-                // stop all wiggling
                 blocks.forEach { $0.enticing = false }
 
                 if gesture.state == .ended {

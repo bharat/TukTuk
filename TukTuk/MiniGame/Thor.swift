@@ -42,7 +42,7 @@ final class Thor: MiniGame {
             skView.presentScene(scene)
 
             scene.completion = {
-                effectView.removeFromSuperview()
+                self.dismiss(animated: true)
             }
         }
     }
@@ -205,8 +205,8 @@ final class Thor: MiniGame {
             let height = view.frame.height
 
             var points = [CGPoint(x: 0, y: height),
-                          CGPoint(x: 0, y: 0),
-                          CGPoint(x: width, y: 0),
+                          CGPoint(x: 0, y: 30),
+                          CGPoint(x: width, y: 30),
                           CGPoint(x: width, y: height)]
             let border = SKShapeNode(points: &points, count: points.count)
             border.lineWidth = 1

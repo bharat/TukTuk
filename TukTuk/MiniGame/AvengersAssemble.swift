@@ -154,9 +154,10 @@ final class AvengersAssemble: MiniGame {
 
         func start(completion: @escaping () -> ()) {
             let yDest: [Float] = [30.0, 10.0, -10.0, -30.0]
+            let randomHeroes = Hero.all.shuffled()
             for (i, block) in blocks.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 * Double(i)) {
-                    block.show(Hero.all.random, pace: .verySlow)
+                    block.show(randomHeroes[i], pace: .verySlow)
                     block.runAction(SCNAction.move(to: SCNVector3(x: 0, y: yDest[i], z: 20), duration: Pace.verySlow.duration)) {
                     }
                 }
@@ -171,7 +172,8 @@ final class AvengersAssemble: MiniGame {
                 completion()
             }
         }
-        
+
+        var turnCount = 0
         @objc func swipeBlock(gesture: UISwipeGestureRecognizer) {
             let sceneView = gesture.view as! SCNView
             let point = gesture.location(in: sceneView)
@@ -188,6 +190,15 @@ final class AvengersAssemble: MiniGame {
                     case .up:       new = block.hero.neighbor.down
                     case .down:     new = block.hero.neighbor.up
                     default:        new = .CaptainAmerica
+                    }
+
+
+                    // Accelerate to the finish if it's taking too long
+                    turnCount += 1
+                    if self.turnCount > 25 {
+                        self.blocks.filter { $0 != block }.forEach {
+                            $0.show(new)
+                        }
                     }
 
                     AudioPlayer.play(new.sound)

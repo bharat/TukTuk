@@ -46,8 +46,8 @@ final class SpellyBlocks: MiniGame {
 
         @objc func didTapScreen(recognizer: UITapGestureRecognizer) {
             if let camera = sceneView.session.currentFrame?.camera {
-                let tapLocation = recognizer.location(in: sceneView)
-                let hitTestResults = sceneView.hitTest(tapLocation)
+                // let tapLocation = recognizer.location(in: sceneView)
+                //let hitTestResults = sceneView.hitTest(tapLocation)
 
                 var translation = matrix_identity_float4x4
                 translation.columns.3.z = -5.0

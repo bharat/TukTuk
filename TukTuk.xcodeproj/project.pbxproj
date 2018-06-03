@@ -37,6 +37,7 @@
 		4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */; };
 		4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */; };
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
+		4FD689CC20C206C80003CA83 /* SpellyBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */; };
 		4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */; };
 		4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */; };
 /* End PBXBuildFile section */
@@ -73,6 +74,7 @@
 		4FBD57B01F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4FBD57B51F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FBD57B71F098DEB00BDCDE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellyBlocks.swift; sourceTree = "<group>"; };
 		4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewController.swift; sourceTree = "<group>"; };
 		4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSquares.swift; sourceTree = "<group>"; };
 		5D93CC645E3623C41C0DD219 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				4F81D5F520A6776D00CB68D8 /* MiniGames.swift */,
 				4F90EB2720A372F000F8EE87 /* Thor.swift */,
 				4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */,
+				4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */,
 			);
 			path = MiniGame;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				4F81D5F820A7600C00CB68D8 /* None.swift in Sources */,
 				4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */,
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
+				4FD689CC20C206C80003CA83 /* SpellyBlocks.swift in Sources */,
 				4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */,
 				4F8A2AA7209FDB9C000C2CA5 /* MutableCollection.swift in Sources */,
 				4F8A2A9A209F6E0A000C2CA5 /* Catalog.swift in Sources */,

@@ -39,6 +39,11 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         welcomeImageView.addGestureRecognizer(long)
     }
 
+    // Useful for debugging
+//    override func viewDidAppear(_ animated: Bool) {
+//        show(SpellyBlocks().uivc, sender: self)
+//    }
+
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false
 

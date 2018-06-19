@@ -31,9 +31,8 @@ class AudioPlayer {
                 player?.volume = 1.0
             }
 
-            if timer == nil {
-                timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in tick()})
-            }
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in tick()})
         } catch let error {
             print(error.localizedDescription)
         }

@@ -17,24 +17,21 @@ final class SpellyBlocks: MiniGame {
 
     class UIVC: UIViewController {
         var sceneView: ARSCNView!
-        var scene = SpellyBlocks.Scene()
+        var scene: SpellyBlocks.Scene!
 
         override func viewDidLoad() {
-            let effect = UIBlurEffect(style: .light)
-            let effectView = UIVisualEffectView(effect: effect)
-            effectView.frame = view.frame
-            view.addSubview(effectView)
-
+            scene = SpellyBlocks.Scene(named: "art.scnassets/balls.scn")
             scene.completion = {
                 self.dismiss(animated: true)
             }
 
             sceneView = ARSCNView(frame: view.frame)
             sceneView.scene = scene
-            sceneView.backgroundColor = .black
-            sceneView.autoenablesDefaultLighting = false
-            sceneView.allowsCameraControl = false
-            effectView.contentView.addSubview(sceneView)
+            sceneView.backgroundColor = .clear
+            sceneView.autoenablesDefaultLighting = true
+            sceneView.allowsCameraControl = true
+            sceneView.showsStatistics = true
+            view.addSubview(sceneView)
 
             sceneView.gestureRecognizers = [
                 UITapGestureRecognizer(target: self, action: #selector(didTapScreen(recognizer:)))
@@ -42,6 +39,23 @@ final class SpellyBlocks: MiniGame {
 
             scene.start() {
             }
+        }
+
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+
+            // Create a session configuration
+            let configuration = ARWorldTrackingConfiguration()
+
+            // Run the view's session
+            sceneView.session.run(configuration)
+        }
+
+        override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+
+            // Pause the view's session
+            sceneView.session.pause()
         }
 
         @objc func didTapScreen(recognizer: UITapGestureRecognizer) {
@@ -56,14 +70,13 @@ final class SpellyBlocks: MiniGame {
                 scene.addSphere(position: position)
             }
         }
-
     }
 
     class Scene: SCNScene {
         var completion: () -> () = { }
 
-        required init(coder: NSCoder) {
-            fatalError("Not yet implemented")
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
         }
 
         override init() {

@@ -38,6 +38,7 @@
 		4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */; };
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
 		4FD689CC20C206C80003CA83 /* SpellyBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */; };
+		4FD689EE20C9B71D0003CA83 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FD689ED20C9B71C0003CA83 /* art.scnassets */; };
 		4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */; };
 		4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */; };
 /* End PBXBuildFile section */
@@ -75,6 +76,7 @@
 		4FBD57B51F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FBD57B71F098DEB00BDCDE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellyBlocks.swift; sourceTree = "<group>"; };
+		4FD689ED20C9B71C0003CA83 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewController.swift; sourceTree = "<group>"; };
 		4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSquares.swift; sourceTree = "<group>"; };
 		5D93CC645E3623C41C0DD219 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */,
 				4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */,
 				4FBD57B71F098DEB00BDCDE3 /* Info.plist */,
+				4FD689ED20C9B71C0003CA83 /* art.scnassets */,
 				4F6A7BE21F1AE9B300299152 /* Assets.xcassets */,
 				4F90EC6820A3CA6D00F8EE87 /* Sounds */,
 				4FB989041F12F45A001F02CE /* Meta */,
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */,
+				4FD689EE20C9B71D0003CA83 /* art.scnassets in Resources */,
 				4FB989071F12F45A001F02CE /* Songs in Resources */,
 				4F90EC6920A3CA6D00F8EE87 /* Sounds in Resources */,
 				4F6A7BDB1F1AD5AB00299152 /* Videos in Resources */,

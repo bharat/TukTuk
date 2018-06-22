@@ -22,13 +22,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var videoCountdown: TimeInterval = 0 {
         didSet {
-            if videoCountdown < 0 {
-                videoCountdown = 0
-            }
-
-            videoTimerLabel.text = "\(Int(videoCountdown))"
-
+            print("videoCountdown set to: \(videoCountdown)")
             if videoCountdown <= 0 {
+                videoCountdown = 0
                 UIView.animate(withDuration: 1) {
                     self.videoTimerLabel.isHidden = true
                     self.videoButton.isHidden = false
@@ -38,6 +34,11 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.videoTimerLabel.isHidden = false
                     self.videoButton.isHidden = true
                 }
+            }
+
+            videoTimerLabel.text = "\(Int(videoCountdown))"
+            if videoCountdown.remainder(dividingBy: 10) == 0 {
+                saveVideoCountdown()
             }
         }
     }
@@ -58,7 +59,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        videoCountdown = UserDefaults.standard.double(forKey: "videoCountdown")
+        loadVideoCountdown()
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
@@ -66,7 +67,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         case videoButton:
             AudioPlayer.stop()
             let video = preferredVideo ?? Catalog.instance.videos.random.video
-            videoCountdown = 2400
+            resetVideoCountdown()
             VideoPlayer.play(video, from: self)
             preferredVideo = nil
             disableStopButton()
@@ -79,8 +80,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             ()
         }
 
-        UserDefaults.standard.setValue(videoCountdown, forKey: "videoCountdown")
-        UserDefaults.standard.synchronize()
+        saveVideoCountdown()
     }
 
     func enableStopButton() {
@@ -136,6 +136,21 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             return 150
         }
+    }
+
+    // MARK: VideoCountdown
+
+    func loadVideoCountdown() {
+        videoCountdown = UserDefaults.standard.double(forKey: "videoCountdown")
+    }
+
+    func resetVideoCountdown() {
+        videoCountdown = (UIApplication.shared.delegate as! AppDelegate).videoCountdownTarget
+    }
+
+    func saveVideoCountdown() {
+        UserDefaults.standard.setValue(videoCountdown, forKey: "videoCountdown")
+        UserDefaults.standard.synchronize()
     }
 
     // MARK: Video

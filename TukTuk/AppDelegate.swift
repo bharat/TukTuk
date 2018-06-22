@@ -12,10 +12,11 @@ import EasyAnimation
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    let videoCountdownTarget: TimeInterval = 2400
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        let defaultValue = ["videoCountdown": 2400]
+        let defaultValue = ["videoCountdown": videoCountdownTarget]
         UserDefaults.standard.register(defaults: defaultValue)
 
         UIApplication.shared.isIdleTimerDisabled = true

@@ -173,7 +173,7 @@ final class AvengersAssemble: MiniGame {
             }
         }
 
-        var turnCount = 0
+        var turnsRemaining = 25
         @objc func swipeBlock(gesture: UISwipeGestureRecognizer) {
             let sceneView = gesture.view as! SCNView
             let point = gesture.location(in: sceneView)
@@ -192,19 +192,18 @@ final class AvengersAssemble: MiniGame {
                     default:        new = .CaptainAmerica
                     }
 
-
                     // Accelerate to the finish if it's taking too long
-                    turnCount += 1
-                    if self.turnCount > 25 {
+                    turnsRemaining -= 1
+                    AudioPlayer.play(new.sound)
+                    if turnsRemaining == 0 {
                         self.blocks.filter { $0 != block }.forEach {
                             $0.show(new)
                         }
                     }
 
-                    AudioPlayer.play(new.sound)
                     block.show(new) {
                         // If they're all the same, we're ready for the next phase
-                        if (self.blocks.map { $0.hero }).allTheSame() {
+                        if self.turnsRemaining == 0 || (self.blocks.map { $0.hero }).allTheSame() {
                             DispatchQueue.main.async {
                                 sceneView.gestureRecognizers?.forEach {
                                     $0.isEnabled = false

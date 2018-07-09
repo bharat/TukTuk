@@ -14,6 +14,7 @@
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
 		4F1F17CE209E15B000483499 /* RollAway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CD209E15B000483499 /* RollAway.swift */; };
 		4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CF209E15BB00483499 /* Hinge.swift */; };
+		4F33AEE820F2DE3F000FF648 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33AEE720F2DE3F000FF648 /* TimeInterval.swift */; };
 		4F6A7BDB1F1AD5AB00299152 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BDA1F1AD5AB00299152 /* Videos */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
 		4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */; };
@@ -50,6 +51,7 @@
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
 		4F1F17CD209E15B000483499 /* RollAway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollAway.swift; sourceTree = "<group>"; };
 		4F1F17CF209E15BB00483499 /* Hinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hinge.swift; sourceTree = "<group>"; };
+		4F33AEE720F2DE3F000FF648 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		4F6A7BDA1F1AD5AB00299152 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */,
 				4F89557820B47B8600E37E53 /* UIImage.swift */,
 				4F90205A20BDAEB3000E4311 /* Array.swift */,
+				4F33AEE720F2DE3F000FF648 /* TimeInterval.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -208,7 +211,6 @@
 				4FBD57A51F098DEB00BDCDE3 /* Frameworks */,
 				4FBD57A61F098DEB00BDCDE3 /* Resources */,
 				D15C2A9A4846E04855A5E1F5 /* [CP] Embed Pods Frameworks */,
-				535F0434EBE69D311393D12A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -274,21 +276,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		535F0434EBE69D311393D12A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		72036C9405361C9306DA5C16 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -355,6 +342,7 @@
 				4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */,
 				4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */,
 				4F84C38F1FC51AC40093801B /* Animations.swift in Sources */,
+				4F33AEE820F2DE3F000FF648 /* TimeInterval.swift in Sources */,
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
 				4F1F17C7209E112C00483499 /* Collection.swift in Sources */,

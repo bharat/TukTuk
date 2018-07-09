@@ -18,22 +18,17 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var videoTimerLabel: UILabel!
 
     var preferredVideo: URL?
-    var preferredMiniGame: MiniGame?
+    var preferredMiniGame: MiniGame.Type?
 
     var videoCountdown: TimeInterval = 0 {
         didSet {
             print("videoCountdown set to: \(videoCountdown)")
-            if videoCountdown <= 0 {
-                videoCountdown = 0
-                UIView.animate(withDuration: 1) {
-                    self.videoTimerLabel.isHidden = true
+            
+            if videoCountdown == 0 {
+                UIView.animate(withDuration: 0.75) {
                     self.videoButton.isHidden = false
                 }
-            } else {
-                if !videoButton.isHidden {
-                    self.videoTimerLabel.isHidden = false
-                    self.videoButton.isHidden = true
-                }
+                videoCountdown = .VideoInterval
             }
 
             videoTimerLabel.text = "\(Int(videoCountdown))"
@@ -49,16 +44,16 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
 
         // 3DTouch or a long press on the stop button will bring up an interface where you can
-        // start a surprise video
+        // cue up a MiniGame or a Video
         registerForPreviewing(with: self, sourceView: stopButton)
         let long = UILongPressGestureRecognizer(target: self, action: #selector(handleVideoLongPress(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
-
-        videoButton.isHidden = true
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         loadVideoCountdown()
     }
 
@@ -66,15 +61,15 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch(sender) {
         case videoButton:
             AudioPlayer.stop()
-            let video = preferredVideo ?? Catalog.instance.videos.random.video
-            resetVideoCountdown()
-            VideoPlayer.play(video, from: self)
+            stopButton.isEnabled = false
+
+            VideoPlayer.play(preferredVideo ?? Catalog.instance.videos.random.video, from: self)
+            videoButton.isHidden = true
             preferredVideo = nil
-            disableStopButton()
 
         case stopButton:
             AudioPlayer.stop()
-            disableStopButton()
+            stopButton.isEnabled = false
 
         default:
             ()
@@ -83,35 +78,34 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         saveVideoCountdown()
     }
 
-    func enableStopButton() {
-        stopButton.isEnabled = true
-    }
-
-    func disableStopButton() {
-        stopButton.isEnabled = false
-    }
-
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if VideoPlayer.isPlaying == false {
-            if preferredMiniGame != nil || Array(1...60).random == 1 {
-                let miniGame = preferredMiniGame ?? MiniGames.random()
-                show(miniGame.uivc, sender: self)
-                preferredMiniGame = nil
+        stopButton.isEnabled = false
+        
+        if !VideoPlayer.isPlaying {
+            if let preferredMiniGame = preferredMiniGame {
+                show(preferredMiniGame.init().uivc, sender: self)
+                self.preferredMiniGame = nil
+                return
+            }
+            
+            if Array(1...60).random == 1 {
+                show(MiniGames.all.random.init().uivc, sender: self)
                 return
             }
 
-            AudioPlayer.play(Catalog.instance.songs[indexPath.row].audio, tick: {
+            AudioPlayer.play(Catalog.instance.songs[indexPath.row].audio) {
                 self.videoCountdown -= 1
-            })
-            enableStopButton()
+            }
+            stopButton.isEnabled = true
 
+            // Notify the tableView that we need to focus on the cell that was tapped
             tableView.beginUpdates()
             tableView.endUpdates()
         }
     }
-
+    
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,10 +136,11 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func loadVideoCountdown() {
         videoCountdown = UserDefaults.standard.double(forKey: "videoCountdown")
+        videoButton.isHidden = (videoCountdown > 0)
     }
 
     func resetVideoCountdown() {
-        videoCountdown = (UIApplication.shared.delegate as! AppDelegate).videoCountdownTarget
+        videoCountdown = .VideoInterval
     }
 
     func saveVideoCountdown() {
@@ -194,7 +189,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.preferredVideo = Catalog.instance.videos[index].video
 
             case "minigame":
-                self.preferredMiniGame = MiniGames.all[index].init()
+                self.preferredMiniGame = MiniGames.all[index]
 
             default:
                 ()

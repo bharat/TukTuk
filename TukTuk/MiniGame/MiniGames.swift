@@ -21,8 +21,4 @@ class MiniGames {
         Thor.self,
         AvengersAssemble.self
     ]
-
-    static func random() -> MiniGame {
-        return all.random.init()
-    }
 }

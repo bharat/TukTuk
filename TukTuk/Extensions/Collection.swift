@@ -10,8 +10,6 @@ import Foundation
 
 extension Collection where Index == Int {
     var random: Iterator.Element {
-        get {
-            return self[Int(arc4random_uniform(UInt32(endIndex)))]
-        }
+        return self[Int(arc4random_uniform(UInt32(endIndex)))]
     }
 }

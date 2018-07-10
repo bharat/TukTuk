@@ -8,7 +8,11 @@
 
 import Foundation
 import UIKit
-    
+
+extension URL {
+    static let Welcome = Bundle.sound("Welcome.mp3")
+}
+
 protocol Animation {
     static var title: String { get }
 

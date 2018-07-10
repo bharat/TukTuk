@@ -175,7 +175,7 @@ final class AvengersAssemble: MiniGame {
             }
         }
 
-        var turnsRemaining = 25
+        var turnsRemaining = 50
         @objc func swipeBlock(gesture: UISwipeGestureRecognizer) {
             let sceneView = gesture.view as! SCNView
             let point = gesture.location(in: sceneView)
@@ -205,7 +205,7 @@ final class AvengersAssemble: MiniGame {
 
                     block.show(new) {
                         // If they're all the same, we're ready for the next phase
-                        if self.turnsRemaining == 0 || (self.blocks.map { $0.hero }).allTheSame() {
+                        if self.turnsRemaining == 0 || Set(self.blocks.map { $0.hero }).count == 1 {
                             DispatchQueue.main.async {
                                 sceneView.gestureRecognizers?.forEach {
                                     $0.isEnabled = false

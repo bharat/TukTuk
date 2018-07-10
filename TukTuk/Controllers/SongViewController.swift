@@ -10,6 +10,10 @@ import UIKit
 import AVFoundation
 import AVKit
 
+extension TimeInterval {
+    static let VideoInterval: TimeInterval = 2400
+}
+
 class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     @IBOutlet weak var musicTable: UITableView!
     @IBOutlet weak var buttons: UIStackView!

@@ -9,10 +9,6 @@
 import Foundation
 import UIKit
 
-extension URL {
-    static let Welcome = Bundle.sound("Welcome.mp3")
-}
-
 extension FileManager {
     static let songs = {
         try! `default`.contentsOfDirectory(atPath: Bundle.songsPath).filter { $0.hasSuffix(".mp3") }.map { $0 as NSString }

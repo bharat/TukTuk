@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 import SceneKit
 
+extension URL {
+    static let Assemble             = Catalog.sound("AvengersAssemble/Assemble.mp3")
+    static let ChooseAnAvenger      = Catalog.sound("AvengersAssemble/ChooseAnAvenger.mp3")
+    static let Tada                 = Catalog.sound("AvengersAssemble/Tada.mp3")
+}
+
 final class AvengersAssemble: MiniGame {
     static var title = "Avengers Assemble!"
     var uivc: UIViewController = UIVC()
@@ -72,13 +78,9 @@ final class AvengersAssemble: MiniGame {
         }
     }
 
-    static var Assemble             = Catalog.sound("AvengersAssemble/Assemble.mp3")
-    static var ChooseAnAvenger      = Catalog.sound("AvengersAssemble/ChooseAnAvenger.mp3")
-    static var Tada                 = Catalog.sound("AvengersAssemble/Tada.mp3")
-
     class UIVC: UIViewController {
         override func viewDidLoad() {
-            AudioPlayer.play(Assemble)
+            AudioPlayer.play(.Assemble)
 
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
@@ -168,7 +170,7 @@ final class AvengersAssemble: MiniGame {
                     $0.enticing = true
                 }
 
-                AudioPlayer.play(ChooseAnAvenger)
+                AudioPlayer.play(.ChooseAnAvenger)
                 completion()
             }
         }
@@ -220,7 +222,7 @@ final class AvengersAssemble: MiniGame {
         }
         
         func select(hero: Hero, from block: Block) {
-            AudioPlayer.play(Tada)
+            AudioPlayer.play(.Tada)
 
             blocks.filter { $0 != block }.forEach {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))

@@ -23,7 +23,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     var videoCountdown: TimeInterval = 0 {
         didSet {
             print("videoCountdown set to: \(videoCountdown)")
-            
+
             if videoCountdown == 0 {
                 UIView.animate(withDuration: 0.75) {
                     self.videoButton.isHidden = false

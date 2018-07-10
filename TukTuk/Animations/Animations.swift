@@ -25,13 +25,4 @@ class Animations {
         FaceSquares.self,
         None.self
     ]
-
-    static func random() -> Animation {
-        while true {
-            let anim = all.random
-            if anim != None.self {
-                return anim.init()
-            }
-        }
-    }
 }

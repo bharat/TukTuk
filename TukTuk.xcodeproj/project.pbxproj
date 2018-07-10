@@ -211,6 +211,7 @@
 				4FBD57A51F098DEB00BDCDE3 /* Frameworks */,
 				4FBD57A61F098DEB00BDCDE3 /* Resources */,
 				D15C2A9A4846E04855A5E1F5 /* [CP] Embed Pods Frameworks */,
+				E8F209432E97B418A2C48CA2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -312,6 +313,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E8F209432E97B418A2C48CA2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

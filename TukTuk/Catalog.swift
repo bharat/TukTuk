@@ -19,6 +19,10 @@ struct Movie {
     var video: URL
 }
 
+extension URL {
+    static let Welcome = Catalog.sound("Welcome.mp3")
+}
+
 // TODO: this class needs to be refactored
 class Catalog {
     static var instance = Catalog()

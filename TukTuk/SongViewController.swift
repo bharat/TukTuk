@@ -63,7 +63,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             AudioPlayer.stop()
             stopButton.isEnabled = false
 
-            VideoPlayer.play(preferredVideo ?? Catalog.instance.videos.random.video, from: self)
+            VideoPlayer.play(preferredVideo ?? Bundle.videos.random.url, from: self)
             videoButton.isHidden = true
             preferredVideo = nil
 
@@ -95,7 +95,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
                 return
             }
 
-            AudioPlayer.play(Catalog.instance.songs[indexPath.row].audio) {
+            AudioPlayer.play(Bundle.songs[indexPath.row].url) {
                 self.videoCountdown -= 1
             }
             stopButton.isEnabled = true
@@ -109,12 +109,12 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Catalog.instance.songs.count
+        return Bundle.songs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell")!
-        let songs = Catalog.instance.songs
+        let songs = Bundle.songs
 
         cell.backgroundView = UIImageView(image: songs[indexPath.row].image)
         cell.backgroundView?.contentMode = .scaleAspectFill
@@ -179,14 +179,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         previewTVC.tableTitle = "Which video should we play?"
         previewTVC.groups = [
-            PreviewGroup(title: "Videos", id: "video", data: Catalog.instance.videos.map { $0.title }),
+            PreviewGroup(title: "Videos", id: "video", data: Bundle.videos.map { $0.title }),
             PreviewGroup(title: "Mini Games", id: "minigame", data: MiniGames.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             switch(id) {
             case "video":
                 self.videoCountdown = 0
-                self.preferredVideo = Catalog.instance.videos[index].video
+                self.preferredVideo = Bundle.videos[index].url
 
             case "minigame":
                 self.preferredMiniGame = MiniGames.all[index]

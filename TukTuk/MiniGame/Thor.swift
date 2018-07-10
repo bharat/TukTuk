@@ -11,12 +11,12 @@ import UIKit
 import SpriteKit
 
 extension URL {
-    static let HammerFallingWhistle     = Catalog.sound("Thor/HammerFallingWhistle.mp3")
-    static let HammerLandingThud        = Catalog.sound("Thor/HammerLandingThud.mp3")
-    static let IReallyWishIHadMyHammer  = Catalog.sound("Thor/IReallyWishIHadMyHammer.mp3")
-    static let ThankYou                 = Catalog.sound("Thor/ThankYou.mp3")
-    static let ILostMyHammer            = Catalog.sound("Thor/ILostMyHammer.mp3")
-    static let IAmTheGodOfThunder       = Catalog.sound("Thor/IAmTheGodOfThunder.mp3")
+    static let HammerFallingWhistle     = Bundle.sound("Thor/HammerFallingWhistle.mp3")
+    static let HammerLandingThud        = Bundle.sound("Thor/HammerLandingThud.mp3")
+    static let IReallyWishIHadMyHammer  = Bundle.sound("Thor/IReallyWishIHadMyHammer.mp3")
+    static let ThankYou                 = Bundle.sound("Thor/ThankYou.mp3")
+    static let ILostMyHammer            = Bundle.sound("Thor/ILostMyHammer.mp3")
+    static let IAmTheGodOfThunder       = Bundle.sound("Thor/IAmTheGodOfThunder.mp3")
 }
 
 final class Thor: MiniGame {

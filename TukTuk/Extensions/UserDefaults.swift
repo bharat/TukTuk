@@ -8,19 +8,24 @@
 
 import Foundation
 
-extension String {
-    static let videoCountdownKey = "videoCountdown"
-}
-
 extension UserDefaults {
-    static var videoCountdown: TimeInterval {
-        set {
-            standard.setValue(newValue, forKey: .videoCountdownKey)
-            standard.synchronize()
+    enum Key: String {
+        case videoCountdown = "videoCountdown"
+    }
+
+    func registerDefaults() {
+        register(defaults: [
+            Key.videoCountdown.rawValue: TimeInterval.VideoInterval
+        ])
+    }
+
+    var videoCountdown: TimeInterval {
+        get {
+            return double(forKey: Key.videoCountdown.rawValue)
         }
 
-        get {
-            return standard.double(forKey: .videoCountdownKey)
+        set {
+            setValue(newValue, forKey: Key.videoCountdown.rawValue)
         }
     }
 }

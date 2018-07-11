@@ -56,14 +56,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        videoCountdown = UserDefaults.videoCountdown
+        videoCountdown = UserDefaults.standard.videoCountdown
         videoButton.isHidden = (videoCountdown > 0)
 
         NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
     }
 
     @objc func appEnteredBackground() {
-        UserDefaults.videoCountdown = videoCountdown
+        UserDefaults.standard.videoCountdown = videoCountdown
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {

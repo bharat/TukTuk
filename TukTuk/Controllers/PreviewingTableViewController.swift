@@ -32,6 +32,7 @@ class PreviewingTableViewController: UITableViewController {
     }
 
     // MARK: UITableViewDataSource
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return groups.count
     }

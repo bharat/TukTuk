@@ -35,7 +35,7 @@ final class SpellyBlocks: MiniGame {
 
             sceneView.gestureRecognizers = [
                 UITapGestureRecognizer(target: self, action: #selector(didTapScreen(recognizer:)))
-                ]
+            ]
 
             scene.start() {
             }

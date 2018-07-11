@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 
 extension FileManager {
-    static let songs = {
-        try! `default`.contentsOfDirectory(atPath: Bundle.songsPath).filter { $0.hasSuffix(".mp3") }.map { $0 as NSString }
+    static let songNames = {
+        Set(try! `default`.contentsOfDirectory(atPath: Bundle.songsPath).map { ($0 as NSString).deletingPathExtension })
     }()
 
-    static let videos = {
-        try! `default`.contentsOfDirectory(atPath: Bundle.videosPath).map { $0 as NSString }
+    static let videoNames = {
+        try! `default`.contentsOfDirectory(atPath: Bundle.videosPath).map { ($0 as NSString).deletingPathExtension }
     }()
 }
 
@@ -35,15 +35,14 @@ extension Bundle {
         return Bundle.url(from: "Videos/\(fileName)")
     }
 
-    static let songs: [Song] = FileManager.songs.map {
-        let name = $0.deletingPathExtension
+    static let songs: [Song] = FileManager.songNames.map { name in
         return Song(title: name,
             image: UIImage(named: "Songs/\(name).jpg")!,
             url: Bundle.url(from: "Songs/\(name).mp3"))
-    }
+    }.shuffled()
 
 
-    static let videos: [Video] = FileManager.videos.map {
-        Video(title: $0.deletingPathExtension, url: Bundle.url(from: "Videos/Normal/\($0)"))
+    static let videos: [Video] = FileManager.videoNames.map { name in
+        Video(title: name, url: Bundle.url(from: "Videos/Normal/\(name).mp4"))
     }
 }

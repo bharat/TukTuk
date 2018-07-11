@@ -8,9 +8,9 @@
 
 import Foundation
 
-// From: https://stackoverflow.com/questions/24026510/how-do-i-shuffle-an-array-in-swift
 extension MutableCollection {
-    /// Shuffles the contents of this collection.
+    // From: https://stackoverflow.com/questions/24026510/how-do-i-shuffle-an-array-in-swift
+    // Shuffles the contents of this collection.
     mutating func shuffle() {
         let c = count
         guard c > 1 else { return }

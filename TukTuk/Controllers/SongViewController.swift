@@ -14,6 +14,13 @@ extension TimeInterval {
     static let VideoInterval: TimeInterval = 2400
 }
 
+extension UITableView {
+    func redraw() {
+        beginUpdates()
+        endUpdates()
+    }
+}
+
 class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     @IBOutlet weak var musicTable: UITableView!
     @IBOutlet weak var buttons: UIStackView!
@@ -53,6 +60,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         let long = UILongPressGestureRecognizer(target: self, action: #selector(handleVideoLongPress(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
+        stopButton.isEnabled = false
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -75,6 +83,10 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             AudioPlayer.stop()
             stopButton.isEnabled = false
 
+            if let selectedRow = musicTable.indexPathForSelectedRow {
+                musicTable.deselectRow(at: selectedRow, animated: true)
+                musicTable.redraw()
+            }
         default:
             ()
         }
@@ -103,13 +115,10 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.videoCountdown -= 1
             }
             stopButton.isEnabled = true
-
-            // Notify the tableView that we need to focus on the cell that was tapped
-            tableView.beginUpdates()
-            tableView.endUpdates()
+            musicTable.redraw()
         }
     }
-    
+
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -118,11 +127,10 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell")!
-        let songs = Bundle.songs
 
-        cell.backgroundView = UIImageView(image: songs[indexPath.row].image)
+        cell.backgroundView = UIImageView(image: Bundle.songs[indexPath.row].image)
         cell.backgroundView?.contentMode = .scaleAspectFill
-        cell.selectedBackgroundView = UIImageView(image: songs[indexPath.row].image)
+        cell.selectedBackgroundView = UIImageView(image: Bundle.songs[indexPath.row].image)
         cell.selectedBackgroundView?.contentMode = .scaleAspectFill
 
         return cell

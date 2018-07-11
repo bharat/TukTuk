@@ -8,9 +8,9 @@
 
 import Foundation
 
-// From: https://stackoverflow.com/questions/24026510/how-do-i-shuffle-an-array-in-swift
 extension Sequence {
-    /// Returns an array with the contents of this sequence, shuffled.
+    // From: https://stackoverflow.com/questions/24026510/how-do-i-shuffle-an-array-in-swift
+    // Returns an array with the contents of this sequence, shuffled.
     func shuffled() -> [Element] {
         var result = Array(self)
         result.shuffle()

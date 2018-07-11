@@ -11,31 +11,29 @@ import AVKit
 
 class AudioPlayer {
     static var instance = AudioPlayer()
-    static var player: AVAudioPlayer?
+    static var player: AVAudioPlayer!
     static var timer: Timer?
-    
+
+    // We purposefully don't do any error handling here because this has never failed in practice
+    // and there's no graceful way to handle it. If this app can't play audio, it might as well crash.
     static func play(_ url: URL, tick: @escaping () -> () = {}) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-            try AVAudioSession.sharedInstance().setActive(true)
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        try! AVAudioSession.sharedInstance().setActive(true)
 
-            let old = player
-            player = try AVAudioPlayer(contentsOf: url)
+        let old = player
+        try! player = AVAudioPlayer(contentsOf: url)
 
-            if let old = old, let new = player {
-                new.play()
-                new.volume = 0
-                crossFade(from: old, to: new)
-            } else {
-                player?.play()
-                player?.volume = 1.0
-            }
-
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in tick()})
-        } catch let error {
-            print(error.localizedDescription)
+        player.play()
+        if let old = old {
+            player.volume = 0
+            crossFade(from: old, to: player)
+        } else {
+            player.play()
+            player.volume = 1.0
         }
+
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in tick()})
     }
 
     private static func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
@@ -50,7 +48,7 @@ class AudioPlayer {
     }
     
     static func stop() {
-        player?.stop()
+        player.stop()
         player = nil
         
         timer?.invalidate()

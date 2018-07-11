@@ -14,13 +14,6 @@ extension TimeInterval {
     static let VideoInterval: TimeInterval = 2400
 }
 
-extension UITableView {
-    func redraw() {
-        beginUpdates()
-        endUpdates()
-    }
-}
-
 class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     @IBOutlet weak var musicTable: UITableView!
     @IBOutlet weak var buttons: UIStackView!
@@ -43,9 +36,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
 
             videoTimerLabel.text = "\(Int(videoCountdown))"
-            if videoCountdown.remainder(dividingBy: 10) == 0 {
-                saveVideoCountdown()
-            }
         }
     }
 
@@ -63,10 +53,17 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         stopButton.isEnabled = false
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        loadVideoCountdown()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        videoCountdown = UserDefaults.videoCountdown
+        videoButton.isHidden = (videoCountdown > 0)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
+    }
+
+    @objc func appEnteredBackground() {
+        UserDefaults.videoCountdown = videoCountdown
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
@@ -90,8 +87,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         default:
             ()
         }
-
-        saveVideoCountdown()
     }
 
     // MARK: UITableViewDelegate
@@ -142,22 +137,6 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             return 150
         }
-    }
-
-    // MARK: VideoCountdown
-
-    func loadVideoCountdown() {
-        videoCountdown = UserDefaults.standard.double(forKey: "videoCountdown")
-        videoButton.isHidden = (videoCountdown > 0)
-    }
-
-    func resetVideoCountdown() {
-        videoCountdown = .VideoInterval
-    }
-
-    func saveVideoCountdown() {
-        UserDefaults.standard.setValue(videoCountdown, forKey: "videoCountdown")
-        UserDefaults.standard.synchronize()
     }
 
     // MARK: Video

@@ -11,7 +11,7 @@ import AVKit
 
 class AudioPlayer {
     static var instance = AudioPlayer()
-    static var player: AVAudioPlayer!
+    static var player: AVAudioPlayer?
     static var timer: Timer?
 
     // We purposefully don't do any error handling here because this has never failed in practice
@@ -22,6 +22,10 @@ class AudioPlayer {
 
         let old = player
         try! player = AVAudioPlayer(contentsOf: url)
+
+        guard let player = player else {
+            return
+        }
 
         player.play()
         if let old = old {
@@ -48,7 +52,7 @@ class AudioPlayer {
     }
     
     static func stop() {
-        player.stop()
+        player?.stop()
         player = nil
         
         timer?.invalidate()

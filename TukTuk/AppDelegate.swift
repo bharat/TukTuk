@@ -15,8 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        let defaultValue = ["videoCountdown": TimeInterval.VideoInterval]
-        UserDefaults.standard.register(defaults: defaultValue)
+        UserDefaults.standard.register(defaults: [
+            String.videoCountdownKey: TimeInterval.VideoInterval
+        ])
 
         UIApplication.shared.isIdleTimerDisabled = true
 

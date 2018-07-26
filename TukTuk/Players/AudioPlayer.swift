@@ -16,7 +16,7 @@ class AudioPlayer {
 
     // We purposefully don't do any error handling here because this has never failed in practice
     // and there's no graceful way to handle it. If this app can't play audio, it might as well crash.
-    static func play(_ url: URL, tick: @escaping () -> () = {}) {
+    static func play(_ url: URL, whilePlaying tick: @escaping () -> () = {}, whenComplete done: @escaping () -> () = {}) {
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         try! AVAudioSession.sharedInstance().setActive(true)
 
@@ -37,7 +37,14 @@ class AudioPlayer {
         }
 
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in tick()})
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
+            if player.isPlaying {
+                tick()
+            } else {
+                timer.invalidate()
+                done()
+            }
+        })
     }
 
     private static func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {

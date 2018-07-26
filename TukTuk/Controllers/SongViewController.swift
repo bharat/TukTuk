@@ -62,6 +62,10 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        UserDefaults.standard.videoCountdown = videoCountdown
+    }
+
     @objc func appEnteredBackground() {
         UserDefaults.standard.videoCountdown = videoCountdown
     }
@@ -79,11 +83,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         case stopButton:
             AudioPlayer.stop()
             stopButton.isEnabled = false
-
-            if let selectedRow = musicTable.indexPathForSelectedRow {
-                musicTable.deselectRow(at: selectedRow, animated: true)
-                musicTable.redraw()
-            }
+            deselectAllSongs()
         default:
             ()
         }
@@ -106,10 +106,20 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
                 return
             }
 
-            AudioPlayer.play(Bundle.songs[indexPath.row].url) {
-                self.videoCountdown -= 1
-            }
             stopButton.isEnabled = true
+            musicTable.redraw()
+
+            AudioPlayer.play(Bundle.songs[indexPath.row].url, whilePlaying: {
+                self.videoCountdown -= 1
+            }, whenComplete: {
+                self.deselectAllSongs()
+            })
+        }
+    }
+
+    func deselectAllSongs() {
+        if let selectedRow = musicTable.indexPathForSelectedRow {
+            musicTable.deselectRow(at: selectedRow, animated: true)
             musicTable.redraw()
         }
     }

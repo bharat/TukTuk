@@ -19,6 +19,7 @@ protocol MiniGame {
 class MiniGames {
     static var all: [MiniGame.Type] = [
         Thor.self,
-        AvengersAssemble.self
+        AvengersAssemble.self,
+        JusticeLeague.self
     ]
 }

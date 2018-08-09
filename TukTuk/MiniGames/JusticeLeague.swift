@@ -11,13 +11,13 @@ import UIKit
 import SceneKit
 
 extension URL {
-    static let AA_Start       = Bundle.sound("AvengersAssemble/Assemble.mp3")
-    static let AA_Choose      = Bundle.sound("AvengersAssemble/ChooseAnAvenger.mp3")
-    static let AA_Complete    = Bundle.sound("AvengersAssemble/Tada.mp3")
+    static let JL_Start       = Bundle.sound("JusticeLeague/Start.mp3")
+    static let JL_Choose      = Bundle.sound("JusticeLeague/Choose.mp3")
+    static let JL_Complete    = Bundle.sound("JusticeLeague/Tada.mp3")
 }
 
-final class AvengersAssemble: MiniGame {
-    static var title = "Avengers Assemble!"
+final class JusticeLeague: MiniGame {
+    static var title = "Justice League!"
     var uivc: UIViewController = UIVC()
 
     enum Pace: TimeInterval {
@@ -34,53 +34,53 @@ final class AvengersAssemble: MiniGame {
     }
 
     enum Hero: String {
-        case CaptainAmerica
-        case Hawkeye
-        case IronMan
-        case Hulk
-        case Thor
-        case BlackWidow
+        case Superman
+        case Batman
+        case WonderWoman
+        case Cyborg
+        case Flash
+        case Aquaman
 
-        static var all: [Hero]  = [.CaptainAmerica, .Hawkeye, .IronMan, .Hulk, .Thor, .BlackWidow]
+        static var all: [Hero]  = [.Superman, .Batman, .WonderWoman, .Cyborg, .Flash, .Aquaman]
 
         var rotation: (x: CGFloat, y: CGFloat) {
             switch self {
-            case .CaptainAmerica:   return (     0.0,  0.0     )
-            case .Hawkeye:          return (     0.0,  -.pi / 2)
-            case .IronMan:          return (     0.0,   .pi    )
-            case .Hulk:             return (     0.0,   .pi / 2)
-            case .Thor:             return ( .pi / 2,  0.0     )
-            case .BlackWidow:       return (-.pi / 2,  0.0     )
+            case .Superman:      return (     0.0,  0.0     )
+            case .Batman:        return (     0.0,  -.pi / 2)
+            case .WonderWoman:   return (     0.0,   .pi    )
+            case .Cyborg:        return (     0.0,   .pi / 2)
+            case .Flash:         return ( .pi / 2,  0.0     )
+            case .Aquaman:       return (-.pi / 2,  0.0     )
             }
         }
 
         var neighbor: (left: Hero, right: Hero, up: Hero, down: Hero) {
             switch self {
-            case .CaptainAmerica:   return (.Hulk, .Hawkeye, .Thor, .BlackWidow)
-            case .Hawkeye:          return (.CaptainAmerica, .IronMan, .Thor, .BlackWidow)
-            case .IronMan:          return (.Hawkeye, .Hulk, .Thor, .BlackWidow)
-            case .Hulk:             return (.IronMan, .CaptainAmerica, .Thor, .BlackWidow)
-            case .Thor:             return (.Hulk, .Hawkeye, .IronMan, .CaptainAmerica)
-            case .BlackWidow:       return (.Hulk, .Hawkeye, .CaptainAmerica, .IronMan)
+            case .Superman:    return (.Cyborg, .Batman, .Flash, .Aquaman)
+            case .Batman:      return (.Superman, .WonderWoman, .Flash, .Aquaman)
+            case .WonderWoman: return (.Batman, .Superman, .Flash, .Aquaman)
+            case .Cyborg:      return (.WonderWoman, .Superman, .Flash, .Aquaman)
+            case .Flash:       return (.Cyborg, .Batman, .WonderWoman, .Superman)
+            case .Aquaman:     return (.Cyborg, .Batman, .Superman, .WonderWoman)
             }
         }
 
         var image: UIImage? {
-            return UIImage(named: "Avenger_\(rawValue)")
+            return UIImage(named: "JusticeLeague_\(rawValue)")
         }
 
         var sound: URL {
-            return Bundle.sound("AvengersAssemble/\(rawValue).mp3")
+            return Bundle.sound("JusticeLeague/\(rawValue).mp3")
         }
 
         var video: URL {
-            return Bundle.video("AvengersAssemble/\(rawValue).mp4")
+            return Bundle.video("JusticeLeague/\(rawValue).mp4")
         }
     }
 
     class UIVC: UIViewController {
         override func viewDidLoad() {
-            AudioPlayer.play(.AA_Start)
+            AudioPlayer.play(.JL_Start)
 
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
@@ -170,7 +170,7 @@ final class AvengersAssemble: MiniGame {
                     $0.enticing = true
                 }
 
-                AudioPlayer.play(.AA_Choose)
+                AudioPlayer.play(.JL_Choose)
                 completion()
             }
         }
@@ -191,7 +191,7 @@ final class AvengersAssemble: MiniGame {
                     case .left:     new = block.hero.neighbor.right
                     case .up:       new = block.hero.neighbor.down
                     case .down:     new = block.hero.neighbor.up
-                    default:        new = .CaptainAmerica
+                    default:        new = .Superman
                     }
 
                     // Accelerate to the finish if it's taking too long
@@ -222,7 +222,7 @@ final class AvengersAssemble: MiniGame {
         }
         
         func select(hero: Hero, from block: Block) {
-            AudioPlayer.play(.AA_Complete)
+            AudioPlayer.play(.JL_Complete)
 
             blocks.filter { $0 != block }.forEach {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))
@@ -243,7 +243,7 @@ final class AvengersAssemble: MiniGame {
     }
 
     class Block: SCNNode {
-        var hero: Hero = .CaptainAmerica
+        var hero: Hero = .Superman
         var enticing: Bool = false {
             didSet {
                 if enticing && !oldValue {
@@ -265,8 +265,8 @@ final class AvengersAssemble: MiniGame {
             guard action(forKey: "show") == nil else { return }
 
             // Rotate through the initial face so that we get the right vertical orientation
-            let x = (Hero.CaptainAmerica.rotation.x - hero.rotation.x + new.rotation.x)
-            var y = (Hero.CaptainAmerica.rotation.y - hero.rotation.y + new.rotation.y)
+            let x = (Hero.Superman.rotation.x - hero.rotation.x + new.rotation.x)
+            var y = (Hero.Superman.rotation.y - hero.rotation.y + new.rotation.y)
 
             // Avoid rotating over .pi, which would cause the rotation code to flip directions
             switch y {

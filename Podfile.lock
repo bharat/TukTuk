@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FLEX:
-    :commit: 386d6ae06ac772633f06ebda3d26e6750ab30d1f
+    :commit: 7da059791ea73341d1e48aa8ff5c539ec13daa2b
     :git: https://github.com/bharat/FLEX.git
 
 SPEC CHECKSUMS:

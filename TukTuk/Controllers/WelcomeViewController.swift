@@ -40,9 +40,9 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
     }
 
     // Useful for debugging
-//    override func viewDidAppear(_ animated: Bool) {
-//        show(SpellyBlocks().uivc, sender: self)
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        show(AllyMaze().uivc, sender: self)
+    }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false

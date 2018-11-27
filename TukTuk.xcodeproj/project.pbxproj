@@ -44,6 +44,7 @@
 		4FD689EE20C9B71D0003CA83 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FD689ED20C9B71C0003CA83 /* art.scnassets */; };
 		4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */; };
 		4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */; };
+		4FFEB1FD2130BB26008A3723 /* AllyMaze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFEB1FC2130BB26008A3723 /* AllyMaze.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,7 @@
 		4FD689ED20C9B71C0003CA83 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewController.swift; sourceTree = "<group>"; };
 		4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSquares.swift; sourceTree = "<group>"; };
+		4FFEB1FC2130BB26008A3723 /* AllyMaze.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllyMaze.swift; sourceTree = "<group>"; };
 		5D93CC645E3623C41C0DD219 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
 		9EE63FDA43874ED794474A36 /* Pods-TukTuk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.debug.xcconfig"; sourceTree = "<group>"; };
 		BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TukTuk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +139,7 @@
 			children = (
 				4F81D5F520A6776D00CB68D8 /* MiniGames.swift */,
 				4F90EB2720A372F000F8EE87 /* Thor.swift */,
+				4FFEB1FC2130BB26008A3723 /* AllyMaze.swift */,
 				4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */,
 				4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */,
 				4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */,
@@ -351,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
+				4FFEB1FD2130BB26008A3723 /* AllyMaze.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,
 				4F89557920B47B8600E37E53 /* UIImage.swift in Sources */,
 				4F1F17CE209E15B000483499 /* RollAway.swift in Sources */,

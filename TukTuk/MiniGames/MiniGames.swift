@@ -20,6 +20,7 @@ class MiniGames {
     static var all: [MiniGame.Type] = [
         Thor.self,
         AvengersAssemble.self,
-        JusticeLeague.self
+        JusticeLeague.self,
+        AllyMaze.self,
     ]
 }

@@ -11,9 +11,9 @@ import UIKit
 import SceneKit
 
 extension URL {
-    static let JL_Start       = Bundle.sound("JusticeLeague/ComeTogether.mp3")
-    static let JL_Choose      = Bundle.sound("JusticeLeague/Choose.mp3")
-    static let JL_Complete    = Bundle.sound("JusticeLeague/Tada.mp3")
+    static let JL_Start       = Bundle.sound(for: "JusticeLeague/ComeTogether")
+    static let JL_Choose      = Bundle.sound(for: "JusticeLeague/Choose")
+    static let JL_Complete    = Bundle.sound(for: "JusticeLeague/Tada")
 }
 
 final class JusticeLeague: MiniGame {
@@ -70,11 +70,11 @@ final class JusticeLeague: MiniGame {
         }
 
         var sound: URL {
-            return Bundle.sound("JusticeLeague/\(rawValue).mp3")
+            return Bundle.sound(for: "JusticeLeague/\(rawValue)")
         }
 
         var video: URL {
-            return Bundle.video("JusticeLeague/\(rawValue).mp4")
+            return Bundle.video(for: "JusticeLeague/\(rawValue)")
         }
     }
 

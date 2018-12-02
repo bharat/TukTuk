@@ -3,7 +3,7 @@ PODS:
   - FLEX (2.4.0)
 
 DEPENDENCIES:
-  - EasyAnimation
+  - EasyAnimation (~> 2.0.2)
   - FLEX (from `https://github.com/bharat/FLEX.git`)
 
 SPEC REPOS:
@@ -23,6 +23,6 @@ SPEC CHECKSUMS:
   EasyAnimation: 977ef673efe8ce62447807eedb380a77b189dc80
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
 
-PODFILE CHECKSUM: 0c6ad55cbaeb0c2410e523aad67f6ca5f2824836
+PODFILE CHECKSUM: 3d94c798d0f4daf7a7a9866c1e55fc204e17c492
 
 COCOAPODS: 1.5.3

@@ -11,9 +11,9 @@ import UIKit
 import SceneKit
 
 extension URL {
-    static let AA_Start       = Bundle.sound("AvengersAssemble/Assemble.mp3")
-    static let AA_Choose      = Bundle.sound("AvengersAssemble/ChooseAnAvenger.mp3")
-    static let AA_Complete    = Bundle.sound("AvengersAssemble/Tada.mp3")
+    static let AA_Start       = Bundle.sound(for: "AvengersAssemble/Assemble")
+    static let AA_Choose      = Bundle.sound(for: "AvengersAssemble/ChooseAnAvenger")
+    static let AA_Complete    = Bundle.sound(for: "AvengersAssemble/Tada")
 }
 
 final class AvengersAssemble: MiniGame {
@@ -70,11 +70,11 @@ final class AvengersAssemble: MiniGame {
         }
 
         var sound: URL {
-            return Bundle.sound("AvengersAssemble/\(rawValue).mp3")
+            return Bundle.sound(for: "AvengersAssemble/\(rawValue)")
         }
 
         var video: URL {
-            return Bundle.video("AvengersAssemble/\(rawValue).mp4")
+            return Bundle.video(for: "AvengersAssemble/\(rawValue)")
         }
     }
 

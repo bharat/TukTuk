@@ -23,26 +23,30 @@ extension Bundle {
     static let songsPath = main.resourcePath! + "/Songs"
     static let videosPath = main.resourcePath! + "/Videos/Normal"
 
-    static func url(from: String) -> URL {
-        return main.url(forAuxiliaryExecutable: from)!
+    static func sound(for name: String) -> URL {
+        return main.url(forAuxiliaryExecutable: "Sounds/\(name).mp3")!
     }
 
-    static func sound(_ fileName: String) -> URL {
-        return Bundle.url(from: "Sounds/\(fileName)")
+    static func song(for name: String) -> URL {
+        return main.url(forAuxiliaryExecutable:  "Songs/\(name).mp3")!
     }
 
-    static func video(_ fileName: String) -> URL {
-        return Bundle.url(from: "Videos/\(fileName)")
+    static func song(for name: String) -> UIImage {
+        return UIImage(named: "Songs/\(name).png") ?? UIImage(named: "Songs/\(name).jpg")!
+    }
+
+    static func video(for name: String) -> URL {
+        return main.url(forAuxiliaryExecutable:  "Videos/\(name).mp4")!
     }
 
     static let songs: [Song] = FileManager.songNames.map { name in
         return Song(title: name,
-            image: UIImage(named: "Songs/\(name).jpg")!,
-            url: Bundle.url(from: "Songs/\(name).mp3"))
+                    image: song(for: name),
+                    url: song(for: name))
     }.shuffled()
 
 
     static let videos: [Video] = FileManager.videoNames.map { name in
-        Video(title: name, url: Bundle.url(from: "Videos/Normal/\(name).mp4"))
+        Video(title: name, url: video(for: "Normal/\(name)"))
     }
 }

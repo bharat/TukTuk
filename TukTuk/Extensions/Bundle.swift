@@ -9,44 +9,37 @@
 import Foundation
 import UIKit
 
-extension FileManager {
-    static let songNames = {
-        Set(try! `default`.contentsOfDirectory(atPath: Bundle.songsPath).map { ($0 as NSString).deletingPathExtension })
-    }()
-
-    static let videoNames = {
-        try! `default`.contentsOfDirectory(atPath: Bundle.videosPath).map { ($0 as NSString).deletingPathExtension }
-    }()
-}
-
 extension Bundle {
-    static let songsPath = main.resourcePath! + "/Songs"
-    static let videosPath = main.resourcePath! + "/Videos/Normal"
+    static func preload() {
+        // Just referencing songs and videos will force them to load
+        print("Loaded \(songs.count) songs and \(videos.count) videos")
+    }
 
     static func sound(for name: String) -> URL {
         return main.url(forAuxiliaryExecutable: "Sounds/\(name).mp3")!
     }
 
-    static func song(for name: String) -> URL {
-        return main.url(forAuxiliaryExecutable:  "Songs/\(name).mp3")!
-    }
-
-    static func song(for name: String) -> UIImage {
-        return UIImage(named: "Songs/\(name).png") ?? UIImage(named: "Songs/\(name).jpg")!
-    }
-
     static func video(for name: String) -> URL {
-        return main.url(forAuxiliaryExecutable:  "Videos/\(name).mp4") ?? main.url(forAuxiliaryExecutable:  "Videos/\(name).m4v") ?? main.url(forAuxiliaryExecutable:  "Videos/\(name).mov")!
+        return main.url(forAuxiliaryExecutable: "Videos/\(name).mp4")!
     }
 
-    static let songs: [Song] = FileManager.songNames.map { name in
-        return Song(title: name,
-                    image: song(for: name),
-                    url: song(for: name))
-    }.shuffled()
+    static let songs: [Song] = {
+        let path = "\(main.resourcePath!)/Songs"
+        let files = try! FileManager.default.contentsOfDirectory(atPath: path)
+        let titles = Set(files.map { ($0 as NSString).deletingPathExtension })
+        return titles.map { name in
+            Song(title: name,
+                 image: UIImage(named: "Songs/\(name).png")!,
+                 url: main.url(forAuxiliaryExecutable:  "\(path)/\(name).mp3")!)
+        }.shuffled()
+    }()
 
+    static let videos: [Video] = {
+        let path = "\(main.resourcePath!)/Videos/Normal"
+        let files = try! FileManager.default.contentsOfDirectory(atPath: path).sorted()
 
-    static let videos: [Video] = FileManager.videoNames.sorted().map { name in
-        Video(title: name, url: video(for: "Normal/\(name)"))
-    }
+        return files.map { name in
+            Video(url: main.url(forAuxiliaryExecutable: "\(path)/\(name)")!, title: (name as NSString).deletingPathExtension)
+        }
+    }()
 }

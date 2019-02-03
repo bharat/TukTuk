@@ -9,6 +9,6 @@
 import Foundation
 
 struct Video {
-    var title: String
     var url: URL
+    var title: String
 }

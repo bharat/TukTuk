@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.isIdleTimerDisabled = true
 
         EasyAnimation.enable()
+        Bundle.preload()
         return true
     }
 }

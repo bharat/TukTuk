@@ -22,8 +22,8 @@ class Hinge: Animation {
         // center of the screen, then do a "hinge" animation where the top right corner
         // releases and it falls down around the top left corner, then the whole image
         // falls off the bottom of the page.
-        let easeInOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        let easeLinear = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        let easeInOut = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        let easeLinear = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             CATransaction.begin()
@@ -38,7 +38,7 @@ class Hinge: Animation {
             view.center = CGPoint(x: view.center.x * 0.6, y: view.center.y * 0.6)
 
             let second = CAKeyframeAnimation(keyPath: "transform.rotation.z")
-            second.fillMode = kCAFillModeForwards
+            second.fillMode = CAMediaTimingFillMode.forwards
             second.isRemovedOnCompletion = false
             second.beginTime = 0.1
             second.duration = 3.5
@@ -52,7 +52,7 @@ class Hinge: Animation {
             second.timingFunctions = [CAMediaTimingFunction](repeating: easeInOut, count: 10)
 
             let third = CAKeyframeAnimation(keyPath: "position.y")
-            third.fillMode = kCAFillModeForwards
+            third.fillMode = CAMediaTimingFillMode.forwards
             third.isRemovedOnCompletion = false
             third.beginTime = second.beginTime + second.duration
             third.duration = 1.0
@@ -62,7 +62,7 @@ class Hinge: Animation {
 
             let group = CAAnimationGroup()
             group.duration = third.beginTime + third.duration
-            group.fillMode = kCAFillModeForwards
+            group.fillMode = CAMediaTimingFillMode.forwards
             group.isRemovedOnCompletion = false
             group.animations = [second, third]
             view.layer.add(group, forKey:nil)
@@ -70,7 +70,7 @@ class Hinge: Animation {
         }
 
         let first = CAKeyframeAnimation(keyPath: "transform.scale")
-        first.fillMode = kCAFillModeForwards
+        first.fillMode = CAMediaTimingFillMode.forwards
         first.isRemovedOnCompletion = false
         first.beginTime = 0.0
         first.duration = 1.0

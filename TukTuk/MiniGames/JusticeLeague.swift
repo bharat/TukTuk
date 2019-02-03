@@ -100,7 +100,7 @@ final class JusticeLeague: MiniGame {
             sceneView.autoenablesDefaultLighting = false
             sceneView.allowsCameraControl = false
             sceneView.gestureRecognizers =
-                [UISwipeGestureRecognizerDirection.left, .right, .up, .down].map {
+                [UISwipeGestureRecognizer.Direction.left, .right, .up, .down].map {
                     let gesture = UISwipeGestureRecognizer(target: sceneView.scene, action: #selector(scene.swipeBlock(gesture:)))
                     gesture.direction = $0
                     gesture.isEnabled = false

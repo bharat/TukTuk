@@ -56,7 +56,7 @@ class RollAway: Animation {
                 zoom.duration = 0.5
                 zoom.toValue = view.superview!.frame.width + 100
                 zoom.isRemovedOnCompletion = false
-                zoom.fillMode = kCAFillModeForwards
+                zoom.fillMode = CAMediaTimingFillMode.forwards
                 view.layer.add(zoom, forKey: nil)
                 CATransaction.commit()
         }

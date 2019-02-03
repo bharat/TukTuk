@@ -59,7 +59,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         videoCountdown = UserDefaults.standard.videoCountdown
         videoButton.isHidden = (videoCountdown > 0)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

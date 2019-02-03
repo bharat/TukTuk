@@ -17,7 +17,7 @@ class AudioPlayer {
     // We purposefully don't do any error handling here because this has never failed in practice
     // and there's no graceful way to handle it. If this app can't play audio, it might as well crash.
     static func play(_ url: URL, whilePlaying tick: @escaping () -> () = {}, whenComplete done: @escaping () -> () = {}) {
-        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        try! AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
         try! AVAudioSession.sharedInstance().setActive(true)
 
         let old = player

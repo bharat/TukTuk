@@ -148,7 +148,7 @@ final class AvengersAssemble: MiniGame {
             for _ in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 120.0)
-                block.show(Hero.all.random, pace: .immediate)
+                block.show(Hero.all.randomElement()!, pace: .immediate)
                 rootNode.addChildNode(block)
                 blocks.append(block)
             }
@@ -284,14 +284,14 @@ final class AvengersAssemble: MiniGame {
         }
 
         func enticeLoop() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + [8, 9, 10, 11, 12].random) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + [8, 9, 10, 11, 12].randomElement()!) {
                 // We use this approach instead of removeAction(forKey:) to avoid stopping
                 // mid-action and leaving the block misaligned.
                 if !self.enticing {
                     return
                 }
 
-                let dir: CGFloat = [1.0, -1.0].random
+                let dir: CGFloat = [1.0, -1.0].randomElement()!
                 self.runAction(
                     SCNAction.sequence([
                         SCNAction.rotateBy(x: 0, y: dir * -0.8, z: 0, duration: 0.5),

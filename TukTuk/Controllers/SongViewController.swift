@@ -76,7 +76,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             AudioPlayer.stop()
             stopButton.isEnabled = false
 
-            VideoPlayer.play(preferredVideo ?? Bundle.videos.random.url, from: self)
+            VideoPlayer.play(preferredVideo ?? Bundle.videos.randomElement()!.url, from: self)
             videoButton.isHidden = true
             preferredVideo = nil
 
@@ -101,8 +101,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
                 return
             }
             
-            if Array(1...60).random == 1 {
-                show(MiniGames.all.random.init().uivc, sender: self)
+            if Array(1...60).randomElement()! == 1 {
+                show(MiniGames.all.randomElement()!.init().uivc, sender: self)
                 return
             }
 

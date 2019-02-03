@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		209D1DB6996F487D912E2782 /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */; };
 		4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */; };
-		4F1F17C7209E112C00483499 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C6209E112C00483499 /* Collection.swift */; };
 		4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C9209E150F00483499 /* FaceBalls.swift */; };
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
 		4F1F17CE209E15B000483499 /* RollAway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CD209E15B000483499 /* RollAway.swift */; };
@@ -22,8 +21,6 @@
 		4F84C38F1FC51AC40093801B /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F84C38E1FC51AC40093801B /* Animations.swift */; };
 		4F89557920B47B8600E37E53 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F89557820B47B8600E37E53 /* UIImage.swift */; };
 		4F8A2A9C209F730E000C2CA5 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2A9B209F730E000C2CA5 /* AudioPlayer.swift */; };
-		4F8A2AA6209FDB9C000C2CA5 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AA4209FDB9C000C2CA5 /* Sequence.swift */; };
-		4F8A2AA7209FDB9C000C2CA5 /* MutableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AA5209FDB9C000C2CA5 /* MutableCollection.swift */; };
 		4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AA820A0D550000C2CA5 /* VideoPlayer.swift */; };
 		4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */; };
 		4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */; };
@@ -48,7 +45,6 @@
 
 /* Begin PBXFileReference section */
 		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
-		4F1F17C6209E112C00483499 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		4F1F17C9209E150F00483499 /* FaceBalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBalls.swift; sourceTree = "<group>"; };
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
 		4F1F17CD209E15B000483499 /* RollAway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollAway.swift; sourceTree = "<group>"; };
@@ -61,8 +57,6 @@
 		4F84C38E1FC51AC40093801B /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		4F89557820B47B8600E37E53 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		4F8A2A9B209F730E000C2CA5 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
-		4F8A2AA4209FDB9C000C2CA5 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
-		4F8A2AA5209FDB9C000C2CA5 /* MutableCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutableCollection.swift; sourceTree = "<group>"; };
 		4F8A2AA820A0D550000C2CA5 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewingTableViewController.swift; sourceTree = "<group>"; };
@@ -105,10 +99,7 @@
 		4F1F17C5209E10E100483499 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4F8A2AA5209FDB9C000C2CA5 /* MutableCollection.swift */,
-				4F8A2AA4209FDB9C000C2CA5 /* Sequence.swift */,
 				4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */,
-				4F1F17C6209E112C00483499 /* Collection.swift */,
 				4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */,
 				4F89557820B47B8600E37E53 /* UIImage.swift */,
 				4FBD0FD320F55DC900BB5E32 /* Bundle.swift */,
@@ -355,7 +346,6 @@
 				4F89557920B47B8600E37E53 /* UIImage.swift in Sources */,
 				4F1F17CE209E15B000483499 /* RollAway.swift in Sources */,
 				4F1F17CC209E159F00483499 /* WordPop.swift in Sources */,
-				4F8A2AA6209FDB9C000C2CA5 /* Sequence.swift in Sources */,
 				4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */,
 				4F81D5F820A7600C00CB68D8 /* None.swift in Sources */,
 				4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */,
@@ -363,7 +353,6 @@
 				4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */,
 				4FD689CC20C206C80003CA83 /* SpellyBlocks.swift in Sources */,
 				4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */,
-				4F8A2AA7209FDB9C000C2CA5 /* MutableCollection.swift in Sources */,
 				4FBD0FE320F587EE00BB5E32 /* UITableView.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
@@ -377,7 +366,6 @@
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
 				4FBD0FE120F587CC00BB5E32 /* UserDefaults.swift in Sources */,
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
-				4F1F17C7209E112C00483499 /* Collection.swift in Sources */,
 				4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

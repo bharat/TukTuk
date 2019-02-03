@@ -48,7 +48,7 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         sender.isEnabled = false
 
         // Run a random welcome animation, or a preset if specified
-        let animation = preferred ?? Animations.all.filter { $0 != None.self }.random.init()
+        let animation = preferred ?? Animations.all.filter { $0 != None.self }.randomElement()!.init()
         animation.animate(view: self.welcomeImageView) {
             self.performSegue(withIdentifier: "SongViewController", sender: self)
 

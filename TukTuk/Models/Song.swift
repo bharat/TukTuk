@@ -12,5 +12,5 @@ import UIKit
 struct Song {
     var title: String
     var image: UIImage
-    var url: URL
+    var audio: URL
 }

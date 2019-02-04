@@ -10,10 +10,14 @@ import Foundation
 import UIKit
 import SceneKit
 
+extension Bundle {
+    static let JusticeLeague = Bundle.media("JusticeLeague")
+}
+
 extension URL {
-    static let JL_Start       = Bundle.sound(for: "JusticeLeague/ComeTogether")
-    static let JL_Choose      = Bundle.sound(for: "JusticeLeague/Choose")
-    static let JL_Complete    = Bundle.sound(for: "JusticeLeague/Tada")
+    static let JL_Start       = Bundle.JusticeLeague.audio("ComeTogether")
+    static let JL_Choose      = Bundle.JusticeLeague.audio("Choose")
+    static let JL_Complete    = Bundle.JusticeLeague.audio("Tada")
 }
 
 final class JusticeLeague: MiniGame {
@@ -70,11 +74,11 @@ final class JusticeLeague: MiniGame {
         }
 
         var sound: URL {
-            return Bundle.sound(for: "JusticeLeague/\(rawValue)")
+            return Bundle.JusticeLeague.audio(rawValue)
         }
 
         var video: URL {
-            return Bundle.video(for: "JusticeLeague/\(rawValue)")
+            return Bundle.JusticeLeague.video(rawValue)
         }
     }
 

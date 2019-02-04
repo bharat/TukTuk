@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension URL {
-    static let Welcome = Bundle.sound(for: "Welcome")
+    static let Welcome = Bundle.Player.audio("Welcome")
 }
 
 protocol Animation {

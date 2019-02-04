@@ -10,6 +10,10 @@ import UIKit
 import AVFoundation
 import AVKit
 
+extension Bundle {
+    static let Player = Bundle.media("Player")
+}
+
 extension TimeInterval {
     static let VideoInterval: TimeInterval = 2400
 }
@@ -23,6 +27,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var preferredVideo: URL?
     var preferredMiniGame: MiniGame.Type?
+    var videos = Bundle.Player.videos()
+    let songs = Bundle.Player.songs().shuffled()
 
     var videoCountdown: TimeInterval = 0 {
         didSet {
@@ -76,7 +82,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             AudioPlayer.stop()
             stopButton.isEnabled = false
 
-            VideoPlayer.play(preferredVideo ?? Bundle.videos.randomElement()!.url, from: self)
+            VideoPlayer.play(preferredVideo ?? videos.randomElement()!.video, from: self)
             videoButton.isHidden = true
             preferredVideo = nil
 
@@ -109,7 +115,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             stopButton.isEnabled = true
             musicTable.redraw()
 
-            AudioPlayer.play(Bundle.songs[indexPath.row].url, whilePlaying: {
+            AudioPlayer.play(songs[indexPath.row].audio, whilePlaying: {
                 self.videoCountdown -= 1
             }, whenComplete: {
                 self.deselectAllSongs()
@@ -127,15 +133,15 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Bundle.songs.count
+        return songs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell")!
 
-        cell.backgroundView = UIImageView(image: Bundle.songs[indexPath.row].image)
+        cell.backgroundView = UIImageView(image: songs[indexPath.row].image)
         cell.backgroundView?.contentMode = .scaleAspectFill
-        cell.selectedBackgroundView = UIImageView(image: Bundle.songs[indexPath.row].image)
+        cell.selectedBackgroundView = UIImageView(image: songs[indexPath.row].image)
         cell.selectedBackgroundView?.contentMode = .scaleAspectFill
 
         return cell
@@ -180,14 +186,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         previewTVC.tableTitle = "Which video should we play?"
         previewTVC.groups = [
-            PreviewGroup(title: "Videos", id: "video", data: Bundle.videos.map { $0.title }),
+            PreviewGroup(title: "Videos", id: "video", data: videos.map { $0.title }),
             PreviewGroup(title: "Mini Games", id: "minigame", data: MiniGames.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             switch(id) {
             case "video":
                 self.videoCountdown = 0
-                self.preferredVideo = Bundle.videos[index].url
+                self.preferredVideo = self.videos[index].video
 
             case "minigame":
                 self.preferredMiniGame = MiniGames.all[index]

@@ -10,10 +10,14 @@ import Foundation
 import UIKit
 import SceneKit
 
+extension Bundle {
+    static let AvengersAssemble = Bundle.media("AvengersAssemble")
+}
+
 extension URL {
-    static let AA_Start       = Bundle.sound(for: "AvengersAssemble/Assemble")
-    static let AA_Choose      = Bundle.sound(for: "AvengersAssemble/ChooseAnAvenger")
-    static let AA_Complete    = Bundle.sound(for: "AvengersAssemble/Tada")
+    static let AA_Start       = Bundle.AvengersAssemble.audio("Assemble")
+    static let AA_Choose      = Bundle.AvengersAssemble.audio("ChooseAnAvenger")
+    static let AA_Complete    = Bundle.AvengersAssemble.audio("Tada")
 }
 
 final class AvengersAssemble: MiniGame {
@@ -70,11 +74,11 @@ final class AvengersAssemble: MiniGame {
         }
 
         var sound: URL {
-            return Bundle.sound(for: "AvengersAssemble/\(rawValue)")
+            return Bundle.AvengersAssemble.audio(rawValue)
         }
 
         var video: URL {
-            return Bundle.video(for: "AvengersAssemble/\(rawValue)")
+            return Bundle.AvengersAssemble.video(rawValue)
         }
     }
 

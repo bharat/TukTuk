@@ -37,6 +37,12 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         let long = UILongPressGestureRecognizer(target: self, action: #selector(handleWelcomeLongPress(gesture:)))
         long.minimumPressDuration = 5.0
         welcomeImageView.addGestureRecognizer(long)
+
+        preload()
+    }
+
+    func preload() {
+        Bundle.Player.videos()
     }
 
     // Useful for debugging

@@ -10,13 +10,17 @@ import Foundation
 import UIKit
 import SpriteKit
 
+extension Bundle {
+    static let Thor = Bundle.media("Thor")
+}
+
 extension URL {
-    static let HammerFallingWhistle     = Bundle.sound(for: "Thor/HammerFallingWhistle")
-    static let HammerLandingThud        = Bundle.sound(for: "Thor/HammerLandingThud")
-    static let IReallyWishIHadMyHammer  = Bundle.sound(for: "Thor/IReallyWishIHadMyHammer")
-    static let ThankYou                 = Bundle.sound(for: "Thor/ThankYou")
-    static let ILostMyHammer            = Bundle.sound(for: "Thor/ILostMyHammer")
-    static let IAmTheGodOfThunder       = Bundle.sound(for: "Thor/IAmTheGodOfThunder")
+    static let HammerFallingWhistle     = Bundle.Thor.audio("HammerFallingWhistle")
+    static let HammerLandingThud        = Bundle.Thor.audio("HammerLandingThud")
+    static let IReallyWishIHadMyHammer  = Bundle.Thor.audio("IReallyWishIHadMyHammer")
+    static let ThankYou                 = Bundle.Thor.audio("ThankYou")
+    static let ILostMyHammer            = Bundle.Thor.audio("ILostMyHammer")
+    static let IAmTheGodOfThunder       = Bundle.Thor.audio("IAmTheGodOfThunder")
 }
 
 final class Thor: MiniGame {

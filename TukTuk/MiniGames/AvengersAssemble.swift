@@ -10,22 +10,22 @@ import Foundation
 import UIKit
 import SceneKit
 
-extension Bundle {
-    static let AvengersAssemble = Bundle.media("AvengersAssemble")
-}
-
-extension URL {
-    static let AA_Start       = Bundle.AvengersAssemble.audio("Assemble")
-    static let AA_Choose      = Bundle.AvengersAssemble.audio("ChooseAnAvenger")
-    static let AA_Complete    = Bundle.AvengersAssemble.audio("Tada")
-}
-
 final class AvengersAssemble: MiniGame {
-    var title = "Avengers Assemble!"
+    static var title = "Avengers Assemble!"
     var uivc: UIViewController = UIVC()
 
-    func preloadableAssets() -> [URL] {
-        return [.AA_Start, .AA_Choose, .AA_Complete]
+    enum Sounds: String, CaseIterable {
+        case Assemble
+        case ChooseAnAvenger
+        case Tada
+
+        var url: URL {
+            return Bundle.media("AvengersAssemble").audio(rawValue)
+        }
+    }
+
+    static func preloadableAssets() -> [URL] {
+        return Sounds.allCases.map { $0.url }
     }
 
     enum Pace: TimeInterval {
@@ -76,17 +76,17 @@ final class AvengersAssemble: MiniGame {
         }
 
         var sound: URL {
-            return Bundle.AvengersAssemble.audio(rawValue)
+            return Bundle.media("AvengersAssemble").audio(rawValue)
         }
 
         var video: URL {
-            return Bundle.AvengersAssemble.video(rawValue)
+            return Bundle.media("AvengersAssemble").video(rawValue)
         }
     }
 
     class UIVC: UIViewController {
         override func viewDidLoad() {
-            AudioPlayer.play(.AA_Start)
+            AudioPlayer.play(Sounds.Assemble.url)
 
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
@@ -176,7 +176,7 @@ final class AvengersAssemble: MiniGame {
                     $0.enticing = true
                 }
 
-                AudioPlayer.play(.AA_Choose)
+                AudioPlayer.play(Sounds.ChooseAnAvenger.url)
                 completion()
             }
         }
@@ -228,7 +228,7 @@ final class AvengersAssemble: MiniGame {
         }
         
         func select(hero: Hero, from block: Block) {
-            AudioPlayer.play(.AA_Complete)
+            AudioPlayer.play(Sounds.Tada.url)
 
             blocks.filter { $0 != block }.forEach {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))

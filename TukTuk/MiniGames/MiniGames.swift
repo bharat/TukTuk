@@ -9,19 +9,21 @@
 import Foundation
 import UIKit
 
-protocol MiniGame: Preloadable {
-    var title: String { get }
+protocol MiniGame: HasPreloadableAssets {
+    static var title: String { get }
     var uivc: UIViewController { get }
+
+    init()
 }
 
-class MiniGames {
-    static var all: [MiniGame] = [
-        Thor(),
-        AvengersAssemble(),
-        JusticeLeague()
+class MiniGames: Preloadable {
+    static var all: [MiniGame.Type] = [
+        Thor.self,
+        AvengersAssemble.self,
+        JusticeLeague.self
     ]
 
-    static func preloadableAssets() -> [URL] {
-        return all.flatMap { $0.preloadableAssets() }
+    static func preload() {
+        all.forEach { _ = $0.preloadableAssets() }
     }
 }

@@ -38,10 +38,8 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         long.minimumPressDuration = 5.0
         welcomeImageView.addGestureRecognizer(long)
 
-        print(
-            SongViewController.preloadableAssets() +
-            MiniGames.preloadableAssets()
-        )
+        SongViewController.preload()
+        MiniGames.preload()
     }
 
     // Useful for debugging

@@ -10,22 +10,22 @@ import Foundation
 import UIKit
 import SceneKit
 
-extension Bundle {
-    static let JusticeLeague = Bundle.media("JusticeLeague")
-}
-
-extension URL {
-    static let JL_Start       = Bundle.JusticeLeague.audio("ComeTogether")
-    static let JL_Choose      = Bundle.JusticeLeague.audio("Choose")
-    static let JL_Complete    = Bundle.JusticeLeague.audio("Tada")
-}
-
 final class JusticeLeague: MiniGame {
-    var title = "Justice League!"
+    static var title = "Justice League!"
     var uivc: UIViewController = UIVC()
 
-    func preloadableAssets() -> [URL] {
-        return [.JL_Start, .JL_Choose, .JL_Complete]
+    enum Sounds: String, CaseIterable {
+        case ComeTogether
+        case Choose
+        case Tada
+
+        var url: URL {
+            return Bundle.media("JusticeLeague").audio(rawValue)
+        }
+    }
+
+    static func preloadableAssets() -> [URL] {
+        return Sounds.allCases.map { $0.url }
     }
 
     enum Pace: TimeInterval {
@@ -76,17 +76,17 @@ final class JusticeLeague: MiniGame {
         }
 
         var sound: URL {
-            return Bundle.JusticeLeague.audio(rawValue)
+            return Bundle.media("JusticeLeague").audio(rawValue)
         }
 
         var video: URL {
-            return Bundle.JusticeLeague.video(rawValue)
+            return Bundle.media("JusticeLeague").video(rawValue)
         }
     }
 
     class UIVC: UIViewController {
         override func viewDidLoad() {
-            AudioPlayer.play(.JL_Start)
+            AudioPlayer.play(Sounds.ComeTogether.url)
 
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
@@ -176,7 +176,7 @@ final class JusticeLeague: MiniGame {
                     $0.enticing = true
                 }
 
-                AudioPlayer.play(.JL_Choose)
+                AudioPlayer.play(Sounds.Choose.url)
                 completion()
             }
         }
@@ -228,7 +228,7 @@ final class JusticeLeague: MiniGame {
         }
         
         func select(hero: Hero, from block: Block) {
-            AudioPlayer.play(.JL_Complete)
+            AudioPlayer.play(Sounds.Tada.url)
 
             blocks.filter { $0 != block }.forEach {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))

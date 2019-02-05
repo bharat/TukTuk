@@ -10,10 +10,14 @@ import Foundation
 import UIKit
 
 extension Bundle {
+    static var bundles: [String: Bundle] = [:]
+
     static func media(_ name: String) -> Bundle {
-        let result = Bundle(path: "\(Bundle.main.resourcePath!)/Media/\(name)")!
-        print("Load bundle: \(result)")
-        return result
+        if !bundles.keys.contains(name) {
+            bundles[name] = Bundle(path: "\(Bundle.main.resourcePath!)/Media/\(name)")!
+        }
+        print("Load bundle: \(bundles[name].debugDescription)")
+        return bundles[name]!
     }
 
     func audio(_ name: String) -> URL {

@@ -30,8 +30,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     static let videos = Bundle.Player.videos()
     static let songs = Bundle.Player.songs().shuffled()
 
-    static func preloadableAssets() -> [URL] {
-        return videos.map { $0.video } + songs.map { $0.audio }
+    static func preload() {
+        _ = [videos, songs]
     }
 
     var videoCountdown: TimeInterval = 0 {
@@ -112,7 +112,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             if Array(1...60).randomElement()! == 1 {
-                show(MiniGames.all.randomElement()!.uivc, sender: self)
+                show(MiniGames.all.randomElement()!.init().uivc, sender: self)
                 return
             }
 
@@ -200,7 +200,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.preferredVideo = SongViewController.videos[index].video
 
             case "minigame":
-                self.preferredMiniGame = MiniGames.all[index]
+                self.preferredMiniGame = MiniGames.all[index].init()
 
             default:
                 ()

@@ -9,5 +9,9 @@
 import Foundation
 
 protocol Preloadable {
-    func preloadableAssets() -> [URL]
+    static func preload()
+}
+
+protocol HasPreloadableAssets {
+    static func preloadableAssets() -> [URL]
 }

@@ -16,20 +16,18 @@ extension Bundle {
         if !bundles.keys.contains(name) {
             bundles[name] = Bundle(path: "\(Bundle.main.resourcePath!)/Media/\(name)")!
         }
-        print("Load bundle: \(bundles[name].debugDescription)")
+        print("Load bundle: \(name)")
         return bundles[name]!
     }
 
     func audio(_ name: String) -> URL {
-        let result = url(forResource: name, withExtension: "mp3", subdirectory: "Audio")!
-        print("Load audio: \(result)")
-        return result
+        print("Load audio: \(name)")
+        return url(forResource: name, withExtension: "mp3", subdirectory: "Audio")!
     }
 
     func video(_ name: String) -> URL {
-        let result = url(forResource: name, withExtension: "mp4", subdirectory: "Video")!
-        print("Load video: \(result)")
-        return result
+        print("Load video: \(name)")
+        return url(forResource: name, withExtension: "mp4", subdirectory: "Video")!
     }
 
     func songs() -> [Song] {
@@ -38,9 +36,9 @@ extension Bundle {
 
         return zip(audios, covers).map { arg in
             let (audio, cover) = arg
-            let song = try! Song(title: audio.lastPathComponent, image: UIImage(data: Data(contentsOf: cover))!, audio: audio)
-            print("Load song: \(song)")
-            return song
+            let title = audio.lastPathComponent
+            print("Load song: \(title)")
+            return try! Song(title: title, image: UIImage(data: Data(contentsOf: cover))!, audio: audio)
         }
     }
 
@@ -49,9 +47,8 @@ extension Bundle {
         let files = try! FileManager.default.contentsOfDirectory(atPath: path)
 
         return files.map { name in
-            let video = Video(video: url(forAuxiliaryExecutable: "\(path)/\(name)")!, title: (name as NSString).deletingPathExtension)
-            print("Load video: \(video)")
-            return video
+            print("Load video: \(name)")
+            return Video(video: url(forAuxiliaryExecutable: "\(path)/\(name)")!, title: (name as NSString).deletingPathExtension)
         }
     }
 }

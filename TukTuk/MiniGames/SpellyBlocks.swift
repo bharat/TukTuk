@@ -12,8 +12,12 @@ import ARKit
 import SceneKit
 
 final class SpellyBlocks: MiniGame {
-    static var title = "Spelly blocks!"
+    var title = "Spelly blocks!"
     var uivc: UIViewController = UIVC()
+
+    func preloadableAssets() -> [URL] {
+        return []
+    }
 
     class UIVC: UIViewController {
         var sceneView: ARSCNView!

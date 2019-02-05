@@ -26,9 +26,13 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var videoTimerLabel: UILabel!
 
     var preferredVideo: URL?
-    var preferredMiniGame: MiniGame.Type?
-    var videos = Bundle.Player.videos()
-    let songs = Bundle.Player.songs().shuffled()
+    var preferredMiniGame: MiniGame?
+    static let videos = Bundle.Player.videos()
+    static let songs = Bundle.Player.songs().shuffled()
+
+    static func preloadableAssets() -> [URL] {
+        return videos.map { $0.video } + songs.map { $0.audio }
+    }
 
     var videoCountdown: TimeInterval = 0 {
         didSet {
@@ -82,7 +86,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             AudioPlayer.stop()
             stopButton.isEnabled = false
 
-            VideoPlayer.play(preferredVideo ?? videos.randomElement()!.video, from: self)
+            VideoPlayer.play(preferredVideo ?? SongViewController.videos.randomElement()!.video, from: self)
             videoButton.isHidden = true
             preferredVideo = nil
 
@@ -102,20 +106,20 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if !VideoPlayer.isPlaying {
             if let preferredMiniGame = preferredMiniGame {
-                show(preferredMiniGame.init().uivc, sender: self)
+                show(preferredMiniGame.uivc, sender: self)
                 self.preferredMiniGame = nil
                 return
             }
             
             if Array(1...60).randomElement()! == 1 {
-                show(MiniGames.all.randomElement()!.init().uivc, sender: self)
+                show(MiniGames.all.randomElement()!.uivc, sender: self)
                 return
             }
 
             stopButton.isEnabled = true
             musicTable.redraw()
 
-            AudioPlayer.play(songs[indexPath.row].audio, whilePlaying: {
+            AudioPlayer.play(SongViewController.songs[indexPath.row].audio, whilePlaying: {
                 self.videoCountdown -= 1
             }, whenComplete: {
                 self.deselectAllSongs()
@@ -133,15 +137,15 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return songs.count
+        return SongViewController.songs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell")!
 
-        cell.backgroundView = UIImageView(image: songs[indexPath.row].image)
+        cell.backgroundView = UIImageView(image: SongViewController.songs[indexPath.row].image)
         cell.backgroundView?.contentMode = .scaleAspectFill
-        cell.selectedBackgroundView = UIImageView(image: songs[indexPath.row].image)
+        cell.selectedBackgroundView = UIImageView(image: SongViewController.songs[indexPath.row].image)
         cell.selectedBackgroundView?.contentMode = .scaleAspectFill
 
         return cell
@@ -186,14 +190,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         previewTVC.tableTitle = "Which video should we play?"
         previewTVC.groups = [
-            PreviewGroup(title: "Videos", id: "video", data: videos.map { $0.title }),
+            PreviewGroup(title: "Videos", id: "video", data: SongViewController.videos.map { $0.title }),
             PreviewGroup(title: "Mini Games", id: "minigame", data: MiniGames.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             switch(id) {
             case "video":
                 self.videoCountdown = 0
-                self.preferredVideo = self.videos[index].video
+                self.preferredVideo = SongViewController.videos[index].video
 
             case "minigame":
                 self.preferredMiniGame = MiniGames.all[index]

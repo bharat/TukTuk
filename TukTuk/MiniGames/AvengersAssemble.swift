@@ -21,8 +21,12 @@ extension URL {
 }
 
 final class AvengersAssemble: MiniGame {
-    static var title = "Avengers Assemble!"
+    var title = "Avengers Assemble!"
     var uivc: UIViewController = UIVC()
+
+    func preloadableAssets() -> [URL] {
+        return [.AA_Start, .AA_Choose, .AA_Complete]
+    }
 
     enum Pace: TimeInterval {
         case immediate  = 0.0
@@ -37,15 +41,13 @@ final class AvengersAssemble: MiniGame {
         }
     }
 
-    enum Hero: String {
+    enum Hero: String, CaseIterable {
         case CaptainAmerica
         case Hawkeye
         case IronMan
         case Hulk
         case Thor
         case BlackWidow
-
-        static var all: [Hero]  = [.CaptainAmerica, .Hawkeye, .IronMan, .Hulk, .Thor, .BlackWidow]
 
         var rotation: (x: CGFloat, y: CGFloat) {
             switch self {
@@ -143,7 +145,7 @@ final class AvengersAssemble: MiniGame {
             rootNode.addChildNode(omniLight)
 
             let box = SCNBox(width: 10.0, height: 10.0, length: 10.0, chamferRadius: 1)
-            box.materials = Hero.all.map {
+            box.materials = Hero.allCases.map {
                 let material = SCNMaterial()
                 material.diffuse.contents = $0.image
                 return material
@@ -152,7 +154,7 @@ final class AvengersAssemble: MiniGame {
             for _ in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 120.0)
-                block.show(Hero.all.randomElement()!, pace: .immediate)
+                block.show(Hero.allCases.randomElement()!, pace: .immediate)
                 rootNode.addChildNode(block)
                 blocks.append(block)
             }
@@ -160,7 +162,7 @@ final class AvengersAssemble: MiniGame {
 
         func start(completion: @escaping () -> ()) {
             let yDest: [Float] = [30.0, 10.0, -10.0, -30.0]
-            let randomHeroes = Hero.all.shuffled()
+            let randomHeroes = Hero.allCases.shuffled()
             for (i, block) in blocks.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 * Double(i)) {
                     block.show(randomHeroes[i], pace: .verySlow)

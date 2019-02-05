@@ -24,7 +24,11 @@ extension URL {
 }
 
 final class Thor: MiniGame {
-    static var title = "Thor lost his hammer!"
+    func preloadableAssets() -> [URL] {
+        return [.HammerFallingWhistle, .HammerLandingThud, .IReallyWishIHadMyHammer, .ThankYou, .ILostMyHammer, .IAmTheGodOfThunder]
+    }
+
+    var title = "Thor lost his hammer!"
     var uivc: UIViewController = UIVC()
 
     enum Collisions: UInt32 {

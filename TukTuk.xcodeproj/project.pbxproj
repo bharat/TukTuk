@@ -10,6 +10,7 @@
 		209D1DB6996F487D912E2782 /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA5C47FC63EB15E8F5D89056 /* Pods_TukTuk.framework */; };
 		4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */; };
 		4F0824942208D64000D45C40 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = 4FFC1C662208B6FA0019A07B /* Media */; };
+		4F08249E22090BAC00D45C40 /* Preloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08249D22090BAC00D45C40 /* Preloader.swift */; };
 		4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C9209E150F00483499 /* FaceBalls.swift */; };
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
 		4F1F17CE209E15B000483499 /* RollAway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CD209E15B000483499 /* RollAway.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
+		4F08249D22090BAC00D45C40 /* Preloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preloader.swift; sourceTree = "<group>"; };
 		4F1F17C9209E150F00483499 /* FaceBalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBalls.swift; sourceTree = "<group>"; };
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
 		4F1F17CD209E15B000483499 /* RollAway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollAway.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			children = (
 				4FBD0FD620F55E1000BB5E32 /* Song.swift */,
 				4FBD0FD820F55E1B00BB5E32 /* Video.swift */,
+				4F08249D22090BAC00D45C40 /* Preloader.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				4FD689CC20C206C80003CA83 /* SpellyBlocks.swift in Sources */,
 				4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */,
 				4FBD0FE320F587EE00BB5E32 /* UITableView.swift in Sources */,
+				4F08249E22090BAC00D45C40 /* Preloader.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
 				4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */,

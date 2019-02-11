@@ -28,7 +28,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     var preferredVideo: URL?
     var preferredMiniGame: MiniGame?
     static let videos = Bundle.Player.videos()
-    static let songs = Bundle.Player.songs().shuffled()
+    static let songs = Bundle.Player.songs()
 
     static func preload() {
         _ = [videos, songs]
@@ -36,7 +36,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     var videoCountdown: TimeInterval = 0 {
         didSet {
-            print("videoCountdown set to: \(videoCountdown)")
+            // print("videoCountdown set to: \(videoCountdown)")
 
             if videoCountdown == 0 {
                 UIView.animate(withDuration: 0.75) {
@@ -119,7 +119,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             stopButton.isEnabled = true
             musicTable.redraw()
 
-            AudioPlayer.play(SongViewController.songs[indexPath.row].audio, whilePlaying: {
+            let song = SongViewController.songs[indexPath.row]
+            print("Playing song: \(song.title)")
+            AudioPlayer.play(song.audio, whilePlaying: {
                 self.videoCountdown -= 1
             }, whenComplete: {
                 self.deselectAllSongs()

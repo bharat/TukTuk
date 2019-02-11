@@ -14,9 +14,9 @@ extension Bundle {
 
     static func media(_ name: String) -> Bundle {
         if !bundles.keys.contains(name) {
+            print("Load bundle: \(name)")
             bundles[name] = Bundle(path: "\(Bundle.main.resourcePath!)/Media/\(name)")!
         }
-        print("Load bundle: \(name)")
         return bundles[name]!
     }
 
@@ -31,8 +31,8 @@ extension Bundle {
     }
 
     func songs() -> [Song] {
-        let audios = urls(forResourcesWithExtension: "mp3", subdirectory: "Songs")!
-        let covers = urls(forResourcesWithExtension: "png", subdirectory: "Songs")!
+        let audios = urls(forResourcesWithExtension: "mp3", subdirectory: "Songs")!.sorted(by: { $0.absoluteString < $1.absoluteString })
+        let covers = urls(forResourcesWithExtension: "png", subdirectory: "Songs")!.sorted(by: { $0.absoluteString < $1.absoluteString })
 
         return zip(audios, covers).map { arg in
             let (audio, cover) = arg
@@ -44,7 +44,7 @@ extension Bundle {
 
     func videos() -> [Video] {
         let path = resourcePath! + "/Video"
-        let files = try! FileManager.default.contentsOfDirectory(atPath: path)
+        let files = try! FileManager.default.contentsOfDirectory(atPath: path).sorted()
 
         return files.map { name in
             print("Load video: \(name)")

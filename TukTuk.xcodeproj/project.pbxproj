@@ -26,6 +26,9 @@
 		4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */; };
 		4F8E43512097B32B000B935B /* PreviewingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */; };
 		4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90EB2720A372F000F8EE87 /* Thor.swift */; };
+		4F9DDD2D221606AB00D3EFAF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD2C221606AB00D3EFAF /* String.swift */; };
+		4F9DDD3E22161C4B00D3EFAF /* StringTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD2E22161BD600D3EFAF /* StringTest.swift */; };
+		4F9DDD3F22161CE000D3EFAF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD2C221606AB00D3EFAF /* String.swift */; };
 		4FBD0FD420F55DC900BB5E32 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD320F55DC900BB5E32 /* Bundle.swift */; };
 		4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD620F55E1000BB5E32 /* Song.swift */; };
 		4FBD0FD920F55E1B00BB5E32 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD820F55E1B00BB5E32 /* Video.swift */; };
@@ -41,6 +44,16 @@
 		4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */; };
 		4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4F9DDD3922161C3E00D3EFAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FBD57A01F098DEB00BDCDE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4FBD57A71F098DEB00BDCDE3;
+			remoteInfo = TukTuk;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
@@ -60,6 +73,10 @@
 		4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4F8E43502097B32B000B935B /* PreviewingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewingTableViewController.swift; sourceTree = "<group>"; };
 		4F90EB2720A372F000F8EE87 /* Thor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thor.swift; sourceTree = "<group>"; };
+		4F9DDD2C221606AB00D3EFAF /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		4F9DDD2E22161BD600D3EFAF /* StringTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTest.swift; sourceTree = "<group>"; };
+		4F9DDD3422161C3D00D3EFAF /* TukTukTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TukTukTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F9DDD3822161C3E00D3EFAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FBD0FD320F55DC900BB5E32 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		4FBD0FD620F55E1000BB5E32 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		4FBD0FD820F55E1B00BB5E32 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
@@ -83,6 +100,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4F9DDD3122161C3D00D3EFAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FBD57A51F098DEB00BDCDE3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -103,6 +127,7 @@
 				4FBD0FD320F55DC900BB5E32 /* Bundle.swift */,
 				4FBD0FE020F587CC00BB5E32 /* UserDefaults.swift */,
 				4FBD0FE220F587EE00BB5E32 /* UITableView.swift */,
+				4F9DDD2C221606AB00D3EFAF /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -131,6 +156,15 @@
 				4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */,
 			);
 			path = MiniGames;
+			sourceTree = "<group>";
+		};
+		4F9DDD3522161C3E00D3EFAF /* TukTukTests */ = {
+			isa = PBXGroup;
+			children = (
+				4F9DDD2E22161BD600D3EFAF /* StringTest.swift */,
+				4F9DDD3822161C3E00D3EFAF /* Info.plist */,
+			);
+			path = TukTukTests;
 			sourceTree = "<group>";
 		};
 		4FBD0FD520F55DFC00BB5E32 /* Models */ = {
@@ -166,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				4FBD57AA1F098DEB00BDCDE3 /* TukTuk */,
+				4F9DDD3522161C3E00D3EFAF /* TukTukTests */,
 				4FBD57A91F098DEB00BDCDE3 /* Products */,
 				955B2461A91F60959C73B8BA /* Pods */,
 				FCC02217AF180E89B1A08AAF /* Frameworks */,
@@ -176,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				4FBD57A81F098DEB00BDCDE3 /* TukTuk.app */,
+				4F9DDD3422161C3D00D3EFAF /* TukTukTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -220,6 +256,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4F9DDD3322161C3D00D3EFAF /* TukTukTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F9DDD3B22161C3E00D3EFAF /* Build configuration list for PBXNativeTarget "TukTukTests" */;
+			buildPhases = (
+				4F9DDD3022161C3D00D3EFAF /* Sources */,
+				4F9DDD3122161C3D00D3EFAF /* Frameworks */,
+				4F9DDD3222161C3D00D3EFAF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F9DDD3A22161C3E00D3EFAF /* PBXTargetDependency */,
+			);
+			name = TukTukTests;
+			productName = TukTukTests;
+			productReference = 4F9DDD3422161C3D00D3EFAF /* TukTukTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4FBD57A71F098DEB00BDCDE3 /* TukTuk */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FBD57BA1F098DEB00BDCDE3 /* Build configuration list for PBXNativeTarget "TukTuk" */;
@@ -245,10 +299,16 @@
 		4FBD57A01F098DEB00BDCDE3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Menalto;
 				TargetAttributes = {
+					4F9DDD3322161C3D00D3EFAF = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = R6DR6B5C8B;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4FBD57A71F098DEB00BDCDE3;
+					};
 					4FBD57A71F098DEB00BDCDE3 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = R6DR6B5C8B;
@@ -271,11 +331,19 @@
 			projectRoot = "";
 			targets = (
 				4FBD57A71F098DEB00BDCDE3 /* TukTuk */,
+				4F9DDD3322161C3D00D3EFAF /* TukTukTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4F9DDD3222161C3D00D3EFAF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FBD57A61F098DEB00BDCDE3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -332,6 +400,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4F9DDD3022161C3D00D3EFAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F9DDD3F22161CE000D3EFAF /* String.swift in Sources */,
+				4F9DDD3E22161C4B00D3EFAF /* StringTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FBD57A41F098DEB00BDCDE3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -354,6 +431,7 @@
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
 				4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */,
 				4F8A2A9C209F730E000C2CA5 /* AudioPlayer.swift in Sources */,
+				4F9DDD2D221606AB00D3EFAF /* String.swift in Sources */,
 				4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */,
 				4FBD0FD420F55DC900BB5E32 /* Bundle.swift in Sources */,
 				4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */,
@@ -367,6 +445,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4F9DDD3A22161C3E00D3EFAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4FBD57A71F098DEB00BDCDE3 /* TukTuk */;
+			targetProxy = 4F9DDD3922161C3E00D3EFAF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */ = {
@@ -388,6 +474,53 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4F9DDD3C22161C3E00D3EFAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R6DR6B5C8B;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = TukTukTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.menalto.TukTukTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TukTuk.app/TukTuk";
+			};
+			name = Debug;
+		};
+		4F9DDD3D22161C3E00D3EFAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R6DR6B5C8B;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = TukTukTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.menalto.TukTukTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TukTuk.app/TukTuk";
+			};
+			name = Release;
+		};
 		4FBD57B81F098DEB00BDCDE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -530,6 +663,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4F9DDD3B22161C3E00D3EFAF /* Build configuration list for PBXNativeTarget "TukTukTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F9DDD3C22161C3E00D3EFAF /* Debug */,
+				4F9DDD3D22161C3E00D3EFAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4FBD57A31F098DEB00BDCDE3 /* Build configuration list for PBXProject "TukTuk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

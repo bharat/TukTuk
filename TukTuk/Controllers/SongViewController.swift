@@ -18,6 +18,10 @@ extension TimeInterval {
     static let VideoInterval: TimeInterval = 2400
 }
 
+class MusicCell: UITableViewCell {
+    @IBOutlet weak var title: UILabel!
+}
+
 class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     @IBOutlet weak var musicTable: UITableView!
     @IBOutlet weak var buttons: UIStackView!
@@ -29,6 +33,12 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     var preferredMiniGame: MiniGame?
     static let videos = Bundle.Player.videos()
     static let songs = Bundle.Player.songs()
+
+    var showSongFilenames: Bool = false {
+        didSet {
+            musicTable.redraw()
+        }
+    }
 
     static func preload() {
         _ = [videos, songs]
@@ -143,12 +153,18 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell")!
-
-        cell.backgroundView = UIImageView(image: SongViewController.songs[indexPath.row].image)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell") as! MusicCell
+        let song = SongViewController.songs[indexPath.row]
+        
+        cell.backgroundView = UIImageView(image: song.image)
         cell.backgroundView?.contentMode = .scaleAspectFill
-        cell.selectedBackgroundView = UIImageView(image: SongViewController.songs[indexPath.row].image)
+        cell.selectedBackgroundView = UIImageView(image: song.image)
         cell.selectedBackgroundView?.contentMode = .scaleAspectFill
+
+        cell.title.text = showSongFilenames ? song.title : ""
+        cell.title.layer.backgroundColor = UIColor.white.cgColor
+
+        cell.title.layer.cornerRadius = 3
 
         return cell
     }
@@ -165,14 +181,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @objc func handleVideoLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            show(videoAndMiniGameChooser(), sender: self)
+            show(controlPanel(), sender: self)
         }
     }
 
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         switch(previewingContext.sourceView) {
         case stopButton:
-            show(videoAndMiniGameChooser(), sender: self)
+            show(controlPanel(), sender: self)
         default:
             break
         }
@@ -181,22 +197,26 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         switch(previewingContext.sourceView) {
         case stopButton:
-            return videoAndMiniGameChooser()
+            return controlPanel()
         default:
             return nil
         }
     }
 
-    func videoAndMiniGameChooser() -> PreviewingTableViewController {
+    func controlPanel() -> PreviewingTableViewController {
         let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
 
-        previewTVC.tableTitle = "Which video should we play?"
+        previewTVC.tableTitle = "Control Panel"
         previewTVC.groups = [
-            PreviewGroup(title: "Videos", id: "video", data: SongViewController.videos.map { $0.title }),
-            PreviewGroup(title: "Mini Games", id: "minigame", data: MiniGames.all.map { $0.title })
+            PreviewGroup(title: "Controls", id: "controls", data: [showSongFilenames ? "Hide filenames" : "Show filenames"]),
+            PreviewGroup(title: "Cue up a videos", id: "video", data: SongViewController.videos.map { $0.title }),
+            PreviewGroup(title: "Cue up a Mini Game", id: "minigame", data: MiniGames.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             switch(id) {
+            case "controls":
+                self.showSongFilenames = !self.showSongFilenames
+
             case "video":
                 self.videoCountdown = 0
                 self.preferredVideo = SongViewController.videos[index].video

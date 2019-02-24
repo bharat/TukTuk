@@ -209,8 +209,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         previewTVC.tableTitle = "Control Panel"
         previewTVC.groups = [
             PreviewGroup(title: "Controls", id: "controls", data: [showSongFilenames ? "Hide filenames" : "Show filenames"]),
-            PreviewGroup(title: "Cue up a videos", id: "video", data: SongViewController.videos.map { $0.title }),
-            PreviewGroup(title: "Cue up a Mini Game", id: "minigame", data: MiniGames.all.map { $0.title })
+            PreviewGroup(title: "Cue up a video", id: "video", data: SongViewController.videos.map { $0.title }),
+            PreviewGroup(title: "Cue up a MiniGame", id: "minigame", data: MiniGames.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             switch(id) {

@@ -31,8 +31,8 @@ extension Bundle {
     }
 
     func songs() -> [Song] {
-        let audios = urls(forResourcesWithExtension: "mp3", subdirectory: "Songs")!.sorted(by: { $0.absoluteString < $1.absoluteString })
-        let covers = urls(forResourcesWithExtension: "png", subdirectory: "Songs")!.sorted(by: { $0.absoluteString < $1.absoluteString })
+        let audios = urls(forResourcesWithExtension: "mp3", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
+        let covers = urls(forResourcesWithExtension: "png", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
 
         return zip(audios, covers).map { arg in
             let (audio, cover) = arg
@@ -43,13 +43,13 @@ extension Bundle {
         }
     }
 
-    func videos() -> [Video] {
+    func movies() -> [Movie] {
         let path = resourcePath! + "/Video"
         let files = try! FileManager.default.contentsOfDirectory(atPath: path).sorted()
 
         return files.map { name in
             print("Load video: \(name)")
-            return Video(video: url(forAuxiliaryExecutable: "\(path)/\(name)")!, title: (name as NSString).deletingPathExtension)
+            return Movie(video: url(forAuxiliaryExecutable: "\(path)/\(name)")!, title: (name as NSString).deletingPathExtension)
         }
     }
 }

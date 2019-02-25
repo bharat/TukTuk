@@ -15,7 +15,7 @@ extension Bundle {
 }
 
 extension TimeInterval {
-    static let VideoInterval: TimeInterval = 2400
+    static let MovieInterval: TimeInterval = 2400
 }
 
 class MusicCell: UITableViewCell {
@@ -26,12 +26,12 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var musicTable: UITableView!
     @IBOutlet weak var buttons: UIStackView!
     @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var videoButton: UIButton!
-    @IBOutlet weak var videoTimerLabel: UILabel!
+    @IBOutlet weak var movieButton: UIButton!
+    @IBOutlet weak var movieTimerLabel: UILabel!
 
-    var preferredVideo: URL?
+    var preferredMovie: Movie?
     var preferredMiniGame: MiniGame?
-    static let videos = Bundle.Player.videos()
+    static let movies = Bundle.Player.movies()
     static let songs = Bundle.Player.songs()
 
     var showSongFilenames: Bool = false {
@@ -41,21 +41,19 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     static func preload() {
-        _ = [videos, songs]
+        _ = [movies, songs]
     }
 
-    var videoCountdown: TimeInterval = 0 {
+    var movieCountdown: TimeInterval = 0 {
         didSet {
-            // print("videoCountdown set to: \(videoCountdown)")
-
-            if videoCountdown == 0 {
+            if movieCountdown == 0 {
                 UIView.animate(withDuration: 0.75) {
-                    self.videoButton.isHidden = false
+                    self.movieButton.isHidden = false
                 }
-                videoCountdown = .VideoInterval
+                movieCountdown = .MovieInterval
             }
 
-            videoTimerLabel.text = "\(Int(videoCountdown))"
+            movieTimerLabel.text = "\(Int(movieCountdown))"
         }
     }
 
@@ -65,9 +63,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
 
         // 3DTouch or a long press on the stop button will bring up an interface where you can
-        // cue up a MiniGame or a Video
+        // cue up a MiniGame or a Movie
         registerForPreviewing(with: self, sourceView: stopButton)
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleVideoLongPress(gesture:)))
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleMovieLongPress(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
@@ -76,29 +74,29 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        videoCountdown = UserDefaults.standard.videoCountdown
-        videoButton.isHidden = (videoCountdown > 0)
+        movieCountdown = UserDefaults.standard.movieCountdown
+        movieButton.isHidden = (movieCountdown > 0)
 
         NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        UserDefaults.standard.videoCountdown = videoCountdown
+        UserDefaults.standard.movieCountdown = movieCountdown
     }
 
     @objc func appEnteredBackground() {
-        UserDefaults.standard.videoCountdown = videoCountdown
+        UserDefaults.standard.movieCountdown = movieCountdown
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
-        case videoButton:
+        case movieButton:
             AudioPlayer.stop()
             stopButton.isEnabled = false
 
-            VideoPlayer.play(preferredVideo ?? SongViewController.videos.randomElement()!.video, from: self)
-            videoButton.isHidden = true
-            preferredVideo = nil
+            VideoPlayer.play(preferredMovie ?? SongViewController.movies.randomElement()!, from: self)
+            movieButton.isHidden = true
+            preferredMovie = nil
 
         case stopButton:
             AudioPlayer.stop()
@@ -131,8 +129,8 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
             let song = SongViewController.songs[indexPath.row]
             print("Playing song: \(song.title)")
-            AudioPlayer.play(song.audio, whilePlaying: {
-                self.videoCountdown -= 1
+            AudioPlayer.play(song, whilePlaying: {
+                self.movieCountdown -= 1
             }, whenComplete: {
                 self.deselectAllSongs()
             })
@@ -177,9 +175,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    // MARK: Video
+    // MARK: Movie
 
-    @objc func handleVideoLongPress(gesture: UIGestureRecognizer) {
+    @objc func handleMovieLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
             show(controlPanel(), sender: self)
         }
@@ -209,7 +207,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         previewTVC.tableTitle = "Control Panel"
         previewTVC.groups = [
             PreviewGroup(title: "Controls", id: "controls", data: [showSongFilenames ? "Hide filenames" : "Show filenames"]),
-            PreviewGroup(title: "Cue up a video", id: "video", data: SongViewController.videos.map { $0.title }),
+            PreviewGroup(title: "Cue up a movie", id: "movie", data: SongViewController.movies.map { $0.title }),
             PreviewGroup(title: "Cue up a MiniGame", id: "minigame", data: MiniGames.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
@@ -217,9 +215,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
             case "controls":
                 self.showSongFilenames = !self.showSongFilenames
 
-            case "video":
-                self.videoCountdown = 0
-                self.preferredVideo = SongViewController.videos[index].video
+            case "movie":
+                self.movieCountdown = 0
+                self.preferredMovie = SongViewController.movies[index]
 
             case "minigame":
                 self.preferredMiniGame = MiniGames.all[index].init()

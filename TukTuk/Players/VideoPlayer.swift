@@ -9,6 +9,10 @@
 import Foundation
 import AVKit
 
+protocol VideoPlayable {
+    var video: URL { get }
+}
+
 class VideoPlayer {
     static var playerVC = AVPlayerViewController()
     static var player = AVPlayer()
@@ -18,11 +22,11 @@ class VideoPlayer {
         return playerVC.isPlaying
     }
 
-    static func play(_ url: URL, from sender: UIViewController, completion: @escaping () -> () = {}) {
+    static func play(_ object: VideoPlayable, from sender: UIViewController, completion: @escaping () -> () = {}) {
         VideoPlayer.completion = completion
         VideoPlayer.playerVC.showsPlaybackControls = false
 
-        let asset = AVAsset(url: url)
+        let asset = AVAsset(url: object.video)
         let playerItem = AVPlayerItem(asset: asset)
         VideoPlayer.player = AVPlayer(playerItem: playerItem)
         VideoPlayer.player.play()

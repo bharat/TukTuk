@@ -16,7 +16,7 @@ class FaceBalls: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
-        AudioPlayer.play(.Welcome)
+        AudioPlayer.play(Sounds.Welcome)
 
         let images = (1...8).map { "FaceBalls_\($0)" }
 

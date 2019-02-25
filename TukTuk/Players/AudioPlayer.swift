@@ -9,6 +9,10 @@
 import Foundation
 import AVKit
 
+protocol AudioPlayable {
+    var audio: URL { get }
+}
+
 class AudioPlayer {
     static var instance = AudioPlayer()
     static var player: AVAudioPlayer?
@@ -16,12 +20,12 @@ class AudioPlayer {
 
     // We purposefully don't do any error handling here because this has never failed in practice
     // and there's no graceful way to handle it. If this app can't play audio, it might as well crash.
-    static func play(_ url: URL, whilePlaying tick: @escaping () -> () = {}, whenComplete done: @escaping () -> () = {}) {
+    static func play(_ object: AudioPlayable, whilePlaying tick: @escaping () -> () = {}, whenComplete done: @escaping () -> () = {}) {
         try! AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
         try! AVAudioSession.sharedInstance().setActive(true)
 
         let old = player
-        try! player = AVAudioPlayer(contentsOf: url)
+        try! player = AVAudioPlayer(contentsOf: object.audio)
 
         guard let player = player else {
             return

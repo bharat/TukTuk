@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct Song {
+struct Song: AudioPlayable {
     var fileName: String
     var title: String
     var image: UIImage

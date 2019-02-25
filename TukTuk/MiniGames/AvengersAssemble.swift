@@ -14,18 +14,18 @@ final class AvengersAssemble: MiniGame {
     static var title = "Avengers Assemble!"
     var uivc: UIViewController = UIVC()
 
-    enum Sounds: String, CaseIterable {
+    enum Sounds: String, CaseIterable, AudioPlayable {
         case Assemble
         case ChooseAnAvenger
         case Tada
 
-        var url: URL {
+        var audio: URL {
             return Bundle.media("AvengersAssemble").audio(rawValue)
         }
     }
 
     static func preloadableAssets() -> [URL] {
-        return Sounds.allCases.map { $0.url }
+        return Sounds.allCases.map { $0.audio }
     }
 
     enum Pace: TimeInterval {
@@ -41,7 +41,7 @@ final class AvengersAssemble: MiniGame {
         }
     }
 
-    enum Hero: String, CaseIterable {
+    enum Hero: String, CaseIterable, AudioPlayable, VideoPlayable {
         case CaptainAmerica
         case Hawkeye
         case IronMan
@@ -75,7 +75,7 @@ final class AvengersAssemble: MiniGame {
             return UIImage(named: "Avenger_\(rawValue)")
         }
 
-        var sound: URL {
+        var audio: URL {
             return Bundle.media("AvengersAssemble").audio(rawValue)
         }
 
@@ -86,16 +86,16 @@ final class AvengersAssemble: MiniGame {
 
     class UIVC: UIViewController {
         override func viewDidLoad() {
-            AudioPlayer.play(Sounds.Assemble.url)
+            AudioPlayer.play(Sounds.Assemble)
 
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
             effectView.frame = view.frame
             view.addSubview(effectView)
 
-            let scene = JusticeLeague.Scene()
+            let scene = AvengersAssemble.Scene()
             scene.completion = { hero in
-                VideoPlayer.play(hero.video, from: self) {
+                VideoPlayer.play(hero, from: self) {
                     self.dismiss(animated: true)
                 }
             }
@@ -176,7 +176,7 @@ final class AvengersAssemble: MiniGame {
                     $0.enticing = true
                 }
 
-                AudioPlayer.play(Sounds.ChooseAnAvenger.url)
+                AudioPlayer.play(Sounds.ChooseAnAvenger)
                 completion()
             }
         }
@@ -202,7 +202,7 @@ final class AvengersAssemble: MiniGame {
 
                     // Accelerate to the finish if it's taking too long
                     turnsRemaining -= 1
-                    AudioPlayer.play(new.sound)
+                    AudioPlayer.play(new)
                     if turnsRemaining == 0 {
                         self.blocks.filter { $0 != block }.forEach {
                             $0.show(new)
@@ -228,7 +228,7 @@ final class AvengersAssemble: MiniGame {
         }
         
         func select(hero: Hero, from block: Block) {
-            AudioPlayer.play(Sounds.Tada.url)
+            AudioPlayer.play(Sounds.Tada)
 
             blocks.filter { $0 != block }.forEach {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))

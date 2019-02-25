@@ -14,18 +14,18 @@ final class JusticeLeague: MiniGame {
     static var title = "Justice League!"
     var uivc: UIViewController = UIVC()
 
-    enum Sounds: String, CaseIterable {
+    enum Sounds: String, CaseIterable, AudioPlayable {
         case ComeTogether
         case Choose
         case Tada
 
-        var url: URL {
+        var audio: URL {
             return Bundle.media("JusticeLeague").audio(rawValue)
         }
     }
 
     static func preloadableAssets() -> [URL] {
-        return Sounds.allCases.map { $0.url }
+        return Sounds.allCases.map { $0.audio }
     }
 
     enum Pace: TimeInterval {
@@ -41,7 +41,7 @@ final class JusticeLeague: MiniGame {
         }
     }
 
-    enum Hero: String, CaseIterable {
+    enum Hero: String, CaseIterable, AudioPlayable, VideoPlayable {
         case Superman
         case Batman
         case WonderWoman
@@ -75,7 +75,7 @@ final class JusticeLeague: MiniGame {
             return UIImage(named: "JusticeLeague_\(rawValue)")
         }
 
-        var sound: URL {
+        var audio: URL {
             return Bundle.media("JusticeLeague").audio(rawValue)
         }
 
@@ -86,7 +86,7 @@ final class JusticeLeague: MiniGame {
 
     class UIVC: UIViewController {
         override func viewDidLoad() {
-            AudioPlayer.play(Sounds.ComeTogether.url)
+            AudioPlayer.play(Sounds.ComeTogether)
 
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
@@ -95,7 +95,7 @@ final class JusticeLeague: MiniGame {
 
             let scene = JusticeLeague.Scene()
             scene.completion = { hero in
-                VideoPlayer.play(hero.video, from: self) {
+                VideoPlayer.play(hero, from: self) {
                     self.dismiss(animated: true)
                 }
             }
@@ -176,7 +176,7 @@ final class JusticeLeague: MiniGame {
                     $0.enticing = true
                 }
 
-                AudioPlayer.play(Sounds.Choose.url)
+                AudioPlayer.play(Sounds.Choose)
                 completion()
             }
         }
@@ -202,7 +202,7 @@ final class JusticeLeague: MiniGame {
 
                     // Accelerate to the finish if it's taking too long
                     turnsRemaining -= 1
-                    AudioPlayer.play(new.sound)
+                    AudioPlayer.play(new)
                     if turnsRemaining == 0 {
                         self.blocks.filter { $0 != block }.forEach {
                             $0.show(new)
@@ -228,7 +228,7 @@ final class JusticeLeague: MiniGame {
         }
         
         func select(hero: Hero, from block: Block) {
-            AudioPlayer.play(Sounds.Tada.url)
+            AudioPlayer.play(Sounds.Tada)
 
             blocks.filter { $0 != block }.forEach {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))

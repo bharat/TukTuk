@@ -52,9 +52,9 @@
                                             <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gor-Q6-Q2h"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-Wj-hJe" userLabel="Video Button">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-Wj-hJe" userLabel="Movie Button">
                                         <rect key="frame" x="125" y="0.0" width="125" height="30"/>
-                                        <state key="normal" title="Video"/>
+                                        <state key="normal" title="Movie"/>
                                         <connections>
                                             <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DcA-vR-iBL"/>
                                         </connections>
@@ -116,10 +116,10 @@
                     </view>
                     <connections>
                         <outlet property="buttons" destination="7Ly-tq-BV9" id="rpB-hX-ddr"/>
+                        <outlet property="movieButton" destination="Bcl-Wj-hJe" id="e1C-Jr-ZOk"/>
+                        <outlet property="movieTimerLabel" destination="sAS-h3-EvS" id="iqk-qq-yun"/>
                         <outlet property="musicTable" destination="Zzm-b8-ODV" id="RTU-qP-LeK"/>
                         <outlet property="stopButton" destination="m6W-cQ-EmU" id="xbK-wO-igf"/>
-                        <outlet property="videoButton" destination="Bcl-Wj-hJe" id="e1C-Jr-ZOk"/>
-                        <outlet property="videoTimerLabel" destination="sAS-h3-EvS" id="iqk-qq-yun"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -9,8 +9,12 @@
 import Foundation
 import UIKit
 
-extension URL {
-    static let Welcome = Bundle.Player.audio("Welcome")
+enum Sounds: String, CaseIterable, AudioPlayable {
+    case Welcome
+
+    var audio: URL {
+        return Bundle.media("Player").audio(rawValue)
+    }
 }
 
 protocol Animation {

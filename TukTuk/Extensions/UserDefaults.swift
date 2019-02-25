@@ -10,22 +10,22 @@ import Foundation
 
 extension UserDefaults {
     enum Key: String {
-        case videoCountdown = "videoCountdown"
+        case movieCountdown = "movieCountdown"
     }
 
     func registerDefaults() {
         register(defaults: [
-            Key.videoCountdown.rawValue: TimeInterval.VideoInterval
+            Key.movieCountdown.rawValue: TimeInterval.MovieInterval
         ])
     }
 
-    var videoCountdown: TimeInterval {
+    var movieCountdown: TimeInterval {
         get {
-            return double(forKey: Key.videoCountdown.rawValue)
+            return double(forKey: Key.movieCountdown.rawValue)
         }
 
         set {
-            setValue(newValue, forKey: Key.videoCountdown.rawValue)
+            setValue(newValue, forKey: Key.movieCountdown.rawValue)
         }
     }
 }

@@ -201,14 +201,14 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    func controlPanel() -> PreviewingTableViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
+    func controlPanel() -> PopUpMenuViewController {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PopUpMenuVC") as! PopUpMenuViewController
 
         previewTVC.tableTitle = "Control Panel"
         previewTVC.groups = [
-            PreviewGroup(title: "Controls", id: "controls", data: [showSongFilenames ? "Hide filenames" : "Show filenames"]),
-            PreviewGroup(title: "Cue up a movie", id: "movie", data: SongViewController.movies.map { $0.title }),
-            PreviewGroup(title: "Cue up a MiniGame", id: "minigame", data: MiniGames.all.map { $0.title })
+            MenuGroup(title: "Controls", id: "controls", choices: [showSongFilenames ? "Hide filenames" : "Show filenames"]),
+            MenuGroup(title: "Cue up a movie", id: "movie", choices: SongViewController.movies.map { $0.title }),
+            MenuGroup(title: "Cue up a MiniGame", id: "minigame", choices: MiniGames.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             switch(id) {

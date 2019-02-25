@@ -77,11 +77,11 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         return animationChooser()
     }
 
-    func animationChooser() -> PreviewingTableViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        previewTVC.tableTitle = "Choose the welcome animation"
+    func animationChooser() -> PopUpMenuViewController {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PopUpMenuVC") as! PopUpMenuViewController
+        previewTVC.tableTitle = "Control Panel"
         previewTVC.groups = [
-            PreviewGroup(title: "Animations", id: "animation", data: Animations.all.map { $0.title })
+            MenuGroup(title: "Choose the Welcome animation", id: "animation", choices: Animations.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             self.preferred = Animations.all[index].init()

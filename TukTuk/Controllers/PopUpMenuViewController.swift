@@ -1,5 +1,5 @@
 //
-//  SurpriseTableViewController.swift
+//  PreviewingTableViewController.swift
 //  TukTuk
 //
 //  Created by Bharat Mediratta on 4/30/18.
@@ -10,17 +10,17 @@ import Foundation
 
 import UIKit
 
-struct PreviewGroup {
+struct MenuGroup {
     var title: String
     var id: String
-    var data: [String]
+    var choices: [String]
 }
 
-class PreviewingTableViewController: UITableViewController {
+class PopUpMenuViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
 
     var tableTitle: String = ""
-    var groups: [PreviewGroup] = []
+    var groups: [MenuGroup] = []
     var completion: (String, Int) -> (Void) = { (id, index) in }
 
     override func viewDidLoad() {
@@ -42,13 +42,13 @@ class PreviewingTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups[section].data.count
+        return groups[section].choices.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SurpriseCell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell")!
 
-        cell.textLabel?.text = groups[indexPath.section].data[indexPath.row]
+        cell.textLabel?.text = groups[indexPath.section].choices[indexPath.row]
         return cell
     }
 

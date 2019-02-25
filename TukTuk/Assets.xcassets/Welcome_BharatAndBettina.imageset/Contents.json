@@ -2,7 +2,6 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Bharat_and_Bettina.png",
       "scale" : "1x"
     },
     {
@@ -11,6 +10,7 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "Screen Shot 2019-02-25 at 10.59.22 AM.png",
       "scale" : "3x"
     }
   ],

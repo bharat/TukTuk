@@ -34,6 +34,8 @@ extension Bundle {
         let audios = urls(forResourcesWithExtension: "mp3", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
         let covers = urls(forResourcesWithExtension: "png", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
 
+        assert(audios.count == covers.count)
+
         return zip(audios, covers).map { arg in
             let (audio, cover) = arg
             let fileName = audio.lastPathComponent

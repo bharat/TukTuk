@@ -41,8 +41,6 @@
 		4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */; };
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
 		4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */; };
-		4FD689CC20C206C80003CA83 /* SpellyBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */; };
-		4FD689EE20C9B71D0003CA83 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FD689ED20C9B71C0003CA83 /* art.scnassets */; };
 		4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */; };
 		4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */; };
 /* End PBXBuildFile section */
@@ -93,8 +91,6 @@
 		4FBD57B51F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FBD57B71F098DEB00BDCDE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JusticeLeague.swift; sourceTree = "<group>"; };
-		4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellyBlocks.swift; sourceTree = "<group>"; };
-		4FD689ED20C9B71C0003CA83 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewController.swift; sourceTree = "<group>"; };
 		4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSquares.swift; sourceTree = "<group>"; };
 		4FFC1C662208B6FA0019A07B /* Media */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Media; sourceTree = "<group>"; };
@@ -159,7 +155,6 @@
 				4F90EB2720A372F000F8EE87 /* Thor.swift */,
 				4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */,
 				4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */,
-				4FD689CB20C206C80003CA83 /* SpellyBlocks.swift */,
 			);
 			path = MiniGames;
 			sourceTree = "<group>";
@@ -227,7 +222,6 @@
 			children = (
 				4F1F17C8209E14DF00483499 /* Animations */,
 				4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */,
-				4FD689ED20C9B71C0003CA83 /* art.scnassets */,
 				4F6A7BE21F1AE9B300299152 /* Assets.xcassets */,
 				4FBD0FDF20F5678A00BB5E32 /* Controllers */,
 				4F1F17C5209E10E100483499 /* Extensions */,
@@ -356,7 +350,6 @@
 			files = (
 				4F0824942208D64000D45C40 /* Media in Resources */,
 				4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */,
-				4FD689EE20C9B71D0003CA83 /* art.scnassets in Resources */,
 				4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */,
 				4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */,
 			);
@@ -430,7 +423,6 @@
 				4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */,
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
 				4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */,
-				4FD689CC20C206C80003CA83 /* SpellyBlocks.swift in Sources */,
 				4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */,
 				4FBD0FE320F587EE00BB5E32 /* UITableView.swift in Sources */,
 				4F08249E22090BAC00D45C40 /* Preloadable.swift in Sources */,

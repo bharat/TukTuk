@@ -207,12 +207,11 @@ extension SongViewController: UICollectionViewDelegate {
         }
     }
 
-        func deselectAllSongs() {
-            songCollection.indexPathsForSelectedItems?.forEach {
-                songCollection.deselectItem(at: $0, animated: true)
-            }
+    func deselectAllSongs() {
+        songCollection.indexPathsForSelectedItems?.forEach {
+            songCollection.deselectItem(at: $0, animated: true)
         }
-
+    }
 }
 
 let yOffsetSpeed: CGFloat = 150.0

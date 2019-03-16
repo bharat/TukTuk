@@ -14,6 +14,7 @@ import QuartzCore
 class SongCell: CollectionViewSlantedCell {
 
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var title: UILabel!
     private var gradient = CAGradientLayer()
 
     override func awakeFromNib() {

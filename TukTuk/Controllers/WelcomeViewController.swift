@@ -40,7 +40,6 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
 
         SongViewController.preload()
         MiniGames.preload()
-
     }
 
     // Useful for debugging

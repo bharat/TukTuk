@@ -176,6 +176,7 @@
 				4FBD0FD620F55E1000BB5E32 /* Song.swift */,
 				4FBD0FD820F55E1B00BB5E32 /* Movie.swift */,
 				4F08249D22090BAC00D45C40 /* Preloadable.swift */,
+				4FA64A86223D722100AED085 /* SongCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -195,7 +196,6 @@
 				4F8E43502097B32B000B935B /* PopUpMenuViewController.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
 				4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */,
-				4FA64A86223D722100AED085 /* SongCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

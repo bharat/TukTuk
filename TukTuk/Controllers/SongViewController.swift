@@ -139,15 +139,11 @@ extension SongViewController: UIViewControllerPreviewingDelegate {
 
         previewTVC.tableTitle = "Control Panel"
         previewTVC.groups = [
-            MenuGroup(title: "Controls", id: "controls", choices: [showSongFilenames ? "Hide filenames" : "Show filenames"]),
             MenuGroup(title: "Cue up a movie", id: "movie", choices: SongViewController.movies.map { $0.title }),
             MenuGroup(title: "Cue up a MiniGame", id: "minigame", choices: MiniGames.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             switch(id) {
-            case "controls":
-                self.showSongFilenames = !self.showSongFilenames
-
             case "movie":
                 self.movieCountdown = 0
                 self.preferredMovie = SongViewController.movies[index]

@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import AVKit
+import CollectionViewSlantedLayout
 
 extension Bundle {
     static let Player = Bundle.media("Player")
@@ -18,12 +19,10 @@ extension TimeInterval {
     static let MovieInterval: TimeInterval = 2400
 }
 
-class MusicCell: UITableViewCell {
-    @IBOutlet weak var title: UILabel!
-}
+class SongViewController: UIViewController {
+    @IBOutlet weak var songCollection: UICollectionView!
+    @IBOutlet weak var songCollectionLayout: CollectionViewSlantedLayout!
 
-class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
-    @IBOutlet weak var musicTable: UITableView!
     @IBOutlet weak var buttons: UIStackView!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var movieButton: UIButton!
@@ -34,11 +33,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     static let movies = Bundle.Player.movies()
     static let songs = Bundle.Player.songs()
 
-    var showSongFilenames: Bool = false {
-        didSet {
-            musicTable.redraw()
-        }
-    }
+    var showSongFilenames: Bool = false
 
     static func preload() {
         _ = [movies, songs]
@@ -57,18 +52,19 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    // MARK: UIViewController
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // 3DTouch or a long press on the stop button will bring up an interface where you can
         // cue up a MiniGame or a Movie
         registerForPreviewing(with: self, sourceView: stopButton)
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleMovieLongPress(gesture:)))
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleControlPanelGesture(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
+
+        songCollectionLayout.isFirstCellExcluded = true
+        songCollectionLayout.isLastCellExcluded = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,6 +74,9 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         movieButton.isHidden = (movieCountdown > 0)
 
         NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
+        songCollection.reloadData()
+        songCollectionLayout.invalidateLayout()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -105,84 +104,18 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         default:
             ()
         }
+
+        songCollectionLayout.redraw()
     }
 
-    // MARK: UITableViewDelegate
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        stopButton.isEnabled = false
-        
-        if !VideoPlayer.isPlaying {
-            if let preferredMiniGame = preferredMiniGame {
-                show(preferredMiniGame.uivc, sender: self)
-                self.preferredMiniGame = nil
-                return
-            }
-            
-            if Array(1...60).randomElement()! == 1 {
-                show(MiniGames.all.randomElement()!.init().uivc, sender: self)
-                return
-            }
-
-            stopButton.isEnabled = true
-            musicTable.redraw()
-
-            let song = SongViewController.songs[indexPath.row]
-            print("Playing song: \(song.title)")
-            AudioPlayer.play(song, whilePlaying: {
-                self.movieCountdown -= 1
-            }, whenComplete: {
-                self.deselectAllSongs()
-            })
-        }
-    }
-
-    func deselectAllSongs() {
-        if let selectedRow = musicTable.indexPathForSelectedRow {
-            musicTable.deselectRow(at: selectedRow, animated: true)
-            musicTable.redraw()
-        }
-    }
-
-    // MARK: UITableViewDataSource
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SongViewController.songs.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell") as! MusicCell
-        let song = SongViewController.songs[indexPath.row]
-        
-        cell.backgroundView = UIImageView(image: song.image)
-        cell.backgroundView?.contentMode = .scaleAspectFill
-        cell.selectedBackgroundView = UIImageView(image: song.image)
-        cell.selectedBackgroundView?.contentMode = .scaleAspectFill
-
-        cell.title.text = showSongFilenames ? song.title : ""
-        cell.title.layer.backgroundColor = UIColor.white.cgColor
-
-        cell.title.layer.cornerRadius = 3
-
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == tableView.indexPathForSelectedRow?.row {
-            return 300
-        } else {
-            return 150
-        }
-    }
-
-    // MARK: Movie
-
-    @objc func handleMovieLongPress(gesture: UIGestureRecognizer) {
+    @objc func handleControlPanelGesture(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
             show(controlPanel(), sender: self)
         }
     }
+}
 
+extension SongViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         switch(previewingContext.sourceView) {
         case stopButton:
@@ -229,3 +162,94 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         return previewTVC
     }
 }
+
+extension SongViewController: CollectionViewDelegateSlantedLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: CollectionViewSlantedLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGFloat {
+
+        if let selected = collectionView.indexPathsForSelectedItems?.map({ $0.row }) {
+            if selected.contains(indexPath.row) {
+                return 400
+            }
+        }
+        return 200
+    }
+}
+
+extension SongViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        stopButton.isEnabled = false
+
+        songCollectionLayout.redraw()
+
+        if !VideoPlayer.isPlaying {
+            if let preferredMiniGame = preferredMiniGame {
+                show(preferredMiniGame.uivc, sender: self)
+                self.preferredMiniGame = nil
+                return
+            }
+            
+            if Array(1...60).randomElement()! == 1 {
+                show(MiniGames.all.randomElement()!.init().uivc, sender: self)
+                return
+            }
+
+            stopButton.isEnabled = true
+
+            let song = SongViewController.songs[indexPath.row]
+            print("Playing song: \(song.title)")
+            AudioPlayer.play(song, whilePlaying: {
+                self.movieCountdown -= 1
+            }, whenComplete: {
+                self.deselectAllSongs()
+            })
+        }
+    }
+
+        func deselectAllSongs() {
+            songCollection.indexPathsForSelectedItems?.forEach {
+                songCollection.deselectItem(at: $0, animated: true)
+            }
+        }
+
+}
+
+let yOffsetSpeed: CGFloat = 150.0
+let xOffsetSpeed: CGFloat = 100.0
+
+extension SongViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let collectionView = songCollection else { return }
+        guard let visibleCells = collectionView.visibleCells as? [SongCell] else { return }
+        
+        for parallaxCell in visibleCells {
+            let yOffset = (collectionView.contentOffset.y - parallaxCell.frame.origin.y) / parallaxCell.imageHeight
+            let xOffset = (collectionView.contentOffset.x - parallaxCell.frame.origin.x) / parallaxCell.imageWidth
+            parallaxCell.offset(CGPoint(x: xOffset * xOffsetSpeed, y: yOffset * yOffsetSpeed))
+        }
+    }
+
+}
+
+extension SongViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return SongViewController.songs.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
+        let song = SongViewController.songs[indexPath.row]
+
+        cell.image = song.image
+
+//        cell.title.text = showSongFilenames ? song.title : ""
+//        cell.title.layer.backgroundColor = UIColor.white.cgColor
+//        cell.title.layer.cornerRadius = 3
+//        cell.title.text = song.title
+
+        return cell
+    }
+}
+

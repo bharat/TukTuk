@@ -40,12 +40,13 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
 
         SongViewController.preload()
         MiniGames.preload()
+
     }
 
     // Useful for debugging
-//    override func viewDidAppear(_ animated: Bool) {
-//        show(SpellyBlocks().uivc, sender: self)
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        self.performSegue(withIdentifier: "SongViewController", sender: self)
+    }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false

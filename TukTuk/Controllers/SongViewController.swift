@@ -166,10 +166,10 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
 
         if let selected = collectionView.indexPathsForSelectedItems?.map({ $0.row }) {
             if selected.contains(indexPath.row) {
-                return 400
+                return 614
             }
         }
-        return 200
+        return 307
     }
 }
 
@@ -241,7 +241,6 @@ extension SongViewController: UICollectionViewDataSource {
 
         cell.image = song.image
         cell.title.text = song.title
-
 
         if let layout = collectionView.collectionViewLayout as? CollectionViewSlantedLayout {
             cell.title.transform = CGAffineTransform(rotationAngle: layout.slantingAngle)

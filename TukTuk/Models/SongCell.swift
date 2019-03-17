@@ -37,7 +37,10 @@ class SongCell: CollectionViewSlantedCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         if let backgroundView = backgroundView {
+            backgroundView.frame = contentView.bounds
             gradient.frame = backgroundView.bounds
+            imageView.frame = backgroundView.bounds
+            title.frame = CGRect(x: 0, y: backgroundView.bounds.height - title.frame.height - 20, width: backgroundView.bounds.width, height: title.frame.height)
         }
     }
 

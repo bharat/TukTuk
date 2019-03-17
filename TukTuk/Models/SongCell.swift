@@ -39,8 +39,13 @@ class SongCell: CollectionViewSlantedCell {
         if let backgroundView = backgroundView {
             backgroundView.frame = contentView.bounds
             gradient.frame = backgroundView.bounds
-            imageView.frame = backgroundView.bounds
-            title.frame = CGRect(x: 0, y: backgroundView.bounds.height - title.frame.height - 20, width: backgroundView.bounds.width, height: title.frame.height)
+
+            if isSelected {
+                imageView.frame = backgroundView.bounds
+            } else {
+                // pad the image frame so that we don't see edges in the parallax view
+                imageView.frame = CGRect(x: 0, y: 0, width: backgroundView.bounds.width, height: backgroundView.bounds.height + 300)
+            }
         }
     }
 

@@ -1,28 +1,24 @@
 PODS:
+  - CollectionViewSlantedLayout (3.1.1)
   - EasyAnimation (2.2.1)
   - FLEX (2.4.0)
 
 DEPENDENCIES:
+  - CollectionViewSlantedLayout
   - EasyAnimation
-  - FLEX (from `https://github.com/bharat/FLEX.git`)
+  - FLEX
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - CollectionViewSlantedLayout
     - EasyAnimation
-
-EXTERNAL SOURCES:
-  FLEX:
-    :git: https://github.com/bharat/FLEX.git
-
-CHECKOUT OPTIONS:
-  FLEX:
-    :commit: 1ef608cf8aa268716363586e894e053a3bed32c4
-    :git: https://github.com/bharat/FLEX.git
+    - FLEX
 
 SPEC CHECKSUMS:
+  CollectionViewSlantedLayout: 24397455acd2461960bc45d394e0ef99c17d03ce
   EasyAnimation: 226d133d23ef0ef99ddfb8928ff2a9a4a77d1cfd
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
 
-PODFILE CHECKSUM: 4051bf164d17af14e294eab0b4d781f6fa2d06dc
+PODFILE CHECKSUM: aa85376916f3968f9f3c79504eea817b975b7fba
 
 COCOAPODS: 1.5.3

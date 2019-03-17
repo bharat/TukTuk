@@ -31,11 +31,12 @@
 		4F9DDD3F22161CE000D3EFAF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD2C221606AB00D3EFAF /* String.swift */; };
 		4F9DDD41222319D500D3EFAF /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD40222319D500D3EFAF /* URL.swift */; };
 		4F9DDD432226023A00D3EFAF /* TeslaZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD422226023A00D3EFAF /* TeslaZoom.swift */; };
+		4FA64A87223D722100AED085 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA64A86223D722100AED085 /* SongCell.swift */; };
+		4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */; };
 		4FBD0FD420F55DC900BB5E32 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD320F55DC900BB5E32 /* Bundle.swift */; };
 		4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD620F55E1000BB5E32 /* Song.swift */; };
 		4FBD0FD920F55E1B00BB5E32 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD820F55E1B00BB5E32 /* Movie.swift */; };
 		4FBD0FE120F587CC00BB5E32 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FE020F587CC00BB5E32 /* UserDefaults.swift */; };
-		4FBD0FE320F587EE00BB5E32 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FE220F587EE00BB5E32 /* UITableView.swift */; };
 		4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */; };
 		4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */; };
 		4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */; };
@@ -79,11 +80,12 @@
 		4F9DDD3822161C3E00D3EFAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F9DDD40222319D500D3EFAF /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4F9DDD422226023A00D3EFAF /* TeslaZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeslaZoom.swift; sourceTree = "<group>"; };
+		4FA64A86223D722100AED085 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
+		4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSlantedLayout.swift; sourceTree = "<group>"; };
 		4FBD0FD320F55DC900BB5E32 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		4FBD0FD620F55E1000BB5E32 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		4FBD0FD820F55E1B00BB5E32 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		4FBD0FE020F587CC00BB5E32 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		4FBD0FE220F587EE00BB5E32 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		4FBD57A81F098DEB00BDCDE3 /* TukTuk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TukTuk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewController.swift; sourceTree = "<group>"; };
@@ -126,9 +128,9 @@
 				4F89557820B47B8600E37E53 /* UIImage.swift */,
 				4FBD0FD320F55DC900BB5E32 /* Bundle.swift */,
 				4FBD0FE020F587CC00BB5E32 /* UserDefaults.swift */,
-				4FBD0FE220F587EE00BB5E32 /* UITableView.swift */,
 				4F9DDD2C221606AB00D3EFAF /* String.swift */,
 				4F9DDD40222319D500D3EFAF /* URL.swift */,
+				4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -174,6 +176,7 @@
 				4FBD0FD620F55E1000BB5E32 /* Song.swift */,
 				4FBD0FD820F55E1B00BB5E32 /* Movie.swift */,
 				4F08249D22090BAC00D45C40 /* Preloadable.swift */,
+				4FA64A86223D722100AED085 /* SongCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -383,11 +386,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CollectionViewSlantedLayout/CollectionViewSlantedLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyAnimation/EasyAnimation.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CollectionViewSlantedLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyAnimation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 			);
@@ -412,6 +417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,
 				4F9DDD432226023A00D3EFAF /* TeslaZoom.swift in Sources */,
@@ -424,7 +430,6 @@
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
 				4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */,
 				4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */,
-				4FBD0FE320F587EE00BB5E32 /* UITableView.swift in Sources */,
 				4F08249E22090BAC00D45C40 /* Preloadable.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
@@ -440,6 +445,7 @@
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
 				4FBD0FE120F587CC00BB5E32 /* UserDefaults.swift in Sources */,
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
+				4FA64A87223D722100AED085 /* SongCell.swift in Sources */,
 				4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

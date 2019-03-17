@@ -227,7 +227,6 @@ extension SongViewController: UIScrollViewDelegate {
             parallaxCell.offset(CGPoint(x: xOffset * xOffsetSpeed, y: yOffset * yOffsetSpeed))
         }
     }
-
 }
 
 extension SongViewController: UICollectionViewDataSource {
@@ -243,15 +242,9 @@ extension SongViewController: UICollectionViewDataSource {
         cell.image = song.image
         cell.title.text = song.title
 
-        cell.title.layer.shadowColor = UIColor.black.cgColor
-        cell.title.layer.shadowRadius = 3.0
-        cell.title.layer.shadowOpacity = 0.8
-        cell.title.layer.shadowOffset = .zero
-        cell.title.layer.masksToBounds = false
-
 
         if let layout = collectionView.collectionViewLayout as? CollectionViewSlantedLayout {
-            cell.contentView.transform = CGAffineTransform(rotationAngle: layout.slantingAngle)
+            cell.title.transform = CGAffineTransform(rotationAngle: layout.slantingAngle)
         }
 
         return cell

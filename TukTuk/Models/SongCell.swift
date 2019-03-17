@@ -26,6 +26,12 @@ class SongCell: CollectionViewSlantedCell {
             gradient.frame = backgroundView.bounds
             backgroundView.layer.addSublayer(gradient)
         }
+
+        title.layer.shadowColor = UIColor.black.cgColor
+        title.layer.shadowRadius = 3.0
+        title.layer.shadowOpacity = 0.8
+        title.layer.shadowOffset = .zero
+        title.layer.masksToBounds = false
     }
 
     override func layoutSubviews() {

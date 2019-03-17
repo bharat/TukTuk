@@ -64,7 +64,7 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5a-sn-aPX">
-                                                    <rect key="frame" x="0.0" y="338.5" width="367" height="21.5"/>
+                                                    <rect key="frame" x="8" y="382.5" width="359" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -76,8 +76,8 @@
                                             <constraint firstItem="cP1-nY-iRA" firstAttribute="leading" secondItem="N58-lx-YH0" secondAttribute="leading" id="KPG-H0-2ks"/>
                                             <constraint firstAttribute="trailing" secondItem="cP1-nY-iRA" secondAttribute="trailing" id="dW5-f0-AfD"/>
                                             <constraint firstItem="cP1-nY-iRA" firstAttribute="top" secondItem="N58-lx-YH0" secondAttribute="top" id="hwN-Yq-GBj"/>
-                                            <constraint firstAttribute="bottom" secondItem="A5a-sn-aPX" secondAttribute="bottom" constant="90" id="vx8-YY-xWM"/>
-                                            <constraint firstItem="A5a-sn-aPX" firstAttribute="leading" secondItem="N58-lx-YH0" secondAttribute="leading" id="wJV-4m-ZiX"/>
+                                            <constraint firstAttribute="bottom" secondItem="A5a-sn-aPX" secondAttribute="bottom" constant="46" id="vx8-YY-xWM"/>
+                                            <constraint firstItem="A5a-sn-aPX" firstAttribute="leading" secondItem="N58-lx-YH0" secondAttribute="leading" constant="8" id="wJV-4m-ZiX"/>
                                             <constraint firstAttribute="trailing" secondItem="A5a-sn-aPX" secondAttribute="trailing" constant="8" id="yvG-fU-S0s"/>
                                         </constraints>
                                         <size key="customSize" width="375" height="450"/>

@@ -9,11 +9,9 @@
 import Foundation
 import UIKit
 
-class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegate {
+class WelcomeViewController: UIViewController {
     var preferred: Animation?
     var welcomeImageView = UIImageView()
-
-    // UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +40,6 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         MiniGames.preload()
     }
 
-//    // Useful for debugging
-//    override func viewDidAppear(_ animated: Bool) {
-//        self.performSegue(withIdentifier: "SongViewController", sender: self)
-//    }
-
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false
 
@@ -61,14 +54,14 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         }
     }
 
-    // UIViewControllerPreviewingDelegate
-
     @objc func handleWelcomeLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
             show(animationChooser(), sender: self)
         }
     }
+}
 
+extension WelcomeViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         show(animationChooser(), sender: self)
     }

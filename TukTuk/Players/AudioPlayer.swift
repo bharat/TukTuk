@@ -14,7 +14,6 @@ protocol AudioPlayable {
 }
 
 class AudioPlayer {
-    static var instance = AudioPlayer()
     static var player: AVAudioPlayer?
     static var timer: Timer?
 

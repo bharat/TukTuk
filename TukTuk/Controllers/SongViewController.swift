@@ -110,7 +110,7 @@ class SongViewController: UIViewController {
             AudioPlayer.stop()
             stopButton.isEnabled = false
 
-            VideoPlayer.play(preferredMovie ?? SongViewController.movies.randomElement()!, from: self)
+            VideoPlayer.instance.play(preferredMovie ?? SongViewController.movies.randomElement()!, from: self)
             movieButton.isHidden = true
             preferredMovie = nil
 
@@ -208,7 +208,7 @@ extension SongViewController: UICollectionViewDelegate {
         // Reset the parallax view of the active cell by pretending to scroll
         self.scrollViewDidScroll(collectionView)
 
-        if !VideoPlayer.isPlaying {
+        if !VideoPlayer.instance.isPlaying {
             if let preferredMiniGame = preferredMiniGame {
                 show(preferredMiniGame.uivc, sender: self)
                 self.preferredMiniGame = nil

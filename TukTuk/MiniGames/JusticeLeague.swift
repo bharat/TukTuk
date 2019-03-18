@@ -95,7 +95,7 @@ final class JusticeLeague: MiniGame {
 
             let scene = JusticeLeague.Scene()
             scene.completion = { hero in
-                VideoPlayer.play(hero, from: self) {
+                VideoPlayer.instance.play(hero, from: self) {
                     self.dismiss(animated: true)
                 }
             }

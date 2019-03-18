@@ -14,35 +14,41 @@ protocol VideoPlayable {
 }
 
 class VideoPlayer {
-    static var playerVC = AVPlayerViewController()
-    static var player = AVPlayer()
-    static var completion = {}
+    static var instance = VideoPlayer()
 
-    static var isPlaying: Bool {
-        return playerVC.isPlaying
+    var vc: AVPlayerViewController
+    var completion = {}
+
+    init() {
+        vc = AVPlayerViewController()
+        vc.showsPlaybackControls = false
+        vc.contentOverlayView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pauseOrResume)))
     }
 
-    static func play(_ object: VideoPlayable, from sender: UIViewController, completion: @escaping () -> () = {}) {
-        VideoPlayer.completion = completion
-        VideoPlayer.playerVC.showsPlaybackControls = false
+    func play(_ object: VideoPlayable, from sender: UIViewController, completion: @escaping () -> () = {}) {
+        self.completion = completion
 
-        let asset = AVAsset(url: object.video)
-        let playerItem = AVPlayerItem(asset: asset)
-        VideoPlayer.player = AVPlayer(playerItem: playerItem)
-        VideoPlayer.player.play()
+        vc.player = AVPlayer(url: object.video)
+        sender.present(vc, animated: true) {
+            self.vc.player?.play()
+        }
 
-        VideoPlayer.playerVC.player = VideoPlayer.player
-        sender.present(VideoPlayer.playerVC, animated: true, completion: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(VideoPlayer.hide), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: VideoPlayer.player.currentItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(hide), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: vc.player?.currentItem)
     }
 
-    static func stop() {
-        player.pause()
+    var isPlaying: Bool {
+        return vc.isPlaying
     }
 
-    @objc static func hide() {
-        playerVC.dismiss(animated: true, completion: VideoPlayer.completion)
+    @objc func pauseOrResume() {
+        if vc.isPlaying {
+            vc.player?.pause()
+        } else {
+            vc.player?.play()
+        }
     }
 
+    @objc func hide() {
+        vc.dismiss(animated: true, completion: completion)
+    }
 }

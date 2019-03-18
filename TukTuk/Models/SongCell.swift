@@ -44,7 +44,7 @@ class SongCell: CollectionViewSlantedCell {
                 imageView.frame = backgroundView.bounds
             } else {
                 // pad the image frame so that we don't see edges in the parallax view
-                imageView.frame = CGRect(x: 0, y: 0, width: backgroundView.bounds.width, height: backgroundView.bounds.height * 2)
+                imageView.frame = CGRect(x: 0, y: 0, width: backgroundView.bounds.width, height: backgroundView.bounds.height + 300)
             }
         }
     }
@@ -65,5 +65,13 @@ class SongCell: CollectionViewSlantedCell {
 
     func offset(_ offset: CGPoint) {
         imageView.frame = imageView.bounds.offsetBy(dx: offset.x, dy: offset.y)
+    }
+
+    var slantingAngle: CGFloat = 0.0 {
+        didSet {
+            if slantingAngle != oldValue {
+                title.transform = CGAffineTransform(rotationAngle: slantingAngle)
+            }
+        }
     }
 }

@@ -66,9 +66,6 @@ class SongViewController: UIViewController {
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
-
-        songCollectionLayout.isFirstCellExcluded = true
-        songCollectionLayout.isLastCellExcluded = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,9 +75,25 @@ class SongViewController: UIViewController {
         movieButton.isHidden = (movieCountdown > 0)
 
         NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
 
-        songCollection.reloadData()
-        songCollectionLayout.invalidateLayout()
+    var lastFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // if songCollection's frame changes, recalculate the slanting angle
+        // TODO: figure out how to trigger this with observer pattern
+        if songCollection.frame != lastFrame {
+            songCollectionLayout.redraw()
+
+            if let cells = songCollection.visibleCells as? [SongCell] {
+                cells.forEach { cell in
+                    cell.slantingAngle = songCollectionLayout.slantingAngle
+                }
+            }
+
+            lastFrame = songCollection.frame
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -182,11 +195,7 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
             }
         }
 
-        if width == 375 {
-            return 200
-        } else {
-            return 300
-        }
+        return 200
     }
 }
 
@@ -227,6 +236,7 @@ extension SongViewController: UICollectionViewDelegate {
         songCollection.indexPathsForSelectedItems?.forEach {
             songCollection.deselectItem(at: $0, animated: true)
         }
+        songCollectionLayout.redraw()
     }
 }
 
@@ -262,7 +272,7 @@ extension SongViewController: UICollectionViewDataSource {
         cell.title.text = song.title
 
         if let layout = collectionView.collectionViewLayout as? CollectionViewSlantedLayout {
-            cell.title.transform = CGAffineTransform(rotationAngle: layout.slantingAngle)
+            cell.slantingAngle = layout.slantingAngle
         }
 
         return cell

@@ -52,6 +52,10 @@ class SongViewController: UIViewController {
         }
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -168,11 +172,21 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
 
         if let cell = collectionView.cellForItem(at: indexPath) {
             if cell.isSelected {
-                return width * (200.0/375.0) * 2
+
+                // Ugh. Ned a more flexible way to identify iPhone vs. iPad
+                if width == 375 {
+                    return 400
+                } else {
+                    return 600
+                }
             }
         }
 
-        return collectionView.frame.width * (200.0/375.0)
+        if width == 375 {
+            return 200
+        } else {
+            return 300
+        }
     }
 }
 

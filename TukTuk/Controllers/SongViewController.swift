@@ -164,12 +164,15 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
                         layout collectionViewLayout: CollectionViewSlantedLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGFloat {
 
-        if let selected = collectionView.indexPathsForSelectedItems?.map({ $0.row }) {
-            if selected.contains(indexPath.row) {
-                return 614
+        let width = collectionView.frame.width
+
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            if cell.isSelected {
+                return width * (200.0/375.0) * 2
             }
         }
-        return 307
+
+        return collectionView.frame.width * (200.0/375.0)
     }
 }
 

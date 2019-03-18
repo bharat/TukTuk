@@ -44,7 +44,7 @@ class SongCell: CollectionViewSlantedCell {
                 imageView.frame = backgroundView.bounds
             } else {
                 // pad the image frame so that we don't see edges in the parallax view
-                imageView.frame = CGRect(x: 0, y: 0, width: backgroundView.bounds.width, height: backgroundView.bounds.height + 300)
+                imageView.frame = CGRect(x: 0, y: 0, width: backgroundView.bounds.width, height: backgroundView.bounds.height * 2)
             }
         }
     }

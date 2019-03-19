@@ -204,9 +204,7 @@ extension SongViewController: UICollectionViewDelegate {
         stopButton.isEnabled = false
 
         songCollectionLayout.redraw()
-
-        // Reset the parallax view of the active cell by pretending to scroll
-        self.scrollViewDidScroll(collectionView)
+        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
 
         if !VideoPlayer.instance.isPlaying {
             if let preferredMiniGame = preferredMiniGame {

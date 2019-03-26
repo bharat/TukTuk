@@ -37,11 +37,11 @@ class VideoPlayer {
     }
 
     var isPlaying: Bool {
-        return vc.isPlaying
+        return vc.player?.timeControlStatus == .playing
     }
 
     @objc func pauseOrResume() {
-        if vc.isPlaying {
+        if isPlaying {
             vc.player?.pause()
         } else {
             vc.player?.play()

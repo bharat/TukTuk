@@ -107,6 +107,7 @@ class SongViewController: UIViewController {
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
         case movieButton:
+            deselectAllSongs()
             AudioPlayer.stop()
             stopButton.isEnabled = false
 
@@ -115,14 +116,12 @@ class SongViewController: UIViewController {
             preferredMovie = nil
 
         case stopButton:
+            deselectAllSongs()
             AudioPlayer.stop()
             stopButton.isEnabled = false
-            deselectAllSongs()
         default:
             ()
         }
-
-        songCollectionLayout.redraw()
     }
 
     @objc func handleControlPanelGesture(gesture: UIGestureRecognizer) {
@@ -183,19 +182,22 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
 
         let width = collectionView.frame.width
 
+        let cellHeight = { () -> CGFloat in
+            switch width {
+            case 375:       // iPhone variants
+                return 200
+            default:        // iPad
+                return 300
+            }
+        }()
+
         if let cell = collectionView.cellForItem(at: indexPath) {
             if cell.isSelected {
-
-                // Ugh. Ned a more flexible way to identify iPhone vs. iPad
-                if width == 375 {
-                    return 400
-                } else {
-                    return 600
-                }
+                return cellHeight * 2
             }
         }
 
-        return 200
+        return cellHeight
     }
 }
 

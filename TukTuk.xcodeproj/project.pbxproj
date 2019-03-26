@@ -26,11 +26,8 @@
 		4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */; };
 		4F8E43512097B32B000B935B /* PopUpMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* PopUpMenuViewController.swift */; };
 		4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90EB2720A372F000F8EE87 /* Thor.swift */; };
-		4F9DDD2D221606AB00D3EFAF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD2C221606AB00D3EFAF /* String.swift */; };
 		4F9DDD3E22161C4B00D3EFAF /* StringTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD2E22161BD600D3EFAF /* StringTest.swift */; };
-		4F9DDD3F22161CE000D3EFAF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD2C221606AB00D3EFAF /* String.swift */; };
 		4F9DDD41222319D500D3EFAF /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD40222319D500D3EFAF /* URL.swift */; };
-		4F9DDD432226023A00D3EFAF /* TeslaZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD422226023A00D3EFAF /* TeslaZoom.swift */; };
 		4FA64A87223D722100AED085 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA64A86223D722100AED085 /* SongCell.swift */; };
 		4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */; };
 		4FBD0FD420F55DC900BB5E32 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD320F55DC900BB5E32 /* Bundle.swift */; };
@@ -42,7 +39,6 @@
 		4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */; };
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
 		4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */; };
-		4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */; };
 		4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,12 +70,10 @@
 		4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		4F8E43502097B32B000B935B /* PopUpMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMenuViewController.swift; sourceTree = "<group>"; };
 		4F90EB2720A372F000F8EE87 /* Thor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thor.swift; sourceTree = "<group>"; };
-		4F9DDD2C221606AB00D3EFAF /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4F9DDD2E22161BD600D3EFAF /* StringTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTest.swift; sourceTree = "<group>"; };
 		4F9DDD3422161C3D00D3EFAF /* TukTukTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TukTukTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9DDD3822161C3E00D3EFAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F9DDD40222319D500D3EFAF /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
-		4F9DDD422226023A00D3EFAF /* TeslaZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeslaZoom.swift; sourceTree = "<group>"; };
 		4FA64A86223D722100AED085 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
 		4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSlantedLayout.swift; sourceTree = "<group>"; };
 		4FBD0FD320F55DC900BB5E32 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -93,7 +87,6 @@
 		4FBD57B51F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FBD57B71F098DEB00BDCDE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JusticeLeague.swift; sourceTree = "<group>"; };
-		4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewController.swift; sourceTree = "<group>"; };
 		4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSquares.swift; sourceTree = "<group>"; };
 		4FFC1C662208B6FA0019A07B /* Media */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Media; sourceTree = "<group>"; };
 		5D93CC645E3623C41C0DD219 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
@@ -123,12 +116,10 @@
 		4F1F17C5209E10E100483499 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4FDB4A6F209D7E3D00900DE7 /* AVPlayerViewController.swift */,
 				4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */,
 				4F89557820B47B8600E37E53 /* UIImage.swift */,
 				4FBD0FD320F55DC900BB5E32 /* Bundle.swift */,
 				4FBD0FE020F587CC00BB5E32 /* UserDefaults.swift */,
-				4F9DDD2C221606AB00D3EFAF /* String.swift */,
 				4F9DDD40222319D500D3EFAF /* URL.swift */,
 				4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */,
 			);
@@ -142,7 +133,6 @@
 				4F81D5F720A7600C00CB68D8 /* None.swift */,
 				4F1F17CF209E15BB00483499 /* Hinge.swift */,
 				4F1F17CD209E15B000483499 /* RollAway.swift */,
-				4F9DDD422226023A00D3EFAF /* TeslaZoom.swift */,
 				4F1F17CB209E159F00483499 /* WordPop.swift */,
 				4F1F17C9209E150F00483499 /* FaceBalls.swift */,
 				4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */,
@@ -408,7 +398,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F9DDD3F22161CE000D3EFAF /* String.swift in Sources */,
 				4F9DDD3E22161C4B00D3EFAF /* StringTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,7 +409,6 @@
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,
-				4F9DDD432226023A00D3EFAF /* TeslaZoom.swift in Sources */,
 				4F89557920B47B8600E37E53 /* UIImage.swift in Sources */,
 				4F1F17CE209E15B000483499 /* RollAway.swift in Sources */,
 				4F1F17CC209E159F00483499 /* WordPop.swift in Sources */,
@@ -435,9 +423,7 @@
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
 				4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */,
 				4F8A2A9C209F730E000C2CA5 /* AudioPlayer.swift in Sources */,
-				4F9DDD2D221606AB00D3EFAF /* String.swift in Sources */,
 				4F9DDD41222319D500D3EFAF /* URL.swift in Sources */,
-				4FDB4A70209D7E3D00900DE7 /* AVPlayerViewController.swift in Sources */,
 				4FBD0FD420F55DC900BB5E32 /* Bundle.swift in Sources */,
 				4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */,
 				4F84C38F1FC51AC40093801B /* Animations.swift in Sources */,

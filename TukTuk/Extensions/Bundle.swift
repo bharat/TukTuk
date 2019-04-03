@@ -39,7 +39,7 @@ extension Bundle {
         return zip(audios, covers).map { arg in
             let (audio, cover) = arg
             let fileName = audio.lastPathComponent
-            let title = fileName.components(separatedBy: ".").first!
+            let title = audio.deletingPathExtension().lastPathComponent
             print("Load song: \(title)")
             return try! Song(fileName: fileName, title: title, image: UIImage(data: Data(contentsOf: cover))!, audio: audio)
         }

@@ -12,7 +12,7 @@ import SpriteKit
 
 
 final class Thor: MiniGame {
-    static var title = "Thor lost his hammer!"
+    var title = "Thor lost his hammer!"
     var uivc: UIViewController = UIVC()
 
     enum Sounds: String, CaseIterable, AudioPlayable {
@@ -28,7 +28,7 @@ final class Thor: MiniGame {
         }
     }
 
-    static func preloadableAssets() -> [URL] {
+    func preloadableAssets() -> [URL] {
         return Sounds.allCases.map { $0.audio }
     }
 

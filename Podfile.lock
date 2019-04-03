@@ -1,24 +1,28 @@
 PODS:
+  - Amplitude-iOS (4.6.0)
   - CollectionViewSlantedLayout (3.1.1)
   - EasyAnimation (2.2.1)
   - FLEX (2.4.0)
 
 DEPENDENCIES:
+  - Amplitude-iOS
   - CollectionViewSlantedLayout
   - EasyAnimation
   - FLEX
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Amplitude-iOS
     - CollectionViewSlantedLayout
     - EasyAnimation
     - FLEX
 
 SPEC CHECKSUMS:
+  Amplitude-iOS: ac1715ae68104b7a51723209ad574f60ab22ae5f
   CollectionViewSlantedLayout: 24397455acd2461960bc45d394e0ef99c17d03ce
   EasyAnimation: 226d133d23ef0ef99ddfb8928ff2a9a4a77d1cfd
   FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
 
-PODFILE CHECKSUM: aa85376916f3968f9f3c79504eea817b975b7fba
+PODFILE CHECKSUM: 9c22d5230e7cd91072075e98a86daa72f03413e5
 
 COCOAPODS: 1.5.3

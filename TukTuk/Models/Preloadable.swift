@@ -13,5 +13,5 @@ protocol Preloadable {
 }
 
 protocol HasPreloadableAssets {
-    static func preloadableAssets() -> [URL]
+    func preloadableAssets() -> [URL]
 }

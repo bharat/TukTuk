@@ -11,7 +11,7 @@ import UIKit
 import SceneKit
 
 final class JusticeLeague: MiniGame {
-    static var title = "Justice League!"
+    var title = "Justice League!"
     var uivc: UIViewController = UIVC()
 
     enum Sounds: String, CaseIterable, AudioPlayable {
@@ -24,7 +24,7 @@ final class JusticeLeague: MiniGame {
         }
     }
 
-    static func preloadableAssets() -> [URL] {
+    func preloadableAssets() -> [URL] {
         return Sounds.allCases.map { $0.audio }
     }
 

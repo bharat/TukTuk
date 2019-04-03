@@ -32,6 +32,7 @@ class SongViewController: UIViewController {
     var preferredMiniGame: MiniGame?
     static let movies = Bundle.Player.movies()
     static let songs = Bundle.Player.songs()
+    var stats = Stats()
 
     var showSongFilenames: Bool = false
 
@@ -66,6 +67,10 @@ class SongViewController: UIViewController {
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
+
+        stats.viewDidLoad()
+        SongViewController.songs.forEach { song in stats.loaded(song: song) }
+        SongViewController.movies.forEach { movie in stats.loaded(movie: movie) }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -109,16 +114,22 @@ class SongViewController: UIViewController {
         case movieButton:
             deselectAllSongs()
             AudioPlayer.stop()
+            stats.stop()
             stopButton.isEnabled = false
 
-            VideoPlayer.instance.play(preferredMovie ?? SongViewController.movies.randomElement()!, from: self)
+            let movie = preferredMovie ?? SongViewController.movies.randomElement()!
+            VideoPlayer.instance.play(movie, from: self)
+            stats.start(movie: movie)
+
             movieButton.isHidden = true
             preferredMovie = nil
 
         case stopButton:
+            stats.stop()
             deselectAllSongs()
             AudioPlayer.stop()
             stopButton.isEnabled = false
+
         default:
             ()
         }
@@ -163,9 +174,11 @@ extension SongViewController: UIViewControllerPreviewingDelegate {
             case "movie":
                 self.movieCountdown = 0
                 self.preferredMovie = SongViewController.movies[index]
+                self.stats.cue(movie: self.preferredMovie!)
 
             case "minigame":
-                self.preferredMiniGame = MiniGames.all[index].init()
+                self.preferredMiniGame = MiniGames.all[index]
+                self.stats.cue(miniGame: self.preferredMiniGame!)
 
             default:
                 ()
@@ -191,10 +204,8 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
             }
         }()
 
-        if let cell = collectionView.cellForItem(at: indexPath) {
-            if cell.isSelected {
-                return cellHeight * 2
-            }
+        if let cell = collectionView.cellForItem(at: indexPath), cell.isSelected {
+            return cellHeight * 2
         }
 
         return cellHeight
@@ -210,13 +221,16 @@ extension SongViewController: UICollectionViewDelegate {
 
         if !VideoPlayer.instance.isPlaying {
             if let preferredMiniGame = preferredMiniGame {
+                stats.start(miniGame: preferredMiniGame)
                 show(preferredMiniGame.uivc, sender: self)
                 self.preferredMiniGame = nil
                 return
             }
             
             if Array(1...60).randomElement()! == 1 {
-                show(MiniGames.all.randomElement()!.init().uivc, sender: self)
+                let miniGame = MiniGames.all.randomElement()!
+                stats.start(miniGame: miniGame)
+                show(miniGame.uivc, sender: self)
                 return
             }
 
@@ -224,9 +238,11 @@ extension SongViewController: UICollectionViewDelegate {
 
             let song = SongViewController.songs[indexPath.row]
             print("Playing song: \(song.title)")
+            stats.start(song: song)
             AudioPlayer.play(song, whilePlaying: {
                 self.movieCountdown -= 1
             }, whenComplete: {
+                self.stats.complete()
                 self.deselectAllSongs()
             })
         }

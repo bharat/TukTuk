@@ -10,18 +10,27 @@ import Foundation
 import UIKit
 import SpriteKit
 
-extension URL {
-    static let HammerFallingWhistle     = Bundle.sound("Thor/HammerFallingWhistle.mp3")
-    static let HammerLandingThud        = Bundle.sound("Thor/HammerLandingThud.mp3")
-    static let IReallyWishIHadMyHammer  = Bundle.sound("Thor/IReallyWishIHadMyHammer.mp3")
-    static let ThankYou                 = Bundle.sound("Thor/ThankYou.mp3")
-    static let ILostMyHammer            = Bundle.sound("Thor/ILostMyHammer.mp3")
-    static let IAmTheGodOfThunder       = Bundle.sound("Thor/IAmTheGodOfThunder.mp3")
-}
 
 final class Thor: MiniGame {
-    static var title = "Thor lost his hammer!"
+    var title = "Thor lost his hammer!"
     var uivc: UIViewController = UIVC()
+
+    enum Sounds: String, CaseIterable, AudioPlayable {
+        case HammerFallingWhistle
+        case HammerLandingThud
+        case IReallyWishIHadMyHammer
+        case ThankYou
+        case ILostMyHammer
+        case IAmTheGodOfThunder
+
+        var audio: URL {
+            return Bundle.media("Thor").audio(rawValue)
+        }
+    }
+
+    func preloadableAssets() -> [URL] {
+        return Sounds.allCases.map { $0.audio }
+    }
 
     enum Collisions: UInt32 {
         case floor  = 1
@@ -116,7 +125,7 @@ final class Thor: MiniGame {
         }
 
         func thud() {
-            AudioPlayer.play(.HammerLandingThud)
+            AudioPlayer.play(Sounds.HammerLandingThud)
         }
     }
 
@@ -146,7 +155,7 @@ final class Thor: MiniGame {
             guard let scene = scene else { return }
 
             run(SKAction.move(to: CGPoint(x: 120, y: scene.frame.height - size.height - 20), duration: 1.0))
-            AudioPlayer.play(.ILostMyHammer)
+            AudioPlayer.play(Sounds.ILostMyHammer)
         }
 
         func grabHammer() {
@@ -157,7 +166,7 @@ final class Thor: MiniGame {
 
             size = CGSize(width: texture.size().width * 0.5, height: texture.size().height * 0.5)
 
-            AudioPlayer.play(.IAmTheGodOfThunder)
+            AudioPlayer.play(Sounds.IAmTheGodOfThunder)
 
             run(SKAction.group([
                     SKAction.move(to: CGPoint(x: frame.width * 0.1, y: frame.height * 0.5), duration: 2.0),
@@ -180,11 +189,11 @@ final class Thor: MiniGame {
                 }
             }
 
-            AudioPlayer.play(.ThankYou)
+            AudioPlayer.play(Sounds.ThankYou)
         }
 
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            AudioPlayer.play(.IReallyWishIHadMyHammer)
+            AudioPlayer.play(Sounds.IReallyWishIHadMyHammer)
         }
     }
 
@@ -228,7 +237,7 @@ final class Thor: MiniGame {
             physicsWorld.contactDelegate = self
             physicsWorld.gravity = CGVector(dx: 0, dy: -2)
 
-            AudioPlayer.play(.HammerFallingWhistle)
+            AudioPlayer.play(Sounds.HammerFallingWhistle)
         }
 
         func finish() {

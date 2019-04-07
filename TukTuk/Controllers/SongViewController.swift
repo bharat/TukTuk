@@ -9,45 +9,61 @@
 import UIKit
 import AVFoundation
 import AVKit
+import CollectionViewSlantedLayout
 
-extension TimeInterval {
-    static let VideoInterval: TimeInterval = 2400
+extension Bundle {
+    static let Player = Bundle.media("Player")
 }
 
-class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
-    @IBOutlet weak var musicTable: UITableView!
+extension TimeInterval {
+    static let MovieInterval: TimeInterval = 2400
+}
+
+class SongViewController: UIViewController {
+    @IBOutlet weak var songCollection: UICollectionView!
+    @IBOutlet weak var songCollectionLayout: CollectionViewSlantedLayout!
+
     @IBOutlet weak var buttons: UIStackView!
     @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var videoButton: UIButton!
-    @IBOutlet weak var videoTimerLabel: UILabel!
+    @IBOutlet weak var movieButton: UIButton!
+    @IBOutlet weak var movieTimerLabel: UILabel!
 
-    var preferredVideo: URL?
-    var preferredMiniGame: MiniGame.Type?
+    var preferredMovie: Movie?
+    var preferredMiniGame: MiniGame?
+    static let movies = Bundle.Player.movies()
+    static let songs = Bundle.Player.songs()
+    var stats = Stats()
 
-    var videoCountdown: TimeInterval = 0 {
+    var showSongFilenames: Bool = false
+
+    static func preload() {
+        _ = [movies, songs]
+    }
+
+    var movieCountdown: TimeInterval = 0 {
         didSet {
-            print("videoCountdown set to: \(videoCountdown)")
-
-            if videoCountdown == 0 {
+            if movieCountdown == 0 {
                 UIView.animate(withDuration: 0.75) {
-                    self.videoButton.isHidden = false
+                    self.movieButton.isHidden = false
                 }
-                videoCountdown = .VideoInterval
+                movieCountdown = .MovieInterval
             }
 
-            videoTimerLabel.text = "\(Int(videoCountdown))"
+            movieTimerLabel.text = "\(Int(movieCountdown))"
         }
     }
 
-    // MARK: UIViewController
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // 3DTouch or a long press on the stop button will bring up an interface where you can
-        // cue up a MiniGame or a Video
+        // cue up a MiniGame or a Movie
         registerForPreviewing(with: self, sourceView: stopButton)
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleVideoLongPress(gesture:)))
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleControlPanelGesture(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
@@ -56,111 +72,77 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        videoCountdown = UserDefaults.standard.videoCountdown
-        videoButton.isHidden = (videoCountdown > 0)
+        movieCountdown = UserDefaults.standard.movieCountdown
+        movieButton.isHidden = (movieCountdown > 0)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+
+    var lastFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // if songCollection's frame changes, recalculate the slanting angle
+        // TODO: figure out how to trigger this with observer pattern
+        if songCollection.frame != lastFrame {
+            songCollectionLayout.redraw()
+
+            if let cells = songCollection.visibleCells as? [SongCell] {
+                cells.forEach { cell in
+                    cell.slantingAngle = songCollectionLayout.slantingAngle
+                }
+            }
+
+            lastFrame = songCollection.frame
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        UserDefaults.standard.videoCountdown = videoCountdown
+        UserDefaults.standard.movieCountdown = movieCountdown
     }
 
     @objc func appEnteredBackground() {
-        UserDefaults.standard.videoCountdown = videoCountdown
+        UserDefaults.standard.movieCountdown = movieCountdown
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
-        case videoButton:
+        case movieButton:
+            deselectAllSongs()
             AudioPlayer.stop()
+            stats.stop()
             stopButton.isEnabled = false
 
-            VideoPlayer.play(preferredVideo ?? Bundle.videos.random.url, from: self)
-            videoButton.isHidden = true
-            preferredVideo = nil
+            let movie = preferredMovie ?? SongViewController.movies.randomElement()!
+            VideoPlayer.instance.play(movie, from: self)
+            stats.start(movie: movie)
+
+            movieButton.isHidden = true
+            preferredMovie = nil
 
         case stopButton:
+            stats.stop()
+            deselectAllSongs()
             AudioPlayer.stop()
             stopButton.isEnabled = false
-            deselectAllSongs()
+
         default:
             ()
         }
     }
 
-    // MARK: UITableViewDelegate
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        stopButton.isEnabled = false
-        
-        if !VideoPlayer.isPlaying {
-            if let preferredMiniGame = preferredMiniGame {
-                show(preferredMiniGame.init().uivc, sender: self)
-                self.preferredMiniGame = nil
-                return
-            }
-            
-            if Array(1...60).random == 1 {
-                show(MiniGames.all.random.init().uivc, sender: self)
-                return
-            }
-
-            stopButton.isEnabled = true
-            musicTable.redraw()
-
-            AudioPlayer.play(Bundle.songs[indexPath.row].url, whilePlaying: {
-                self.videoCountdown -= 1
-            }, whenComplete: {
-                self.deselectAllSongs()
-            })
-        }
-    }
-
-    func deselectAllSongs() {
-        if let selectedRow = musicTable.indexPathForSelectedRow {
-            musicTable.deselectRow(at: selectedRow, animated: true)
-            musicTable.redraw()
-        }
-    }
-
-    // MARK: UITableViewDataSource
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Bundle.songs.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell")!
-
-        cell.backgroundView = UIImageView(image: Bundle.songs[indexPath.row].image)
-        cell.backgroundView?.contentMode = .scaleAspectFill
-        cell.selectedBackgroundView = UIImageView(image: Bundle.songs[indexPath.row].image)
-        cell.selectedBackgroundView?.contentMode = .scaleAspectFill
-
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == tableView.indexPathForSelectedRow?.row {
-            return 300
-        } else {
-            return 150
-        }
-    }
-
-    // MARK: Video
-
-    @objc func handleVideoLongPress(gesture: UIGestureRecognizer) {
+    @objc func handleControlPanelGesture(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            show(videoAndMiniGameChooser(), sender: self)
+            show(controlPanel(), sender: self)
         }
     }
+}
 
+extension SongViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         switch(previewingContext.sourceView) {
         case stopButton:
-            show(videoAndMiniGameChooser(), sender: self)
+            show(controlPanel(), sender: self)
         default:
             break
         }
@@ -169,28 +151,30 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         switch(previewingContext.sourceView) {
         case stopButton:
-            return videoAndMiniGameChooser()
+            return controlPanel()
         default:
             return nil
         }
     }
 
-    func videoAndMiniGameChooser() -> PreviewingTableViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
+    func controlPanel() -> PopUpMenuViewController {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PopUpMenuVC") as! PopUpMenuViewController
 
-        previewTVC.tableTitle = "Which video should we play?"
+        previewTVC.tableTitle = "Control Panel"
         previewTVC.groups = [
-            PreviewGroup(title: "Videos", id: "video", data: Bundle.videos.map { $0.title }),
-            PreviewGroup(title: "Mini Games", id: "minigame", data: MiniGames.all.map { $0.title })
+            MenuGroup(title: "Cue up a movie", id: "movie", choices: SongViewController.movies.map { $0.title }),
+            MenuGroup(title: "Cue up a MiniGame", id: "minigame", choices: MiniGames.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             switch(id) {
-            case "video":
-                self.videoCountdown = 0
-                self.preferredVideo = Bundle.videos[index].url
+            case "movie":
+                self.movieCountdown = 0
+                self.preferredMovie = SongViewController.movies[index]
+                self.stats.cue(movie: self.preferredMovie!)
 
             case "minigame":
                 self.preferredMiniGame = MiniGames.all[index]
+                self.stats.cue(miniGame: self.preferredMiniGame!)
 
             default:
                 ()
@@ -199,3 +183,111 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         return previewTVC
     }
 }
+
+extension SongViewController: CollectionViewDelegateSlantedLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: CollectionViewSlantedLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGFloat {
+
+        let width = collectionView.frame.width
+
+        let cellHeight = { () -> CGFloat in
+            switch width {
+            case 375:       // iPhone variants
+                return 200
+            default:        // iPad
+                return 300
+            }
+        }()
+
+        if let cell = collectionView.cellForItem(at: indexPath), cell.isSelected {
+            return cellHeight * 2
+        }
+
+        return cellHeight
+    }
+}
+
+extension SongViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        stopButton.isEnabled = false
+
+        songCollectionLayout.redraw()
+        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+
+        if !VideoPlayer.instance.isPlaying {
+            if let preferredMiniGame = preferredMiniGame {
+                stats.start(miniGame: preferredMiniGame)
+                show(preferredMiniGame.uivc, sender: self)
+                self.preferredMiniGame = nil
+                return
+            }
+            
+            if Array(1...60).randomElement()! == 1 {
+                let miniGame = MiniGames.all.randomElement()!
+                stats.start(miniGame: miniGame)
+                show(miniGame.uivc, sender: self)
+                return
+            }
+
+            stopButton.isEnabled = true
+
+            let song = SongViewController.songs[indexPath.row]
+            print("Playing song: \(song.title)")
+            stats.start(song: song)
+            AudioPlayer.play(song, whilePlaying: {
+                self.movieCountdown -= 1
+            }, whenComplete: {
+                self.stats.complete()
+                self.deselectAllSongs()
+            })
+        }
+    }
+
+    func deselectAllSongs() {
+        songCollection.indexPathsForSelectedItems?.forEach {
+            songCollection.deselectItem(at: $0, animated: true)
+        }
+        songCollectionLayout.redraw()
+    }
+}
+
+let yOffsetSpeed: CGFloat = 150.0
+let xOffsetSpeed: CGFloat = 100.0
+
+extension SongViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let collectionView = songCollection else { return }
+        guard let visibleCells = collectionView.visibleCells as? [SongCell] else { return }
+
+        for parallaxCell in visibleCells {
+            if !parallaxCell.isSelected {
+                let yOffset = (collectionView.contentOffset.y - parallaxCell.frame.origin.y) / parallaxCell.imageHeight
+                let xOffset = (collectionView.contentOffset.x - parallaxCell.frame.origin.x) / parallaxCell.imageWidth
+                parallaxCell.offset(CGPoint(x: xOffset * xOffsetSpeed, y: yOffset * yOffsetSpeed))
+            }
+        }
+    }
+}
+
+extension SongViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return SongViewController.songs.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
+        let song = SongViewController.songs[indexPath.row]
+
+        cell.image = song.image
+        cell.title.text = song.title
+
+        if let layout = collectionView.collectionViewLayout as? CollectionViewSlantedLayout {
+            cell.slantingAngle = layout.slantingAngle
+        }
+
+        return cell
+    }
+}
+

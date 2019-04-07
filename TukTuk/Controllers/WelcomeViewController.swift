@@ -9,11 +9,9 @@
 import Foundation
 import UIKit
 
-class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegate {
+class WelcomeViewController: UIViewController {
     var preferred: Animation?
     var welcomeImageView = UIImageView()
-
-    // UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +35,9 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         let long = UILongPressGestureRecognizer(target: self, action: #selector(handleWelcomeLongPress(gesture:)))
         long.minimumPressDuration = 5.0
         welcomeImageView.addGestureRecognizer(long)
+
+        SongViewController.preload()
+        MiniGames.preload()
     }
 
     // Useful for debugging
@@ -48,7 +49,7 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         sender.isEnabled = false
 
         // Run a random welcome animation, or a preset if specified
-        let animation = preferred ?? Animations.all.filter { $0 != None.self }.random.init()
+        let animation = preferred ?? Animations.all.filter { $0 != None.self }.randomElement()!.init()
         animation.animate(view: self.welcomeImageView) {
             self.performSegue(withIdentifier: "SongViewController", sender: self)
 
@@ -58,14 +59,14 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         }
     }
 
-    // UIViewControllerPreviewingDelegate
-
     @objc func handleWelcomeLongPress(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
             show(animationChooser(), sender: self)
         }
     }
+}
 
+extension WelcomeViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         show(animationChooser(), sender: self)
     }
@@ -74,11 +75,11 @@ class WelcomeViewController: UIViewController, UIViewControllerPreviewingDelegat
         return animationChooser()
     }
 
-    func animationChooser() -> PreviewingTableViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PreviewTableVC") as! PreviewingTableViewController
-        previewTVC.tableTitle = "Choose the welcome animation"
+    func animationChooser() -> PopUpMenuViewController {
+        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PopUpMenuVC") as! PopUpMenuViewController
+        previewTVC.tableTitle = "Control Panel"
         previewTVC.groups = [
-            PreviewGroup(title: "Animations", id: "animation", data: Animations.all.map { $0.title })
+            MenuGroup(title: "Choose the Welcome animation", id: "animation", choices: Animations.all.map { $0.title })
         ]
         previewTVC.completion = { id, index in
             self.preferred = Animations.all[index].init()

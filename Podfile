@@ -3,5 +3,7 @@ use_frameworks!
 
 target 'TukTuk' do
   pod 'EasyAnimation'
-  pod 'FLEX', :configurations => ['Debug'], :git => 'https://github.com/bharat/FLEX.git'
+  pod 'CollectionViewSlantedLayout'
+  pod 'FLEX', :configurations => ['Debug'], :inhibit_warnings => true
+  pod 'Amplitude-iOS'
 end

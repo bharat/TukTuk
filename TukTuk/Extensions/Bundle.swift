@@ -9,40 +9,50 @@
 import Foundation
 import UIKit
 
-extension FileManager {
-    static let songNames = {
-        Set(try! `default`.contentsOfDirectory(atPath: Bundle.songsPath).map { ($0 as NSString).deletingPathExtension })
-    }()
-
-    static let videoNames = {
-        try! `default`.contentsOfDirectory(atPath: Bundle.videosPath).map { ($0 as NSString).deletingPathExtension }
-    }()
-}
-
 extension Bundle {
-    static let songsPath = main.resourcePath! + "/Songs"
-    static let videosPath = main.resourcePath! + "/Videos/Normal"
+    static var bundles: [String: Bundle] = [:]
 
-    static func url(from: String) -> URL {
-        return main.url(forAuxiliaryExecutable: from)!
+    static func media(_ name: String) -> Bundle {
+        if !bundles.keys.contains(name) {
+            print("Load bundle: \(name)")
+            bundles[name] = Bundle(path: "\(Bundle.main.resourcePath!)/Media/\(name)")!
+        }
+        return bundles[name]!
     }
 
-    static func sound(_ fileName: String) -> URL {
-        return Bundle.url(from: "Sounds/\(fileName)")
+    func audio(_ name: String) -> URL {
+        print("Load audio: \(name)")
+        return url(forResource: name, withExtension: "mp3", subdirectory: "Audio")!
     }
 
-    static func video(_ fileName: String) -> URL {
-        return Bundle.url(from: "Videos/\(fileName)")
+    func video(_ name: String) -> URL {
+        print("Load video: \(name)")
+        return url(forResource: name, withExtension: "mp4", subdirectory: "Video")!
     }
 
-    static let songs: [Song] = FileManager.songNames.map { name in
-        return Song(title: name,
-            image: UIImage(named: "Songs/\(name).jpg")!,
-            url: Bundle.url(from: "Songs/\(name).mp3"))
-    }.shuffled()
+    func songs() -> [Song] {
+        let audios = urls(forResourcesWithExtension: "mp3", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
+        let covers = urls(forResourcesWithExtension: "png", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
 
+        assert(audios.count == covers.count)
 
-    static let videos: [Video] = FileManager.videoNames.map { name in
-        Video(title: name, url: Bundle.url(from: "Videos/Normal/\(name).mp4"))
+        return zip(audios, covers).map { arg in
+            let (audio, cover) = arg
+            let fileName = audio.lastPathComponent
+            let title = audio.deletingPathExtension().lastPathComponent
+            print("Load song: \(title)")
+            return try! Song(fileName: fileName, title: title, image: UIImage(data: Data(contentsOf: cover))!, audio: audio)
+        }
+    }
+
+    func movies() -> [Movie] {
+        let path = resourcePath! + "/Video"
+        let files = try! FileManager.default.contentsOfDirectory(atPath: path).sorted()
+
+        return files.map { name in
+            print("Load video: \(name)")
+            return Movie(video: url(forAuxiliaryExecutable: "\(path)/\(name)")!, title: (name as NSString).deletingPathExtension)
+        }
     }
 }
+

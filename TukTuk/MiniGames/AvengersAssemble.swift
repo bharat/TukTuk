@@ -10,15 +10,23 @@ import Foundation
 import UIKit
 import SceneKit
 
-extension URL {
-    static let AA_Start       = Bundle.sound("AvengersAssemble/Assemble.mp3")
-    static let AA_Choose      = Bundle.sound("AvengersAssemble/ChooseAnAvenger.mp3")
-    static let AA_Complete    = Bundle.sound("AvengersAssemble/Tada.mp3")
-}
-
 final class AvengersAssemble: MiniGame {
-    static var title = "Avengers Assemble!"
+    var title = "Avengers Assemble!"
     var uivc: UIViewController = UIVC()
+
+    enum Sounds: String, CaseIterable, AudioPlayable {
+        case Assemble
+        case ChooseAnAvenger
+        case Tada
+
+        var audio: URL {
+            return Bundle.media("AvengersAssemble").audio(rawValue)
+        }
+    }
+
+    func preloadableAssets() -> [URL] {
+        return Sounds.allCases.map { $0.audio }
+    }
 
     enum Pace: TimeInterval {
         case immediate  = 0.0
@@ -33,15 +41,13 @@ final class AvengersAssemble: MiniGame {
         }
     }
 
-    enum Hero: String {
+    enum Hero: String, CaseIterable, AudioPlayable, VideoPlayable {
         case CaptainAmerica
         case Hawkeye
         case IronMan
         case Hulk
         case Thor
         case BlackWidow
-
-        static var all: [Hero]  = [.CaptainAmerica, .Hawkeye, .IronMan, .Hulk, .Thor, .BlackWidow]
 
         var rotation: (x: CGFloat, y: CGFloat) {
             switch self {
@@ -69,27 +75,27 @@ final class AvengersAssemble: MiniGame {
             return UIImage(named: "Avenger_\(rawValue)")
         }
 
-        var sound: URL {
-            return Bundle.sound("AvengersAssemble/\(rawValue).mp3")
+        var audio: URL {
+            return Bundle.media("AvengersAssemble").audio(rawValue)
         }
 
         var video: URL {
-            return Bundle.video("AvengersAssemble/\(rawValue).mp4")
+            return Bundle.media("AvengersAssemble").video(rawValue)
         }
     }
 
     class UIVC: UIViewController {
         override func viewDidLoad() {
-            AudioPlayer.play(.AA_Start)
+            AudioPlayer.play(Sounds.Assemble)
 
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
             effectView.frame = view.frame
             view.addSubview(effectView)
 
-            let scene = JusticeLeague.Scene()
+            let scene = AvengersAssemble.Scene()
             scene.completion = { hero in
-                VideoPlayer.play(hero.video, from: self) {
+                VideoPlayer.instance.play(hero, from: self) {
                     self.dismiss(animated: true)
                 }
             }
@@ -100,7 +106,7 @@ final class AvengersAssemble: MiniGame {
             sceneView.autoenablesDefaultLighting = false
             sceneView.allowsCameraControl = false
             sceneView.gestureRecognizers =
-                [UISwipeGestureRecognizerDirection.left, .right, .up, .down].map {
+                [UISwipeGestureRecognizer.Direction.left, .right, .up, .down].map {
                     let gesture = UISwipeGestureRecognizer(target: sceneView.scene, action: #selector(scene.swipeBlock(gesture:)))
                     gesture.direction = $0
                     gesture.isEnabled = false
@@ -139,7 +145,7 @@ final class AvengersAssemble: MiniGame {
             rootNode.addChildNode(omniLight)
 
             let box = SCNBox(width: 10.0, height: 10.0, length: 10.0, chamferRadius: 1)
-            box.materials = Hero.all.map {
+            box.materials = Hero.allCases.map {
                 let material = SCNMaterial()
                 material.diffuse.contents = $0.image
                 return material
@@ -148,7 +154,7 @@ final class AvengersAssemble: MiniGame {
             for _ in 0...3 {
                 let block = Block(geometry: box)
                 block.position = SCNVector3(x: 0, y: 0, z: 120.0)
-                block.show(Hero.all.random, pace: .immediate)
+                block.show(Hero.allCases.randomElement()!, pace: .immediate)
                 rootNode.addChildNode(block)
                 blocks.append(block)
             }
@@ -156,7 +162,7 @@ final class AvengersAssemble: MiniGame {
 
         func start(completion: @escaping () -> ()) {
             let yDest: [Float] = [30.0, 10.0, -10.0, -30.0]
-            let randomHeroes = Hero.all.shuffled()
+            let randomHeroes = Hero.allCases.shuffled()
             for (i, block) in blocks.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 * Double(i)) {
                     block.show(randomHeroes[i], pace: .verySlow)
@@ -170,7 +176,7 @@ final class AvengersAssemble: MiniGame {
                     $0.enticing = true
                 }
 
-                AudioPlayer.play(.AA_Choose)
+                AudioPlayer.play(Sounds.ChooseAnAvenger)
                 completion()
             }
         }
@@ -196,7 +202,7 @@ final class AvengersAssemble: MiniGame {
 
                     // Accelerate to the finish if it's taking too long
                     turnsRemaining -= 1
-                    AudioPlayer.play(new.sound)
+                    AudioPlayer.play(new)
                     if turnsRemaining == 0 {
                         self.blocks.filter { $0 != block }.forEach {
                             $0.show(new)
@@ -222,7 +228,7 @@ final class AvengersAssemble: MiniGame {
         }
         
         func select(hero: Hero, from block: Block) {
-            AudioPlayer.play(.AA_Complete)
+            AudioPlayer.play(Sounds.Tada)
 
             blocks.filter { $0 != block }.forEach {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))
@@ -284,14 +290,14 @@ final class AvengersAssemble: MiniGame {
         }
 
         func enticeLoop() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + [8, 9, 10, 11, 12].random) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + [8, 9, 10, 11, 12].randomElement()!) {
                 // We use this approach instead of removeAction(forKey:) to avoid stopping
                 // mid-action and leaving the block misaligned.
                 if !self.enticing {
                     return
                 }
 
-                let dir: CGFloat = [1.0, -1.0].random
+                let dir: CGFloat = [1.0, -1.0].randomElement()!
                 self.runAction(
                     SCNAction.sequence([
                         SCNAction.rotateBy(x: 0, y: dir * -0.8, z: 0, duration: 0.5),

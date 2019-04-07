@@ -12,16 +12,8 @@ import Amplitude_iOS
 class Stats {
     var active: Song?
 
-    func viewDidLoad() {
-        Amplitude.instance()?.logEvent("ViewDidLoad")
-    }
-
-    func loaded(song: Song) {
-        Amplitude.instance()?.logEvent("SongLoaded", withEventProperties: ["title": song.title])
-    }
-
-    func loaded(movie: Movie) {
-        Amplitude.instance()?.logEvent("MovieLoaded", withEventProperties: ["title": movie.title])
+    func appLaunched() {
+        Amplitude.instance()?.logEvent("AppLaunched")
     }
 
     func start(song: Song) {

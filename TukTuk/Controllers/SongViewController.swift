@@ -67,10 +67,6 @@ class SongViewController: UIViewController {
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
-
-        stats.viewDidLoad()
-        SongViewController.songs.forEach { song in stats.loaded(song: song) }
-        SongViewController.movies.forEach { movie in stats.loaded(movie: movie) }
     }
 
     override func viewWillAppear(_ animated: Bool) {

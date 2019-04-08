@@ -20,6 +20,8 @@ final class Labyrinth: MiniGame {
     }
 
     class UIVC: UIViewController {
+        var scene: Scene!
+
         override func viewDidAppear(_ animated: Bool) {
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
@@ -30,8 +32,8 @@ final class Labyrinth: MiniGame {
             skView.allowsTransparency = true
             effectView.contentView.addSubview(skView)
 
-            let scene = Scene(size: view.frame.size)
-            scene.complexity = 2
+            scene = Scene(size: view.frame.size)
+            scene.complexity = 20
             scene.completion = {
                 self.dismiss(animated: true)
             }
@@ -41,15 +43,11 @@ final class Labyrinth: MiniGame {
 
     //  Adapted from: https://rosettacode.org/wiki/Maze_generation#Swift
     class Maze {
-        enum Direction: Int {
+        enum Direction: Int, CaseIterable {
             case up      =  1
             case down    =  2
             case left    =  4
             case right   =  8
-
-            static var allDirections: [Direction] {
-                return [.up, .down, .left, .right]
-            }
 
             var opposite: Direction {
                 switch self {
@@ -79,11 +77,10 @@ final class Labyrinth: MiniGame {
             self.rows = rows
             self.maze = Array(repeating: Array(repeating: 0, count: columns), count: rows)
             generate(0, 0)
-            dump()
         }
 
         private func generate(_ cx:Int, _ cy:Int) {
-            for direction in Direction.allDirections.shuffled() {
+            for direction in Direction.allCases.shuffled() {
                 let (dx, dy) = direction.diff
                 let nx = cx + dx
                 let ny = cy + dy
@@ -102,12 +99,6 @@ final class Labyrinth: MiniGame {
         private func inBounds(value: Int, upper: Int) -> Bool {
             return (value >= 0) && (value < upper)
         }
-
-        func dump() {
-            for r in self.maze {
-                print(r.map { String(format: "%3d", $0) }.joined())
-            }
-        }
     }
 
     enum Collisions: UInt32 {
@@ -120,6 +111,8 @@ final class Labyrinth: MiniGame {
         let motionManager = CMMotionManager()
         var completion: () -> () = { }
         var complexity: Int = 2
+        var marbleNode: SKSpriteNode!
+        var targetNode: SKSpriteNode!
 
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
@@ -181,43 +174,45 @@ final class Labyrinth: MiniGame {
             }
 
             let radius: CGFloat = min(xScale, yScale) * 0.3
-            let marbleNode = SKShapeNode(circleOfRadius: radius)
-            marbleNode.lineWidth = 1
-            marbleNode.fillColor = .white
-            marbleNode.fillTexture = SKTexture(imageNamed: "Labyrinth_Marble")
-            let marbleTexture = self.view?.texture(from: marbleNode)
+            let marbleTextureNode = SKShapeNode(circleOfRadius: radius)
+            marbleTextureNode.lineWidth = 1
+            marbleTextureNode.fillColor = .white
+            marbleTextureNode.fillTexture = SKTexture(imageNamed: "Labyrinth_Marble")
+            let marbleTexture = self.view?.texture(from: marbleTextureNode)
 
-            let marble: SKSpriteNode = SKSpriteNode(texture: marbleTexture)
-            marble.physicsBody = SKPhysicsBody(circleOfRadius: radius)
-            marble.physicsBody?.usesPreciseCollisionDetection = true
-            marble.physicsBody?.restitution = 0.2
-            marble.physicsBody?.categoryBitMask = Collisions.marble.rawValue
-            marble.physicsBody?.contactTestBitMask = Collisions.wall.rawValue
-            marble.position = CGPoint(x: CGFloat(columns) * xScale - 0.5 * xScale, y: CGFloat(rows) * yScale - 0.5 * yScale)
-            marble.zRotation = 45.0 * [-1, 1].randomElement()!
-            self.addChild(marble)
+            marbleNode = SKSpriteNode(texture: marbleTexture)
+            marbleNode.physicsBody = SKPhysicsBody(circleOfRadius: radius)
+            marbleNode.physicsBody?.usesPreciseCollisionDetection = true
+            marbleNode.physicsBody?.restitution = 0.2
+            marbleNode.physicsBody?.categoryBitMask = Collisions.marble.rawValue
+            marbleNode.physicsBody?.contactTestBitMask = Collisions.wall.rawValue
+            marbleNode.position = CGPoint(x: CGFloat(columns) * xScale - 0.5 * xScale, y: CGFloat(rows) * yScale - 0.5 * yScale)
+            marbleNode.zRotation = 45.0 * [-1, 1].randomElement()!
+            self.addChild(marbleNode)
 
-            let targetNode = SKShapeNode(circleOfRadius: radius)
-            targetNode.lineWidth = 1
-            targetNode.fillColor = .white
-            targetNode.fillTexture = SKTexture(imageNamed: "Labyrinth_Target")
-            let targetTexture = self.view?.texture(from: targetNode)
+            let targetTextureNode = SKShapeNode(circleOfRadius: radius)
+            targetTextureNode.lineWidth = 1
+            targetTextureNode.fillColor = .white
+            targetTextureNode.fillTexture = SKTexture(imageNamed: "Labyrinth_Target")
+            let targetTexture = self.view?.texture(from: targetTextureNode)
 
-            let target: SKSpriteNode = SKSpriteNode(texture: targetTexture)
-            target.physicsBody = SKPhysicsBody(circleOfRadius: radius)
-            target.physicsBody?.usesPreciseCollisionDetection = true
-            target.physicsBody?.restitution = 0.2
-            target.physicsBody?.categoryBitMask = Collisions.target.rawValue
-            target.physicsBody?.contactTestBitMask = Collisions.wall.rawValue
-            target.physicsBody?.isDynamic = false
-            target.position = CGPoint(x: 0.5 * xScale, y: 0.5 * yScale)
-            self.addChild(target)
-            target.run(SKAction.repeatForever(SKAction.rotate(byAngle: .pi, duration: 1.0)))
+            targetNode = SKSpriteNode(texture: targetTexture)
+            targetNode.physicsBody = SKPhysicsBody(circleOfRadius: radius)
+            targetNode.physicsBody?.usesPreciseCollisionDetection = true
+            targetNode.physicsBody?.restitution = 0.2
+            targetNode.physicsBody?.categoryBitMask = Collisions.target.rawValue
+            targetNode.physicsBody?.contactTestBitMask = Collisions.wall.rawValue
+            targetNode.physicsBody?.isDynamic = false
+            targetNode.position = CGPoint(x: 0.5 * xScale, y: 0.5 * yScale)
+            self.addChild(targetNode)
+            targetNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: .pi, duration: 1.0)))
 
             physicsWorld.contactDelegate = self
             physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 
-            motionManager.startAccelerometerUpdates()
+            if motionManager.isAccelerometerAvailable {
+                motionManager.startAccelerometerUpdates()
+            }
         }
 
         deinit {
@@ -232,9 +227,41 @@ final class Labyrinth: MiniGame {
         }
 
         func didBegin(_ contact: SKPhysicsContact) {
-//            if contact.bodyA.node == target || contact.bodyB.node == target {
-//                hammer.thud()
-//            }
+            if contact.bodyA.node == targetNode || contact.bodyB == targetNode {
+            }
         }
+    }
+}
+
+// Enable arrow keys to simulate motion in the simulator
+extension Labyrinth.UIVC {
+    override var keyCommands: [UIKeyCommand]? {
+        get {
+            return [
+                UIKeyCommand.inputUpArrow,
+                UIKeyCommand.inputDownArrow,
+                UIKeyCommand.inputLeftArrow,
+                UIKeyCommand.inputRightArrow,
+                " "
+            ].map {
+                UIKeyCommand(input: $0, modifierFlags: [], action: #selector(handleKey(sender:)))
+            }
+        }
+    }
+
+    @objc func handleKey(sender: UIKeyCommand) {
+        var dx: Int = 0
+        var dy: Int = 0
+
+        switch sender.input {
+        case UIKeyCommand.inputUpArrow:             dy =  5
+        case UIKeyCommand.inputDownArrow:           dy = -5
+        case UIKeyCommand.inputLeftArrow:           dx = -5
+        case UIKeyCommand.inputRightArrow:          dx =  5
+        default:
+            break
+        }
+        print("Gravity: \(dx), \(dy)")
+        scene.physicsWorld.gravity = CGVector(dx: dx, dy: dy)
     }
 }

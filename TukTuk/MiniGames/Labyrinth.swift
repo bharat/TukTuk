@@ -47,32 +47,32 @@ final class Labyrinth: MiniGame {
     }
 
     //  Adapted from: https://rosettacode.org/wiki/Maze_generation#Swift
-    class Maze {
-        enum Direction: Int, CaseIterable {
-            case up      =  1
-            case down    =  2
-            case left    =  4
-            case right   =  8
+    enum Direction: Int, CaseIterable {
+        case up      =  1
+        case down    =  2
+        case left    =  4
+        case right   =  8
 
-            var opposite: Direction {
-                switch self {
-                case .up:    return .down
-                case .down:  return .up
-                case .left:  return .right
-                case .right: return .left
-                }
-            }
-
-            var diff: (Int, Int) {
-                switch self {
-                case .up:    return ( 0, -1)
-                case .down:  return ( 0,  1)
-                case .right: return ( 1,  0)
-                case .left:  return (-1,  0)
-                }
+        var opposite: Direction {
+            switch self {
+            case .up:    return .down
+            case .down:  return .up
+            case .left:  return .right
+            case .right: return .left
             }
         }
 
+        var diff: (Int, Int) {
+            switch self {
+            case .up:    return ( 0,  1)
+            case .down:  return ( 0, -1)
+            case .right: return ( 1,  0)
+            case .left:  return (-1,  0)
+            }
+        }
+    }
+
+    class Maze {
         let columns: Int
         let rows: Int
         var maze: [[Int]]
@@ -174,6 +174,49 @@ final class Labyrinth: MiniGame {
         }
     }
 
+    class Wall {
+        var node: SKShapeNode
+        var scaleX: CGFloat
+        var scaleY: CGFloat
+        var direction: Direction
+
+        init(direction: Direction, scaleX: CGFloat, scaleY: CGFloat) {
+            self.scaleX = scaleX
+            self.scaleY = scaleY
+            self.direction = direction
+
+            node = SKShapeNode(rect: {
+                switch direction {
+                case .up, .down:
+                    return CGRect(x: 0, y: 0, width: scaleX, height: 0)
+                case .left, .right:
+                    return CGRect(x: 0, y: 0, width: 0, height: scaleY)
+                }
+            }())
+
+            node.lineWidth = 4
+            node.lineCap = .round
+            node.strokeColor = .white
+            node.physicsBody = SKPhysicsBody(edgeChainFrom: node.path!)
+            node.physicsBody?.categoryBitMask = Collisions.wall.rawValue
+            node.physicsBody?.restitution = 0.2
+            node.physicsBody?.isDynamic = false
+        }
+
+        func moveTo(row: Int, col: Int) {
+            node.position.x = CGFloat(col) * scaleX
+            node.position.y = CGFloat(row) * scaleY
+            switch direction {
+            case .up:
+                node.position.y += scaleY
+            case .right:
+                node.position.x += scaleX
+            default:
+                break
+            }
+        }
+    }
+
     class Scene: SKScene, SKPhysicsContactDelegate {
         let motionManager = CMMotionManager()
         var completion: () -> () = { }
@@ -208,37 +251,17 @@ final class Labyrinth: MiniGame {
 
             scaleX = frame.width / CGFloat(columns)
             scaleY = frame.height / CGFloat(rows)
-            var walls: [CGRect] = []
 
             for (y, row) in maze.maze.enumerated() {
                 for (x, val) in row.enumerated() {
-                    if Maze.Direction.up.rawValue & val == 0 {
-                        walls.append(CGRect(x: x, y: y, width: 1, height: 0))
-                    }
-                    if Maze.Direction.down.rawValue & val == 0 {
-                        walls.append(CGRect(x: x, y: y + 1, width: 1, height: 0))
-                    }
-                    if Maze.Direction.left.rawValue & val == 0 {
-                        walls.append(CGRect(x: x, y: y, width: 0, height: 1))
-                    }
-                    if Maze.Direction.right.rawValue & val == 0 {
-                        walls.append(CGRect(x: x + 1, y: y, width: 0, height: 1))
+                    for direction in Direction.allCases {
+                        if direction.rawValue & val == 0 {
+                            let wall = Wall(direction: direction, scaleX: scaleX, scaleY: scaleY)
+                            wall.moveTo(row: y, col: x)
+                            addChild(wall.node)
+                        }
                     }
                 }
-            }
-
-            walls.forEach {
-                // Account for the frame's inset from (0, 0) and scale it up
-                let rect = CGRect(x: $0.minX * scaleX, y: $0.minY * scaleY, width: $0.width * scaleX, height: $0.height * scaleY)
-                let wall = SKShapeNode(rect: rect)
-                wall.lineWidth = 4
-                wall.lineCap = .round
-                wall.strokeColor = .white
-                wall.physicsBody = SKPhysicsBody(edgeChainFrom: wall.path!)
-                wall.physicsBody?.categoryBitMask = Collisions.wall.rawValue
-                wall.physicsBody?.restitution = 0.2
-                wall.physicsBody?.isDynamic = false
-                addChild(wall)
             }
 
             marble = Marble(imageName: "Labyrinth_Marble", view: self.view!, scaleX: scaleX, scaleY: scaleY)

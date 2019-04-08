@@ -42,7 +42,7 @@ class WelcomeViewController: UIViewController {
 
     // Useful for debugging
     override func viewDidAppear(_ animated: Bool) {
-        show(AllyMaze().uivc, sender: self)
+        show(Labyrinth().uivc, sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {

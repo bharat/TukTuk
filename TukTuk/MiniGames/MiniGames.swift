@@ -21,7 +21,7 @@ class MiniGames: Preloadable {
         Thor(),
         AvengersAssemble(),
         JusticeLeague(),
-        AllyMaze()
+        Labyrinth()
     ]
 
     static func preload() {

@@ -33,7 +33,7 @@ final class Labyrinth: MiniGame {
             effectView.contentView.addSubview(skView)
 
             scene = Scene(size: view.frame.size)
-            scene.complexity = 20
+            scene.complexity = 6
             scene.completion = {
                 self.dismiss(animated: true)
             }
@@ -113,6 +113,8 @@ final class Labyrinth: MiniGame {
         var complexity: Int = 2
         var marbleNode: SKSpriteNode!
         var targetNode: SKSpriteNode!
+        var scaleY: CGFloat!
+        var scaleX: CGFloat!
 
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
@@ -139,8 +141,8 @@ final class Labyrinth: MiniGame {
             let columns = complexity
             let rows = Int(CGFloat(complexity) * (height / width))
             let maze = Maze(columns: columns, rows: rows)
-            let xScale = width / CGFloat(columns)
-            let yScale = height / CGFloat(rows)
+            scaleX = width / CGFloat(columns)
+            scaleY = height / CGFloat(rows)
             var walls: [CGRect] = []
 
             for (y, row) in maze.maze.enumerated() {
@@ -162,7 +164,7 @@ final class Labyrinth: MiniGame {
 
             walls.forEach {
                 // Account for the frame's inset from (0, 0) and scale it up
-                let rect = CGRect(x: view.frame.minX + $0.minX * xScale, y: view.frame.minY + $0.minY * yScale, width: $0.width * xScale, height: $0.height * yScale)
+                let rect = CGRect(x: view.frame.minX + $0.minX * scaleX, y: view.frame.minY + $0.minY * scaleY, width: $0.width * scaleX, height: $0.height * scaleY)
                 let wall = SKShapeNode(rect: rect)
                 wall.lineWidth = 4
                 wall.strokeColor = .white
@@ -173,7 +175,7 @@ final class Labyrinth: MiniGame {
                 addChild(wall)
             }
 
-            let radius: CGFloat = min(xScale, yScale) * 0.3
+            let radius: CGFloat = min(scaleX, scaleY) * 0.3
             let marbleTextureNode = SKShapeNode(circleOfRadius: radius)
             marbleTextureNode.lineWidth = 1
             marbleTextureNode.fillColor = .white
@@ -186,7 +188,8 @@ final class Labyrinth: MiniGame {
             marbleNode.physicsBody?.restitution = 0.2
             marbleNode.physicsBody?.categoryBitMask = Collisions.marble.rawValue
             marbleNode.physicsBody?.contactTestBitMask = Collisions.wall.rawValue
-            marbleNode.position = CGPoint(x: CGFloat(columns) * xScale - 0.5 * xScale, y: CGFloat(rows) * yScale - 0.5 * yScale)
+            marbleNode.position.x = view.frame.minX + CGFloat(columns) * scaleX - 0.5 * scaleX
+            marbleNode.position.y = view.frame.minY + CGFloat(rows) * scaleY - 0.5 * scaleY
             marbleNode.zRotation = 45.0 * [-1, 1].randomElement()!
             self.addChild(marbleNode)
 
@@ -203,7 +206,7 @@ final class Labyrinth: MiniGame {
             targetNode.physicsBody?.categoryBitMask = Collisions.target.rawValue
             targetNode.physicsBody?.contactTestBitMask = Collisions.wall.rawValue
             targetNode.physicsBody?.isDynamic = false
-            targetNode.position = CGPoint(x: 0.5 * xScale, y: 0.5 * yScale)
+            targetNode.position = CGPoint(x: 0.5 * scaleX, y: 0.5 * scaleY)
             self.addChild(targetNode)
             targetNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: .pi, duration: 1.0)))
 
@@ -223,6 +226,13 @@ final class Labyrinth: MiniGame {
         override func update(_ currentTime: TimeInterval) {
             if let data = motionManager.accelerometerData {
                 physicsWorld.gravity = CGVector(dx: data.acceleration.x * 5.0, dy: data.acceleration.y * 5.0)
+            }
+
+            if let view = view {
+                let col = floor((marbleNode.position.x - view.frame.minX) / scaleX)
+                let row = floor((marbleNode.position.y - view.frame.minY) / scaleY)
+
+                print("(x,y): \(col), \(row)")
             }
         }
 

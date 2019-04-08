@@ -77,28 +77,54 @@ final class Labyrinth: MiniGame {
         let rows: Int
         var maze: [[Int]]
 
+        struct Coord: Equatable, Hashable {
+            var x: Int
+            var y: Int
+        }
+
         init(columns: Int, rows: Int) {
             self.columns = columns
             self.rows = rows
             self.maze = Array(repeating: Array(repeating: 0, count: columns), count: rows)
-            generate(0, 0)
+            generate(Coord(x: 0, y: 0))
         }
 
-        private func generate(_ cx:Int, _ cy:Int) {
+        private func generate(_ coord: Coord) {
             for direction in Direction.allCases.shuffled() {
                 let (dx, dy) = direction.diff
-                let nx = cx + dx
-                let ny = cy + dy
-                if inBounds(nx, ny) && maze[ny][nx] == 0 {
-                    maze[cy][cx] |= direction.rawValue
-                    maze[ny][nx] |= direction.opposite.rawValue
-                    generate(nx, ny)
+                let new = Coord(x: coord.x + dx, y: coord.y + dy)
+                if inBounds(new) && maze[new.y][new.x] == 0 {
+                    maze[coord.y][coord.x] |= direction.rawValue
+                    maze[new.y][new.x] |= direction.opposite.rawValue
+                    generate(new)
                 }
             }
         }
 
-        private func inBounds(_ testX: Int, _ testY: Int) -> Bool {
-            return inBounds(value: testX, upper: columns) && inBounds(value: testY, upper: rows)
+        func solve(from src: Coord, to dst: Coord, path: [Coord] = []) -> [Coord]? {
+            if src == dst {
+                return path
+            }
+
+            for dir in Direction.allCases {
+                let (dx, dy) = dir.diff
+                let coord = Coord(x: src.x + dx, y: src.y + dy)
+                if legalMove(from: src, direction: dir) && inBounds(coord) && !path.contains(coord) {
+                    if let solution = solve(from: coord, to: dst, path: path + [coord]) {
+                        return solution
+                    }
+                }
+            }
+
+            return nil
+        }
+
+        private func legalMove(from src: Coord, direction: Direction) -> Bool {
+            return maze[src.y][src.x] & direction.rawValue > 0
+        }
+
+        private func inBounds(_ coord: Coord) -> Bool {
+            return inBounds(value: coord.x, upper: columns) && inBounds(value: coord.y, upper: rows)
         }
 
         private func inBounds(value: Int, upper: Int) -> Bool {
@@ -152,6 +178,12 @@ final class Labyrinth: MiniGame {
             }
             set {
                 node.position.y = CGFloat(newValue + 1) * scaleY - 0.5 * scaleY
+            }
+        }
+
+        var coord: Maze.Coord {
+            get {
+                return Maze.Coord(x: col, y: row)
             }
         }
     }
@@ -225,6 +257,7 @@ final class Labyrinth: MiniGame {
         var target: Target!
         var scaleY: CGFloat!
         var scaleX: CGFloat!
+        var maze: Maze!
 
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
@@ -247,7 +280,7 @@ final class Labyrinth: MiniGame {
 
             let rows = Int(CGFloat(complexity) * (frame.height / frame.width))
             let columns = complexity
-            let maze = Maze(columns: columns, rows: rows)
+            maze = Maze(columns: columns, rows: rows)
 
             scaleX = frame.width / CGFloat(columns)
             scaleY = frame.height / CGFloat(rows)
@@ -287,10 +320,16 @@ final class Labyrinth: MiniGame {
             completion()
         }
 
+        var lastTimeWePresentedASolution: TimeInterval?
+
         override func update(_ currentTime: TimeInterval) {
+            super.update(currentTime)
+
             if let data = motionManager.accelerometerData {
                 physicsWorld.gravity = CGVector(dx: data.acceleration.x * 5.0, dy: data.acceleration.y * 5.0)
             }
+
+            print(maze.solve(from: marble.coord, to: target.coord))
         }
 
         func didBegin(_ contact: SKPhysicsContact) {

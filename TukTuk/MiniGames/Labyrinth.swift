@@ -72,32 +72,31 @@ final class Labyrinth: MiniGame {
         }
     }
 
-    struct Coord: Equatable, Hashable {
-        var y: Int
-        var x: Int
-    }
-    typealias Path = [Coord]
-
     class Maze {
         let columns: Int
         let rows: Int
         var maze: [[Int]]
 
+        struct Coord: Equatable, Hashable {
+            var row: Int
+            var col: Int
+        }
+        typealias Path = [Coord]
 
         init(columns: Int, rows: Int) {
             self.columns = columns
             self.rows = rows
             self.maze = Array(repeating: Array(repeating: 0, count: columns), count: rows)
-            generate(Coord(y: 0, x: 0))
+            generate(Coord(row: 0, col: 0))
         }
 
         private func generate(_ coord: Coord) {
             for direction in Direction.allCases.shuffled() {
                 let diff = direction.diff
-                let new = Coord(y: coord.y + diff.y, x: coord.x + diff.x)
-                if inBounds(new) && maze[new.y][new.x] == 0 {
-                    maze[coord.y][coord.x] |= direction.rawValue
-                    maze[new.y][new.x] |= direction.opposite.rawValue
+                let new = Coord(row: coord.row + diff.y, col: coord.col + diff.x)
+                if inBounds(new) && maze[new.row][new.col] == 0 {
+                    maze[coord.row][coord.col] |= direction.rawValue
+                    maze[new.row][new.col] |= direction.opposite.rawValue
                     generate(new)
                 }
             }
@@ -111,7 +110,7 @@ final class Labyrinth: MiniGame {
             var paths: [Path?] = []
             for dir in Direction.allCases {
                 let diff = dir.diff
-                let coord = Coord(y: src.y + diff.y, x: src.x + diff.x)
+                let coord = Coord(row: src.row + diff.y, col: src.col + diff.x)
                 if legalMove(from: src, direction: dir) && inBounds(coord) && !path.contains(coord) {
                     paths += [solve(from: coord, to: dst, path: path + [coord])]
                 }
@@ -122,11 +121,11 @@ final class Labyrinth: MiniGame {
         }
 
         private func legalMove(from src: Coord, direction: Direction) -> Bool {
-            return maze[src.y][src.x] & direction.rawValue > 0
+            return maze[src.row][src.col] & direction.rawValue > 0
         }
 
         private func inBounds(_ coord: Coord) -> Bool {
-            return inBounds(value: coord.x, upper: columns) && inBounds(value: coord.y, upper: rows)
+            return inBounds(value: coord.col, upper: columns) && inBounds(value: coord.row, upper: rows)
         }
 
         private func inBounds(value: Int, upper: Int) -> Bool {
@@ -146,12 +145,12 @@ final class Labyrinth: MiniGame {
         var scaleY: CGFloat
         var view: SKView
 
-        init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat, radiusFraction: CGFloat) {
+        init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat) {
             self.scaleX = scaleX
             self.scaleY = scaleY
             self.view = view
 
-            let radius: CGFloat = min(scaleX, scaleY) * radiusFraction
+            let radius: CGFloat = min(scaleX, scaleY) * 0.4
             let textureNode = SKShapeNode(circleOfRadius: radius)
             textureNode.lineWidth = 1
             textureNode.fillColor = .white
@@ -183,36 +182,27 @@ final class Labyrinth: MiniGame {
             }
         }
 
-        var coord: Coord {
+        var coord: Maze.Coord {
             get {
-                return Coord(y: row, x: col)
+                return Maze.Coord(row: row, col: col)
             }
         }
     }
 
     class Marble: Round {
-        init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat) {
-            super.init(imageName: imageName, view: view, scaleX: scaleX, scaleY: scaleY, radiusFraction: 0.4)
+        override init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat) {
+            super.init(imageName: imageName, view: view, scaleX: scaleX, scaleY: scaleY)
             node.physicsBody?.categoryBitMask = Collisions.marble.rawValue
             node.physicsBody?.contactTestBitMask |= Collisions.target.rawValue
         }
     }
 
     class Target: Round {
-        init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat) {
-            super.init(imageName: imageName, view: view, scaleX: scaleX, scaleY: scaleY, radiusFraction: 0.4)
+        override init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat) {
+            super.init(imageName: imageName, view: view, scaleX: scaleX, scaleY: scaleY)
             node.physicsBody?.categoryBitMask = Collisions.target.rawValue
             node.physicsBody?.contactTestBitMask |= Collisions.marble.rawValue
             node.physicsBody?.isDynamic = false
-            node.run(SKAction.repeatForever(SKAction.rotate(byAngle: .pi, duration: 1.0)))
-        }
-    }
-
-    class Pointer: Round {
-        init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat) {
-            super.init(imageName: imageName, view: view, scaleX: scaleX, scaleY: scaleY, radiusFraction: 0.1)
-            node.physicsBody?.isDynamic = false
-            node.run(SKAction.repeatForever(SKAction.group([SKAction.scale(to: 1.2, duration: 1.0), SKAction.scale(to: 1.0, duration: 1.0)])))
             node.run(SKAction.repeatForever(SKAction.rotate(byAngle: .pi, duration: 1.0)))
         }
     }
@@ -246,9 +236,9 @@ final class Labyrinth: MiniGame {
             node.physicsBody?.isDynamic = false
         }
 
-        func moveTo(coord: Coord) {
-            node.position.x = CGFloat(coord.x) * scaleX
-            node.position.y = CGFloat(coord.y) * scaleY
+        func moveTo(coord: Maze.Coord) {
+            node.position.x = CGFloat(coord.col) * scaleX
+            node.position.y = CGFloat(coord.row) * scaleY
             switch direction {
             case .up:
                 node.position.y += scaleY
@@ -269,7 +259,7 @@ final class Labyrinth: MiniGame {
         var scaleY: CGFloat!
         var scaleX: CGFloat!
         var maze: Maze!
-        var pointers: [Pointer] = []
+        var solution: SKShapeNode?
 
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
@@ -302,7 +292,7 @@ final class Labyrinth: MiniGame {
                     for direction in Direction.allCases {
                         if direction.rawValue & val == 0 {
                             let wall = Wall(direction: direction, scaleX: scaleX, scaleY: scaleY)
-                            wall.moveTo(coord: Coord(y: y, x: x))
+                            wall.moveTo(coord: Maze.Coord(row: y, col: x))
                             addChild(wall.node)
                         }
                     }
@@ -332,7 +322,7 @@ final class Labyrinth: MiniGame {
             completion()
         }
 
-        var showingSolutionForCoord: Coord?
+        var showingSolutionForCoord: Maze.Coord?
         override func update(_ currentTime: TimeInterval) {
             super.update(currentTime)
 
@@ -342,16 +332,26 @@ final class Labyrinth: MiniGame {
 
             if showingSolutionForCoord == nil || showingSolutionForCoord != marble.coord {
                 if let path = maze.solve(from: marble.coord, to: target.coord) {
-                    pointers.forEach { pointer in
-                        pointer.node.removeFromParent()
+                    if let solution = solution {
+                        solution.removeFromParent()
                     }
-                    path.forEach { coord in
-                        let pointer = Pointer(imageName: "Labyrinth_Pointer", view: self.view!, scaleX: scaleX, scaleY: scaleY)
-                        pointer.row = coord.y
-                        pointer.col = coord.x
-                        addChild(pointer.node)
-                        pointers += [pointer]
+                    let bezierPath = UIBezierPath()
+                    let points = path.map { coord in
+                        CGPoint(x: CGFloat(coord.col + 1) * scaleX - 0.5 * scaleX, y: CGFloat(coord.row + 1) * scaleY - 0.5 * scaleY)
                     }
+                    bezierPath.move(to: points[0])
+                    points.dropFirst().forEach { point in
+                            bezierPath.addLine(to: point)
+                    }
+
+                    solution = SKShapeNode(path: bezierPath.cgPath)
+                    solution?.strokeColor = .green
+                    solution?.lineWidth = 1
+                    solution?.run(SKAction.fadeOut(withDuration: 2.0)) {
+                        self.solution?.removeFromParent()
+                        self.solution = nil
+                    }
+                    addChild(solution!)
                     showingSolutionForCoord = marble.coord
                 }
             }

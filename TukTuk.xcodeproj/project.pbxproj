@@ -17,6 +17,7 @@
 		4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CF209E15BB00483499 /* Hinge.swift */; };
 		4F3270C7225559430063CC32 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3270C6225559430063CC32 /* Stats.swift */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
+		4F75101E225D259B0039AA35 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75101D225D259B0039AA35 /* Maze.swift */; };
 		4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */; };
 		4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F81D5F520A6776D00CB68D8 /* MiniGames.swift */; };
 		4F81D5F820A7600C00CB68D8 /* None.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F81D5F720A7600C00CB68D8 /* None.swift */; };
@@ -64,6 +65,7 @@
 		4F1F17CF209E15BB00483499 /* Hinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hinge.swift; sourceTree = "<group>"; };
 		4F3270C6225559430063CC32 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4F75101D225D259B0039AA35 /* Maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
 		4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		4F81D5F520A6776D00CB68D8 /* MiniGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGames.swift; sourceTree = "<group>"; };
 		4F81D5F720A7600C00CB68D8 /* None.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = None.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				4F3270C6225559430063CC32 /* Stats.swift */,
+				4F75101D225D259B0039AA35 /* Maze.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */,
 				4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */,
 				4F08249E22090BAC00D45C40 /* Preloadable.swift in Sources */,
+				4F75101E225D259B0039AA35 /* Maze.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
 				4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */,

@@ -344,7 +344,8 @@ final class Labyrinth: MiniGame {
                             bezierPath.addLine(to: point)
                     }
 
-                    solution = SKShapeNode(path: bezierPath.cgPath)
+                    var pattern: [CGFloat] = [3.0, 2.0]
+                    solution = SKShapeNode(path: bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern))
                     solution?.strokeColor = .green
                     solution?.lineWidth = 1
                     solution?.run(SKAction.fadeOut(withDuration: 2.0)) {

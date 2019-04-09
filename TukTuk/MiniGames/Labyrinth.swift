@@ -46,6 +46,7 @@ final class Labyrinth: MiniGame {
         }
     }
 
+
     //  Adapted from: https://rosettacode.org/wiki/Maze_generation#Swift
     enum Direction: Int, CaseIterable {
         case up      =  1
@@ -102,12 +103,12 @@ final class Labyrinth: MiniGame {
             }
         }
 
-        func solve(from src: Coord, to dst: Coord, path: Path = []) -> Path? {
+        func solve(from src: Coord, to dst: Coord, path: Path = []) -> Path {
             if src == dst {
                 return path
             }
 
-            var paths: [Path?] = []
+            var paths: [Path] = []
             for dir in Direction.allCases {
                 let diff = dir.diff
                 let coord = Coord(row: src.row + diff.y, col: src.col + diff.x)
@@ -115,9 +116,7 @@ final class Labyrinth: MiniGame {
                     paths += [solve(from: coord, to: dst, path: path + [coord])]
                 }
             }
-            return paths.sorted {
-                $0?.count ?? 1000 < $1?.count ?? 1000
-            }.first ?? nil
+            return paths.sorted { $0.count < $1.count }.first!
         }
 
         private func legalMove(from src: Coord, direction: Direction) -> Bool {
@@ -250,6 +249,33 @@ final class Labyrinth: MiniGame {
         }
     }
 
+    class Solution {
+        var node: SKShapeNode
+        let pattern: [CGFloat] = [3.0, 2.0]
+
+        init() {
+            let bezierPath = UIBezierPath()
+            node = SKShapeNode(path: bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern))
+            node.strokeColor = .clear
+            node.lineWidth = 1
+        }
+
+        func show(maze: Maze, src: Round, dst: Round, scaleX: CGFloat, scaleY: CGFloat) {
+            let path = maze.solve(from: src.coord, to: dst.coord)
+            let bezierPath = UIBezierPath()
+            let points = path.map { coord in
+                CGPoint(x: CGFloat(coord.col + 1) * scaleX - 0.5 * scaleX, y: CGFloat(coord.row + 1) * scaleY - 0.5 * scaleY)
+            }
+            bezierPath.move(to: points[0])
+            points.dropFirst().forEach { point in
+                bezierPath.addLine(to: point)
+            }
+            node.strokeColor = .green
+            node.path = bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern)
+            node.run(SKAction.fadeOut(withDuration: 2.0))
+        }
+    }
+
     class Scene: SKScene, SKPhysicsContactDelegate {
         let motionManager = CMMotionManager()
         var completion: () -> () = { }
@@ -259,7 +285,7 @@ final class Labyrinth: MiniGame {
         var scaleY: CGFloat!
         var scaleX: CGFloat!
         var maze: Maze!
-        var solution: SKShapeNode?
+        var solution: Solution!
 
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
@@ -315,6 +341,9 @@ final class Labyrinth: MiniGame {
             if motionManager.isAccelerometerAvailable {
                 motionManager.startAccelerometerUpdates()
             }
+
+            solution = Solution()
+            addChild(solution.node)
         }
 
         func done() {
@@ -322,7 +351,6 @@ final class Labyrinth: MiniGame {
             completion()
         }
 
-        var showingSolutionForCoord: Maze.Coord?
         override func update(_ currentTime: TimeInterval) {
             super.update(currentTime)
 
@@ -330,32 +358,7 @@ final class Labyrinth: MiniGame {
                 physicsWorld.gravity = CGVector(dx: data.acceleration.x * 5.0, dy: data.acceleration.y * 5.0)
             }
 
-            if showingSolutionForCoord == nil || showingSolutionForCoord != marble.coord {
-                if let path = maze.solve(from: marble.coord, to: target.coord) {
-                    if let solution = solution {
-                        solution.removeFromParent()
-                    }
-                    let bezierPath = UIBezierPath()
-                    let points = path.map { coord in
-                        CGPoint(x: CGFloat(coord.col + 1) * scaleX - 0.5 * scaleX, y: CGFloat(coord.row + 1) * scaleY - 0.5 * scaleY)
-                    }
-                    bezierPath.move(to: points[0])
-                    points.dropFirst().forEach { point in
-                            bezierPath.addLine(to: point)
-                    }
-
-                    var pattern: [CGFloat] = [3.0, 2.0]
-                    solution = SKShapeNode(path: bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern))
-                    solution?.strokeColor = .green
-                    solution?.lineWidth = 1
-                    solution?.run(SKAction.fadeOut(withDuration: 2.0)) {
-                        self.solution?.removeFromParent()
-                        self.solution = nil
-                    }
-                    addChild(solution!)
-                    showingSolutionForCoord = marble.coord
-                }
-            }
+            solution.show(maze: maze, src: marble, dst: target, scaleX: scaleX, scaleY: scaleY)
         }
 
         func didBegin(_ contact: SKPhysicsContact) {

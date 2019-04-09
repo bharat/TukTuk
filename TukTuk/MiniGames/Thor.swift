@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import SpriteKit
 
-
 final class Thor: MiniGame {
     var title = "Thor lost his hammer!"
     var uivc: UIViewController = UIVC()

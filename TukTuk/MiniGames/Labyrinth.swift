@@ -52,18 +52,34 @@ final class Labyrinth: MiniGame {
         }
     }
 
-    class Round {
+    class Translator {
+        let scaleX: CGFloat
+        let scaleY: CGFloat
+
+        init(frame: CGRect, rows: Int, cols: Int) {
+            scaleX = frame.width / CGFloat(cols)
+            scaleY = frame.height / CGFloat(rows)
+        }
+
+        func mazePosition(from pos: CGPoint) -> Maze.Position {
+            return Maze.Position(row: Int(floor(pos.y / scaleY)), col: Int(floor(pos.x / scaleX)))
+        }
+
+        func nodePosition(from pos: Maze.Position) -> CGPoint {
+            return CGPoint(x: CGFloat(pos.col + 1) * scaleX - 0.5 * scaleX,
+                           y: CGFloat(pos.row + 1) * scaleY - 0.5 * scaleY)
+        }
+    }
+
+    class RoundSprite {
         var node: SKSpriteNode
-        var scaleX: CGFloat
-        var scaleY: CGFloat
         var view: SKView
+        var translator: Translator
 
-        init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat) {
-            self.scaleX = scaleX
-            self.scaleY = scaleY
+        init(imageName: String, view: SKView, radius: CGFloat, translator: Translator) {
             self.view = view
+            self.translator = translator
 
-            let radius: CGFloat = min(scaleX, scaleY) * 0.4
             let textureNode = SKShapeNode(circleOfRadius: radius)
             textureNode.lineWidth = 1
             textureNode.fillColor = .white
@@ -77,42 +93,27 @@ final class Labyrinth: MiniGame {
             node.physicsBody?.contactTestBitMask = Collisions.wall.rawValue
         }
 
-        var col: Int {
+        var mazePosition: Maze.Position {
             get {
-                return Int(floor(node.position.x / scaleX))
+                return translator.mazePosition(from: node.position)
             }
             set {
-                node.position.x = CGFloat(newValue + 1) * scaleX - 0.5 * scaleX
-            }
-        }
-
-        var row: Int {
-            get {
-                return Int(floor(node.position.y / scaleY))
-            }
-            set {
-                node.position.y = CGFloat(newValue + 1) * scaleY - 0.5 * scaleY
-            }
-        }
-
-        var coord: Maze.Coord {
-            get {
-                return Maze.Coord(row: row, col: col)
+                node.position = translator.nodePosition(from: newValue)
             }
         }
     }
 
-    class Marble: Round {
-        override init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat) {
-            super.init(imageName: imageName, view: view, scaleX: scaleX, scaleY: scaleY)
+    class Marble: RoundSprite {
+        override init(imageName: String, view: SKView, radius: CGFloat, translator: Translator) {
+            super.init(imageName: imageName, view: view, radius: radius, translator: translator)
             node.physicsBody?.categoryBitMask = Collisions.marble.rawValue
             node.physicsBody?.contactTestBitMask |= Collisions.target.rawValue
         }
     }
 
-    class Target: Round {
-        override init(imageName: String, view: SKView, scaleX: CGFloat, scaleY: CGFloat) {
-            super.init(imageName: imageName, view: view, scaleX: scaleX, scaleY: scaleY)
+    class Target: RoundSprite {
+        override init(imageName: String, view: SKView, radius: CGFloat, translator: Translator) {
+            super.init(imageName: imageName, view: view, radius: radius, translator: translator)
             node.physicsBody?.categoryBitMask = Collisions.target.rawValue
             node.physicsBody?.contactTestBitMask |= Collisions.marble.rawValue
             node.physicsBody?.isDynamic = false
@@ -122,21 +123,19 @@ final class Labyrinth: MiniGame {
 
     class Wall {
         var node: SKShapeNode
-        var scaleX: CGFloat
-        var scaleY: CGFloat
         var direction: Maze.Direction
+        var translator: Translator
 
-        init(direction: Maze.Direction, scaleX: CGFloat, scaleY: CGFloat) {
-            self.scaleX = scaleX
-            self.scaleY = scaleY
+        init(direction: Maze.Direction, translator: Translator) {
             self.direction = direction
+            self.translator = translator
 
             node = SKShapeNode(rect: {
                 switch direction {
                 case .up, .down:
-                    return CGRect(x: 0, y: 0, width: scaleX, height: 0)
+                    return CGRect(x: 0, y: 0, width: translator.scaleX, height: 0)
                 case .left, .right:
-                    return CGRect(x: 0, y: 0, width: 0, height: scaleY)
+                    return CGRect(x: 0, y: 0, width: 0, height: translator.scaleY)
                 }
             }())
 
@@ -149,14 +148,13 @@ final class Labyrinth: MiniGame {
             node.physicsBody?.isDynamic = false
         }
 
-        func moveTo(coord: Maze.Coord) {
-            node.position.x = CGFloat(coord.col) * scaleX
-            node.position.y = CGFloat(coord.row) * scaleY
+        func moveTo(pos: Maze.Position) {
+            node.position = translator.nodePosition(from: pos)
             switch direction {
             case .up:
-                node.position.y += scaleY
+                node.position.y += translator.scaleY
             case .right:
-                node.position.x += scaleX
+                node.position.x += translator.scaleX
             default:
                 break
             }
@@ -165,21 +163,22 @@ final class Labyrinth: MiniGame {
 
     class Solution {
         var node: SKShapeNode
+        var translator: Translator
         let pattern: [CGFloat] = [3.0, 2.0]
 
-        init() {
+        init(translator: Translator) {
+            self.translator = translator
+
             let bezierPath = UIBezierPath()
             node = SKShapeNode(path: bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern))
             node.strokeColor = .clear
             node.lineWidth = 1
         }
 
-        func show(maze: Maze, src: Round, dst: Round, scaleX: CGFloat, scaleY: CGFloat) {
-            let path = maze.solve(from: src.coord, to: dst.coord)
+        func show(maze: Maze, src: RoundSprite, dst: RoundSprite) {
+            let path = maze.solve(from: src.mazePosition, to: dst.mazePosition)!
+            let points = path.map { pos in translator.nodePosition(from: pos) }
             let bezierPath = UIBezierPath()
-            let points = path.map { coord in
-                CGPoint(x: CGFloat(coord.col + 1) * scaleX - 0.5 * scaleX, y: CGFloat(coord.row + 1) * scaleY - 0.5 * scaleY)
-            }
             bezierPath.move(to: points[0])
             points.dropFirst().forEach { point in
                 bezierPath.addLine(to: point)
@@ -196,10 +195,9 @@ final class Labyrinth: MiniGame {
         var complexity: Int = 2
         var marble: Marble!
         var target: Target!
-        var scaleY: CGFloat!
-        var scaleX: CGFloat!
         var maze: Maze!
         var solution: Solution!
+        var translator: Translator!
 
         required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
@@ -221,32 +219,29 @@ final class Labyrinth: MiniGame {
             addChild(border)
 
             let rows = Int(CGFloat(complexity) * (frame.height / frame.width))
-            let columns = complexity
-            maze = Maze(columns: columns, rows: rows)
+            let cols = complexity
+            maze = Maze(cols: cols, rows: rows)
 
-            scaleX = frame.width / CGFloat(columns)
-            scaleY = frame.height / CGFloat(rows)
+            translator = Translator(frame: frame, rows: rows, cols: cols)
 
-            for (y, row) in maze.maze.enumerated() {
-                for (x, val) in row.enumerated() {
-                    for direction in Maze.Direction.allCases {
-                        if direction.rawValue & val == 0 {
-                            let wall = Wall(direction: direction, scaleX: scaleX, scaleY: scaleY)
-                            wall.moveTo(coord: Maze.Coord(row: y, col: x))
+            for (row, cols) in maze.maze.enumerated() {
+                for (col, bits) in cols.enumerated() {
+                    Maze.Direction.allCases.forEach { direction in
+                        if direction.rawValue & bits == 0 {
+                            let wall = Wall(direction: direction, translator: translator)
+                            wall.moveTo(pos: Maze.Position(row: row, col: col))
                             addChild(wall.node)
                         }
                     }
                 }
             }
 
-            marble = Marble(imageName: "Labyrinth_Marble", view: self.view!, scaleX: scaleX, scaleY: scaleY)
-            marble.row = rows - 1
-            marble.col = columns - 1
+            marble = Marble(imageName: "Labyrinth_Marble", view: self.view!, radius: 0.4, translator: translator)
+            marble.mazePosition = Maze.Position(row: rows - 1, col: cols - 1) // top right
             addChild(marble.node)
 
-            target = Target(imageName: "Labyrinth_Target", view: self.view!, scaleX: scaleX, scaleY: scaleY)
-            target.row = 0
-            target.col = 0
+            target = Target(imageName: "Labyrinth_Target", view: self.view!, radius: 0.4, translator: translator)
+            target.mazePosition = Maze.Position(row: 0, col: 0) // bottom left
             addChild(target.node)
 
             physicsWorld.contactDelegate = self
@@ -256,7 +251,7 @@ final class Labyrinth: MiniGame {
                 motionManager.startAccelerometerUpdates()
             }
 
-            solution = Solution()
+            solution = Solution(translator: translator)
             addChild(solution.node)
         }
 
@@ -272,7 +267,7 @@ final class Labyrinth: MiniGame {
                 physicsWorld.gravity = CGVector(dx: data.acceleration.x * 5.0, dy: data.acceleration.y * 5.0)
             }
 
-            solution.show(maze: maze, src: marble, dst: target, scaleX: scaleX, scaleY: scaleY)
+            solution.show(maze: maze, src: marble, dst: target)
         }
 
         func didBegin(_ contact: SKPhysicsContact) {

@@ -8,17 +8,23 @@
 
 import Foundation
 
+func +(_ pos: Maze.Position, _ delta: Maze.Delta) -> Maze.Position {
+    return Maze.Position(row: pos.row + delta.row, col: pos.col + delta.col)
+}
+
 //  Adapted from: https://rosettacode.org/wiki/Maze_generation#Swift
 class Maze {
-    let columns: Int
+    let cols: Int
     let rows: Int
     var maze: [[Int]]
 
-    struct Coord: Equatable, Hashable {
+    struct Position: Equatable, Hashable {
         var row: Int
         var col: Int
+
     }
-    typealias Path = [Coord]
+    typealias Path = [Position]
+    typealias Delta = Position
 
     enum Direction: Int, CaseIterable {
         case up      =  1
@@ -35,27 +41,26 @@ class Maze {
             }
         }
 
-        var diff: (y: Int, x: Int) {
+        var delta: Delta {
             switch self {
-            case .up:    return ( 1,  0)
-            case .down:  return (-1,  0)
-            case .right: return ( 0,  1)
-            case .left:  return ( 0, -1)
+            case .up:    return Delta(row:  1, col:  0)
+            case .down:  return Delta(row: -1, col:  0)
+            case .right: return Delta(row:  0, col:  1)
+            case .left:  return Delta(row:  0, col: -1)
             }
         }
     }
 
-    init(columns: Int, rows: Int) {
-        self.columns = columns
+    init(cols: Int, rows: Int) {
+        self.cols = cols
         self.rows = rows
-        self.maze = Array(repeating: Array(repeating: 0, count: columns), count: rows)
-        generate(Coord(row: 0, col: 0))
+        self.maze = Array(repeating: Array(repeating: 0, count: cols), count: rows)
+        generate(Position(row: 0, col: 0))
     }
 
-    private func generate(_ coord: Coord) {
+    private func generate(_ coord: Position) {
         for direction in Direction.allCases.shuffled() {
-            let diff = direction.diff
-            let new = Coord(row: coord.row + diff.y, col: coord.col + diff.x)
+            let new = coord + direction.delta
             if inBounds(new) && maze[new.row][new.col] == 0 {
                 maze[coord.row][coord.col] |= direction.rawValue
                 maze[new.row][new.col] |= direction.opposite.rawValue
@@ -64,28 +69,27 @@ class Maze {
         }
     }
 
-    func solve(from src: Coord, to dst: Coord, path: Path = []) -> Path {
+    func solve(from src: Position, to dst: Position, path: Path = []) -> Path? {
         if src == dst {
             return path
         }
 
-        var paths: [Path] = []
+        var paths: [Path?] = []
         for dir in Direction.allCases {
-            let diff = dir.diff
-            let coord = Coord(row: src.row + diff.y, col: src.col + diff.x)
-            if legalMove(from: src, direction: dir) && inBounds(coord) && !path.contains(coord) {
-                paths += [solve(from: coord, to: dst, path: path + [coord])]
+            let candidate = src + dir.delta
+            if legalMove(from: src, direction: dir) && inBounds(candidate) && !path.contains(candidate) {
+                paths += [solve(from: candidate, to: dst, path: path + [candidate])]
             }
         }
-        return paths.sorted { $0.count < $1.count }.first!
+        return paths.compactMap { $0 }.sorted { $0.count < $1.count }.first
     }
 
-    private func legalMove(from src: Coord, direction: Direction) -> Bool {
+    private func legalMove(from src: Position, direction: Direction) -> Bool {
         return maze[src.row][src.col] & direction.rawValue > 0
     }
 
-    private func inBounds(_ coord: Coord) -> Bool {
-        return inBounds(value: coord.col, upper: columns) && inBounds(value: coord.row, upper: rows)
+    private func inBounds(_ coord: Position) -> Bool {
+        return inBounds(value: coord.col, upper: cols) && inBounds(value: coord.row, upper: rows)
     }
 
     private func inBounds(value: Int, upper: Int) -> Bool {

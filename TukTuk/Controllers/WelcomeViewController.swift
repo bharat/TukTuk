@@ -41,9 +41,9 @@ class WelcomeViewController: UIViewController {
     }
 
     // Useful for debugging
-    override func viewDidAppear(_ animated: Bool) {
-        show(Labyrinth().uivc, sender: self)
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        show(CaptainAmerica().uivc, sender: self)
+//    }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false

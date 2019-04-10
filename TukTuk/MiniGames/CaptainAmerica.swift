@@ -1,5 +1,5 @@
 //
-//  Labyrinth.swift
+//  CaptainAmerica.swift
 //  TukTuk
 //
 //  Created by Bharat Mediratta on 8/23/18.
@@ -11,8 +11,8 @@ import UIKit
 import SpriteKit
 import CoreMotion
 
-final class Labyrinth: MiniGame {
-    var title = "Labyrinth"
+final class CaptainAmerica: MiniGame {
+    var title = "CaptainAmerica"
     var uivc: UIViewController = UIVC()
 
     enum Collisions: UInt32 {
@@ -22,22 +22,23 @@ final class Labyrinth: MiniGame {
     }
 
     func preloadableAssets() -> [URL] {
-        return []
+        return Sounds.allCases.map { $0.audio } + Videos.allCases.map { $0.video }
     }
 
     enum Sounds: String, CaseIterable, AudioPlayable {
         case Rescue
 
         var audio: URL {
-            return Bundle.media("Labyrinth").audio(rawValue)
+            return Bundle.media("CaptainAmerica").audio(rawValue)
         }
     }
 
     enum Videos: String, CaseIterable, VideoPlayable {
         case LostShield
+        case Avengers
 
         var video: URL {
-            return Bundle.media("Labyrinth").video(rawValue)
+            return Bundle.media("CaptainAmerica").video(rawValue)
         }
     }
 
@@ -56,7 +57,7 @@ final class Labyrinth: MiniGame {
                 return
             }
 
-            AudioPlayer .play(Sounds.Rescue)
+            AudioPlayer.play(Sounds.Rescue)
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
             effectView.frame = view.frame
@@ -67,9 +68,12 @@ final class Labyrinth: MiniGame {
             effectView.contentView.addSubview(skView)
 
             scene = Scene(size: view.frame.insetBy(dx: 8, dy: 20).size)
-            scene?.complexity = 6
+            scene?.complexity = UserDefaults.standard.mazeComplexity
             scene?.completion = {
-                self.dismiss(animated: true)
+                VideoPlayer.instance.play(Videos.Avengers, from: self) {
+                    UserDefaults.standard.mazeComplexity += 1
+                    self.dismiss(animated: true)
+                }
             }
             skView.presentScene(self.scene!)
         }
@@ -343,7 +347,7 @@ final class Labyrinth: MiniGame {
 }
 
 // Enable arrow keys to simulate motion in the simulator
-extension Labyrinth.UIVC {
+extension CaptainAmerica.UIVC {
     override var keyCommands: [UIKeyCommand]? {
         get {
             return [

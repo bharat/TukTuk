@@ -42,7 +42,7 @@
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
 		4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */; };
 		4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */; };
-		4FFEB1FD2130BB26008A3723 /* Labyrinth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFEB1FC2130BB26008A3723 /* Labyrinth.swift */; };
+		4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFEB1FC2130BB26008A3723 /* CaptainAmerica.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +95,7 @@
 		4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JusticeLeague.swift; sourceTree = "<group>"; };
 		4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSquares.swift; sourceTree = "<group>"; };
 		4FFC1C662208B6FA0019A07B /* Media */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Media; sourceTree = "<group>"; };
-		4FFEB1FC2130BB26008A3723 /* Labyrinth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Labyrinth.swift; sourceTree = "<group>"; };
+		4FFEB1FC2130BB26008A3723 /* CaptainAmerica.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptainAmerica.swift; sourceTree = "<group>"; };
 		AB9C99B4DB907A0FA705882B /* Pods_TukTuk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TukTuk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D34EA84987384C2AFDDEEE23 /* Pods-TukTuk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,7 +160,7 @@
 			children = (
 				4F81D5F520A6776D00CB68D8 /* MiniGames.swift */,
 				4F90EB2720A372F000F8EE87 /* Thor.swift */,
-				4FFEB1FC2130BB26008A3723 /* Labyrinth.swift */,
+				4FFEB1FC2130BB26008A3723 /* CaptainAmerica.swift */,
 				4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */,
 				4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */,
 			);
@@ -429,7 +429,7 @@
 			files = (
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
-				4FFEB1FD2130BB26008A3723 /* Labyrinth.swift in Sources */,
+				4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,
 				4F89557920B47B8600E37E53 /* UIImage.swift in Sources */,
 				4F1F17CE209E15B000483499 /* RollAway.swift in Sources */,

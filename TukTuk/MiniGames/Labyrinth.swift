@@ -25,10 +25,38 @@ final class Labyrinth: MiniGame {
         return []
     }
 
+    enum Sounds: String, CaseIterable, AudioPlayable {
+        case Rescue
+
+        var audio: URL {
+            return Bundle.media("Labyrinth").audio(rawValue)
+        }
+    }
+
+    enum Videos: String, CaseIterable, VideoPlayable {
+        case LostShield
+
+        var video: URL {
+            return Bundle.media("Labyrinth").video(rawValue)
+        }
+    }
+
+
     class UIVC: UIViewController {
         var scene: Scene?
 
+        var firstTime = true
         override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+
+            // Show our intro video. viewDidAppear will get called again afterwards
+            if firstTime {
+                VideoPlayer.instance.play(Videos.LostShield, from: self)
+                firstTime = false
+                return
+            }
+
+            AudioPlayer .play(Sounds.Rescue)
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
             effectView.frame = view.frame
@@ -43,7 +71,7 @@ final class Labyrinth: MiniGame {
             scene?.completion = {
                 self.dismiss(animated: true)
             }
-            skView.presentScene(scene!)
+            skView.presentScene(self.scene!)
         }
 
         override func viewWillDisappear(_ animated: Bool) {
@@ -66,8 +94,11 @@ final class Labyrinth: MiniGame {
         }
 
         func nodePosition(from pos: Maze.Position) -> CGPoint {
-            return CGPoint(x: CGFloat(pos.col + 1) * scaleX - 0.5 * scaleX,
-                           y: CGFloat(pos.row + 1) * scaleY - 0.5 * scaleY)
+            return CGPoint(x: CGFloat(pos.col) * scaleX, y: CGFloat(pos.row) * scaleY)
+        }
+
+        func centeredNodePosition(from pos: Maze.Position) -> CGPoint {
+            return nodePosition(from: pos) + CGPoint(x: 0.5 * scaleX, y: 0.5 * scaleY)
         }
     }
 
@@ -76,17 +107,18 @@ final class Labyrinth: MiniGame {
         var view: SKView
         var translator: Translator
 
-        init(imageName: String, view: SKView, radius: CGFloat, translator: Translator) {
+        init(imageName: String, view: SKView, translator: Translator) {
             self.view = view
             self.translator = translator
 
+            let radius: CGFloat = 0.4 * min(translator.scaleX, translator.scaleY)
             let textureNode = SKShapeNode(circleOfRadius: radius)
             textureNode.lineWidth = 1
             textureNode.fillColor = .white
             textureNode.fillTexture = SKTexture(imageNamed: imageName)
-            let marbleTexture = view.texture(from: textureNode)
+            let texture = view.texture(from: textureNode)
 
-            node = SKSpriteNode(texture: marbleTexture)
+            node = SKSpriteNode(texture: texture)
             node.physicsBody = SKPhysicsBody(circleOfRadius: radius)
             node.physicsBody?.usesPreciseCollisionDetection = true
             node.physicsBody?.restitution = 0.2
@@ -98,26 +130,34 @@ final class Labyrinth: MiniGame {
                 return translator.mazePosition(from: node.position)
             }
             set {
-                node.position = translator.nodePosition(from: newValue)
+                node.position = translator.centeredNodePosition(from: newValue)
             }
         }
     }
 
     class Marble: RoundSprite {
-        override init(imageName: String, view: SKView, radius: CGFloat, translator: Translator) {
-            super.init(imageName: imageName, view: view, radius: radius, translator: translator)
+        init(view: SKView, translator: Translator) {
+            super.init(imageName: "Labyrinth_Marble", view: view, translator: translator)
             node.physicsBody?.categoryBitMask = Collisions.marble.rawValue
             node.physicsBody?.contactTestBitMask |= Collisions.target.rawValue
         }
     }
 
     class Target: RoundSprite {
-        override init(imageName: String, view: SKView, radius: CGFloat, translator: Translator) {
-            super.init(imageName: imageName, view: view, radius: radius, translator: translator)
+        init(view: SKView, translator: Translator) {
+            super.init(imageName: "Labyrinth_Target", view: view, translator: translator)
             node.physicsBody?.categoryBitMask = Collisions.target.rawValue
             node.physicsBody?.contactTestBitMask |= Collisions.marble.rawValue
             node.physicsBody?.isDynamic = false
-            node.run(SKAction.repeatForever(SKAction.rotate(byAngle: .pi, duration: 1.0)))
+            node.run(SKAction.repeatForever(
+                SKAction.group([
+                    SKAction.rotate(byAngle: 2 * .pi, duration: 2.0),
+                    SKAction.sequence([
+                        SKAction.scale(by: 2.0, duration: 1.0),
+                        SKAction.scale(by: 0.5, duration: 1.0)
+                        ])
+                    ])
+                ))
         }
     }
 
@@ -172,20 +212,29 @@ final class Labyrinth: MiniGame {
             let bezierPath = UIBezierPath()
             node = SKShapeNode(path: bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern))
             node.strokeColor = .clear
-            node.lineWidth = 1
+            node.lineWidth = 2
         }
 
         func show(maze: Maze, src: RoundSprite, dst: RoundSprite) {
-            let path = maze.solve(from: src.mazePosition, to: dst.mazePosition)!
-            let points = path.map { pos in translator.nodePosition(from: pos) }
-            let bezierPath = UIBezierPath()
-            bezierPath.move(to: points[0])
-            points.dropFirst().forEach { point in
-                bezierPath.addLine(to: point)
+            if let path = maze.solve(from: src.mazePosition, to: dst.mazePosition), path.count > 4 {
+                let points = path[0...Int(path.count)/3].map { pos in translator.centeredNodePosition(from: pos) }
+
+                let bezierPath = UIBezierPath()
+                bezierPath.move(to: src.node.position)
+                points.forEach { point in
+                    bezierPath.addLine(to: point)
+                }
+                bezierPath.lineJoinStyle = .round
+                bezierPath.lineCapStyle = .round
+
+                node.path = bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern)
+                node.strokeColor = .green
+                node.isHidden = false
             }
-            node.strokeColor = .green
-            node.path = bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern)
-            node.run(SKAction.fadeOut(withDuration: 2.0))
+        }
+
+        func hide() {
+            node.isHidden = true
         }
     }
 
@@ -236,11 +285,11 @@ final class Labyrinth: MiniGame {
                 }
             }
 
-            marble = Marble(imageName: "Labyrinth_Marble", view: self.view!, radius: 0.4, translator: translator)
+            marble = Marble(view: self.view!, translator: translator)
             marble.mazePosition = Maze.Position(row: rows - 1, col: cols - 1) // top right
             addChild(marble.node)
 
-            target = Target(imageName: "Labyrinth_Target", view: self.view!, radius: 0.4, translator: translator)
+            target = Target(view: self.view!, translator: translator)
             target.mazePosition = Maze.Position(row: 0, col: 0) // bottom left
             addChild(target.node)
 
@@ -260,6 +309,8 @@ final class Labyrinth: MiniGame {
             completion()
         }
 
+        var lastMoveTime: TimeInterval = 0.0
+        var lastMarblePosition = Maze.Position(row: -1, col: -1)
         override func update(_ currentTime: TimeInterval) {
             super.update(currentTime)
 
@@ -267,7 +318,15 @@ final class Labyrinth: MiniGame {
                 physicsWorld.gravity = CGVector(dx: data.acceleration.x * 5.0, dy: data.acceleration.y * 5.0)
             }
 
-            solution.show(maze: maze, src: marble, dst: target)
+            if marble.mazePosition != lastMarblePosition {
+                lastMoveTime = currentTime
+                lastMarblePosition = marble.mazePosition
+                solution.hide()
+            }
+
+            if currentTime - lastMoveTime > 3.0 {
+                solution.show(maze: maze, src: marble, dst: target)
+            }
         }
 
         func didBegin(_ contact: SKPhysicsContact) {

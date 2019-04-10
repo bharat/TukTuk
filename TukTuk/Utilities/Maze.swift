@@ -77,7 +77,7 @@ class Maze {
         var paths: [Path?] = []
         for dir in Direction.allCases {
             let candidate = src + dir.delta
-            if legalMove(from: src, direction: dir) && inBounds(candidate) && !path.contains(candidate) {
+            if inBounds(candidate) && legalMove(from: src, direction: dir) && !path.contains(candidate) {
                 paths += [solve(from: candidate, to: dst, path: path + [candidate])]
             }
         }

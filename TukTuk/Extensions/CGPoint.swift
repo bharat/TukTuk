@@ -9,6 +9,11 @@
 import Foundation
 import CoreGraphics
 
+func +(_ lhs: CGPoint, _ rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+}
+
+
 extension CGPoint {
     func distance(to point:CGPoint) -> CGFloat {
         return sqrt(pow(x - point.x, 2) + pow(y - point.y, 2))

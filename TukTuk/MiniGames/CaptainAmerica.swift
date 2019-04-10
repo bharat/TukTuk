@@ -25,6 +25,16 @@ final class CaptainAmerica: MiniGame {
         return Sounds.allCases.map { $0.audio } + Videos.allCases.map { $0.video }
     }
 
+    enum BounceSounds: String, CaseIterable, AudioPlayable {
+        case Bounce_1
+        case Bounce_2
+        case Bounce_3
+
+        var audio: URL {
+            return Bundle.media("CaptainAmerica").audio(rawValue)
+        }
+    }
+
     enum Sounds: String, CaseIterable, AudioPlayable {
         case Rescue
 
@@ -338,6 +348,8 @@ final class CaptainAmerica: MiniGame {
             case Collisions.marble.rawValue | Collisions.target.rawValue:
                 done()
             case Collisions.marble.rawValue | Collisions.wall.rawValue:
+                AudioPlayer.stop()
+                AudioPlayer.play(BounceSounds.allCases.randomElement()!)
                 break // play a sound
             default:
                 break

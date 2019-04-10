@@ -224,23 +224,18 @@ final class CaptainAmerica: MiniGame {
             self.translator = translator
 
             let bezierPath = UIBezierPath()
-            node = SKShapeNode(path: bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern))
+            node = SKShapeNode(path: bezierPath.cgPath)
             node.strokeColor = .clear
             node.lineWidth = 2
         }
 
         func show(maze: Maze, src: RoundSprite, dst: RoundSprite) {
             if let path = maze.solve(from: src.mazePosition, to: dst.mazePosition), path.count > 4 {
-                let points = path[0...Int(path.count)/3].map { pos in translator.centeredNodePosition(from: pos) }
-
-                let bezierPath = UIBezierPath()
-                bezierPath.move(to: src.node.position)
-                points.forEach { point in
-                    bezierPath.addLine(to: point)
+                let points = [src.node.position] + path.map {
+                    pos in translator.centeredNodePosition(from: pos)
                 }
-                bezierPath.lineJoinStyle = .round
-                bezierPath.lineCapStyle = .round
 
+                let bezierPath = Bezier.curveFrom(points: points)
                 node.path = bezierPath.cgPath.copy(dashingWithPhase: 2, lengths: pattern)
                 node.strokeColor = .green
                 node.isHidden = false

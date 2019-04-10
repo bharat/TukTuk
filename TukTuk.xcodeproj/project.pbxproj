@@ -42,6 +42,8 @@
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
 		4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */; };
 		4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */; };
+		4FF69124225E9F8800595BDE /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF69123225E9F8800595BDE /* Bezier.swift */; };
+		4FF69126225EB50F00595BDE /* CubicCurveAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */; };
 		4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFEB1FC2130BB26008A3723 /* CaptainAmerica.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +96,8 @@
 		4FBD57B71F098DEB00BDCDE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JusticeLeague.swift; sourceTree = "<group>"; };
 		4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSquares.swift; sourceTree = "<group>"; };
+		4FF69123225E9F8800595BDE /* Bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bezier.swift; sourceTree = "<group>"; };
+		4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubicCurveAlgorithm.swift; sourceTree = "<group>"; };
 		4FFC1C662208B6FA0019A07B /* Media */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Media; sourceTree = "<group>"; };
 		4FFEB1FC2130BB26008A3723 /* CaptainAmerica.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptainAmerica.swift; sourceTree = "<group>"; };
 		AB9C99B4DB907A0FA705882B /* Pods_TukTuk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TukTuk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +155,8 @@
 			children = (
 				4F3270C6225559430063CC32 /* Stats.swift */,
 				4F75101D225D259B0039AA35 /* Maze.swift */,
+				4FF69123225E9F8800595BDE /* Bezier.swift */,
+				4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -431,7 +437,9 @@
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
 				4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,
+				4FF69124225E9F8800595BDE /* Bezier.swift in Sources */,
 				4F89557920B47B8600E37E53 /* UIImage.swift in Sources */,
+				4FF69126225EB50F00595BDE /* CubicCurveAlgorithm.swift in Sources */,
 				4F1F17CE209E15B000483499 /* RollAway.swift in Sources */,
 				4F1F17CC209E159F00483499 /* WordPop.swift in Sources */,
 				4F8E43512097B32B000B935B /* PopUpMenuViewController.swift in Sources */,

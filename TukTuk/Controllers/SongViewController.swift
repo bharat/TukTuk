@@ -28,8 +28,8 @@ class SongViewController: UIViewController {
     @IBOutlet weak var movieButton: UIButton!
     @IBOutlet weak var movieTimerLabel: UILabel!
 
-    var preferredMovie: Movie?
-    var preferredMiniGame: MiniGame?
+    var cuedMovie: Movie?
+    var cuedMiniGame: MiniGame?
     static let movies = Bundle.Player.movies()
     static let songs = Bundle.Player.songs()
     var stats = Stats()
@@ -98,6 +98,7 @@ class SongViewController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        AudioPlayer.stop()
         UserDefaults.standard.movieCountdown = movieCountdown
     }
 
@@ -113,12 +114,12 @@ class SongViewController: UIViewController {
             stats.stop()
             stopButton.isEnabled = false
 
-            let movie = preferredMovie ?? SongViewController.movies.randomElement()!
+            let movie = cuedMovie ?? SongViewController.movies.randomElement()!
             VideoPlayer.instance.play(movie, from: self)
             stats.start(movie: movie)
 
             movieButton.isHidden = true
-            preferredMovie = nil
+            cuedMovie = nil
 
         case stopButton:
             stats.stop()
@@ -160,21 +161,26 @@ extension SongViewController: UIViewControllerPreviewingDelegate {
     func controlPanel() -> PopUpMenuViewController {
         let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PopUpMenuVC") as! PopUpMenuViewController
 
+        let mazeComplexities = Array(1...20).map { "\($0)" }
         previewTVC.tableTitle = "Control Panel"
         previewTVC.groups = [
             MenuGroup(title: "Cue up a movie", id: "movie", choices: SongViewController.movies.map { $0.title }),
-            MenuGroup(title: "Cue up a MiniGame", id: "minigame", choices: MiniGames.all.map { $0.title })
+            MenuGroup(title: "Cue up a MiniGame", id: "minigame", choices: MiniGames.all.map { $0.title }),
+            MenuGroup(title: "Set Maze level", id: "maze", choices: mazeComplexities),
         ]
         previewTVC.completion = { id, index in
             switch(id) {
             case "movie":
                 self.movieCountdown = 0
-                self.preferredMovie = SongViewController.movies[index]
-                self.stats.cue(movie: self.preferredMovie!)
+                self.cuedMovie = SongViewController.movies[index]
+                self.stats.cue(movie: self.cuedMovie!)
 
             case "minigame":
-                self.preferredMiniGame = MiniGames.all[index]
-                self.stats.cue(miniGame: self.preferredMiniGame!)
+                self.cuedMiniGame = MiniGames.all[index]
+                self.stats.cue(miniGame: self.cuedMiniGame!)
+
+            case "maze":
+                UserDefaults.standard.mazeComplexity = Int(mazeComplexities[index]) ?? 1
 
             default:
                 ()
@@ -216,10 +222,10 @@ extension SongViewController: UICollectionViewDelegate {
         collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
 
         if !VideoPlayer.instance.isPlaying {
-            if let preferredMiniGame = preferredMiniGame {
+            if let preferredMiniGame = cuedMiniGame {
                 stats.start(miniGame: preferredMiniGame)
                 show(preferredMiniGame.uivc, sender: self)
-                self.preferredMiniGame = nil
+                self.cuedMiniGame = nil
                 return
             }
             

@@ -36,15 +36,15 @@ class VideoPlayer {
         NotificationCenter.default.addObserver(self, selector: #selector(hide), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: vc.player?.currentItem)
     }
 
-    var isPlaying: Bool {
-        return vc.player?.timeControlStatus == .playing
+    var isStopped: Bool {
+        return vc.player?.timeControlStatus != .playing
     }
 
     @objc func pauseOrResume() {
-        if isPlaying {
-            vc.player?.pause()
-        } else {
+        if isStopped {
             vc.player?.play()
+        } else {
+            vc.player?.pause()
         }
     }
 

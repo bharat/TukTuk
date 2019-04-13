@@ -98,7 +98,6 @@ class SongViewController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        AudioPlayer.stop()
         UserDefaults.standard.movieCountdown = movieCountdown
     }
 
@@ -109,23 +108,10 @@ class SongViewController: UIViewController {
     @IBAction func buttonTapped(_ sender: UIButton) {
         switch(sender) {
         case movieButton:
-            deselectAllSongs()
-            AudioPlayer.stop()
-            stats.stop()
-            stopButton.isEnabled = false
-
-            let movie = cuedMovie ?? SongViewController.movies.randomElement()!
-            VideoPlayer.instance.play(movie, from: self)
-            stats.start(movie: movie)
-
-            movieButton.isHidden = true
-            cuedMovie = nil
+            playMovie()
 
         case stopButton:
-            stats.stop()
-            deselectAllSongs()
-            AudioPlayer.stop()
-            stopButton.isEnabled = false
+            stopSong()
 
         default:
             ()
@@ -136,6 +122,68 @@ class SongViewController: UIViewController {
         if gesture.state == .began {
             show(controlPanel(), sender: self)
         }
+    }
+
+    func playMovie() {
+        deselectAllSongs()
+        AudioPlayer.stop()
+        stats.stop()
+        stopButton.isEnabled = false
+
+        let movie = cuedMovie ?? SongViewController.movies.randomElement()!
+        VideoPlayer.instance.play(movie, from: self)
+        stats.start(movie: movie)
+
+        movieButton.isHidden = true
+        cuedMovie = nil
+    }
+
+    func stopSong() {
+        stats.stop()
+        deselectAllSongs()
+        AudioPlayer.stop()
+        stopButton.isEnabled = false
+    }
+
+    func maybePlayMiniGame() -> Bool {
+        var miniGame: MiniGame?
+        if let cuedMiniGame = cuedMiniGame {
+            miniGame = cuedMiniGame
+            self.cuedMiniGame = nil
+        } else if Array(1...60).randomElement()! == 1 {
+            miniGame = MiniGames.all.randomElement()!
+        }
+
+        if let miniGame = miniGame {
+            stopSong()
+            stats.start(miniGame: miniGame)
+            show(miniGame.uivc, sender: self)
+            return true
+        }
+
+        return false
+    }
+
+    func playSong(_ song: Song) {
+        if AudioPlayer.player?.isPlaying ?? false {
+            stats.stop()
+        }
+
+        print("Playing song: \(song.title)")
+        stats.start(song: song)
+        AudioPlayer.play(song, whilePlaying: {
+            self.movieCountdown -= 1
+        }, whenComplete: {
+            self.stats.complete()
+            self.deselectAllSongs()
+        })
+    }
+
+    func deselectAllSongs() {
+        songCollection.indexPathsForSelectedItems?.forEach {
+            songCollection.deselectItem(at: $0, animated: true)
+        }
+        songCollectionLayout.redraw()
     }
 }
 
@@ -221,40 +269,15 @@ extension SongViewController: UICollectionViewDelegate {
         songCollectionLayout.redraw()
         collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
 
-        if !VideoPlayer.instance.isPlaying {
-            if let preferredMiniGame = cuedMiniGame {
-                stats.start(miniGame: preferredMiniGame)
-                show(preferredMiniGame.uivc, sender: self)
-                self.cuedMiniGame = nil
-                return
-            }
-            
-            if Array(1...60).randomElement()! == 1 {
-                let miniGame = MiniGames.all.randomElement()!
-                stats.start(miniGame: miniGame)
-                show(miniGame.uivc, sender: self)
+        if VideoPlayer.instance.isStopped {
+            if maybePlayMiniGame() {
                 return
             }
 
             stopButton.isEnabled = true
-
             let song = SongViewController.songs[indexPath.row]
-            print("Playing song: \(song.title)")
-            stats.start(song: song)
-            AudioPlayer.play(song, whilePlaying: {
-                self.movieCountdown -= 1
-            }, whenComplete: {
-                self.stats.complete()
-                self.deselectAllSongs()
-            })
+            playSong(song)
         }
-    }
-
-    func deselectAllSongs() {
-        songCollection.indexPathsForSelectedItems?.forEach {
-            songCollection.deselectItem(at: $0, animated: true)
-        }
-        songCollectionLayout.redraw()
     }
 }
 
@@ -296,4 +319,3 @@ extension SongViewController: UICollectionViewDataSource {
         return cell
     }
 }
-

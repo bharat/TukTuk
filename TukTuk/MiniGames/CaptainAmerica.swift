@@ -231,7 +231,7 @@ final class CaptainAmerica: MiniGame {
 
         func show(maze: Maze, src: RoundSprite, dst: RoundSprite) {
             if let path = maze.solve(from: src.mazePosition, to: dst.mazePosition), path.count > 4 {
-                let points = [src.node.position] + path.map {
+                let points = [src.node.position] + path[0...path.count/3].map {
                     pos in translator.centeredNodePosition(from: pos)
                 }
 
@@ -278,9 +278,8 @@ final class CaptainAmerica: MiniGame {
 
             let rows = Int(CGFloat(complexity) * (frame.height / frame.width))
             let cols = complexity
-            maze = Maze(cols: cols, rows: rows)
-
             translator = Translator(frame: frame, rows: rows, cols: cols)
+            maze = Maze(cols: cols, rows: rows)
 
             for (row, cols) in maze.maze.enumerated() {
                 for (col, bits) in cols.enumerated() {
@@ -343,9 +342,9 @@ final class CaptainAmerica: MiniGame {
             case Collisions.marble.rawValue | Collisions.target.rawValue:
                 done()
             case Collisions.marble.rawValue | Collisions.wall.rawValue:
-                AudioPlayer.stop()
-                AudioPlayer.play(BounceSounds.allCases.randomElement()!)
-                break // play a sound
+                if AudioPlayer.player?.isPlaying ?? false {
+                    AudioPlayer.play(BounceSounds.allCases.randomElement()!)
+                }
             default:
                 break
             }

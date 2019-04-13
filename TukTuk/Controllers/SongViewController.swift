@@ -126,7 +126,7 @@ class SongViewController: UIViewController {
 
     func playMovie() {
         deselectAllSongs()
-        AudioPlayer.stop()
+        AudioPlayer.instance.stop()
         stats.stop()
         stopButton.isEnabled = false
 
@@ -141,7 +141,7 @@ class SongViewController: UIViewController {
     func stopSong() {
         stats.stop()
         deselectAllSongs()
-        AudioPlayer.stop()
+        AudioPlayer.instance.stop()
         stopButton.isEnabled = false
     }
 
@@ -165,13 +165,13 @@ class SongViewController: UIViewController {
     }
 
     func playSong(_ song: Song) {
-        if AudioPlayer.player?.isPlaying ?? false {
+        if AudioPlayer.instance.isPlaying {
             stats.stop()
         }
 
         print("Playing song: \(song.title)")
         stats.start(song: song)
-        AudioPlayer.play(song, whilePlaying: {
+        AudioPlayer.instance.play(song, whilePlaying: {
             self.movieCountdown -= 1
         }, whenComplete: {
             self.stats.complete()

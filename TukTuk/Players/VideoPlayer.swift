@@ -19,7 +19,7 @@ class VideoPlayer {
     var vc: AVPlayerViewController
     var completion = {}
 
-    init() {
+    fileprivate init() {
         vc = AVPlayerViewController()
         vc.showsPlaybackControls = false
         vc.contentOverlayView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pauseOrResume)))

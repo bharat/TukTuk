@@ -67,7 +67,7 @@ final class CaptainAmerica: MiniGame {
                 return
             }
 
-            AudioPlayer.play(Sounds.Rescue)
+            AudioPlayer.instance.play(Sounds.Rescue)
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
             effectView.frame = view.frame
@@ -342,8 +342,8 @@ final class CaptainAmerica: MiniGame {
             case Collisions.marble.rawValue | Collisions.target.rawValue:
                 done()
             case Collisions.marble.rawValue | Collisions.wall.rawValue:
-                if AudioPlayer.player?.isPlaying ?? false {
-                    AudioPlayer.play(BounceSounds.allCases.randomElement()!)
+                if AudioPlayer.instance.player?.isPlaying ?? false {
+                    AudioPlayer.instance.play(BounceSounds.allCases.randomElement()!)
                 }
             default:
                 break

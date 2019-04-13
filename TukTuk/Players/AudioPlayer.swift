@@ -14,12 +14,20 @@ protocol AudioPlayable {
 }
 
 class AudioPlayer {
-    static var player: AVAudioPlayer?
-    static var timer: Timer?
+    static var instance = AudioPlayer()
+    var player: AVAudioPlayer?
+    var timer: Timer?
+
+    fileprivate init() {
+    }
+
+    var isPlaying: Bool {
+        return player?.isPlaying ?? false
+    }
 
     // We purposefully don't do any error handling here because this has never failed in practice
     // and there's no graceful way to handle it. If this app can't play audio, it might as well crash.
-    static func play(_ object: AudioPlayable, whilePlaying tick: @escaping () -> () = {}, whenComplete done: @escaping () -> () = {}) {
+    func play(_ object: AudioPlayable, whilePlaying tick: @escaping () -> () = {}, whenComplete done: @escaping () -> () = {}) {
         try! AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
         try! AVAudioSession.sharedInstance().setActive(true)
 
@@ -50,7 +58,7 @@ class AudioPlayer {
         })
     }
 
-    private static func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
+    private func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
         if new.volume < 1.0 {
             old.volume -= 0.1
             new.volume += 0.1
@@ -61,7 +69,7 @@ class AudioPlayer {
         }
     }
     
-    static func stop() {
+    func stop() {
         player?.stop()
         player = nil
         

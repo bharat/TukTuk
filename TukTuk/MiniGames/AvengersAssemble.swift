@@ -86,7 +86,7 @@ final class AvengersAssemble: MiniGame {
 
     class UIVC: UIViewController {
         override func viewDidLoad() {
-            AudioPlayer.play(Sounds.Assemble)
+            AudioPlayer.instance.play(Sounds.Assemble)
 
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
@@ -176,7 +176,7 @@ final class AvengersAssemble: MiniGame {
                     $0.enticing = true
                 }
 
-                AudioPlayer.play(Sounds.ChooseAnAvenger)
+                AudioPlayer.instance.play(Sounds.ChooseAnAvenger)
                 completion()
             }
         }
@@ -202,7 +202,7 @@ final class AvengersAssemble: MiniGame {
 
                     // Accelerate to the finish if it's taking too long
                     turnsRemaining -= 1
-                    AudioPlayer.play(new)
+                    AudioPlayer.instance.play(new)
                     if turnsRemaining == 0 {
                         self.blocks.filter { $0 != block }.forEach {
                             $0.show(new)
@@ -228,7 +228,7 @@ final class AvengersAssemble: MiniGame {
         }
         
         func select(hero: Hero, from block: Block) {
-            AudioPlayer.play(Sounds.Tada)
+            AudioPlayer.instance.play(Sounds.Tada)
 
             blocks.filter { $0 != block }.forEach {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))

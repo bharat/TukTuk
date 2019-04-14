@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class WelcomeViewController: UIViewController {
-    var preferred: Animation?
     var welcomeImageView = UIImageView()
 
     override func viewDidLoad() {
@@ -29,10 +28,7 @@ class WelcomeViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleWelcomeTap(sender:)))
         welcomeImageView.addGestureRecognizer(tap)
 
-        // 3DTouch or a long press on the welcome image will bring up an interface where you can
-        // choose which animation will play
-        registerForPreviewing(with: self, sourceView: welcomeImageView)
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleWelcomeLongPress(gesture:)))
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(showSettings(gesture:)))
         long.minimumPressDuration = 5.0
         welcomeImageView.addGestureRecognizer(long)
 
@@ -49,9 +45,10 @@ class WelcomeViewController: UIViewController {
         sender.isEnabled = false
 
         // Run a random welcome animation, or a preset if specified
-        let animation = preferred ?? Animations.all.filter { $0 != None.self }.randomElement()!.init()
+        let animation = Settings.cuedAnimation ?? Animations.all.randomElement()!
+        Settings.cuedAnimation = nil
         animation.animate(view: self.welcomeImageView) {
-            self.performSegue(withIdentifier: "SongViewController", sender: self)
+            self.performSegue(withIdentifier: "Songs", sender: self)
 
             // It's useful to re-enable this since in the simulator you can hit escape
             // and go back to the welcome view and run the animation again
@@ -59,31 +56,9 @@ class WelcomeViewController: UIViewController {
         }
     }
 
-    @objc func handleWelcomeLongPress(gesture: UIGestureRecognizer) {
+    @objc func showSettings(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            show(animationChooser(), sender: self)
+            performSegue(withIdentifier: "Settings", sender: self)
         }
-    }
-}
-
-extension WelcomeViewController: UIViewControllerPreviewingDelegate {
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        show(animationChooser(), sender: self)
-    }
-
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        return animationChooser()
-    }
-
-    func animationChooser() -> PopUpMenuViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PopUpMenuVC") as! PopUpMenuViewController
-        previewTVC.tableTitle = "Control Panel"
-        previewTVC.groups = [
-            MenuGroup(title: "Choose the Welcome animation", id: "animation", choices: Animations.all.map { $0.title })
-        ]
-        previewTVC.completion = { id, index in
-            self.preferred = Animations.all[index].init()
-        }
-        return previewTVC
     }
 }

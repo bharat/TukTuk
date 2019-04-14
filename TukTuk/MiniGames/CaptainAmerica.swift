@@ -14,6 +14,18 @@ import CoreMotion
 final class CaptainAmerica: MiniGame {
     var title = "CaptainAmerica"
     var uivc: UIViewController = UIVC()
+    static var levels: [Titled] = Array(1...20).map{ Level($0) }
+
+    class Level: Titled {
+        var level: Int
+        var title: String {
+            return "\(level)"
+        }
+
+        init(_ level: Int) {
+            self.level = level
+        }
+    }
 
     enum Collisions: UInt32 {
         case wall   = 1
@@ -24,6 +36,7 @@ final class CaptainAmerica: MiniGame {
     func preloadableAssets() -> [URL] {
         return Sounds.allCases.map { $0.audio } + Videos.allCases.map { $0.video }
     }
+
 
     enum BounceSounds: String, CaseIterable, AudioPlayable {
         case Bounce_1

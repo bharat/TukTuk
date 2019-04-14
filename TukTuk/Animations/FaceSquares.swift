@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class FaceSquares: Animation {
-    static var title: String = "Face Squares"
+    var title: String = "Face Squares"
 
     required init() {
     }

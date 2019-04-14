@@ -12,6 +12,9 @@ import UIKit
 extension Bundle {
     static var bundles: [String: Bundle] = [:]
 
+    static var cachedMovies: [Movie]?
+    static var cachedSongs: [Song]?
+
     static func media(_ name: String) -> Bundle {
         if !bundles.keys.contains(name) {
             print("Load bundle: \(name)")
@@ -31,28 +34,36 @@ extension Bundle {
     }
 
     func songs() -> [Song] {
-        let audios = urls(forResourcesWithExtension: "mp3", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
-        let covers = urls(forResourcesWithExtension: "png", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
+        if Bundle.cachedSongs == nil {
+            let audios = urls(forResourcesWithExtension: "mp3", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
+            let covers = urls(forResourcesWithExtension: "png", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
 
-        assert(audios.count == covers.count)
+            assert(audios.count == covers.count)
 
-        return zip(audios, covers).map { arg in
-            let (audio, cover) = arg
-            let fileName = audio.lastPathComponent
-            let title = audio.deletingPathExtension().lastPathComponent
-            print("Load song: \(title)")
-            return try! Song(fileName: fileName, title: title, image: UIImage(data: Data(contentsOf: cover))!, audio: audio)
+            Bundle.cachedSongs = zip(audios, covers).map { arg in
+                let (audio, cover) = arg
+                let fileName = audio.lastPathComponent
+                let title = audio.deletingPathExtension().lastPathComponent
+                print("Load song: \(title)")
+                return try! Song(fileName: fileName, title: title, image: UIImage(data: Data(contentsOf: cover))!, audio: audio)
+            }
         }
+
+        return Bundle.cachedSongs!
     }
 
     func movies() -> [Movie] {
-        let path = resourcePath! + "/Video"
-        let files = try! FileManager.default.contentsOfDirectory(atPath: path).sorted()
+        if Bundle.cachedMovies == nil {
+            let path = resourcePath! + "/Video"
+            let files = try! FileManager.default.contentsOfDirectory(atPath: path).sorted()
 
-        return files.map { name in
-            print("Load video: \(name)")
-            return Movie(video: url(forAuxiliaryExecutable: "\(path)/\(name)")!, title: (name as NSString).deletingPathExtension)
+            Bundle.cachedMovies = files.map { name in
+                print("Load video: \(name)")
+                return Movie(video: url(forAuxiliaryExecutable: "\(path)/\(name)")!, title: (name as NSString).deletingPathExtension)
+            }
         }
+
+        return Bundle.cachedMovies!
     }
 }
 

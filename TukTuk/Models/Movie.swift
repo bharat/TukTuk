@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Movie: VideoPlayable {
+struct Movie: VideoPlayable, Titled {
     var video: URL
     var title: String
 }

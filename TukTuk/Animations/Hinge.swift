@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class Hinge: Animation {
-    static var title: String = "Hinge"
+    var title: String = "Hinge"
 
     required init() {
     }

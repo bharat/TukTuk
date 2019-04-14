@@ -11,6 +11,9 @@
 		4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */; };
 		4F0824942208D64000D45C40 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = 4FFC1C662208B6FA0019A07B /* Media */; };
 		4F08249E22090BAC00D45C40 /* Preloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08249D22090BAC00D45C40 /* Preloadable.swift */; };
+		4F11FEF122616D0C00AD777D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF022616D0C00AD777D /* SettingsViewController.swift */; };
+		4F11FEF52263BB3600AD777D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF42263BB3600AD777D /* Settings.swift */; };
+		4F11FEF72263BB8500AD777D /* Titled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF62263BB8500AD777D /* Titled.swift */; };
 		4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C9209E150F00483499 /* FaceBalls.swift */; };
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
 		4F1F17CE209E15B000483499 /* RollAway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CD209E15B000483499 /* RollAway.swift */; };
@@ -26,7 +29,6 @@
 		4F8A2A9C209F730E000C2CA5 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2A9B209F730E000C2CA5 /* AudioPlayer.swift */; };
 		4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AA820A0D550000C2CA5 /* VideoPlayer.swift */; };
 		4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */; };
-		4F8E43512097B32B000B935B /* PopUpMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8E43502097B32B000B935B /* PopUpMenuViewController.swift */; };
 		4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F90EB2720A372F000F8EE87 /* Thor.swift */; };
 		4F9DDD3E22161C4B00D3EFAF /* StringTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD2E22161BD600D3EFAF /* StringTest.swift */; };
 		4F9DDD41222319D500D3EFAF /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD40222319D500D3EFAF /* URL.swift */; };
@@ -61,6 +63,9 @@
 		313AAED39EC65E1F2E3920D7 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
 		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
 		4F08249D22090BAC00D45C40 /* Preloadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preloadable.swift; sourceTree = "<group>"; };
+		4F11FEF022616D0C00AD777D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		4F11FEF42263BB3600AD777D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		4F11FEF62263BB8500AD777D /* Titled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Titled.swift; sourceTree = "<group>"; };
 		4F1F17C9209E150F00483499 /* FaceBalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBalls.swift; sourceTree = "<group>"; };
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
 		4F1F17CD209E15B000483499 /* RollAway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollAway.swift; sourceTree = "<group>"; };
@@ -76,7 +81,6 @@
 		4F8A2A9B209F730E000C2CA5 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		4F8A2AA820A0D550000C2CA5 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		4F8E43502097B32B000B935B /* PopUpMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMenuViewController.swift; sourceTree = "<group>"; };
 		4F90EB2720A372F000F8EE87 /* Thor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thor.swift; sourceTree = "<group>"; };
 		4F9DDD2E22161BD600D3EFAF /* StringTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTest.swift; sourceTree = "<group>"; };
 		4F9DDD3422161C3D00D3EFAF /* TukTukTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TukTukTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +161,8 @@
 				4F75101D225D259B0039AA35 /* Maze.swift */,
 				4FF69123225E9F8800595BDE /* Bezier.swift */,
 				4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */,
+				4F11FEF42263BB3600AD777D /* Settings.swift */,
+				4F11FEF62263BB8500AD777D /* Titled.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -205,9 +211,9 @@
 		4FBD0FDF20F5678A00BB5E32 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4F8E43502097B32B000B935B /* PopUpMenuViewController.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
 				4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */,
+				4F11FEF022616D0C00AD777D /* SettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -382,7 +388,6 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework",
-				"${BUILT_PRODUCTS_DIR}/BezierKit/BezierKit.framework",
 				"${BUILT_PRODUCTS_DIR}/CollectionViewSlantedLayout/CollectionViewSlantedLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyAnimation/EasyAnimation.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
@@ -390,7 +395,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplitude_iOS.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BezierKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CollectionViewSlantedLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyAnimation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
@@ -435,6 +439,7 @@
 			files = (
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
+				4F11FEF122616D0C00AD777D /* SettingsViewController.swift in Sources */,
 				4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,
 				4FF69124225E9F8800595BDE /* Bezier.swift in Sources */,
@@ -442,7 +447,6 @@
 				4FF69126225EB50F00595BDE /* CubicCurveAlgorithm.swift in Sources */,
 				4F1F17CE209E15B000483499 /* RollAway.swift in Sources */,
 				4F1F17CC209E159F00483499 /* WordPop.swift in Sources */,
-				4F8E43512097B32B000B935B /* PopUpMenuViewController.swift in Sources */,
 				4F81D5F820A7600C00CB68D8 /* None.swift in Sources */,
 				4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */,
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
@@ -452,6 +456,7 @@
 				4F75101E225D259B0039AA35 /* Maze.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
+				4F11FEF52263BB3600AD777D /* Settings.swift in Sources */,
 				4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */,
 				4F8A2A9C209F730E000C2CA5 /* AudioPlayer.swift in Sources */,
 				4F3270C7225559430063CC32 /* Stats.swift in Sources */,
@@ -465,6 +470,7 @@
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
 				4FA64A87223D722100AED085 /* SongCell.swift in Sources */,
 				4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */,
+				4F11FEF72263BB8500AD777D /* Titled.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,7 +600,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -646,7 +652,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

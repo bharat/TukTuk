@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class WordPop: Animation {
-    static var title: String = "Word Pop"
+    var title: String = "Word Pop"
 
     required init() {
     }

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class RollAway: Animation {
-    static var title: String = "Roll Away"
+    var title: String = "Roll Away"
 
     required init() {
     }

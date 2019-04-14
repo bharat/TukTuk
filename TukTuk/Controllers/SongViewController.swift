@@ -22,22 +22,17 @@ extension TimeInterval {
 class SongViewController: UIViewController {
     @IBOutlet weak var songCollection: UICollectionView!
     @IBOutlet weak var songCollectionLayout: CollectionViewSlantedLayout!
-
     @IBOutlet weak var buttons: UIStackView!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var movieButton: UIButton!
     @IBOutlet weak var movieTimerLabel: UILabel!
 
-    var cuedMovie: Movie?
-    var cuedMiniGame: MiniGame?
-    static let movies = Bundle.Player.movies()
-    static let songs = Bundle.Player.songs()
+    var movies = Bundle.Player.movies()
+    var songs = Bundle.Player.songs()
     var stats = Stats()
 
-    var showSongFilenames: Bool = false
-
     static func preload() {
-        _ = [movies, songs]
+        _ = [Bundle.Player.movies(), Bundle.Player.songs()]
     }
 
     var movieCountdown: TimeInterval = 0 {
@@ -60,10 +55,9 @@ class SongViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // 3DTouch or a long press on the stop button will bring up an interface where you can
+        // Long press on the stop button will bring up an interface where you can
         // cue up a MiniGame or a Movie
-        registerForPreviewing(with: self, sourceView: stopButton)
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(handleControlPanelGesture(gesture:)))
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(showSettings(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
@@ -118,9 +112,9 @@ class SongViewController: UIViewController {
         }
     }
 
-    @objc func handleControlPanelGesture(gesture: UIGestureRecognizer) {
+    @objc func showSettings(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            show(controlPanel(), sender: self)
+            performSegue(withIdentifier: "Settings", sender: self)
         }
     }
 
@@ -130,12 +124,12 @@ class SongViewController: UIViewController {
         stats.stop()
         stopButton.isEnabled = false
 
-        let movie = cuedMovie ?? SongViewController.movies.randomElement()!
+        let movie = Settings.cuedMovie ?? movies.randomElement()!
         VideoPlayer.instance.play(movie, from: self)
         stats.start(movie: movie)
 
         movieButton.isHidden = true
-        cuedMovie = nil
+        Settings.cuedMovie = nil
     }
 
     func stopSong() {
@@ -147,9 +141,9 @@ class SongViewController: UIViewController {
 
     func maybePlayMiniGame() -> Bool {
         var miniGame: MiniGame?
-        if let cuedMiniGame = cuedMiniGame {
+        if let cuedMiniGame = Settings.cuedMiniGame {
             miniGame = cuedMiniGame
-            self.cuedMiniGame = nil
+            Settings.cuedMiniGame = nil
         } else if Array(1...60).randomElement()! == 1 {
             miniGame = MiniGames.all.randomElement()!
         }
@@ -187,57 +181,6 @@ class SongViewController: UIViewController {
     }
 }
 
-extension SongViewController: UIViewControllerPreviewingDelegate {
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        switch(previewingContext.sourceView) {
-        case stopButton:
-            show(controlPanel(), sender: self)
-        default:
-            break
-        }
-    }
-
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        switch(previewingContext.sourceView) {
-        case stopButton:
-            return controlPanel()
-        default:
-            return nil
-        }
-    }
-
-    func controlPanel() -> PopUpMenuViewController {
-        let previewTVC = storyboard?.instantiateViewController(withIdentifier: "PopUpMenuVC") as! PopUpMenuViewController
-
-        let mazeComplexities = Array(1...20).map { "\($0)" }
-        previewTVC.tableTitle = "Control Panel"
-        previewTVC.groups = [
-            MenuGroup(title: "Cue up a movie", id: "movie", choices: SongViewController.movies.map { $0.title }),
-            MenuGroup(title: "Cue up a MiniGame", id: "minigame", choices: MiniGames.all.map { $0.title }),
-            MenuGroup(title: "Set Maze level", id: "maze", choices: mazeComplexities),
-        ]
-        previewTVC.completion = { id, index in
-            switch(id) {
-            case "movie":
-                self.movieCountdown = 0
-                self.cuedMovie = SongViewController.movies[index]
-                self.stats.cue(movie: self.cuedMovie!)
-
-            case "minigame":
-                self.cuedMiniGame = MiniGames.all[index]
-                self.stats.cue(miniGame: self.cuedMiniGame!)
-
-            case "maze":
-                UserDefaults.standard.mazeComplexity = Int(mazeComplexities[index]) ?? 1
-
-            default:
-                ()
-            }
-        }
-        return previewTVC
-    }
-}
-
 extension SongViewController: CollectionViewDelegateSlantedLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: CollectionViewSlantedLayout,
@@ -262,6 +205,7 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
     }
 }
 
+
 extension SongViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         stopButton.isEnabled = false
@@ -275,7 +219,7 @@ extension SongViewController: UICollectionViewDelegate {
             }
 
             stopButton.isEnabled = true
-            let song = SongViewController.songs[indexPath.row]
+            let song = songs[indexPath.row]
             playSong(song)
         }
     }
@@ -301,13 +245,13 @@ extension SongViewController: UIScrollViewDelegate {
 
 extension SongViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return SongViewController.songs.count
+        return songs.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
-        let song = SongViewController.songs[indexPath.row]
+        let song = songs[indexPath.row]
 
         cell.image = song.image
         cell.title.text = song.title
@@ -319,3 +263,4 @@ extension SongViewController: UICollectionViewDataSource {
         return cell
     }
 }
+

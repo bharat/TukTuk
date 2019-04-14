@@ -17,20 +17,19 @@ enum Sounds: String, CaseIterable, AudioPlayable {
     }
 }
 
-protocol Animation {
-    static var title: String { get }
+protocol Animation: Titled {
+    var title: String { get }
 
     init()
     func animate(view: UIView, completion: @escaping ()->())
 }
 
 class Animations {
-    static var all: [Animation.Type] = [
-        Hinge.self,
-        RollAway.self,
-        WordPop.self,
-        FaceBalls.self,
-        FaceSquares.self,
-        None.self
+    static var all: [Animation] = [
+        Hinge(),
+        RollAway(),
+        WordPop(),
+        FaceBalls(),
+        FaceSquares(),
     ]
 }

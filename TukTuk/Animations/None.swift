@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class None: Animation {
-    static var title: String = "None"
+    var title: String = "None"
 
     required init() {
     }

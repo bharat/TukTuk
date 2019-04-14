@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol MiniGame: HasPreloadableAssets {
+protocol MiniGame: HasPreloadableAssets, Titled {
     var title: String { get }
     var uivc: UIViewController { get }
 

@@ -11,13 +11,13 @@ import Foundation
 extension UserDefaults {
     enum Key: String {
         case movieCountdown = "movieCountdown"
-        case mazeComplexity = "mazeComplexity"
+        case mazeLevel = "mazeLevel"
     }
 
     func registerDefaults() {
         register(defaults: [
             Key.movieCountdown.rawValue: TimeInterval.MovieInterval,
-            Key.mazeComplexity.rawValue: 3
+            Key.mazeLevel.rawValue: 3
         ])
     }
 
@@ -31,12 +31,12 @@ extension UserDefaults {
         }
     }
 
-    var mazeComplexity: Int {
+    var mazeLevel: Int {
         get {
-            return integer(forKey: Key.mazeComplexity.rawValue)
+            return integer(forKey: Key.mazeLevel.rawValue)
         }
         set {
-            setValue(newValue, forKey: Key.mazeComplexity.rawValue)
+            setValue(newValue, forKey: Key.mazeLevel.rawValue)
         }
     }
 }

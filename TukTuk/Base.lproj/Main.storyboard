@@ -227,7 +227,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="P3k-Z1-AUC">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="NEY-wF-sEN">
+                        <barButtonItem key="leftBarButtonItem" title="Done" id="NEY-wF-sEN">
                             <connections>
                                 <action selector="done" destination="E5K-1k-TcD" id="L4j-8F-qWD"/>
                             </connections>

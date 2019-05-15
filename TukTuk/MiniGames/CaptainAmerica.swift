@@ -14,12 +14,34 @@ import CoreMotion
 final class CaptainAmerica: MiniGame {
     var title = "CaptainAmerica"
     var uivc: UIViewController = UIVC()
-    static var levels: [Titled] = Array(1...20).map{ Level($0) }
+    static var levels: [Titled] = Array(1...10).map{ Level($0) }
 
     class Level: Titled {
         var level: Int
         var title: String {
             return "\(level)"
+        }
+
+        var reward: Videos {
+            switch level {
+            case  1: return Videos.Reward_Magnet_Mayhem
+            case  2: return Videos.Reward_Spidey_and_IronMan
+            case  3: return Videos.Reward_Rocket_and_Groot
+            case  4: return Videos.Reward_Hulk_BlackWidow
+            case  5: return Videos.Reward_Chimichangas
+            case  6: return Videos.Reward_CaptainAmerica_vs_RedSkull
+            case  7: return Videos.Reward_Thor
+            case  8: return Videos.Reward_SpiderGwen
+            case  9: return Videos.Reward_Cello_Wars
+            case 10: return Videos.Reward_Guardians_Full
+
+            default:
+                return Videos.Reward_Magnet_Mayhem
+            }
+        }
+
+        var complexity: Int {
+            return level
         }
 
         init(_ level: Int) {
@@ -58,25 +80,29 @@ final class CaptainAmerica: MiniGame {
 
     enum Videos: String, CaseIterable, VideoPlayable {
         case LostShield
-        case Avengers
+        case Reward_Magnet_Mayhem
+        case Reward_Spidey_and_IronMan
+        case Reward_Rocket_and_Groot
+        case Reward_Hulk_BlackWidow
+        case Reward_Chimichangas
+        case Reward_CaptainAmerica_vs_RedSkull
+        case Reward_Thor
+        case Reward_SpiderGwen
+        case Reward_Cello_Wars
+        case Reward_Guardians_Full
 
         var video: URL {
             return Bundle.media("CaptainAmerica").video(rawValue)
         }
     }
 
-
     class UIVC: UIViewController {
         var scene: Scene?
 
-        var firstTime = true
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
 
-            // Show our intro video. viewDidAppear will get called again afterwards
-            if firstTime {
-                VideoPlayer.instance.play(Videos.LostShield, from: self)
-                firstTime = false
+            if maybePlayPreroll() {
                 return
             }
 
@@ -91,19 +117,32 @@ final class CaptainAmerica: MiniGame {
             effectView.contentView.addSubview(skView)
 
             scene = Scene(size: view.frame.insetBy(dx: 8, dy: 20).size)
-            scene?.complexity = UserDefaults.standard.mazeComplexity
-            scene?.completion = {
-                VideoPlayer.instance.play(Videos.Avengers, from: self) {
-                    UserDefaults.standard.mazeComplexity += 1
-                    self.dismiss(animated: true)
+            if let scene = scene {
+                scene.level = Level(UserDefaults.standard.mazeLevel)
+                scene.completion = {
+                    VideoPlayer.instance.play(scene.level.reward, from: self) {
+                        self.dismiss(animated: animated)
+                        UserDefaults.standard.mazeLevel += 1
+                    }
                 }
+                skView.presentScene(scene)
             }
-            skView.presentScene(self.scene!)
         }
 
         override func viewWillDisappear(_ animated: Bool) {
             scene?.removeFromParent()
             scene = nil
+        }
+
+        var firstTime = true
+        func maybePlayPreroll() -> Bool {
+            if firstTime {
+                VideoPlayer.instance.play(Videos.LostShield, from: self)
+                firstTime = false
+                return true
+            }
+
+            return false
         }
     }
 
@@ -180,8 +219,8 @@ final class CaptainAmerica: MiniGame {
                 SKAction.group([
                     SKAction.rotate(byAngle: 2 * .pi, duration: 2.0),
                     SKAction.sequence([
-                        SKAction.scale(by: 2.0, duration: 1.0),
-                        SKAction.scale(by: 0.5, duration: 1.0)
+                        SKAction.scale(by: 0.5, duration: 1.0),
+                        SKAction.scale(by: 2.0, duration: 1.0)
                         ])
                     ])
                 ))
@@ -263,7 +302,7 @@ final class CaptainAmerica: MiniGame {
     class Scene: SKScene, SKPhysicsContactDelegate {
         let motionManager = CMMotionManager()
         var completion: () -> () = { }
-        var complexity: Int = 2
+        var level: Level!
         var marble: Marble!
         var target: Target!
         var maze: Maze!
@@ -289,8 +328,8 @@ final class CaptainAmerica: MiniGame {
             border.physicsBody?.isDynamic = false
             addChild(border)
 
-            let rows = Int(CGFloat(complexity) * (frame.height / frame.width))
-            let cols = complexity
+            let rows = Int(CGFloat(level.complexity) * (frame.height / frame.width))
+            let cols = level.complexity
             translator = Translator(frame: frame, rows: rows, cols: cols)
             maze = Maze(cols: cols, rows: rows)
 
@@ -353,9 +392,10 @@ final class CaptainAmerica: MiniGame {
         func didBegin(_ contact: SKPhysicsContact) {
             switch contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask {
             case Collisions.marble.rawValue | Collisions.target.rawValue:
+                scene?.isPaused = true
                 done()
             case Collisions.marble.rawValue | Collisions.wall.rawValue:
-                if AudioPlayer.instance.player?.isPlaying ?? false {
+                if AudioPlayer.instance.player?.isPlaying == false {
                     AudioPlayer.instance.play(BounceSounds.allCases.randomElement()!)
                 }
             default:

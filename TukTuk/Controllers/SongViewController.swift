@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SongViewController.swift
 //  TukTuk
 //
 //  Created by Bharat Mediratta on 7/2/17.
@@ -151,6 +151,7 @@ class SongViewController: UIViewController {
         if let miniGame = miniGame {
             stopSong()
             stats.start(miniGame: miniGame)
+
             show(miniGame.uivc, sender: self)
             return true
         }

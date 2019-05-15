@@ -141,11 +141,11 @@ class SettingsViewController: UITableViewController {
             }
         case IndexPath(row: 0, section: 1):
             cell.title.text = "Maze Level"
-            cell.detail.text = "\(UserDefaults.standard.mazeComplexity)"
+            cell.detail.text = "\(UserDefaults.standard.mazeLevel)"
             cell.data = CaptainAmerica.levels
             cell.canBeEmpty = false
             cell.select = { obj in
-                UserDefaults.standard.mazeComplexity = (obj as! CaptainAmerica.Level).level
+                UserDefaults.standard.mazeLevel = (obj as! CaptainAmerica.Level).level
                 self.redraw()
             }
         default:

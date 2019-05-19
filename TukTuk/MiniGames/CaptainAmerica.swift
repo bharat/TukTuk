@@ -24,15 +24,15 @@ final class CaptainAmerica: MiniGame {
 
         var reward: Videos {
             switch level {
-            case  1: return Videos.Reward_Magnet_Mayhem
-            case  2: return Videos.Reward_Spidey_and_IronMan
-            case  3: return Videos.Reward_Rocket_and_Groot
-            case  4: return Videos.Reward_Hulk_BlackWidow
-            case  5: return Videos.Reward_Chimichangas
-            case  6: return Videos.Reward_CaptainAmerica_vs_RedSkull
-            case  7: return Videos.Reward_Thor
-            case  8: return Videos.Reward_SpiderGwen
-            case  9: return Videos.Reward_Cello_Wars
+            case 1:  return Videos.Reward_CaptainAmerica_vs_RedSkull
+            case 2:  return Videos.Reward_Magnet_Mayhem
+            case 3:  return Videos.Reward_SpiderGwen
+            case 4:  return Videos.Reward_Rocket_and_Groot
+            case 5:  return Videos.Reward_Chimichangas
+            case 6:  return Videos.Reward_Spidey_and_IronMan
+            case 7:  return Videos.Reward_Thor
+            case 8:  return Videos.Reward_Hulk_BlackWidow
+            case 9:  return Videos.Reward_Cello_Wars
             case 10: return Videos.Reward_Guardians_Full
 
             default:
@@ -41,7 +41,7 @@ final class CaptainAmerica: MiniGame {
         }
 
         var complexity: Int {
-            return level
+            return level + 2
         }
 
         init(_ level: Int) {
@@ -72,6 +72,7 @@ final class CaptainAmerica: MiniGame {
 
     enum Sounds: String, CaseIterable, AudioPlayable {
         case Rescue
+        case Tada
 
         var audio: URL {
             return Bundle.media("CaptainAmerica").audio(rawValue)
@@ -97,52 +98,89 @@ final class CaptainAmerica: MiniGame {
     }
 
     class UIVC: UIViewController {
-        var scene: Scene?
+        enum States {
+            case Preroll
+            case Scene
+            case Reward
+            case Done
+        }
+        var state: States = .Preroll
 
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
 
-            if maybePlayPreroll() {
-                return
+            let level = Level(UserDefaults.standard.mazeLevel)
+            switch state {
+            case .Preroll:
+                present(PrerollVC(), animated: animated)
+                self.state = .Scene
+            case .Scene:
+                let sceneVC = SceneVC()
+                sceneVC.level = level
+                self.present(sceneVC, animated: animated)
+                self.state = .Reward
+            case .Reward:
+                let rewardVC = RewardVC()
+                rewardVC.level = level
+                self.present(RewardVC(), animated: animated)
+                self.state = .Done
+            case .Done:
+                UserDefaults.standard.mazeLevel += 1
+                self.state = .Preroll
+                self.dismiss(animated: animated)
             }
+        }
+    }
+
+    class PrerollVC: UIViewController {
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            DispatchQueue.main.async {
+                VideoPlayer.instance.play(Videos.LostShield, from: self) {
+                    self.dismiss(animated: true)
+                }
+            }
+        }
+    }
+
+    class SceneVC: UIViewController {
+        var scene: Scene!
+        var level: Level!
+
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
 
             AudioPlayer.instance.play(Sounds.Rescue)
-            let effect = UIBlurEffect(style: .light)
-            let effectView = UIVisualEffectView(effect: effect)
-            effectView.frame = view.frame
-            view.addSubview(effectView)
-
             let skView = SKView(frame: view.frame.insetBy(dx: 8, dy: 20))
             skView.allowsTransparency = true
-            effectView.contentView.addSubview(skView)
+            view.addSubview(skView)
 
             scene = Scene(size: view.frame.insetBy(dx: 8, dy: 20).size)
-            if let scene = scene {
-                scene.level = Level(UserDefaults.standard.mazeLevel)
-                scene.completion = {
-                    VideoPlayer.instance.play(scene.level.reward, from: self) {
-                        self.dismiss(animated: animated)
-                        UserDefaults.standard.mazeLevel += 1
-                    }
+            scene.level = level
+            scene.completion = {
+                AudioPlayer.instance.play(Sounds.Tada) {
+                    self.dismiss(animated: animated)
                 }
-                skView.presentScene(scene)
             }
+            skView.presentScene(scene)
         }
 
         override func viewWillDisappear(_ animated: Bool) {
             scene?.removeFromParent()
             scene = nil
         }
+    }
 
-        var firstTime = true
-        func maybePlayPreroll() -> Bool {
-            if firstTime {
-                VideoPlayer.instance.play(Videos.LostShield, from: self)
-                firstTime = false
-                return true
+    class RewardVC: UIViewController {
+        var level: Level!
+
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            DispatchQueue.main.async {
+                VideoPlayer.instance.play(self.level.reward, from: self) {
+                    self.dismiss(animated: true)
+                }
             }
-
-            return false
         }
     }
 
@@ -365,7 +403,7 @@ final class CaptainAmerica: MiniGame {
         }
 
         func done() {
-            motionManager.startAccelerometerUpdates()
+            motionManager.stopAccelerometerUpdates()
             completion()
         }
 
@@ -406,7 +444,7 @@ final class CaptainAmerica: MiniGame {
 }
 
 // Enable arrow keys to simulate motion in the simulator
-extension CaptainAmerica.UIVC {
+extension CaptainAmerica.SceneVC {
     override var keyCommands: [UIKeyCommand]? {
         get {
             return [

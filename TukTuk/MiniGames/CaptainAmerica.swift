@@ -122,7 +122,7 @@ final class CaptainAmerica: MiniGame {
             case .Reward:
                 let rewardVC = RewardVC()
                 rewardVC.level = level
-                self.present(RewardVC(), animated: animated)
+                self.present(rewardVC, animated: animated)
                 self.state = .Done
             case .Done:
                 UserDefaults.standard.mazeLevel += 1

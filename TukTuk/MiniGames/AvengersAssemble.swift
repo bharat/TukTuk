@@ -297,7 +297,7 @@ final class AvengersAssemble: MiniGame {
                     return
                 }
 
-                let dir: CGFloat = [1.0, -1.0].randomElement()!
+                let dir: CGFloat = CGFloat([1.0, -1.0].randomElement()!)
                 self.runAction(
                     SCNAction.sequence([
                         SCNAction.rotateBy(x: 0, y: dir * -0.8, z: 0, duration: 0.5),

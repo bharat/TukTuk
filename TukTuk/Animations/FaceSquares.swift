@@ -42,9 +42,9 @@ class FaceSquares: Animation {
                 let sprite: SKSpriteNode = SKSpriteNode(texture: texture)
                 sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: side, height: side))
                 sprite.physicsBody?.usesPreciseCollisionDetection = true
-                sprite.physicsBody?.restitution = 0.9 + [-0.05, 0, 0.05].randomElement()!
-                sprite.position = CGPoint(x: scene.frame.width * 0.4 + [-40, -20, 0, 20, 40].randomElement()!, y: scene.frame.height)
-                sprite.zRotation = 45.0 * [-1, 1].randomElement()!
+                sprite.physicsBody?.restitution = CGFloat(0.9 + [-0.05, 0, 0.05].randomElement()!)
+                sprite.position = CGPoint(x: scene.frame.width * 0.4 + CGFloat([-40, -20, 0, 20, 40].randomElement()!), y: scene.frame.height)
+                sprite.zRotation = CGFloat(45.0 * [-1, 1].randomElement()!)
                 scene.addChild(sprite)
             }
         }

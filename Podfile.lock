@@ -1,28 +1,37 @@
 PODS:
   - Amplitude-iOS (4.6.0)
   - CollectionViewSlantedLayout (3.1.1)
-  - EasyAnimation (2.2.1)
-  - FLEX (2.4.0)
+  - EasyAnimation (2.2)
+  - FLEX (3.0.0)
 
 DEPENDENCIES:
   - Amplitude-iOS
   - CollectionViewSlantedLayout
-  - EasyAnimation
+  - EasyAnimation (from `https://github.com/bharat/EasyAnimation.git`, branch `swift5`)
   - FLEX
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Amplitude-iOS
     - CollectionViewSlantedLayout
-    - EasyAnimation
     - FLEX
+
+EXTERNAL SOURCES:
+  EasyAnimation:
+    :branch: swift5
+    :git: https://github.com/bharat/EasyAnimation.git
+
+CHECKOUT OPTIONS:
+  EasyAnimation:
+    :commit: cf40c08e3b2111e97f7c18cae35b2ab407b5e92c
+    :git: https://github.com/bharat/EasyAnimation.git
 
 SPEC CHECKSUMS:
   Amplitude-iOS: ac1715ae68104b7a51723209ad574f60ab22ae5f
   CollectionViewSlantedLayout: 24397455acd2461960bc45d394e0ef99c17d03ce
-  EasyAnimation: 226d133d23ef0ef99ddfb8928ff2a9a4a77d1cfd
-  FLEX: bd1a39e55b56bb413b6f1b34b3c10a0dc44ef079
+  EasyAnimation: a5117bc37f18721e30a20a039562d7e232639485
+  FLEX: d66c759bce0f6ebbbf472c742380874d846f2883
 
-PODFILE CHECKSUM: c4de99441bfbb4dce39e6a6f71dec0975b5aebc8
+PODFILE CHECKSUM: 79acff37e85dafb40103901c89277e7bf9df2ef6
 
 COCOAPODS: 1.5.3

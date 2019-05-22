@@ -17,7 +17,7 @@ extension UserDefaults {
     func registerDefaults() {
         register(defaults: [
             Key.movieCountdown.rawValue: TimeInterval.MovieInterval,
-            Key.mazeLevel.rawValue: 3
+            Key.mazeLevel.rawValue: 1
         ])
     }
 

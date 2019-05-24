@@ -31,5 +31,6 @@ class Animations {
         WordPop(),
         FaceBalls(),
         FaceSquares(),
+        CurlUp()
     ]
 }

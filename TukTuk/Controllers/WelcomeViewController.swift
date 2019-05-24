@@ -45,7 +45,6 @@ class WelcomeViewController: UIViewController {
         sender.isEnabled = false
 
         // Run a random welcome animation, or a preset if specified
-        Settings.cuedAnimation = CurlUp()
         let animation = Settings.cuedAnimation ?? Animations.all.randomElement()!
         Settings.cuedAnimation = nil
         animation.animate(view: self.welcomeImageView) {

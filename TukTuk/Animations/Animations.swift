@@ -26,11 +26,11 @@ protocol Animation: Titled {
 
 class Animations {
     static var all: [Animation] = [
-        Hinge(),
-        RollAway(),
-        WordPop(),
         FaceBalls(),
         FaceSquares(),
-        CurlUp()
+        Hinge(),
+        PhotoFlip(),
+        RollAway(),
+        WordPop(),
     ]
 }

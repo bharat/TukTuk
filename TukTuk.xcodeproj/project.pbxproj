@@ -32,7 +32,7 @@
 		4F9DDD41222319D500D3EFAF /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9DDD40222319D500D3EFAF /* URL.swift */; };
 		4FA64A87223D722100AED085 /* SongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA64A86223D722100AED085 /* SongCell.swift */; };
 		4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */; };
-		4FB27EF4229724D100A44CE6 /* CurlUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB27EF3229724D100A44CE6 /* CurlUp.swift */; };
+		4FB27EF4229724D100A44CE6 /* PhotoFlip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB27EF3229724D100A44CE6 /* PhotoFlip.swift */; };
 		4FBD0FD420F55DC900BB5E32 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD320F55DC900BB5E32 /* Bundle.swift */; };
 		4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD620F55E1000BB5E32 /* Song.swift */; };
 		4FBD0FD920F55E1B00BB5E32 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD820F55E1B00BB5E32 /* Movie.swift */; };
@@ -85,7 +85,7 @@
 		4F9DDD40222319D500D3EFAF /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4FA64A86223D722100AED085 /* SongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongCell.swift; sourceTree = "<group>"; };
 		4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSlantedLayout.swift; sourceTree = "<group>"; };
-		4FB27EF3229724D100A44CE6 /* CurlUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurlUp.swift; sourceTree = "<group>"; };
+		4FB27EF3229724D100A44CE6 /* PhotoFlip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoFlip.swift; sourceTree = "<group>"; };
 		4FBD0FD320F55DC900BB5E32 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		4FBD0FD620F55E1000BB5E32 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		4FBD0FD820F55E1B00BB5E32 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				4F84C38E1FC51AC40093801B /* Animations.swift */,
-				4FB27EF3229724D100A44CE6 /* CurlUp.swift */,
+				4FB27EF3229724D100A44CE6 /* PhotoFlip.swift */,
 				4F1F17C9209E150F00483499 /* FaceBalls.swift */,
 				4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */,
 				4F1F17CF209E15BB00483499 /* Hinge.swift */,
@@ -338,10 +338,9 @@
 			};
 			buildConfigurationList = 4FBD57A31F098DEB00BDCDE3 /* Build configuration list for PBXProject "TukTuk" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -436,7 +435,7 @@
 			files = (
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
-				4FB27EF4229724D100A44CE6 /* CurlUp.swift in Sources */,
+				4FB27EF4229724D100A44CE6 /* PhotoFlip.swift in Sources */,
 				4F11FEF122616D0C00AD777D /* SettingsViewController.swift in Sources */,
 				4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,

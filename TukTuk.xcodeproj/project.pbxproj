@@ -159,7 +159,6 @@
 				4F75101D225D259B0039AA35 /* Maze.swift */,
 				4FF69123225E9F8800595BDE /* Bezier.swift */,
 				4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */,
-				4F11FEF42263BB3600AD777D /* Settings.swift */,
 				4F11FEF62263BB8500AD777D /* Titled.swift */,
 			);
 			path = Utilities;
@@ -191,6 +190,7 @@
 				4FBD0FD620F55E1000BB5E32 /* Song.swift */,
 				4FBD0FD820F55E1B00BB5E32 /* Movie.swift */,
 				4F08249D22090BAC00D45C40 /* Preloadable.swift */,
+				4F11FEF42263BB3600AD777D /* Settings.swift */,
 				4FA64A86223D722100AED085 /* SongCell.swift */,
 			);
 			path = Models;

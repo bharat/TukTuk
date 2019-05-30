@@ -38,9 +38,7 @@ class SongViewController: UIViewController {
     var movieCountdown: TimeInterval = 0 {
         didSet {
             if movieCountdown == 0 {
-                UIView.animate(withDuration: 0.75) {
-                    self.movieButton.isHidden = false
-                }
+                showMovieButton()
                 movieCountdown = .MovieInterval
             }
 
@@ -61,6 +59,12 @@ class SongViewController: UIViewController {
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
+
+        NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -68,8 +72,6 @@ class SongViewController: UIViewController {
 
         movieCountdown = UserDefaults.standard.movieCountdown
         movieButton.isHidden = (movieCountdown > 0)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
     var lastFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
@@ -118,6 +120,14 @@ class SongViewController: UIViewController {
         }
     }
 
+    func showMovieButton() {
+        if movieButton.isHidden {
+            UIView.animate(withDuration: 0.75) {
+                self.movieButton.isHidden = false
+            }
+        }
+    }
+
     func playMovie() {
         deselectAllSongs()
         AudioPlayer.instance.stop()
@@ -128,8 +138,8 @@ class SongViewController: UIViewController {
         VideoPlayer.instance.play(movie, from: self)
         stats.start(movie: movie)
 
-        movieButton.isHidden = true
         Settings.cuedMovie = nil
+        movieButton.isHidden = true
     }
 
     func stopSong() {
@@ -168,6 +178,9 @@ class SongViewController: UIViewController {
         stats.start(song: song)
         AudioPlayer.instance.play(song, whilePlaying: {
             self.movieCountdown -= 1
+            if Settings.cuedMovie != nil {
+                self.showMovieButton()
+            }
         }, whenComplete: {
             self.stats.complete()
             self.deselectAllSongs()

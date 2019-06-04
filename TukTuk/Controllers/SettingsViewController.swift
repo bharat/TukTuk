@@ -74,9 +74,6 @@ extension PickerCell: UIPickerViewDelegate {
 }
 
 class SettingsViewController: UITableViewController {
-    let movies = Bundle.Player.movies()
-    let songs = Bundle.Player.songs()
-
     @IBAction func done() {
         dismiss(animated: true, completion: {})
     }
@@ -126,7 +123,7 @@ class SettingsViewController: UITableViewController {
         case IndexPath(row: 1, section: 0):
             cell.title.text = "Movie"
             cell.detail.text = Settings.cuedMovie?.title ?? .emptyTitle
-            cell.data = movies
+            cell.data = Media.Player.movies
             cell.select = { obj in
                 Settings.cuedMovie = obj as! Movie?
                 self.redraw()

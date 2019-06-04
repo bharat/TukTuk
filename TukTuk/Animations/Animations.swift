@@ -13,7 +13,7 @@ enum Sounds: String, CaseIterable, AudioPlayable {
     case Welcome
 
     var audio: URL {
-        return Bundle.media("Player").audio(rawValue)
+        return Media.Player.audio(rawValue)
     }
 }
 

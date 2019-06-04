@@ -11,10 +11,6 @@ import AVFoundation
 import AVKit
 import CollectionViewSlantedLayout
 
-extension Bundle {
-    static let Player = Bundle.media("Player")
-}
-
 extension TimeInterval {
     static let MovieInterval: TimeInterval = 2400
 }
@@ -27,13 +23,7 @@ class SongViewController: UIViewController {
     @IBOutlet weak var movieButton: UIButton!
     @IBOutlet weak var movieTimerLabel: UILabel!
 
-    var movies = Bundle.Player.movies()
-    var songs = Bundle.Player.songs()
     var stats = Stats()
-
-    static func preload() {
-        _ = [Bundle.Player.movies(), Bundle.Player.songs()]
-    }
 
     var movieCountdown: TimeInterval = 0 {
         didSet {
@@ -116,7 +106,7 @@ class SongViewController: UIViewController {
 
     @objc func showSettings(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            performSegue(withIdentifier: "Settings", sender: self)
+            performSegue(withIdentifier: "Admin", sender: self)
         }
     }
 
@@ -134,7 +124,7 @@ class SongViewController: UIViewController {
         stats.stop()
         stopButton.isEnabled = false
 
-        let movie = Settings.cuedMovie ?? movies.randomElement()!
+        let movie = Settings.cuedMovie ?? Media.Player.movies.randomElement()!
         VideoPlayer.instance.play(movie, from: self)
         stats.start(movie: movie)
 
@@ -233,7 +223,7 @@ extension SongViewController: UICollectionViewDelegate {
             }
 
             stopButton.isEnabled = true
-            let song = songs[indexPath.row]
+            let song = Media.Player.songs[indexPath.row]
             playSong(song)
         }
     }
@@ -259,13 +249,13 @@ extension SongViewController: UIScrollViewDelegate {
 
 extension SongViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return songs.count
+        return Media.Player.songs.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
-        let song = songs[indexPath.row]
+        let song = Media.Player.songs[indexPath.row]
 
         cell.image = song.image
         cell.title.text = song.title

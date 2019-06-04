@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		358872262460F4EF41275C6A /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9C99B4DB907A0FA705882B /* Pods_TukTuk.framework */; };
+		4F074AE022A5F714008E5F22 /* DismissModalSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074ADF22A5F714008E5F22 /* DismissModalSegue.swift */; };
+		4F074AE422A5FD04008E5F22 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE322A5FD04008E5F22 /* Media.swift */; };
 		4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */; };
 		4F0824942208D64000D45C40 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = 4FFC1C662208B6FA0019A07B /* Media */; };
-		4F08249E22090BAC00D45C40 /* Preloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08249D22090BAC00D45C40 /* Preloadable.swift */; };
 		4F11FEF122616D0C00AD777D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF022616D0C00AD777D /* SettingsViewController.swift */; };
 		4F11FEF52263BB3600AD777D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF42263BB3600AD777D /* Settings.swift */; };
 		4F11FEF72263BB8500AD777D /* Titled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF62263BB8500AD777D /* Titled.swift */; };
@@ -18,6 +19,7 @@
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
 		4F1F17CE209E15B000483499 /* RollAway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CD209E15B000483499 /* RollAway.swift */; };
 		4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CF209E15BB00483499 /* Hinge.swift */; };
+		4F24D0E022A5D7F60039B83E /* MediaTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F24D0DF22A5D7F60039B83E /* MediaTableViewController.swift */; };
 		4F3270C7225559430063CC32 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3270C6225559430063CC32 /* Stats.swift */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
 		4F75101E225D259B0039AA35 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75101D225D259B0039AA35 /* Maze.swift */; };
@@ -60,8 +62,9 @@
 
 /* Begin PBXFileReference section */
 		313AAED39EC65E1F2E3920D7 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
+		4F074ADF22A5F714008E5F22 /* DismissModalSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissModalSegue.swift; sourceTree = "<group>"; };
+		4F074AE322A5FD04008E5F22 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
-		4F08249D22090BAC00D45C40 /* Preloadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preloadable.swift; sourceTree = "<group>"; };
 		4F11FEF022616D0C00AD777D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4F11FEF42263BB3600AD777D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		4F11FEF62263BB8500AD777D /* Titled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Titled.swift; sourceTree = "<group>"; };
@@ -69,6 +72,7 @@
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
 		4F1F17CD209E15B000483499 /* RollAway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollAway.swift; sourceTree = "<group>"; };
 		4F1F17CF209E15BB00483499 /* Hinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hinge.swift; sourceTree = "<group>"; };
+		4F24D0DF22A5D7F60039B83E /* MediaTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTableViewController.swift; sourceTree = "<group>"; };
 		4F3270C6225559430063CC32 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F75101D225D259B0039AA35 /* Maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 				4FF69123225E9F8800595BDE /* Bezier.swift */,
 				4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */,
 				4F11FEF62263BB8500AD777D /* Titled.swift */,
+				4F074ADF22A5F714008E5F22 /* DismissModalSegue.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -189,9 +194,9 @@
 			children = (
 				4FBD0FD620F55E1000BB5E32 /* Song.swift */,
 				4FBD0FD820F55E1B00BB5E32 /* Movie.swift */,
-				4F08249D22090BAC00D45C40 /* Preloadable.swift */,
 				4F11FEF42263BB3600AD777D /* Settings.swift */,
 				4FA64A86223D722100AED085 /* SongCell.swift */,
+				4F074AE322A5FD04008E5F22 /* Media.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
 				4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */,
 				4F11FEF022616D0C00AD777D /* SettingsViewController.swift */,
+				4F24D0DF22A5D7F60039B83E /* MediaTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -433,6 +439,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F074AE422A5FD04008E5F22 /* Media.swift in Sources */,
+				4F24D0E022A5D7F60039B83E /* MediaTableViewController.swift in Sources */,
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
 				4FB27EF4229724D100A44CE6 /* PhotoFlip.swift in Sources */,
@@ -448,7 +456,6 @@
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
 				4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */,
 				4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */,
-				4F08249E22090BAC00D45C40 /* Preloadable.swift in Sources */,
 				4F75101E225D259B0039AA35 /* Maze.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
@@ -466,6 +473,7 @@
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
 				4FA64A87223D722100AED085 /* SongCell.swift in Sources */,
 				4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */,
+				4F074AE022A5F714008E5F22 /* DismissModalSegue.swift in Sources */,
 				4F11FEF72263BB8500AD777D /* Titled.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

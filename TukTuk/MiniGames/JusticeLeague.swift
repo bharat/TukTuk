@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 import SceneKit
 
+extension Media {
+    static let JusticeLeague = Media("JusticeLeague")
+}
+
 final class JusticeLeague: MiniGame {
     var title = "Justice League!"
     var uivc: UIViewController = UIVC()
@@ -20,12 +24,8 @@ final class JusticeLeague: MiniGame {
         case Tada
 
         var audio: URL {
-            return Bundle.media("JusticeLeague").audio(rawValue)
+            return Media.JusticeLeague.audio(rawValue)
         }
-    }
-
-    func preloadableAssets() -> [URL] {
-        return Sounds.allCases.map { $0.audio }
     }
 
     enum Pace: TimeInterval {
@@ -76,11 +76,11 @@ final class JusticeLeague: MiniGame {
         }
 
         var audio: URL {
-            return Bundle.media("JusticeLeague").audio(rawValue)
+            return Media.JusticeLeague.audio(rawValue)
         }
 
         var video: URL {
-            return Bundle.media("JusticeLeague").video(rawValue)
+            return Media.JusticeLeague.video(rawValue)
         }
     }
 

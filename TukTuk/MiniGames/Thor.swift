@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 import SpriteKit
 
+extension Media {
+    static let Thor = Media("Thor")
+}
+
 final class Thor: MiniGame {
     var title = "Thor lost his hammer!"
     var uivc: UIViewController = UIVC()
@@ -23,12 +27,8 @@ final class Thor: MiniGame {
         case IAmTheGodOfThunder
 
         var audio: URL {
-            return Bundle.media("Thor").audio(rawValue)
+            return Media.Thor.audio(rawValue)
         }
-    }
-
-    func preloadableAssets() -> [URL] {
-        return Sounds.allCases.map { $0.audio }
     }
 
     enum Collisions: UInt32 {

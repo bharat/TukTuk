@@ -31,9 +31,6 @@ class WelcomeViewController: UIViewController {
         let long = UILongPressGestureRecognizer(target: self, action: #selector(showSettings(gesture:)))
         long.minimumPressDuration = 5.0
         welcomeImageView.addGestureRecognizer(long)
-
-        SongViewController.preload()
-        MiniGames.preload()
     }
 
     // Useful for debugging
@@ -58,7 +55,7 @@ class WelcomeViewController: UIViewController {
 
     @objc func showSettings(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            performSegue(withIdentifier: "Settings", sender: self)
+            performSegue(withIdentifier: "Admin", sender: self)
         }
     }
 }

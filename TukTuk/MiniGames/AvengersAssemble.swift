@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 import SceneKit
 
+extension Media {
+    static let AvengersAssemble = Media("AvengersAssemble")
+}
+
 final class AvengersAssemble: MiniGame {
     var title = "Avengers Assemble!"
     var uivc: UIViewController = UIVC()
@@ -20,12 +24,8 @@ final class AvengersAssemble: MiniGame {
         case Tada
 
         var audio: URL {
-            return Bundle.media("AvengersAssemble").audio(rawValue)
+            return Media.AvengersAssemble.audio(rawValue)
         }
-    }
-
-    func preloadableAssets() -> [URL] {
-        return Sounds.allCases.map { $0.audio }
     }
 
     enum Pace: TimeInterval {
@@ -76,11 +76,11 @@ final class AvengersAssemble: MiniGame {
         }
 
         var audio: URL {
-            return Bundle.media("AvengersAssemble").audio(rawValue)
+            return Media.AvengersAssemble.audio(rawValue)
         }
 
         var video: URL {
-            return Bundle.media("AvengersAssemble").video(rawValue)
+            return Media.AvengersAssemble.video(rawValue)
         }
     }
 

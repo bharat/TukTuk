@@ -11,6 +11,10 @@ import UIKit
 import SpriteKit
 import CoreMotion
 
+extension Media {
+    static let CaptainAmerica = Media("CaptainAmerica")
+}
+
 final class CaptainAmerica: MiniGame {
     var title = "CaptainAmerica"
     var uivc: UIViewController = UIVC()
@@ -55,18 +59,13 @@ final class CaptainAmerica: MiniGame {
         case target = 4
     }
 
-    func preloadableAssets() -> [URL] {
-        return Sounds.allCases.map { $0.audio } + Videos.allCases.map { $0.video }
-    }
-
-
     enum BounceSounds: String, CaseIterable, AudioPlayable {
         case Bounce_1
         case Bounce_2
         case Bounce_3
 
         var audio: URL {
-            return Bundle.media("CaptainAmerica").audio(rawValue)
+            return Media.CaptainAmerica.audio(rawValue)
         }
     }
 
@@ -75,7 +74,7 @@ final class CaptainAmerica: MiniGame {
         case Tada
 
         var audio: URL {
-            return Bundle.media("CaptainAmerica").audio(rawValue)
+            return Media.CaptainAmerica.audio(rawValue)
         }
     }
 
@@ -93,7 +92,7 @@ final class CaptainAmerica: MiniGame {
         case Reward_Guardians_Full
 
         var video: URL {
-            return Bundle.media("CaptainAmerica").video(rawValue)
+            return Media.CaptainAmerica.video(rawValue)
         }
     }
 

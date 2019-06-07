@@ -51,6 +51,10 @@ class SongViewController: UIViewController {
         stopButton.isEnabled = false
 
         NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "Admin", sender: self)
+        }
     }
 
     deinit {
@@ -62,6 +66,13 @@ class SongViewController: UIViewController {
 
         movieCountdown = UserDefaults.standard.movieCountdown
         movieButton.isHidden = (movieCountdown > 0)
+
+        if Songs.instance.songsChangedSinceLastDisplay {
+            AudioPlayer.instance.stop()
+            songCollection.reloadData()
+            deselectAllSongs()
+            Songs.instance.songsChangedSinceLastDisplay = false
+        }
     }
 
     var lastFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
@@ -223,7 +234,7 @@ extension SongViewController: UICollectionViewDelegate {
             }
 
             stopButton.isEnabled = true
-            let song = Media.Player.songs[indexPath.row]
+            let song = Songs.instance.songs[indexPath.row]
             playSong(song)
         }
     }
@@ -249,13 +260,13 @@ extension SongViewController: UIScrollViewDelegate {
 
 extension SongViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Media.Player.songs.count
+        return Songs.instance.songs.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
-        let song = Media.Player.songs[indexPath.row]
+        let song = Songs.instance.songs[indexPath.row]
 
         cell.image = song.image
         cell.title.text = song.title

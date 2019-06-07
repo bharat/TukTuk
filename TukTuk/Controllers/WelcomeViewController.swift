@@ -33,13 +33,18 @@ class WelcomeViewController: UIViewController {
         welcomeImageView.addGestureRecognizer(long)
     }
 
-    // Useful for debugging
-//    override func viewDidAppear(_ animated: Bool) {
-//        show(CaptainAmerica().uivc, sender: self)
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // Useful for quickly jumping to a specific minigame
+        // show(CaptainAmerica().uivc, sender: self)
+    }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false
+
+        // Shortcut for development
+        Settings.cuedAnimation = None()
 
         // Run a random welcome animation, or a preset if specified
         let animation = Settings.cuedAnimation ?? Animations.all.randomElement()!

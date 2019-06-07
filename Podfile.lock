@@ -1,20 +1,55 @@
 PODS:
   - Amplitude-iOS (4.6.0)
+  - cdTaskQueue (0.13.0)
   - CollectionViewSlantedLayout (3.1.1)
   - EasyAnimation (2.2)
   - FLEX (3.0.0)
+  - GoogleAPIClientForREST/Core (1.2.1):
+    - GTMSessionFetcher (>= 1.1.7)
+  - GoogleAPIClientForREST/Drive (1.2.1):
+    - GoogleAPIClientForREST/Core
+    - GTMSessionFetcher (>= 1.1.7)
+  - GoogleSignIn (4.1.2):
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
+    - GTMOAuth2 (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.2.1):
+    - GoogleToolboxForMac/Defines (= 2.2.1)
+  - GoogleToolboxForMac/Defines (2.2.1)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.1)":
+    - GoogleToolboxForMac/DebugUtils (= 2.2.1)
+    - GoogleToolboxForMac/Defines (= 2.2.1)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.1)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.2.1)"
+  - GTMOAuth2 (1.1.6):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.2.2):
+    - GTMSessionFetcher/Full (= 1.2.2)
+  - GTMSessionFetcher/Core (1.2.2)
+  - GTMSessionFetcher/Full (1.2.2):
+    - GTMSessionFetcher/Core (= 1.2.2)
 
 DEPENDENCIES:
   - Amplitude-iOS
+  - cdTaskQueue
   - CollectionViewSlantedLayout
   - EasyAnimation (from `https://github.com/bharat/EasyAnimation.git`, branch `swift5`)
   - FLEX
+  - GoogleAPIClientForREST/Drive (~> 1.2.1)
+  - GoogleSignIn (~> 4.1.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Amplitude-iOS
+    - cdTaskQueue
     - CollectionViewSlantedLayout
     - FLEX
+    - GoogleAPIClientForREST
+    - GoogleSignIn
+    - GoogleToolboxForMac
+    - GTMOAuth2
+    - GTMSessionFetcher
 
 EXTERNAL SOURCES:
   EasyAnimation:
@@ -28,10 +63,16 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Amplitude-iOS: ac1715ae68104b7a51723209ad574f60ab22ae5f
+  cdTaskQueue: a281ef7d75f8310e613c99ca93f56118a62a9ac7
   CollectionViewSlantedLayout: 24397455acd2461960bc45d394e0ef99c17d03ce
   EasyAnimation: a5117bc37f18721e30a20a039562d7e232639485
   FLEX: d66c759bce0f6ebbbf472c742380874d846f2883
+  GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
+  GoogleSignIn: d9ef55b10f0aa401a5de2747f59b725e4b9732ac
+  GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
+  GTMOAuth2: e8b6512c896235149df975c41d9a36c868ab7fba
+  GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
 
-PODFILE CHECKSUM: 79acff37e85dafb40103901c89277e7bf9df2ef6
+PODFILE CHECKSUM: 98448c0655b1fd89ba338e8593b58db0a68607d4
 
 COCOAPODS: 1.5.3

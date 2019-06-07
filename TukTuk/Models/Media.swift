@@ -27,24 +27,10 @@ class Media {
 }
 
 class PlayerMedia: Media {
-    var songs: [Song]!
     var movies: [Movie]!
 
     init() {
         super.init("Player")
-
-        let audios = bundle.urls(forResourcesWithExtension: "mp3", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
-        let covers = bundle.urls(forResourcesWithExtension: "png", subdirectory: "Songs")!.sorted(by: { $0.lowerCaseString < $1.lowerCaseString })
-
-        assert(audios.count == covers.count)
-
-        songs = zip(audios, covers).map { arg in
-            let (audio, cover) = arg
-            let fileName = audio.lastPathComponent
-            let title = audio.deletingPathExtension().lastPathComponent
-            print("Load song: \(title)")
-            return try! Song(fileName: fileName, title: title, image: UIImage(data: Data(contentsOf: cover))!, audio: audio)
-        }
 
         let path = bundle.resourcePath! + "/Video"
         let files = try! FileManager.default.contentsOfDirectory(atPath: path).sorted()

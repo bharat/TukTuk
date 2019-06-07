@@ -10,6 +10,10 @@
 		358872262460F4EF41275C6A /* Pods_TukTuk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9C99B4DB907A0FA705882B /* Pods_TukTuk.framework */; };
 		4F074AE022A5F714008E5F22 /* DismissModalSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074ADF22A5F714008E5F22 /* DismissModalSegue.swift */; };
 		4F074AE422A5FD04008E5F22 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE322A5FD04008E5F22 /* Media.swift */; };
+		4F074AE622A74137008E5F22 /* GoogleDrive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE522A74137008E5F22 /* GoogleDrive.swift */; };
+		4F074AE822A74767008E5F22 /* None.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE722A74767008E5F22 /* None.swift */; };
+		4F074AEA22A89828008E5F22 /* Songs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE922A89828008E5F22 /* Songs.swift */; };
+		4F074AEC22A9BCEC008E5F22 /* SyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AEB22A9BCEC008E5F22 /* SyncEngine.swift */; };
 		4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */; };
 		4F0824942208D64000D45C40 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = 4FFC1C662208B6FA0019A07B /* Media */; };
 		4F11FEF122616D0C00AD777D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF022616D0C00AD777D /* SettingsViewController.swift */; };
@@ -64,6 +68,10 @@
 		313AAED39EC65E1F2E3920D7 /* Pods-TukTuk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.release.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.release.xcconfig"; sourceTree = "<group>"; };
 		4F074ADF22A5F714008E5F22 /* DismissModalSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissModalSegue.swift; sourceTree = "<group>"; };
 		4F074AE322A5FD04008E5F22 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		4F074AE522A74137008E5F22 /* GoogleDrive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDrive.swift; sourceTree = "<group>"; };
+		4F074AE722A74767008E5F22 /* None.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = None.swift; sourceTree = "<group>"; };
+		4F074AE922A89828008E5F22 /* Songs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Songs.swift; sourceTree = "<group>"; };
+		4F074AEB22A9BCEC008E5F22 /* SyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEngine.swift; sourceTree = "<group>"; };
 		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
 		4F11FEF022616D0C00AD777D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4F11FEF42263BB3600AD777D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -152,6 +160,7 @@
 				4F1F17CF209E15BB00483499 /* Hinge.swift */,
 				4F1F17CD209E15B000483499 /* RollAway.swift */,
 				4F1F17CB209E159F00483499 /* WordPop.swift */,
+				4F074AE722A74767008E5F22 /* None.swift */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -165,6 +174,7 @@
 				4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */,
 				4F11FEF62263BB8500AD777D /* Titled.swift */,
 				4F074ADF22A5F714008E5F22 /* DismissModalSegue.swift */,
+				4F074AEB22A9BCEC008E5F22 /* SyncEngine.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -192,11 +202,13 @@
 		4FBD0FD520F55DFC00BB5E32 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4FBD0FD620F55E1000BB5E32 /* Song.swift */,
+				4F074AE522A74137008E5F22 /* GoogleDrive.swift */,
+				4F074AE322A5FD04008E5F22 /* Media.swift */,
 				4FBD0FD820F55E1B00BB5E32 /* Movie.swift */,
 				4F11FEF42263BB3600AD777D /* Settings.swift */,
+				4FBD0FD620F55E1000BB5E32 /* Song.swift */,
 				4FA64A86223D722100AED085 /* SongCell.swift */,
-				4F074AE322A5FD04008E5F22 /* Media.swift */,
+				4F074AE922A89828008E5F22 /* Songs.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -308,6 +320,7 @@
 				4FBD57A51F098DEB00BDCDE3 /* Frameworks */,
 				4FBD57A61F098DEB00BDCDE3 /* Resources */,
 				133FB5F55DDD8AEA5EA07693 /* [CP] Embed Pods Frameworks */,
+				AB8AD344E4816C6DAD5F729B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -394,6 +407,11 @@
 				"${BUILT_PRODUCTS_DIR}/CollectionViewSlantedLayout/CollectionViewSlantedLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyAnimation/EasyAnimation.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/cdTaskQueue/TaskQueue.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -401,6 +419,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CollectionViewSlantedLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyAnimation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TaskQueue.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -425,6 +448,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AB8AD344E4816C6DAD5F729B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -439,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F074AEA22A89828008E5F22 /* Songs.swift in Sources */,
 				4F074AE422A5FD04008E5F22 /* Media.swift in Sources */,
 				4F24D0E022A5D7F60039B83E /* MediaTableViewController.swift in Sources */,
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
@@ -448,6 +490,7 @@
 				4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,
 				4FF69124225E9F8800595BDE /* Bezier.swift in Sources */,
+				4F074AE822A74767008E5F22 /* None.swift in Sources */,
 				4F89557920B47B8600E37E53 /* UIImage.swift in Sources */,
 				4FF69126225EB50F00595BDE /* CubicCurveAlgorithm.swift in Sources */,
 				4F1F17CE209E15B000483499 /* RollAway.swift in Sources */,
@@ -459,6 +502,7 @@
 				4F75101E225D259B0039AA35 /* Maze.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
+				4F074AEC22A9BCEC008E5F22 /* SyncEngine.swift in Sources */,
 				4F11FEF52263BB3600AD777D /* Settings.swift in Sources */,
 				4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */,
 				4F8A2A9C209F730E000C2CA5 /* AudioPlayer.swift in Sources */,
@@ -469,6 +513,7 @@
 				4F84C38F1FC51AC40093801B /* Animations.swift in Sources */,
 				4FBD0FD920F55E1B00BB5E32 /* Movie.swift in Sources */,
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
+				4F074AE622A74137008E5F22 /* GoogleDrive.swift in Sources */,
 				4FBD0FE120F587CC00BB5E32 /* UserDefaults.swift in Sources */,
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
 				4FA64A87223D722100AED085 /* SongCell.swift in Sources */,

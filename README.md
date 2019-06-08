@@ -1,5 +1,7 @@
 # TukTuk
-This is a simple music player app I wrote for my son, Remy. When he was 2 years old, he'd sit in the back seat of our car and request the same songs over and over again. We got pretty tired of it and wanted to listen to our own music, so it started with a very simple music jukebox and has grown over time.
+This is a simple music player app I wrote for my son, Remy. When he was 2 years old, he'd sit in the back seat of our car and request the same songs over and over again. We got pretty tired of it and wanted to listen to our own music, so TukTuk (which is a cute name for "car" in German) started with a very simple music jukebox. We'd give it to him on an iPad with some headphones and he'd happily listen to music for hours.
+
+As of this writing, he's 4.5 years old and listening to TukTuk is still one of his favorite things to do. Over time we've evolved it with him so it has moments of fun and delight and is personalized for him. But- much of what's there is generalizable so it can be used by other little kids.
 
 ## Features
 1. Music. The main thing that TukTuk does is to let Remy scroll through his songs and play the ones that he wants

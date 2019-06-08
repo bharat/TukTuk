@@ -25,7 +25,7 @@ class SongViewController: UIViewController {
     @IBOutlet weak var movieTimerLabel: UILabel!
 
     var stats = Stats()
-    var songs: [Song] = [] {
+    var songs: [LocalSong] = [] {
         didSet {
             AudioPlayer.instance.stop()
             songCollection.reloadData()
@@ -33,6 +33,7 @@ class SongViewController: UIViewController {
         }
     }
 
+    var movies: [LocalMovie] = []
     var movieCountdown: TimeInterval = 0 {
         didSet {
             if movieCountdown == 0 {
@@ -68,7 +69,7 @@ class SongViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        loadSongs()
+        loadSongsAndMovies()
         if songs.count == 0 {
             let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
                 self.performSegue(withIdentifier: "Admin", sender: self)
@@ -80,9 +81,13 @@ class SongViewController: UIViewController {
         movieButton.isHidden = (movieCountdown > 0)
     }
 
-    fileprivate func loadSongs() {
+    fileprivate func loadSongsAndMovies() {
         if Set(songs.map { $0.title }) != Set(LocalStorage.instance.songs.keys) {
             songs = LocalStorage.instance.songs.values.sorted(by: { $0.title < $1.title })
+        }
+
+        if Set(movies.map { $0.title }) != Set(LocalStorage.instance.movies.keys) {
+            movies = LocalStorage.instance.movies.values.sorted(by: { $0.title < $1.title })
         }
     }
 
@@ -146,7 +151,7 @@ class SongViewController: UIViewController {
         stats.stop()
         stopButton.isEnabled = false
 
-        let movie = Settings.cuedMovie ?? Media.Player.movies.randomElement()!
+        let movie = Settings.cuedMovie ?? movies.randomElement()!
         VideoPlayer.instance.play(movie, from: self)
         stats.start(movie: movie)
 
@@ -181,7 +186,7 @@ class SongViewController: UIViewController {
         return false
     }
 
-    func playSong(_ song: Song) {
+    func playSong(_ song: LocalSong) {
         if AudioPlayer.instance.isPlaying {
             stats.stop()
         }
@@ -279,7 +284,7 @@ extension SongViewController: UICollectionViewDataSource {
         let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
         let song = songs[indexPath.row]
 
-        cell.image = song.image
+        cell.image = song.uiImage
         cell.title.text = song.title
 
         if let layout = collectionView.collectionViewLayout as? CollectionViewSlantedLayout {

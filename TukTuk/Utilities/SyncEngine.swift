@@ -11,40 +11,89 @@ import Foundation
 class SyncEngine {
     private let queue = OperationQueue()
 
-    var cloud = CloudSongDict()
-    var toDelete: [Song] = []
-    var toDownload: [CloudSong] = []
-    var totalOperations: Int = 0
+    var cloudSongs = CloudSongDict()
+    var cloudMovies = CloudMovieDict()
+    var songTitlesToDelete: [String] = []
+    var songTitlesToDownload: [String] = []
+    var movieTitlesToDelete: [String] = []
+    var movieTitlesToDownload: [String] = []
+    var totalOperationCount: Int = 0
     var cancelInProgress: Bool = false
     var notify: ()->() = {}
 
     var inProgress: Bool {
         return queue.operationCount > 0
     }
+    
     var progress: Float {
-        return Float(totalOperations - queue.operationCount) / Float(totalOperations)
+        return Float(totalOperationCount - queue.operationCount) / Float(totalOperationCount)
     }
 
-    init(concurrency: Int = 4) {
+    init(concurrency: Int = 6) {
         queue.maxConcurrentOperationCount = concurrency
     }
 
-    func recalculate() {
-        let cloudTitles = Set(cloud.keys)
-        let localTitles = Set(LocalStorage.instance.songs.keys)
+    func calculate() {
+        guard !inProgress else { return }
 
-        toDelete = localTitles.subtracting(cloudTitles).map { title in
-            LocalStorage.instance.songs[title]!
-        }
+        let cloudSongTitles = Set(cloudSongs.keys)
+        let localSongTitles = Set(LocalStorage.instance.songs.keys)
+        songTitlesToDelete = Array(localSongTitles.subtracting(cloudSongTitles))
+        songTitlesToDownload = Array(cloudSongTitles.subtracting(localSongTitles))
 
-        toDownload = cloudTitles.subtracting(localTitles).map { title in
-            cloud[title]!
-        }
+        let cloudMovieTitles = Set(cloudMovies.keys)
+        let localMovieTitles = Set(LocalStorage.instance.movies.keys)
+        movieTitlesToDelete = Array(localMovieTitles.subtracting(cloudMovieTitles))
+        movieTitlesToDownload = Array(cloudMovieTitles.subtracting(localMovieTitles))
 
-        totalOperations = toDelete.count + toDownload.count
+        totalOperationCount = songTitlesToDelete.count + songTitlesToDownload.count + movieTitlesToDelete.count + movieTitlesToDownload.count
     }
 
-    func wrap(block: @escaping ()->()) -> ()->() {
+    func run() {
+        guard !inProgress else { return }
+
+        var operations: [()->()] = []
+        operations += songTitlesToDelete.map { title in
+            let song = LocalStorage.instance.songs[title]!
+            return self.wrap {
+                    LocalStorage.instance.delete(song)
+            }
+        }
+        operations += songTitlesToDownload.map { title in
+            let song = cloudSongs[title]!
+            return self.wrap {
+                if let tmp = GoogleDrive.instance.download(song) {
+                    LocalStorage.instance.add(tmp)
+                }
+            }
+        }
+        operations += movieTitlesToDelete.map { title in
+            let movie = LocalStorage.instance.movies[title]!
+            return self.wrap {
+                LocalStorage.instance.delete(movie)
+            }
+        }
+        operations += movieTitlesToDownload.map { title in
+            let movie = cloudMovies[title]!
+            return self.wrap {
+                if let tmp = GoogleDrive.instance.download(movie) {
+                    LocalStorage.instance.add(tmp)
+                }
+            }
+        }
+
+        operations.shuffled().forEach { op in
+            queue.addOperation {
+                op()
+            }
+        }
+    }
+
+    func cancel() {
+        cancelInProgress = true
+    }
+
+    fileprivate func wrap(block: @escaping ()->()) -> ()->() {
         return {
             if !self.cancelInProgress {
                 block()
@@ -55,31 +104,5 @@ class SyncEngine {
                 self.cancelInProgress = false
             }
         }
-    }
-
-    func run() {
-        queue.cancelAllOperations()
-
-        toDelete.forEach { song in
-            queue.addOperation {
-                self.wrap {
-                    LocalStorage.instance.delete(song: song)
-                }()
-            }
-        }
-
-        toDownload.forEach { song in
-            queue.addOperation {
-                self.wrap {
-                    if let tempSong = GoogleDrive.instance.download(song: song) {
-                        LocalStorage.instance.add(tmpSong: tempSong)
-                    }
-                }()
-            }
-        }
-    }
-
-    func cancel() {
-        cancelInProgress = true
     }
 }

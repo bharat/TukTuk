@@ -23,7 +23,7 @@ final class JusticeLeague: MiniGame {
         case Choose
         case Tada
 
-        var audioUrl: URL {
+        var audio: URL {
             return Media.JusticeLeague.audio(rawValue)
         }
     }
@@ -75,7 +75,7 @@ final class JusticeLeague: MiniGame {
             return UIImage(named: "JusticeLeague_\(rawValue)")
         }
 
-        var audioUrl: URL {
+        var audio: URL {
             return Media.JusticeLeague.audio(rawValue)
         }
 

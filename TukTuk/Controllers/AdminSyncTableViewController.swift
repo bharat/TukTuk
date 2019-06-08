@@ -12,8 +12,10 @@ import PopupDialog
 import GoogleSignIn
 
 class AdminSyncTableViewController: UITableViewController {
-    @IBOutlet var onThisDeviceLabel: UILabel!
-    @IBOutlet var inTheCloudLabel: UILabel!
+    @IBOutlet var songsOnThisDeviceLabel: UILabel!
+    @IBOutlet var songsInTheCloudLabel: UILabel!
+    @IBOutlet var moviesOnThisDeviceLabel: UILabel!
+    @IBOutlet var moviesInTheCloudLabel: UILabel!
     @IBOutlet var syncCancelButton: UIButton!
     @IBOutlet var syncButton: UIButton!
     @IBOutlet var syncProgress: UIProgressView!
@@ -42,15 +44,20 @@ class AdminSyncTableViewController: UITableViewController {
 
     func loadFromCloud() {
         GoogleDrive.instance.getSongs() { songs in
-            self.sync.cloud = songs
-            self.sync.recalculate()
-            self.updateUI()
+            self.sync.cloudSongs = songs
+            GoogleDrive.instance.getMovies() { movies in
+                self.sync.cloudMovies = movies
+                self.sync.calculate()
+                self.updateUI()
+            }
         }
     }
 
     func updateUI() {
-        self.inTheCloudLabel.text = "\(sync.cloud.count)"
-        self.onThisDeviceLabel.text = "\(LocalStorage.instance.songs.count)"
+        self.songsInTheCloudLabel.text = "\(sync.cloudSongs.count)"
+        self.songsOnThisDeviceLabel.text = "\(LocalStorage.instance.songs.count)"
+        self.moviesInTheCloudLabel.text = "\(sync.cloudMovies.count)"
+        self.moviesOnThisDeviceLabel.text = "\(LocalStorage.instance.movies.count)"
 
         if sync.inProgress {
             syncProgress.isHidden = false
@@ -63,10 +70,12 @@ class AdminSyncTableViewController: UITableViewController {
             }
             syncButton.isHidden = false
             syncCancelButton.isHidden = true
+            syncCancelButton.titleLabel?.text = "Cancel"
         }
     }
 
     @IBAction func cancel(_ sender: Any) {
+        syncCancelButton.titleLabel?.text = "Cancelling..."
         sync.cancel()
     }
 
@@ -77,17 +86,18 @@ class AdminSyncTableViewController: UITableViewController {
             self.syncProgress.isHidden = false
             self.syncProgress.setProgress(0, animated: false)
         }
-        sync.recalculate()
+        sync.calculate()
         sync.run()
         updateUI()
     }
 
     @IBAction func reset(_ sender: Any) {
-        let popup = PopupDialog(title: "Are you sure?", message: "This will delete all downloaded songs")
+        let popup = PopupDialog(title: "Are you sure?", message: "This will delete all downloaded songs and videos!")
         popup.addButtons([
             CancelButton(title: "Cancel") { },
             DefaultButton(title: "Ok") {
                 LocalStorage.instance.deleteAllSongs()
+                LocalStorage.instance.deleteAllMovies()
                 self.updateUI()
             }
             ])

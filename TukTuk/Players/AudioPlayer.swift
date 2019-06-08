@@ -10,7 +10,7 @@ import Foundation
 import AVKit
 
 protocol AudioPlayable {
-    var audioUrl: URL { get }
+    var audio: URL { get }
 }
 
 class AudioPlayer {
@@ -32,7 +32,7 @@ class AudioPlayer {
         try! AVAudioSession.sharedInstance().setActive(true)
 
         let old = player
-        try! player = AVAudioPlayer(contentsOf: object.audioUrl)
+        try! player = AVAudioPlayer(contentsOf: object.audio)
 
         guard let player = player else {
             return

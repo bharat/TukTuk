@@ -12,6 +12,7 @@ import GoogleAPIClientForREST
 
 let CLIENT_ID = "519173767662-ca9oluprutan3a2s0n619no01mlnla3a.apps.googleusercontent.com"
 let SONGS_FOLDER_ID = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
+let MOVIES_FOLDER_ID = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
 
 struct CloudSong {
     var title: String
@@ -19,6 +20,12 @@ struct CloudSong {
     var imageId: String
 }
 typealias CloudSongDict = [String:CloudSong]
+
+struct CloudMovie {
+    var title: String
+    var id: String
+}
+typealias CloudMovieDict = [String:CloudMovie]
 
 class GoogleDrive: NSObject {
     static var instance = GoogleDrive()
@@ -98,14 +105,16 @@ extension GoogleDrive {
         }
     }
 
-    func download(song: CloudSong) -> TempSong? {
+    func download(_ cloudSong: CloudSong) -> TempSong? {
         var tempSong: TempSong?
         let group = DispatchGroup()
         group.enter()
-        getFile(id: song.audioId) { audioData in
-            self.getFile(id: song.imageId) { imageData in
+        getFile(id: cloudSong.audioId) { audioData in
+            self.getFile(id: cloudSong.imageId) { imageData in
                 if let audioData = audioData, let imageData = imageData {
-                    tempSong = TempSong(title: song.title, audioData: audioData, imageData: imageData)
+                    tempSong = TempSong(title: cloudSong.title, audioData: audioData, imageData: imageData)
+                }  else {
+                    print("Error downloading song: \(cloudSong.title)")
                 }
                 group.leave()
             }
@@ -115,4 +124,41 @@ extension GoogleDrive {
         return tempSong
     }
 }
+
+extension GoogleDrive {
+    func getMovies(done: @escaping (CloudMovieDict) -> ()) {
+        let query = GTLRDriveQuery_FilesList.query()
+        query.pageSize = 1000
+        query.q = "\"\(MOVIES_FOLDER_ID)\" in parents"
+
+        service.executeQuery(query) { (ticket, results, error) in
+            var movies = CloudMovieDict()
+            if let files = (results as? GTLRDrive_FileList)?.files {
+                files.forEach { file in
+                    let title = NSString(string: file.name!).deletingPathExtension
+                    movies[title] = CloudMovie(title: title, id: file.identifier!)
+                }
+            }
+            done(movies)
+        }
+    }
+
+    func download(_ cloudMovie: CloudMovie) -> TempMovie? {
+        var tmp: TempMovie?
+        let group = DispatchGroup()
+        group.enter()
+        getFile(id: cloudMovie.id) { data in
+            if let data = data {
+                tmp = TempMovie(title: cloudMovie.title, video: data)
+            } else {
+                print("Error downloading movie: \(cloudMovie.title)")
+            }
+            group.leave()
+        }
+        group.wait()
+
+        return tmp
+    }
+}
+
 

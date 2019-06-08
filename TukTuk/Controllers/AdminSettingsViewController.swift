@@ -123,9 +123,9 @@ class AdminSettingsViewController: UITableViewController {
         case IndexPath(row: 1, section: 0):
             cell.title.text = "Movie"
             cell.detail.text = Settings.cuedMovie?.title ?? .emptyTitle
-            cell.data = Media.Player.movies
+            cell.data = LocalStorage.instance.movies.values.sorted { $0.title < $1.title }
             cell.select = { obj in
-                Settings.cuedMovie = obj as! Movie?
+                Settings.cuedMovie = obj as! LocalMovie?
                 self.redraw()
             }
         case IndexPath(row: 2, section: 0):

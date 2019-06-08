@@ -17,6 +17,7 @@
 		4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */; };
 		4F0824942208D64000D45C40 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = 4FFC1C662208B6FA0019A07B /* Media */; };
 		4F0F5A3322AC3A080012934B /* AdminTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F5A3222AC3A080012934B /* AdminTabBarController.swift */; };
+		4F0F5A3522AC4A1D0012934B /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F5A3422AC4A1D0012934B /* FileManager.swift */; };
 		4F11FEF122616D0C00AD777D /* AdminSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */; };
 		4F11FEF52263BB3600AD777D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF42263BB3600AD777D /* Settings.swift */; };
 		4F11FEF72263BB8500AD777D /* Titled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF62263BB8500AD777D /* Titled.swift */; };
@@ -41,8 +42,8 @@
 		4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */; };
 		4FB27EF4229724D100A44CE6 /* PhotoFlip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB27EF3229724D100A44CE6 /* PhotoFlip.swift */; };
 		4FBD0FD420F55DC900BB5E32 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD320F55DC900BB5E32 /* Bundle.swift */; };
-		4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD620F55E1000BB5E32 /* Song.swift */; };
-		4FBD0FD920F55E1B00BB5E32 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD820F55E1B00BB5E32 /* Movie.swift */; };
+		4FBD0FD720F55E1000BB5E32 /* LocalSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD620F55E1000BB5E32 /* LocalSong.swift */; };
+		4FBD0FD920F55E1B00BB5E32 /* LocalMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FD820F55E1B00BB5E32 /* LocalMovie.swift */; };
 		4FBD0FE120F587CC00BB5E32 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD0FE020F587CC00BB5E32 /* UserDefaults.swift */; };
 		4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */; };
 		4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */; };
@@ -75,6 +76,7 @@
 		4F074AEB22A9BCEC008E5F22 /* SyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEngine.swift; sourceTree = "<group>"; };
 		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
 		4F0F5A3222AC3A080012934B /* AdminTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTabBarController.swift; sourceTree = "<group>"; };
+		4F0F5A3422AC4A1D0012934B /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSettingsViewController.swift; sourceTree = "<group>"; };
 		4F11FEF42263BB3600AD777D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		4F11FEF62263BB8500AD777D /* Titled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Titled.swift; sourceTree = "<group>"; };
@@ -101,8 +103,8 @@
 		4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSlantedLayout.swift; sourceTree = "<group>"; };
 		4FB27EF3229724D100A44CE6 /* PhotoFlip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoFlip.swift; sourceTree = "<group>"; };
 		4FBD0FD320F55DC900BB5E32 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
-		4FBD0FD620F55E1000BB5E32 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
-		4FBD0FD820F55E1B00BB5E32 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		4FBD0FD620F55E1000BB5E32 /* LocalSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSong.swift; sourceTree = "<group>"; };
+		4FBD0FD820F55E1B00BB5E32 /* LocalMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMovie.swift; sourceTree = "<group>"; };
 		4FBD0FE020F587CC00BB5E32 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		4FBD57A81F098DEB00BDCDE3 /* TukTuk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TukTuk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBD57AB1F098DEB00BDCDE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				4FBD0FE020F587CC00BB5E32 /* UserDefaults.swift */,
 				4F9DDD40222319D500D3EFAF /* URL.swift */,
 				4FA64A88223D87CB00AED085 /* CollectionViewSlantedLayout.swift */,
+				4F0F5A3422AC4A1D0012934B /* FileManager.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -206,9 +209,9 @@
 			children = (
 				4F074AE522A74137008E5F22 /* GoogleDrive.swift */,
 				4F074AE322A5FD04008E5F22 /* Media.swift */,
-				4FBD0FD820F55E1B00BB5E32 /* Movie.swift */,
+				4FBD0FD820F55E1B00BB5E32 /* LocalMovie.swift */,
 				4F11FEF42263BB3600AD777D /* Settings.swift */,
-				4FBD0FD620F55E1000BB5E32 /* Song.swift */,
+				4FBD0FD620F55E1000BB5E32 /* LocalSong.swift */,
 				4FA64A86223D722100AED085 /* SongCell.swift */,
 				4F074AE922A89828008E5F22 /* LocalStorage.swift */,
 			);
@@ -488,9 +491,10 @@
 				4F074AEA22A89828008E5F22 /* LocalStorage.swift in Sources */,
 				4F074AE422A5FD04008E5F22 /* Media.swift in Sources */,
 				4F0F5A3322AC3A080012934B /* AdminTabBarController.swift in Sources */,
+				4F0F5A3522AC4A1D0012934B /* FileManager.swift in Sources */,
 				4F24D0E022A5D7F60039B83E /* AdminSyncTableViewController.swift in Sources */,
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
-				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
+				4FBD0FD720F55E1000BB5E32 /* LocalSong.swift in Sources */,
 				4FB27EF4229724D100A44CE6 /* PhotoFlip.swift in Sources */,
 				4F11FEF122616D0C00AD777D /* AdminSettingsViewController.swift in Sources */,
 				4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */,
@@ -517,7 +521,7 @@
 				4FBD0FD420F55DC900BB5E32 /* Bundle.swift in Sources */,
 				4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */,
 				4F84C38F1FC51AC40093801B /* Animations.swift in Sources */,
-				4FBD0FD920F55E1B00BB5E32 /* Movie.swift in Sources */,
+				4FBD0FD920F55E1B00BB5E32 /* LocalMovie.swift in Sources */,
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
 				4F074AE622A74137008E5F22 /* GoogleDrive.swift in Sources */,
 				4FBD0FE120F587CC00BB5E32 /* UserDefaults.swift in Sources */,

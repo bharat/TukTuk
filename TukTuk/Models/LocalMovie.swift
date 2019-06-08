@@ -1,5 +1,5 @@
 //
-//  Movie.swift
+//  LocalMovie.swift
 //  TukTuk
 //
 //  Created by Bharat Mediratta on 7/10/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Movie: VideoPlayable, Titled {
+struct LocalMovie: VideoPlayable, Titled {
     var video: URL
     var title: String
 }

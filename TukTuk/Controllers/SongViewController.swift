@@ -79,7 +79,7 @@ class SongViewController: UIViewController {
     }
 
     fileprivate func loadSongs() {
-        if songs.count != LocalStorage.instance.songs.count {
+        if Set(songs.map { $0.title }) != Set(LocalStorage.instance.songs.keys) {
             songs = LocalStorage.instance.songs.values.sorted(by: { $0.title < $1.title })
         }
     }

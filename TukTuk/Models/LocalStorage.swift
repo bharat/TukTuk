@@ -34,6 +34,12 @@ class LocalStorage {
             let audioUrl = songsUrl.appendingPathComponent("\(title).mp3")
             songs[title] = LocalSong(title: title, image: imageUrl, audio: audioUrl)
         }
+
+        movies = [:]
+        try! FileManager.default.contentsOfDirectory(atPath: moviesUrl.path).forEach { fileName in
+            let title = NSString(string: fileName).deletingPathExtension
+            movies[title] = LocalMovie(video: moviesUrl.appendingPathComponent(fileName), title: title)
+        }
     }
 }
 

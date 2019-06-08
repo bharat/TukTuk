@@ -59,7 +59,6 @@ class GoogleDrive: NSObject {
     func getFile(id: String, completion: @escaping (Data?) -> ()) {
         let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: id)
         service.executeQuery(query) { (ticket, file, error) in
-            print("FILE \(file.debugDescription)")
             completion((file as? GTLRDataObject)?.data)
         }
     }

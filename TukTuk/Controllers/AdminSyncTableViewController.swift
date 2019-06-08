@@ -68,15 +68,17 @@ class AdminSyncTableViewController: UITableViewController {
             UIView.animate(withDuration: 1.0) {
                 self.syncProgress.isHidden = true
             }
-            syncButton.isHidden = false
             syncCancelButton.isHidden = true
-            syncCancelButton.titleLabel?.text = "Cancel"
+            syncCancelButton.setTitle("Cancel", for: .normal)
+
+            syncButton.isHidden = false
+            syncButton.isEnabled = sync.pendingOperationCount > 0
         }
     }
 
     @IBAction func cancel(_ sender: Any) {
-        syncCancelButton.titleLabel?.text = "Cancelling..."
         sync.cancel()
+        syncCancelButton.setTitle("Canceling...", for: .normal)
     }
 
     @IBAction func sync(_ sender: Any) {
@@ -87,7 +89,10 @@ class AdminSyncTableViewController: UITableViewController {
             self.syncProgress.setProgress(0, animated: false)
         }
         sync.calculate()
-        sync.run()
+        sync.run() {
+            self.sync.calculate()
+            self.updateUI()
+        }
         updateUI()
     }
 
@@ -95,7 +100,7 @@ class AdminSyncTableViewController: UITableViewController {
         let popup = PopupDialog(title: "Are you sure?", message: "This will delete all downloaded songs and videos!")
         popup.addButtons([
             CancelButton(title: "Cancel") { },
-            DefaultButton(title: "Ok") {
+            DestructiveButton(title: "Ok") {
                 LocalStorage.instance.deleteAllSongs()
                 LocalStorage.instance.deleteAllMovies()
                 self.updateUI()

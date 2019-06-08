@@ -78,6 +78,12 @@ class AdminSettingsViewController: UITableViewController {
         dismiss(animated: true, completion: {})
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tableView.reloadData()
+    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }

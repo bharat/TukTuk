@@ -17,7 +17,7 @@ class SyncEngine {
     var songTitlesToDownload: [String] = []
     var movieTitlesToDelete: [String] = []
     var movieTitlesToDownload: [String] = []
-    var totalOperationCount: Int = 0
+    var pendingOperationCount: Int = 0
     var cancelInProgress: Bool = false
     var notify: ()->() = {}
 
@@ -26,7 +26,7 @@ class SyncEngine {
     }
     
     var progress: Float {
-        return Float(totalOperationCount - queue.operationCount) / Float(totalOperationCount)
+        return Float(pendingOperationCount - queue.operationCount) / Float(pendingOperationCount)
     }
 
     init(concurrency: Int = 6) {
@@ -46,10 +46,10 @@ class SyncEngine {
         movieTitlesToDelete = Array(localMovieTitles.subtracting(cloudMovieTitles))
         movieTitlesToDownload = Array(cloudMovieTitles.subtracting(localMovieTitles))
 
-        totalOperationCount = songTitlesToDelete.count + songTitlesToDownload.count + movieTitlesToDelete.count + movieTitlesToDownload.count
+        pendingOperationCount = songTitlesToDelete.count + songTitlesToDownload.count + movieTitlesToDelete.count + movieTitlesToDownload.count
     }
 
-    func run() {
+    func run(complete: @escaping () -> ()) {
         guard !inProgress else { return }
 
         var operations: [()->()] = []
@@ -86,6 +86,10 @@ class SyncEngine {
             queue.addOperation {
                 op()
             }
+        }
+
+        queue.addOperation {
+            complete()
         }
     }
 

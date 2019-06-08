@@ -1,5 +1,5 @@
 # TukTuk
-This is a simple music player app I wrote for my son, Remy. When he was 2 years old, he'd sit in the back seat of our car and request the same songs over and over again. We got pretty tired of it and wanted to listen to our own music, so it started with a very simple music jukebox and has grown over time.
+This is a simple music player app I wrote for my son, Remy. When he was 2 years old, he'd sit in the back seat of our car and request the same songs over and over again. We got pretty tired of it and wanted to listen to our own music, so it started with a very simple music jukebox and has grown over time. As of this writing, he's 4.5 years old and it's still one of his favorite things to do.
 
 ## Features
 1. Music. The main thing that TukTuk does is to let Remy scroll through his songs and play the ones that he wants

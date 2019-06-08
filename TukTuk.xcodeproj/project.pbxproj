@@ -16,6 +16,7 @@
 		4F074AEC22A9BCEC008E5F22 /* SyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AEB22A9BCEC008E5F22 /* SyncEngine.swift */; };
 		4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */; };
 		4F0824942208D64000D45C40 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = 4FFC1C662208B6FA0019A07B /* Media */; };
+		4F0F5A3322AC3A080012934B /* AdminTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F5A3222AC3A080012934B /* AdminTabBarController.swift */; };
 		4F11FEF122616D0C00AD777D /* AdminSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */; };
 		4F11FEF52263BB3600AD777D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF42263BB3600AD777D /* Settings.swift */; };
 		4F11FEF72263BB8500AD777D /* Titled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF62263BB8500AD777D /* Titled.swift */; };
@@ -73,6 +74,7 @@
 		4F074AE922A89828008E5F22 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		4F074AEB22A9BCEC008E5F22 /* SyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEngine.swift; sourceTree = "<group>"; };
 		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
+		4F0F5A3222AC3A080012934B /* AdminTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTabBarController.swift; sourceTree = "<group>"; };
 		4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSettingsViewController.swift; sourceTree = "<group>"; };
 		4F11FEF42263BB3600AD777D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		4F11FEF62263BB8500AD777D /* Titled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Titled.swift; sourceTree = "<group>"; };
@@ -225,10 +227,11 @@
 		4FBD0FDF20F5678A00BB5E32 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
-				4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */,
 				4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */,
 				4F24D0DF22A5D7F60039B83E /* AdminSyncTableViewController.swift */,
+				4F0F5A3222AC3A080012934B /* AdminTabBarController.swift */,
+				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
+				4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 			files = (
 				4F074AEA22A89828008E5F22 /* LocalStorage.swift in Sources */,
 				4F074AE422A5FD04008E5F22 /* Media.swift in Sources */,
+				4F0F5A3322AC3A080012934B /* AdminTabBarController.swift in Sources */,
 				4F24D0E022A5D7F60039B83E /* AdminSyncTableViewController.swift in Sources */,
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,

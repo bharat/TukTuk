@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import AVKit
 import CollectionViewSlantedLayout
+import PopupDialog
 
 extension TimeInterval {
     static let MovieInterval: TimeInterval = 2400
@@ -69,9 +70,10 @@ class SongViewController: UIViewController {
 
         loadSongs()
         if songs.count == 0 {
-            DispatchQueue.main.async {
+            let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
                 self.performSegue(withIdentifier: "Admin", sender: self)
             }
+            self.present(popup, animated: true, completion: nil)
         }
 
         movieCountdown = UserDefaults.standard.movieCountdown

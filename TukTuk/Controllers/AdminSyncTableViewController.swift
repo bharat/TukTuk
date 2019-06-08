@@ -29,8 +29,18 @@ class AdminSyncTableViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        GoogleDrive.instance.signIn(uiDelegate: self)
 
+        if GoogleDrive.instance.isAuthenticated {
+            loadFromCloud()
+        } else {
+            let popup = PopupDialog(title: "Let's get started", message: "It's pretty easy. First, log in to Google, then hit the Synchronize button") {
+                GoogleDrive.instance.signIn(uiDelegate: self)
+            }
+            self.present(popup, animated: true, completion: nil)
+        }
+    }
+
+    func loadFromCloud() {
         GoogleDrive.instance.getSongs() { songs in
             self.sync.cloud = songs
             self.sync.recalculate()

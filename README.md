@@ -5,8 +5,14 @@ This is a simple music player app I wrote for my son, Remy. When he was 2 years 
 1. Music. The main thing that TukTuk does is to let Remy scroll through his songs and play the ones that he wants
 2. Movies. After Remy listens to 40 minutes of music, he gets rewarded with a random video! He loves these.
 3. MiniGames. Periodically when Remy picks a song, he gets rewarded with a little minigame. Some of them are tiny, some are more complicated. He gets incredibly excited when he gets one of these because when he "wins" the game, he gets a little video reward.
+4. Admin interface. There's a secret interface that's very hard for children to find that enables you to download content from the cloud, cue up minigames, videos, etc.
 
 ## Demos
+Here are a few quick demos so that you can see what it looks like. To get the full experience, click on a demo image to be taken to a Youtube video which plays the audio as well.
+
+[![Startup and Basic Operation](/Demo/TukTuk_startup_demo.gif)](https://www.youtube.com/watch?v=_wMdDbZUeYA)
+[![Secret admin interface](/Demo/TukTuk_admin_interface_demo.gif)](https://www.youtube.com/watch?v=hK1JI0XgkgA)
+[![MiniGame demo](/Demo/TukTuk_MiniGame_demo.gif)](https://www.youtube.com/watch?v=14orQdS3btY)
 
 ## Can you use it?
 Absolutely. Even though I designed this for Remy, all the music and videos are backed in the cloud. Not everything is flexible enough to be customized, but if you're interested in creating this experience for your child, contact me and let's make it work!

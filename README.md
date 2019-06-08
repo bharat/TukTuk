@@ -10,9 +10,9 @@ This is a simple music player app I wrote for my son, Remy. When he was 2 years 
 ## Demos
 Here are a few quick demos so that you can see what it looks like. To get the full experience, click on a demo image to be taken to a Youtube video which plays the audio as well.
 
-[![Startup and Basic Operation](/Demo/TukTuk_startup_demo.gif)](https://www.youtube.com/watch?v=_wMdDbZUeYA)
-[![Secret admin interface](/Demo/TukTuk_admin_interface_demo.gif)](https://www.youtube.com/watch?v=hK1JI0XgkgA)
-[![MiniGame demo](/Demo/TukTuk_MiniGame_demo.gif)](https://www.youtube.com/watch?v=14orQdS3btY)
+<a href="https://www.youtube.com/watch?v=_wMdDbZUeYA"><img src="/Demo/TukTuk_startup_demo.gif" width="255" height="554"/></a>
+<a href="https://www.youtube.com/watch?v=hK1JI0XgkgA"><img src="/Demo/TukTuk_admin_interface_demo.gif" width="255" height="554"/></a>
+<a href="https://www.youtube.com/watch?v=14orQdS3btY"><img src="/Demo/TukTuk_MiniGame_demo.gif" width="255" height="554"/></a>
 
 ## Can you use it?
 Absolutely. Even though I designed this for Remy, all the music and videos are backed in the cloud. Not everything is flexible enough to be customized, but if you're interested in creating this experience for your child, contact me and let's make it work!

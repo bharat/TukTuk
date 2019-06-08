@@ -36,7 +36,7 @@ class LocalStorage {
     init() {
         songsUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Songs")
         if !FileManager.default.fileExists(atPath: songsUrl.path) {
-            try? FileManager.default.createDirectory(atPath: songsUrl.path, withIntermediateDirectories: false, attributes: nil)
+            try! FileManager.default.createDirectory(atPath: songsUrl.path, withIntermediateDirectories: false, attributes: nil)
         }
 
         load()
@@ -60,6 +60,14 @@ class LocalStorage {
         FileManager.default.createFile(atPath: song.imageUrl.path, contents: tmpSong.imageData, attributes: nil)
         FileManager.default.createFile(atPath: song.audioUrl.path, contents: tmpSong.audioData, attributes: nil)
         songs[song.title] = song
+
+        // This can probably be pulled out into an extension on FileManager
+        var resourceValues = URLResourceValues()
+        resourceValues.isExcludedFromBackup = true
+        [song.imageUrl, song.audioUrl].forEach { url in
+            var copy = url
+            try! copy.setResourceValues(resourceValues)
+        }
     }
 
     func delete(song: Song) {

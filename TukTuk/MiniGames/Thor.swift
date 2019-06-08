@@ -26,7 +26,7 @@ final class Thor: MiniGame {
         case ILostMyHammer
         case IAmTheGodOfThunder
 
-        var audio: URL {
+        var audioUrl: URL {
             return Media.Thor.audio(rawValue)
         }
     }

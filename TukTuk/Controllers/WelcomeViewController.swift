@@ -43,8 +43,8 @@ class WelcomeViewController: UIViewController {
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false
 
-        // Shortcut for development
-        Settings.cuedAnimation = None()
+        // Useful shortcut for development
+        // Settings.cuedAnimation = None()
 
         // Run a random welcome animation, or a preset if specified
         let animation = Settings.cuedAnimation ?? Animations.all.randomElement()!

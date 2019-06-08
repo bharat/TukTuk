@@ -24,6 +24,13 @@ class SongViewController: UIViewController {
     @IBOutlet weak var movieTimerLabel: UILabel!
 
     var stats = Stats()
+    var songs: [Song] = [] {
+        didSet {
+            AudioPlayer.instance.stop()
+            songCollection.reloadData()
+            deselectAllSongs()
+        }
+    }
 
     var movieCountdown: TimeInterval = 0 {
         didSet {
@@ -51,10 +58,6 @@ class SongViewController: UIViewController {
         stopButton.isEnabled = false
 
         NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "Admin", sender: self)
-        }
     }
 
     deinit {
@@ -64,14 +67,20 @@ class SongViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        loadSongs()
+        if songs.count == 0 {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "Admin", sender: self)
+            }
+        }
+
         movieCountdown = UserDefaults.standard.movieCountdown
         movieButton.isHidden = (movieCountdown > 0)
+    }
 
-        if Songs.instance.songsChangedSinceLastDisplay {
-            AudioPlayer.instance.stop()
-            songCollection.reloadData()
-            deselectAllSongs()
-            Songs.instance.songsChangedSinceLastDisplay = false
+    fileprivate func loadSongs() {
+        if songs.count != LocalStorage.instance.songs.count {
+            songs = LocalStorage.instance.songs.values.sorted(by: { $0.title < $1.title })
         }
     }
 
@@ -234,7 +243,7 @@ extension SongViewController: UICollectionViewDelegate {
             }
 
             stopButton.isEnabled = true
-            let song = Songs.instance.songs[indexPath.row]
+            let song = songs[indexPath.row]
             playSong(song)
         }
     }
@@ -260,13 +269,13 @@ extension SongViewController: UIScrollViewDelegate {
 
 extension SongViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Songs.instance.songs.count
+        return songs.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
-        let song = Songs.instance.songs[indexPath.row]
+        let song = songs[indexPath.row]
 
         cell.image = song.image
         cell.title.text = song.title

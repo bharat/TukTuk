@@ -23,7 +23,7 @@ final class AvengersAssemble: MiniGame {
         case ChooseAnAvenger
         case Tada
 
-        var audio: URL {
+        var audioUrl: URL {
             return Media.AvengersAssemble.audio(rawValue)
         }
     }
@@ -75,7 +75,7 @@ final class AvengersAssemble: MiniGame {
             return UIImage(named: "Avenger_\(rawValue)")
         }
 
-        var audio: URL {
+        var audioUrl: URL {
             return Media.AvengersAssemble.audio(rawValue)
         }
 

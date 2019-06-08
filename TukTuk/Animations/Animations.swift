@@ -12,7 +12,7 @@ import UIKit
 enum Sounds: String, CaseIterable, AudioPlayable {
     case Welcome
 
-    var audio: URL {
+    var audioUrl: URL {
         return Media.Player.audio(rawValue)
     }
 }

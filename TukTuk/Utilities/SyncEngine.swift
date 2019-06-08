@@ -10,28 +10,76 @@ import Foundation
 
 class SyncEngine {
     private let queue = OperationQueue()
-    static let instance = SyncEngine()
+
+    var cloud = CloudSongDict()
+    var toDelete: [Song] = []
+    var toDownload: [CloudSong] = []
+    var totalOperations: Int = 0
+    var cancelInProgress: Bool = false
+    var notify: ()->() = {}
+
+    var inProgress: Bool {
+        return queue.operationCount > 0
+    }
+    var progress: Float {
+        return Float(totalOperations - queue.operationCount) / Float(totalOperations)
+    }
 
     init(concurrency: Int = 4) {
         queue.maxConcurrentOperationCount = concurrency
     }
 
-    func start(notify: @escaping () -> ()) {
-        let local = Set(Songs.instance.songs.map { $0.title })
-        let cloud = Set(GoogleDrive.instance.songs.keys)
+    func recalculate() {
+        let cloudTitles = Set(cloud.keys)
+        let localTitles = Set(LocalStorage.instance.songs.keys)
 
-        local.subtracting(cloud).forEach { title in
+        toDelete = localTitles.subtracting(cloudTitles).map { title in
+            LocalStorage.instance.songs[title]!
+        }
+
+        toDownload = cloudTitles.subtracting(localTitles).map { title in
+            cloud[title]!
+        }
+
+        totalOperations = toDelete.count + toDownload.count
+    }
+
+    func wrap(block: @escaping ()->()) -> ()->() {
+        return {
+            if !self.cancelInProgress {
+                block()
+            }
+            self.notify()
+
+            if self.queue.operationCount == 1 {
+                self.cancelInProgress = false
+            }
+        }
+    }
+
+    func run() {
+        queue.cancelAllOperations()
+
+        toDelete.forEach { song in
             queue.addOperation {
-                Songs.instance.remove(title: title)
-                notify()
+                self.wrap {
+                    LocalStorage.instance.delete(song: song)
+                }()
             }
         }
 
-        cloud.subtracting(local).forEach { title in
+        toDownload.forEach { song in
             queue.addOperation {
-                GoogleDrive.instance.downloadSong(title: title)
-                notify()
+                self.wrap {
+                    if let tempSong = GoogleDrive.instance.download(song: song) {
+                        LocalStorage.instance.add(tmpSong: tempSong)
+                    }
+                }()
             }
         }
+    }
+
+    func cancel() {
+        cancelInProgress = true
     }
 }

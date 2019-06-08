@@ -12,18 +12,18 @@
 		4F074AE422A5FD04008E5F22 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE322A5FD04008E5F22 /* Media.swift */; };
 		4F074AE622A74137008E5F22 /* GoogleDrive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE522A74137008E5F22 /* GoogleDrive.swift */; };
 		4F074AE822A74767008E5F22 /* None.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE722A74767008E5F22 /* None.swift */; };
-		4F074AEA22A89828008E5F22 /* Songs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE922A89828008E5F22 /* Songs.swift */; };
+		4F074AEA22A89828008E5F22 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AE922A89828008E5F22 /* LocalStorage.swift */; };
 		4F074AEC22A9BCEC008E5F22 /* SyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F074AEB22A9BCEC008E5F22 /* SyncEngine.swift */; };
 		4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */; };
 		4F0824942208D64000D45C40 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = 4FFC1C662208B6FA0019A07B /* Media */; };
-		4F11FEF122616D0C00AD777D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF022616D0C00AD777D /* SettingsViewController.swift */; };
+		4F11FEF122616D0C00AD777D /* AdminSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */; };
 		4F11FEF52263BB3600AD777D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF42263BB3600AD777D /* Settings.swift */; };
 		4F11FEF72263BB8500AD777D /* Titled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF62263BB8500AD777D /* Titled.swift */; };
 		4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17C9209E150F00483499 /* FaceBalls.swift */; };
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
 		4F1F17CE209E15B000483499 /* RollAway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CD209E15B000483499 /* RollAway.swift */; };
 		4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CF209E15BB00483499 /* Hinge.swift */; };
-		4F24D0E022A5D7F60039B83E /* MediaTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F24D0DF22A5D7F60039B83E /* MediaTableViewController.swift */; };
+		4F24D0E022A5D7F60039B83E /* AdminSyncTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F24D0DF22A5D7F60039B83E /* AdminSyncTableViewController.swift */; };
 		4F3270C7225559430063CC32 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3270C6225559430063CC32 /* Stats.swift */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
 		4F75101E225D259B0039AA35 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75101D225D259B0039AA35 /* Maze.swift */; };
@@ -70,17 +70,17 @@
 		4F074AE322A5FD04008E5F22 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		4F074AE522A74137008E5F22 /* GoogleDrive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDrive.swift; sourceTree = "<group>"; };
 		4F074AE722A74767008E5F22 /* None.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = None.swift; sourceTree = "<group>"; };
-		4F074AE922A89828008E5F22 /* Songs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Songs.swift; sourceTree = "<group>"; };
+		4F074AE922A89828008E5F22 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		4F074AEB22A9BCEC008E5F22 /* SyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEngine.swift; sourceTree = "<group>"; };
 		4F08093220AA5A9500CF8767 /* AvengersAssemble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvengersAssemble.swift; sourceTree = "<group>"; };
-		4F11FEF022616D0C00AD777D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSettingsViewController.swift; sourceTree = "<group>"; };
 		4F11FEF42263BB3600AD777D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		4F11FEF62263BB8500AD777D /* Titled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Titled.swift; sourceTree = "<group>"; };
 		4F1F17C9209E150F00483499 /* FaceBalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceBalls.swift; sourceTree = "<group>"; };
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
 		4F1F17CD209E15B000483499 /* RollAway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollAway.swift; sourceTree = "<group>"; };
 		4F1F17CF209E15BB00483499 /* Hinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hinge.swift; sourceTree = "<group>"; };
-		4F24D0DF22A5D7F60039B83E /* MediaTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTableViewController.swift; sourceTree = "<group>"; };
+		4F24D0DF22A5D7F60039B83E /* AdminSyncTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSyncTableViewController.swift; sourceTree = "<group>"; };
 		4F3270C6225559430063CC32 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F75101D225D259B0039AA35 /* Maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 				4F11FEF42263BB3600AD777D /* Settings.swift */,
 				4FBD0FD620F55E1000BB5E32 /* Song.swift */,
 				4FA64A86223D722100AED085 /* SongCell.swift */,
-				4F074AE922A89828008E5F22 /* Songs.swift */,
+				4F074AE922A89828008E5F22 /* LocalStorage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -227,8 +227,8 @@
 			children = (
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
 				4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */,
-				4F11FEF022616D0C00AD777D /* SettingsViewController.swift */,
-				4F24D0DF22A5D7F60039B83E /* MediaTableViewController.swift */,
+				4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */,
+				4F24D0DF22A5D7F60039B83E /* AdminSyncTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -405,25 +405,27 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/CollectionViewSlantedLayout/CollectionViewSlantedLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyAnimation/EasyAnimation.framework",
 				"${BUILT_PRODUCTS_DIR}/FLEX/FLEX.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/cdTaskQueue/TaskQueue.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Amplitude_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CollectionViewSlantedLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyAnimation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLEX.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TaskQueue.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -480,13 +482,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F074AEA22A89828008E5F22 /* Songs.swift in Sources */,
+				4F074AEA22A89828008E5F22 /* LocalStorage.swift in Sources */,
 				4F074AE422A5FD04008E5F22 /* Media.swift in Sources */,
-				4F24D0E022A5D7F60039B83E /* MediaTableViewController.swift in Sources */,
+				4F24D0E022A5D7F60039B83E /* AdminSyncTableViewController.swift in Sources */,
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4FBD0FD720F55E1000BB5E32 /* Song.swift in Sources */,
 				4FB27EF4229724D100A44CE6 /* PhotoFlip.swift in Sources */,
-				4F11FEF122616D0C00AD777D /* SettingsViewController.swift in Sources */,
+				4F11FEF122616D0C00AD777D /* AdminSettingsViewController.swift in Sources */,
 				4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,
 				4FF69124225E9F8800595BDE /* Bezier.swift in Sources */,

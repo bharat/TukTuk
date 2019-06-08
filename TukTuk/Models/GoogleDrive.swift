@@ -13,15 +13,16 @@ import GoogleAPIClientForREST
 let CLIENT_ID = "519173767662-ca9oluprutan3a2s0n619no01mlnla3a.apps.googleusercontent.com"
 let SONGS_FOLDER_ID = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
 
-struct GDriveSong {
+struct CloudSong {
+    var title: String
     var audioId: String
     var imageId: String
 }
+typealias CloudSongDict = [String:CloudSong]
 
 class GoogleDrive: NSObject {
     static var instance = GoogleDrive()
     let service = GTLRDriveService()
-    var songs: [String:GDriveSong] = [:]
 
     var isAuthenticated: Bool {
         return GIDSignIn.sharedInstance().currentUser != nil
@@ -71,12 +72,13 @@ extension GoogleDrive: GIDSignInUIDelegate {
 }
 
 extension GoogleDrive {
-    func listSongs(done: @escaping () -> ()) {
+    func getSongs(done: @escaping (CloudSongDict) -> ()) {
         let query = GTLRDriveQuery_FilesList.query()
         query.pageSize = 1000
         query.q = "\"\(SONGS_FOLDER_ID)\" in parents"
 
         service.executeQuery(query) { (ticket, results, error) in
+            var songs = CloudSongDict()
             if let files = (results as? GTLRDrive_FileList)?.files {
                 var audio: [String:String] = [:]
                 var image: [String:String] = [:]
@@ -89,27 +91,28 @@ extension GoogleDrive {
                     }
                 }
                 Set(audio.keys).intersection(Set(image.keys)).forEach { title in
-                    self.songs[title] = GDriveSong(audioId: audio[title]!, imageId: image[title]!)
+                    songs[title] = CloudSong(title: title, audioId: audio[title]!, imageId: image[title]!)
                 }
             }
-            done()
+            done(songs)
         }
     }
 
-    func downloadSong(title: String) {
-        guard let song = songs[title] else { return }
-
+    func download(song: CloudSong) -> TempSong? {
+        var tempSong: TempSong?
         let group = DispatchGroup()
         group.enter()
         getFile(id: song.audioId) { audioData in
             self.getFile(id: song.imageId) { imageData in
                 if let audioData = audioData, let imageData = imageData {
-                    Songs.instance.add(title: title, audioData: audioData, imageData: imageData)
+                    tempSong = TempSong(title: song.title, audioData: audioData, imageData: imageData)
                 }
                 group.leave()
             }
         }
         group.wait()
+
+        return tempSong
     }
 }
 

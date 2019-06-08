@@ -64,7 +64,7 @@ final class CaptainAmerica: MiniGame {
         case Bounce_2
         case Bounce_3
 
-        var audio: URL {
+        var audioUrl: URL {
             return Media.CaptainAmerica.audio(rawValue)
         }
     }
@@ -73,7 +73,7 @@ final class CaptainAmerica: MiniGame {
         case Rescue
         case Tada
 
-        var audio: URL {
+        var audioUrl: URL {
             return Media.CaptainAmerica.audio(rawValue)
         }
     }

@@ -11,6 +11,20 @@ import UIKit
 
 struct Song: AudioPlayable, Titled {
     var title: String
-    var image: UIImage
-    var audio: URL
+    var imageUrl: URL
+    var audioUrl: URL
+
+    var image: UIImage {
+        return UIImage(contentsOfFile: imagePath)!
+    }
+
+    var audioPath: String {
+        return audioUrl.path
+    }
+
+    var imagePath: String {
+        return imageUrl.path
+    }
 }
+
+typealias LocalSongDict = [String:Song]

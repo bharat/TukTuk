@@ -14,20 +14,7 @@ let CLIENT_ID = "519173767662-ca9oluprutan3a2s0n619no01mlnla3a.apps.googleuserco
 let SONGS_FOLDER_ID = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
 let MOVIES_FOLDER_ID = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
 
-struct CloudSong {
-    var title: String
-    var audioId: String
-    var imageId: String
-}
-typealias CloudSongDict = [String:CloudSong]
-
-struct CloudMovie {
-    var title: String
-    var id: String
-}
-typealias CloudMovieDict = [String:CloudMovie]
-
-class GoogleDrive: NSObject {
+class GoogleDrive: NSObject, CloudProvider {
     static var instance = GoogleDrive()
     let service = GTLRDriveService()
 
@@ -78,13 +65,13 @@ extension GoogleDrive: GIDSignInUIDelegate {
 }
 
 extension GoogleDrive {
-    func getSongs(done: @escaping (CloudSongDict) -> ()) {
+    func getSongs(done: @escaping (Song.CloudDict) -> ()) {
         let query = GTLRDriveQuery_FilesList.query()
         query.pageSize = 1000
         query.q = "\"\(SONGS_FOLDER_ID)\" in parents"
 
         service.executeQuery(query) { (ticket, results, error) in
-            var songs = CloudSongDict()
+            var songs = Song.CloudDict()
             if let files = (results as? GTLRDrive_FileList)?.files {
                 var audio: [String:String] = [:]
                 var image: [String:String] = [:]
@@ -97,21 +84,21 @@ extension GoogleDrive {
                     }
                 }
                 Set(audio.keys).intersection(Set(image.keys)).forEach { title in
-                    songs[title] = CloudSong(title: title, audioId: audio[title]!, imageId: image[title]!)
+                    songs[title] = Song.Cloud(title: title, audioId: audio[title]!, imageId: image[title]!, provider: self)
                 }
             }
             done(songs)
         }
     }
 
-    func download(_ cloudSong: CloudSong) -> TempSong? {
-        var tempSong: TempSong?
+    func download(_ cloudSong: Song.Cloud) -> Song.Temporary? {
+        var tmp: Song.Temporary?
         let group = DispatchGroup()
         group.enter()
         getFile(id: cloudSong.audioId) { audioData in
             self.getFile(id: cloudSong.imageId) { imageData in
                 if let audioData = audioData, let imageData = imageData {
-                    tempSong = TempSong(title: cloudSong.title, audioData: audioData, imageData: imageData)
+                    tmp = Song.Temporary(title: cloudSong.title, audioData: audioData, imageData: imageData)
                 }  else {
                     print("Error downloading song: \(cloudSong.title)")
                 }
@@ -120,35 +107,35 @@ extension GoogleDrive {
         }
         group.wait()
 
-        return tempSong
+        return tmp
     }
 }
 
 extension GoogleDrive {
-    func getMovies(done: @escaping (CloudMovieDict) -> ()) {
+    func getMovies(done: @escaping (Movie.CloudDict) -> ()) {
         let query = GTLRDriveQuery_FilesList.query()
         query.pageSize = 1000
         query.q = "\"\(MOVIES_FOLDER_ID)\" in parents"
 
         service.executeQuery(query) { (ticket, results, error) in
-            var movies = CloudMovieDict()
+            var movies = Movie.CloudDict()
             if let files = (results as? GTLRDrive_FileList)?.files {
                 files.forEach { file in
                     let title = NSString(string: file.name!).deletingPathExtension
-                    movies[title] = CloudMovie(title: title, id: file.identifier!)
+                    movies[title] = Movie.Cloud(title: title, id: file.identifier!, provider: self)
                 }
             }
             done(movies)
         }
     }
 
-    func download(_ cloudMovie: CloudMovie) -> TempMovie? {
-        var tmp: TempMovie?
+    func download(_ cloudMovie: Movie.Cloud) -> Movie.Temporary? {
+        var tmp: Movie.Temporary?
         let group = DispatchGroup()
         group.enter()
         getFile(id: cloudMovie.id) { data in
             if let data = data {
-                tmp = TempMovie(title: cloudMovie.title, video: data)
+                tmp = Movie.Temporary(title: cloudMovie.title, video: data)
             } else {
                 print("Error downloading movie: \(cloudMovie.title)")
             }

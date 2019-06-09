@@ -10,6 +10,6 @@ import Foundation
 
 class Settings {
     static var cuedAnimation: Animation?
-    static var cuedMovie: LocalMovie?
+    static var cuedMovie: Movie.Local?
     static var cuedMiniGame: MiniGame?
 }

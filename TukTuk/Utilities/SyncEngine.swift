@@ -11,13 +11,9 @@ import Foundation
 class SyncEngine {
     private let queue = OperationQueue()
 
-    var cloudSongs = CloudSongDict()
-    var cloudMovies = CloudMovieDict()
-    var songTitlesToDelete: [String] = []
-    var songTitlesToDownload: [String] = []
-    var movieTitlesToDelete: [String] = []
-    var movieTitlesToDownload: [String] = []
-    var pendingOperationCount: Int = 0
+    var cloudSongs = Song.CloudDict()
+    var cloudMovies = Movie.CloudDict()
+    var totalOps: Int = 0
     var cancelInProgress: Bool = false
     var notify: ()->() = {}
 
@@ -26,79 +22,69 @@ class SyncEngine {
     }
     
     var progress: Float {
-        return Float(pendingOperationCount - queue.operationCount) / Float(pendingOperationCount)
+        return Float(totalOps - queue.operationCount) / Float(totalOps)
+    }
+
+    var syncRequired: Bool {
+        return Set(self.cloudSongs.keys) != Set(LocalStorage.instance.songs.keys) ||
+        Set(cloudMovies.keys) != Set(LocalStorage.instance.movies.keys)
     }
 
     init(concurrency: Int = 6) {
         queue.maxConcurrentOperationCount = concurrency
     }
 
-    func calculate() {
-        guard !inProgress else { return }
-
-        let cloudSongTitles = Set(cloudSongs.keys)
-        let localSongTitles = Set(LocalStorage.instance.songs.keys)
-        songTitlesToDelete = Array(localSongTitles.subtracting(cloudSongTitles))
-        songTitlesToDownload = Array(cloudSongTitles.subtracting(localSongTitles))
-
-        let cloudMovieTitles = Set(cloudMovies.keys)
-        let localMovieTitles = Set(LocalStorage.instance.movies.keys)
-        movieTitlesToDelete = Array(localMovieTitles.subtracting(cloudMovieTitles))
-        movieTitlesToDownload = Array(cloudMovieTitles.subtracting(localMovieTitles))
-
-        pendingOperationCount = songTitlesToDelete.count + songTitlesToDownload.count + movieTitlesToDelete.count + movieTitlesToDownload.count
+    func cancel() {
+        cancelInProgress = true
     }
 
     func run(complete: @escaping () -> ()) {
         guard !inProgress else { return }
 
-        var operations: [()->()] = []
-        operations += songTitlesToDelete.map { title in
-            let song = LocalStorage.instance.songs[title]!
-            return self.wrap {
-                    LocalStorage.instance.delete(song)
-            }
-        }
-        operations += songTitlesToDownload.map { title in
-            let song = cloudSongs[title]!
-            return self.wrap {
-                if let tmp = GoogleDrive.instance.download(song) {
-                    LocalStorage.instance.add(tmp)
-                }
-            }
-        }
-        operations += movieTitlesToDelete.map { title in
-            let movie = LocalStorage.instance.movies[title]!
-            return self.wrap {
-                LocalStorage.instance.delete(movie)
-            }
-        }
-        operations += movieTitlesToDownload.map { title in
-            let movie = cloudMovies[title]!
-            return self.wrap {
-                if let tmp = GoogleDrive.instance.download(movie) {
-                    LocalStorage.instance.add(tmp)
-                }
-            }
-        }
-
-        operations.shuffled().forEach { op in
-            queue.addOperation {
-                op()
-            }
-        }
-
+        queueSongs()
+        queueMovies()
         queue.addOperation {
             complete()
         }
+        totalOps = queue.operationCount
     }
 
-    func cancel() {
-        cancelInProgress = true
+    fileprivate func queueSongs() {
+        let cloud = Set(self.cloudSongs.keys)
+        let local = Set(LocalStorage.instance.songs.keys)
+
+        local.subtracting(cloud).forEach { title in
+            enqueue {
+                LocalStorage.instance.songs[title]!.delete()
+            }
+        }
+
+        cloud.subtracting(local).forEach { title in
+            enqueue {
+                self.cloudSongs[title]!.download()
+            }
+        }
     }
 
-    fileprivate func wrap(block: @escaping ()->()) -> ()->() {
-        return {
+    fileprivate func queueMovies() {
+        let cloud = Set(cloudMovies.keys)
+        let local = Set(LocalStorage.instance.movies.keys)
+
+        local.subtracting(cloud).forEach { title in
+            enqueue {
+                LocalStorage.instance.movies[title]!.delete()
+            }
+        }
+
+        cloud.subtracting(local).forEach { title in
+            enqueue {
+                self.cloudMovies[title]!.download()
+            }
+        }
+    }
+
+    fileprivate func enqueue(block: @escaping ()->()) {
+        queue.addOperation {
             if !self.cancelInProgress {
                 block()
             }

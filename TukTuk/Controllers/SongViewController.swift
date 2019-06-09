@@ -25,7 +25,7 @@ class SongViewController: UIViewController {
     @IBOutlet weak var movieTimerLabel: UILabel!
 
     var stats = Stats()
-    var songs: [LocalSong] = [] {
+    var songs: [Song.Local] = [] {
         didSet {
             AudioPlayer.instance.stop()
             songCollection.reloadData()
@@ -33,7 +33,7 @@ class SongViewController: UIViewController {
         }
     }
 
-    var movies: [LocalMovie] = []
+    var movies: [Movie.Local] = []
     var movieCountdown: TimeInterval = 0 {
         didSet {
             if movieCountdown == 0 {
@@ -186,7 +186,7 @@ class SongViewController: UIViewController {
         return false
     }
 
-    func playSong(_ song: LocalSong) {
+    func playSong(_ song: Song.Local) {
         if AudioPlayer.instance.isPlaying {
             stats.stop()
         }

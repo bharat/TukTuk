@@ -10,18 +10,18 @@ import Foundation
 import Amplitude_iOS
 
 class Stats {
-    var active: LocalSong?
+    var active: Song.Local?
 
     func appLaunched() {
         Amplitude.instance()?.logEvent("AppLaunched")
     }
 
-    func start(song: LocalSong) {
+    func start(song: Song.Local) {
         Amplitude.instance()?.logEvent("StartSong", withEventProperties: ["title": song.title])
         active = song
     }
 
-    func start(movie: LocalMovie) {
+    func start(movie: Movie.Local) {
         Amplitude.instance()?.logEvent("StartMovie", withEventProperties: ["title": movie.title])
     }
 
@@ -29,7 +29,7 @@ class Stats {
         Amplitude.instance()?.logEvent("StartMiniGame", withEventProperties: ["title": miniGame.title])
     }
 
-    func cue(movie: LocalMovie) {
+    func cue(movie: Movie.Local) {
         Amplitude.instance()?.logEvent("CueMovie", withEventProperties: ["title": movie.title])
     }
 

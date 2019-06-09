@@ -19,7 +19,9 @@ class AdminSyncTableViewController: UITableViewController {
     @IBOutlet var syncCancelButton: UIButton!
     @IBOutlet var syncButton: UIButton!
     @IBOutlet var syncProgress: UIProgressView!
+
     let sync = SyncEngine()
+    let cloud = GoogleDrive.instance
 
     override func viewDidLoad() {
         sync.notify = {
@@ -32,22 +34,21 @@ class AdminSyncTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if GoogleDrive.instance.isAuthenticated {
+        if cloud.isAuthenticated {
             loadFromCloud()
         } else {
             let popup = PopupDialog(title: "Let's get started", message: "It's pretty easy. First, log in to Google, then hit the Synchronize button") {
-                GoogleDrive.instance.signIn(uiDelegate: self)
+                self.cloud.signIn(uiDelegate: self)
             }
             self.present(popup, animated: true, completion: nil)
         }
     }
 
     func loadFromCloud() {
-        GoogleDrive.instance.getSongs() { songs in
+        cloud.getSongs() { songs in
             self.sync.cloudSongs = songs
-            GoogleDrive.instance.getMovies() { movies in
+            self.cloud.getMovies() { movies in
                 self.sync.cloudMovies = movies
-                self.sync.calculate()
                 self.updateUI()
             }
         }
@@ -72,7 +73,7 @@ class AdminSyncTableViewController: UITableViewController {
             syncCancelButton.setTitle("Cancel", for: .normal)
 
             syncButton.isHidden = false
-            syncButton.isEnabled = sync.pendingOperationCount > 0
+            syncButton.isEnabled = sync.syncRequired
         }
     }
 
@@ -88,10 +89,10 @@ class AdminSyncTableViewController: UITableViewController {
             self.syncProgress.isHidden = false
             self.syncProgress.setProgress(0, animated: false)
         }
-        sync.calculate()
         sync.run() {
-            self.sync.calculate()
-            self.updateUI()
+            DispatchQueue.main.async {
+                self.updateUI()
+            }
         }
         updateUI()
     }

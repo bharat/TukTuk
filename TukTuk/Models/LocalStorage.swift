@@ -1,5 +1,5 @@
 //
-//  LocalSongs.swift
+//  Song.Locals.swift
 //  TukTuk
 //
 //  Created by Bharat Mediratta on 6/5/19.
@@ -12,9 +12,9 @@ import UIKit
 class LocalStorage {
     static let instance = LocalStorage()
     var songsUrl: URL
-    var songs: [String:LocalSong] = [:]
+    var songs = Song.LocalDict()
     var moviesUrl: URL
-    var movies: [String:LocalMovie] = [:]
+    var movies = Movie.LocalDict()
 
     init() {
         songsUrl = FileManager.default.documentsSubdirectoryUrl("Songs")
@@ -32,40 +32,22 @@ class LocalStorage {
         titles.forEach { title in
             let imageUrl = songsUrl.appendingPathComponent("\(title).png")
             let audioUrl = songsUrl.appendingPathComponent("\(title).mp3")
-            songs[title] = LocalSong(title: title, image: imageUrl, audio: audioUrl)
+            songs[title] = Song.Local(title: title, image: imageUrl, audio: audioUrl)
         }
 
         movies = [:]
         try! FileManager.default.contentsOfDirectory(atPath: moviesUrl.path).forEach { fileName in
             let title = NSString(string: fileName).deletingPathExtension
-            movies[title] = LocalMovie(video: moviesUrl.appendingPathComponent(fileName), title: title)
+            movies[title] = Movie.Local(video: moviesUrl.appendingPathComponent(fileName), title: title)
         }
     }
 }
 
-struct TempSong {
-    var title: String
-    var audioData: Data
-    var imageData: Data
-
-    func song(_ base: URL) -> LocalSong {
-        return LocalSong(title: title, image: imageUrl(base), audio: audioUrl(base))
-    }
-
-    func imageUrl(_ base: URL) -> URL {
-        return base.appendingPathComponent("\(title).png")
-    }
-
-    func audioUrl(_ base: URL) -> URL {
-        return base.appendingPathComponent("\(title).mp3")
-    }
-}
-
 extension LocalStorage {
-    func add(_ tmpSong: TempSong) {
-        let song = tmpSong.song(songsUrl)
-        FileManager.default.createFile(atPath: song.image.path, contents: tmpSong.imageData, attributes: nil)
-        FileManager.default.createFile(atPath: song.audio.path, contents: tmpSong.audioData, attributes: nil)
+    func add(_ tmp: Song.Temporary) {
+        let song = tmp.song(songsUrl)
+        FileManager.default.createFile(atPath: song.image.path, contents: tmp.imageData, attributes: nil)
+        FileManager.default.createFile(atPath: song.audio.path, contents: tmp.audioData, attributes: nil)
         songs[song.title] = song
 
         [song.image, song.audio].forEach { url in
@@ -73,7 +55,7 @@ extension LocalStorage {
         }
     }
 
-    func delete(_ song: LocalSong) {
+    func delete(_ song: Song.Local) {
         try! FileManager.default.removeItem(atPath: song.image.path)
         try! FileManager.default.removeItem(atPath: song.audio.path)
         songs.removeValue(forKey: song.title)
@@ -86,17 +68,9 @@ extension LocalStorage {
     }
 }
 
-struct TempMovie {
-    var title: String
-    var video: Data
-
-    func movie(_ base: URL) -> LocalMovie {
-        return LocalMovie(video: base.appendingPathComponent("\(title).mp4"), title: title)
-    }
-}
 
 extension LocalStorage {
-    func add(_ tmp: TempMovie) {
+    func add(_ tmp: Movie.Temporary) {
         let movie = tmp.movie(moviesUrl)
         FileManager.default.createFile(atPath: movie.video.path, contents: tmp.video, attributes: nil)
         FileManager.default.excludeFromBackup(movie.video)
@@ -104,7 +78,7 @@ extension LocalStorage {
 
     }
 
-    func delete(_ movie: LocalMovie) {
+    func delete(_ movie: Movie.Local) {
         try! FileManager.default.removeItem(atPath: movie.video.path)
         movies.removeValue(forKey: movie.title)
     }

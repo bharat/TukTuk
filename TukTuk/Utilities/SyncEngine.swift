@@ -11,8 +11,8 @@ import Foundation
 class SyncEngine {
     private let queue = OperationQueue()
 
-    var cloudSongs = Song.CloudDict()
-    var cloudMovies = Movie.CloudDict()
+    var cloudSongs: Song.CloudDict?
+    var cloudMovies: Movie.CloudDict?
     var totalOps: Int = 0
     var cancelInProgress: Bool = false
     var notify: ()->() = {}
@@ -26,8 +26,8 @@ class SyncEngine {
     }
 
     var syncRequired: Bool {
-        return Set(self.cloudSongs.keys) != Set(LocalStorage.instance.songs.keys) ||
-        Set(cloudMovies.keys) != Set(LocalStorage.instance.movies.keys)
+        return Set(cloudSongs?.keys ?? Song.CloudDict().keys) != Set(LocalStorage.instance.songs?.keys ?? Song.LocalDict().keys)
+            || Set(cloudMovies?.keys ?? Movie.CloudDict().keys) != Set(LocalStorage.instance.movies?.keys ?? Movie.LocalDict().keys)
     }
 
     init(concurrency: Int = 6) {
@@ -50,35 +50,37 @@ class SyncEngine {
     }
 
     fileprivate func queueSongs() {
-        let cloud = Set(self.cloudSongs.keys)
-        let local = Set(LocalStorage.instance.songs.keys)
+        guard let cloudSongs = cloudSongs, let localSongs = LocalStorage.instance.songs else { return }
+        let cloud = Set(cloudSongs.keys)
+        let local = Set(localSongs.keys)
 
         local.subtracting(cloud).forEach { title in
             enqueue {
-                LocalStorage.instance.songs[title]!.delete()
+                localSongs[title]!.delete()
             }
         }
 
         cloud.subtracting(local).forEach { title in
             enqueue {
-                self.cloudSongs[title]!.download()
+                cloudSongs[title]!.download()
             }
         }
     }
 
     fileprivate func queueMovies() {
+        guard let cloudMovies = cloudMovies, let localMovies = LocalStorage.instance.movies else { return }
         let cloud = Set(cloudMovies.keys)
-        let local = Set(LocalStorage.instance.movies.keys)
+        let local = Set(localMovies.keys)
 
         local.subtracting(cloud).forEach { title in
             enqueue {
-                LocalStorage.instance.movies[title]!.delete()
+                localMovies[title]!.delete()
             }
         }
 
         cloud.subtracting(local).forEach { title in
             enqueue {
-                self.cloudMovies[title]!.download()
+                cloudMovies[title]!.download()
             }
         }
     }

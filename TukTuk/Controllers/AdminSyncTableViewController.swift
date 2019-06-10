@@ -11,11 +11,16 @@ import UIKit
 import PopupDialog
 import GoogleSignIn
 
+enum Outlet: Int {
+    case songsLocal = 0
+    case songsCloud
+    case moviesLocal
+    case moviesCloud
+}
+
 class AdminSyncTableViewController: UITableViewController {
-    @IBOutlet var songsOnThisDeviceLabel: UILabel!
-    @IBOutlet var songsInTheCloudLabel: UILabel!
-    @IBOutlet var moviesOnThisDeviceLabel: UILabel!
-    @IBOutlet var moviesInTheCloudLabel: UILabel!
+    @IBOutlet var counts: [UILabel]!
+    @IBOutlet var spinners: [UIActivityIndicatorView]!
     @IBOutlet var syncCancelButton: UIButton!
     @IBOutlet var syncButton: UIButton!
     @IBOutlet var syncProgress: UIProgressView!
@@ -29,13 +34,23 @@ class AdminSyncTableViewController: UITableViewController {
                 self.updateUI()
             }
         }
+
+        counts.sort { $0.tag < $1.tag }
+        spinners.sort { $0.tag < $1.tag }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         if cloud.isAuthenticated {
-            loadFromCloud()
+            cloud.getSongs() { songs in
+                self.sync.cloudSongs = songs
+                self.updateUI()
+            }
+            self.cloud.getMovies() { movies in
+                self.sync.cloudMovies = movies
+                self.updateUI()
+            }
         } else {
             let popup = PopupDialog(title: "Let's get started", message: "It's pretty easy. First, log in to Google, then hit the Synchronize button") {
                 self.cloud.signIn(uiDelegate: self)
@@ -44,21 +59,28 @@ class AdminSyncTableViewController: UITableViewController {
         }
     }
 
-    func loadFromCloud() {
-        cloud.getSongs() { songs in
-            self.sync.cloudSongs = songs
-            self.cloud.getMovies() { movies in
-                self.sync.cloudMovies = movies
-                self.updateUI()
-            }
+    fileprivate func updateCount(for outlet: Outlet, from data: Int?) {
+        let spinner = spinners[outlet.rawValue]
+        let count = counts[outlet.rawValue]
+
+        if let data = data {
+            spinner.isHidden = true
+            spinner.stopAnimating()
+            count.isHidden = false
+            count.text = "\(data)"
+        } else {
+            spinner.isHidden = false
+            spinner.startAnimating()
+            count.isHidden = true
+            count.text = "??"
         }
     }
 
     func updateUI() {
-        self.songsInTheCloudLabel.text = "\(sync.cloudSongs.count)"
-        self.songsOnThisDeviceLabel.text = "\(LocalStorage.instance.songs.count)"
-        self.moviesInTheCloudLabel.text = "\(sync.cloudMovies.count)"
-        self.moviesOnThisDeviceLabel.text = "\(LocalStorage.instance.movies.count)"
+        updateCount(for: .songsCloud, from: sync.cloudSongs?.count)
+        updateCount(for: .songsLocal, from: LocalStorage.instance.songs?.count)
+        updateCount(for: .moviesCloud, from: sync.cloudMovies?.count)
+        updateCount(for: .moviesLocal, from: LocalStorage.instance.movies?.count)
 
         if sync.inProgress {
             syncProgress.isHidden = false

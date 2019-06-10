@@ -82,12 +82,16 @@ class SongViewController: UIViewController {
     }
 
     fileprivate func loadSongsAndMovies() {
-        if Set(songs.map { $0.title }) != Set(LocalStorage.instance.songs.keys) {
-            songs = LocalStorage.instance.songs.values.sorted(by: { $0.title < $1.title })
+        if let stored = LocalStorage.instance.songs {
+            if Set(songs.map { $0.title }) != Set(stored.keys) {
+                songs = stored.values.sorted(by: { $0.title < $1.title })
+            }
         }
 
-        if Set(movies.map { $0.title }) != Set(LocalStorage.instance.movies.keys) {
-            movies = LocalStorage.instance.movies.values.sorted(by: { $0.title < $1.title })
+        if let stored = LocalStorage.instance.movies {
+            if Set(movies.map { $0.title }) != Set(stored.keys) {
+                movies = stored.values.sorted(by: { $0.title < $1.title })
+            }
         }
     }
 

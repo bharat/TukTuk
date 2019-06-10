@@ -296,13 +296,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="...calculating" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2tL-HM-0cK">
-                                                    <rect key="frame" x="297.5" y="12" width="96.5" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="##" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2tL-HM-0cK">
+                                                    <rect key="frame" x="373" y="12" width="21" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="djB-zl-k6N">
+                                                    <rect key="frame" x="197" y="11.5" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -320,13 +324,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="...calculating" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T65-x2-7Jz">
-                                                    <rect key="frame" x="297.5" y="12" width="96.5" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="##" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T65-x2-7Jz">
+                                                    <rect key="frame" x="373" y="12" width="21" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <activityIndicatorView opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="fIr-0O-9fA">
+                                                    <rect key="frame" x="197" y="11.5" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -348,13 +356,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="...calculating" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k2T-1z-5QE">
-                                                    <rect key="frame" x="297.5" y="12" width="96.5" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="2" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="##" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k2T-1z-5QE">
+                                                    <rect key="frame" x="373" y="12" width="21" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <activityIndicatorView opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PHc-ZO-Cbd">
+                                                    <rect key="frame" x="197" y="11.5" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -372,13 +384,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="...calculating" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="edW-Sn-nhy">
-                                                    <rect key="frame" x="297.5" y="12" width="96.5" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="3" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="##" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="edW-Sn-nhy">
+                                                    <rect key="frame" x="373" y="12" width="21" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <activityIndicatorView opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Zmt-JQ-vJC">
+                                                    <rect key="frame" x="197" y="11.5" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -458,13 +474,17 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Media" image="Admin_Synchronize" id="fQx-QW-5Lf" userLabel="Sync"/>
                     <connections>
-                        <outlet property="moviesInTheCloudLabel" destination="edW-Sn-nhy" id="NTo-Ed-9Oe"/>
-                        <outlet property="moviesOnThisDeviceLabel" destination="k2T-1z-5QE" id="C5J-kS-orY"/>
-                        <outlet property="songsInTheCloudLabel" destination="T65-x2-7Jz" id="NgZ-mT-KGM"/>
-                        <outlet property="songsOnThisDeviceLabel" destination="2tL-HM-0cK" id="Els-RZ-lh4"/>
                         <outlet property="syncButton" destination="LeE-PH-POI" id="LOO-Na-CPz"/>
                         <outlet property="syncCancelButton" destination="1nH-FD-xhg" id="5c3-DR-Wuj"/>
                         <outlet property="syncProgress" destination="RQQ-0i-pDS" id="OJn-JU-gJq"/>
+                        <outletCollection property="counts" destination="2tL-HM-0cK" collectionClass="NSMutableArray" id="bit-qb-Y3a"/>
+                        <outletCollection property="spinners" destination="djB-zl-k6N" collectionClass="NSMutableArray" id="3K3-9w-6py"/>
+                        <outletCollection property="counts" destination="T65-x2-7Jz" collectionClass="NSMutableArray" id="uIK-d5-YLa"/>
+                        <outletCollection property="spinners" destination="fIr-0O-9fA" collectionClass="NSMutableArray" id="nOf-Bh-vi3"/>
+                        <outletCollection property="counts" destination="k2T-1z-5QE" collectionClass="NSMutableArray" id="wfN-ND-MQk"/>
+                        <outletCollection property="spinners" destination="PHc-ZO-Cbd" collectionClass="NSMutableArray" id="RCa-sU-x6y"/>
+                        <outletCollection property="counts" destination="edW-Sn-nhy" collectionClass="NSMutableArray" id="t0G-HR-KgZ"/>
+                        <outletCollection property="spinners" destination="Zmt-JQ-vJC" collectionClass="NSMutableArray" id="47f-oG-RmY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HAU-Af-bP5" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -11,8 +11,9 @@ import UIKit
 
 class AdminTabBarController: UITabBarController {
     override func viewDidLoad() {
-        if LocalStorage.instance.songs.count == 0 {
-            selectedIndex = 1 // Sync tab
+        if LocalStorage.instance.songs?.count ?? 0 == 0 {
+            // Jump to the Sync tab
+            selectedIndex = 1
         }
     }
 }

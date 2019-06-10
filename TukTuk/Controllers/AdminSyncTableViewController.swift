@@ -57,6 +57,8 @@ class AdminSyncTableViewController: UITableViewController {
             }
             self.present(popup, animated: true, completion: nil)
         }
+
+        self.updateUI()
     }
 
     fileprivate func updateCount(for outlet: Outlet, from data: Int?) {

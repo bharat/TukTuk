@@ -59,7 +59,7 @@ final class CaptainAmerica: MiniGame {
         case target = 4
     }
 
-    enum BounceSounds: String, CaseIterable, AudioPlayable {
+    enum BounceSounds: String, CaseIterable {
         case Bounce_1
         case Bounce_2
         case Bounce_3
@@ -69,7 +69,7 @@ final class CaptainAmerica: MiniGame {
         }
     }
 
-    enum Sounds: String, CaseIterable, AudioPlayable {
+    enum Sounds: String, CaseIterable {
         case Rescue
         case Tada
 
@@ -78,7 +78,7 @@ final class CaptainAmerica: MiniGame {
         }
     }
 
-    enum Videos: String, CaseIterable, VideoPlayable {
+    enum Videos: String, CaseIterable {
         case LostShield
         case Reward_Magnet_Mayhem
         case Reward_Spidey_and_IronMan
@@ -135,7 +135,7 @@ final class CaptainAmerica: MiniGame {
         override func viewDidLoad() {
             super.viewDidLoad()
             DispatchQueue.main.async {
-                VideoPlayer.instance.play(Videos.LostShield, from: self) {
+                VideoPlayer.instance.play(Videos.LostShield.video, from: self) {
                     self.dismiss(animated: true)
                 }
             }
@@ -149,7 +149,7 @@ final class CaptainAmerica: MiniGame {
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
 
-            AudioPlayer.instance.play(Sounds.Rescue)
+            AudioPlayer.instance.play(Sounds.Rescue.audio)
             let skView = SKView(frame: view.frame.insetBy(dx: 8, dy: 20))
             skView.allowsTransparency = true
             view.addSubview(skView)
@@ -157,7 +157,7 @@ final class CaptainAmerica: MiniGame {
             scene = Scene(size: view.frame.insetBy(dx: 8, dy: 20).size)
             scene.level = level
             scene.completion = {
-                AudioPlayer.instance.play(Sounds.Tada) {
+                AudioPlayer.instance.play(Sounds.Tada.audio) {
                     self.dismiss(animated: animated)
                 }
             }
@@ -176,7 +176,7 @@ final class CaptainAmerica: MiniGame {
         override func viewDidLoad() {
             super.viewDidLoad()
             DispatchQueue.main.async {
-                VideoPlayer.instance.play(self.level.reward, from: self) {
+                VideoPlayer.instance.play(self.level.reward.video, from: self) {
                     self.dismiss(animated: true)
                 }
             }
@@ -433,7 +433,7 @@ final class CaptainAmerica: MiniGame {
                 done()
             case Collisions.marble.rawValue | Collisions.wall.rawValue:
                 if AudioPlayer.instance.player?.isPlaying == false {
-                    AudioPlayer.instance.play(BounceSounds.allCases.randomElement()!)
+                    AudioPlayer.instance.play(BounceSounds.allCases.randomElement()!.audio)
                 }
             default:
                 break

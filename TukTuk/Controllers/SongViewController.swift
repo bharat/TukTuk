@@ -25,7 +25,7 @@ class SongViewController: UIViewController {
     @IBOutlet weak var movieTimerLabel: UILabel!
 
     var stats = Stats()
-    var songs: [Songs.Local] = [] {
+    var songs: [Song] = [] {
         didSet {
             AudioPlayer.instance.stop()
             songCollection.reloadData()
@@ -33,7 +33,7 @@ class SongViewController: UIViewController {
         }
     }
 
-    var movies: [Movies.Local] = []
+    var movies: [Movie] = []
     var movieCountdown: TimeInterval = 0 {
         didSet {
             if movieCountdown == 0 {
@@ -77,7 +77,7 @@ class SongViewController: UIViewController {
             $0.title < $1.title
         }
 
-        if songs.isEmpty {
+        if true || songs.isEmpty {
             let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
                 self.performSegue(withIdentifier: "Admin", sender: self)
             }
@@ -149,8 +149,10 @@ class SongViewController: UIViewController {
         stopButton.isEnabled = false
 
         let movie = Settings.cuedMovie ?? movies.randomElement()!
-        VideoPlayer.instance.play(movie, from: self)
-        stats.start(movie: movie)
+        if let video = movie.video {
+            VideoPlayer.instance.play(video.url, from: self)
+            stats.start(movie: movie)
+        }
 
         Settings.cuedMovie = nil
         movieButton.isHidden = true
@@ -183,22 +185,24 @@ class SongViewController: UIViewController {
         return false
     }
 
-    func playSong(_ song: Songs.Local) {
+    func playSong(_ song: Song) {
         if AudioPlayer.instance.isPlaying {
             stats.stop()
         }
 
         print("Playing song: \(song.title)")
-        stats.start(song: song)
-        AudioPlayer.instance.play(song, whilePlaying: {
-            self.movieCountdown -= 1
-            if Settings.cuedMovie != nil {
-                self.showMovieButton()
-            }
-        }, whenComplete: {
-            self.stats.complete()
-            self.deselectAllSongs()
-        })
+        if let audio = song.audio {
+            stats.start(song: song)
+            AudioPlayer.instance.play(audio.url, whilePlaying: {
+                self.movieCountdown -= 1
+                if Settings.cuedMovie != nil {
+                    self.showMovieButton()
+                }
+            }, whenComplete: {
+                self.stats.complete()
+                self.deselectAllSongs()
+            })
+        }
     }
 
     func deselectAllSongs() {
@@ -281,7 +285,7 @@ extension SongViewController: UICollectionViewDataSource {
         let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
         let song = songs[indexPath.row]
 
-        cell.image = song.uiImage
+        cell.image = song.uiImage ?? UIImage()
         cell.title.text = song.title
 
         if let layout = collectionView.collectionViewLayout as? CollectionViewSlantedLayout {

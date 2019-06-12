@@ -53,7 +53,7 @@ class GoogleDrive: NSObject, CloudProvider {
 
         let ticket = service.executeQuery(query) { (ticket, results, error) in
             files = (results as? GTLRDrive_FileList)?.files?.map { file in
-                CloudFile(name: file.name!, id: file.identifier!, size: file.size!)
+                CloudFile(name: file.name!, id: file.identifier!, size: file.size!.uint64Value)
             }
         }
         service.wait(for: ticket, timeout: 300)

@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct CloudFile {
+struct CloudFile: Hashable {
     let name: String
     let id: String
-    let size: NSNumber
+    let size: UInt64
 }
 
 protocol CloudProvider {

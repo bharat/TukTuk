@@ -16,7 +16,7 @@ class WordPop: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
-        AudioPlayer.instance.play(Sounds.Welcome)
+        AudioPlayer.instance.play(Sounds.Welcome.audio)
 
         let cadence: [(words: String, duration: CFTimeInterval)] = [
             ("Hi,\nRemy!",                           1.0),

@@ -41,22 +41,22 @@ class SyncEngine {
         guard !inProgress else { return }
 
         let songs = Songs.instance
-        songs.extra.forEach { song in
+        songs.delete.forEach { song in
             enqueue { songs.delete(song) }
         }
-        songs.missing.forEach { song in
+        songs.download.forEach { song in
             enqueue {
                 songs.download(song, from: self.provider)
             }
         }
 
         let movies = Movies.instance
-        movies.extra.forEach { movie in
+        movies.delete.forEach { movie in
             enqueue {
                 movies.delete(movie)
             }
         }
-        movies.missing.forEach { movie in
+        movies.download.forEach { movie in
             enqueue {
                 movies.download(movie, from: self.provider)
             }

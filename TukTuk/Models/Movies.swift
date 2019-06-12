@@ -13,50 +13,53 @@ class Movies {
     let queue = DispatchQueue(label: "MoviesWorker")
     let base: URL
     let fm = FileManager.default
-    var local = Set<Local>()
-    var cloud = Set<Cloud>()
+    var data = [String:Movie]()
+
+    var inSync: Bool {
+        return queue.sync {
+            data.values.filter { $0.syncAction != .None }.count == 0
+        }
+    }
+
+    var download: [Movie] {
+        return queue.sync {
+            data.values.filter { $0.syncAction == .Download }
+        }
+    }
+
+    var delete: [Movie] {
+        return queue.sync {
+            data.values.filter { $0.syncAction == .Delete }
+        }
+    }
+
+    var local: [Movie] {
+        return queue.sync {
+            data.values.filter { $0.video != nil }
+        }
+    }
+
+    var cloud: [Movie] {
+        return queue.sync {
+            data.values.filter { $0.cloudVideo != nil }
+        }
+    }
+
+    var localEmpty: Bool {
+        return local.count == 0
+    }
 
     fileprivate init() {
         base = fm.documentsSubdirectoryUrl("Movies")
 
-        try! FileManager.default.contentsOfDirectory(atPath: base.path).forEach { fileName in
-            let title = NSString(string: fileName).deletingPathExtension
-            local.insert(Local(title: title, base: base))
+        let names = try! FileManager.default.contentsOfDirectory(atPath: base.path).map { fileName in
+            NSString(string: fileName).deletingPathExtension
         }
-    }
-
-    var inSync: Bool {
-        return queue.sync {
-            local.hashValue == cloud.hashValue
-        }
-    }
-
-    var localHashes: Set<Int> {
-        return queue.sync {
-            Set(local.map { $0.hashValue })
-        }
-    }
-
-    var cloudHashes: Set<Int> {
-        return queue.sync {
-            Set(cloud.map { $0.hashValue })
-        }
-    }
-
-    var missing: Set<Cloud> {
-        let missingHashes = cloudHashes.subtracting(localHashes)
-        return queue.sync {
-            cloud.filter {
-                missingHashes.contains($0.hashValue)
-            }
-        }
-    }
-
-    var extra: Set<Local> {
-        let missingHashes = localHashes.subtracting(cloudHashes)
-        return queue.sync {
-            local.filter {
-                missingHashes.contains($0.hashValue)
+        names.forEach { name in
+            let video = LocalFile(url: base.appendingPathComponent("\(name).mp4"))
+            let movie = Movie(title: name, video: video, cloudVideo: nil)
+            queue.sync {
+                data[movie.title] = movie
             }
         }
     }
@@ -64,65 +67,71 @@ class Movies {
     func load(from provider: CloudProvider) {
         let files = provider.list(folder: provider.moviesFolder)
         files?.forEach { file in
-            let name = NSString(string: file.name).deletingPathExtension
+            let title = NSString(string: file.name).deletingPathExtension
+            var movie = queue.sync {
+                data[title] ?? Movie(title: title)
+            }
+            movie.cloudVideo = file
             queue.sync {
-                let _ = self.cloud.insert(Cloud(title: name, id: file.id, size: UInt64(truncating: file.size)))
+                data[movie.title] = movie
             }
         }
     }
 
-    func download(_ cloud: Cloud, from provider: CloudProvider) {
-        guard let data = provider.get(file: cloud.id) else { return }
+    func download(_ movie: Movie, from provider: CloudProvider) {
+        guard let cloud = movie.cloudVideo else { return }
+        guard let videoData = provider.get(file: cloud.id) else { return }
 
-        let movie = Local(title: cloud.title, base: base)
-        FileManager.default.createFile(atPath: movie.video.path, contents: data, attributes: nil)
-        FileManager.default.excludeFromBackup(movie.video)
+        let video = LocalFile(url: base.appendingPathComponent("\(movie.title).mp4"))
+        fm.createNonBackupFile(at: video.url, contents: videoData)
+
         queue.sync {
-            let _ = local.insert(movie)
+            var movie = movie
+            movie.video = video
+            data[movie.title] = movie
         }
     }
 
-    func delete(_ movie: Local) {
+    func delete(_ movie: Movie) {
         queue.sync {
-            let _ = local.remove(movie)
+            let _ = data.removeValue(forKey: movie.title)
         }
-        try! FileManager.default.removeItem(atPath: movie.video.path)
+        if let path = movie.video?.url.path {
+            try! fm.removeItem(atPath: path)
+        }
     }
 
-    func deleteAll() {
-        queue.sync {
-            local.forEach { movie in
-                let _ = local.remove(movie)
-                try! FileManager.default.removeItem(atPath: movie.video.path)
-            }
+    func deleteAllLocal() {
+        local.forEach { movie in
+            delete(movie)
         }
     }
 }
 
-extension Movies {
-    struct Local: VideoPlayable, Titled, Hashable {
-        var title: String
-        var base: URL
+struct Movie: Titled, Hashable {
+    var title: String
+    var video: LocalFile?
+    var cloudVideo: CloudFile? = nil
 
-        var video: URL {
-            return base.appendingPathComponent("\(title).mp4")
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(title)
-            hasher.combine(FileManager.default.fileSize(video))
-        }
-    }
-
-    struct Cloud: Hashable {
-        var title: String
-        var id: String
-        var size: UInt64
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(title)
-            hasher.combine(size)
+    var syncAction: SyncAction {
+        if let cloudVideo = cloudVideo {
+            if let video = video {
+                if cloudVideo.size == video.size {
+                    return .None
+                } else {
+                    return .Download
+                }
+            } else {
+                return .Download
+            }
+        } else {
+            return .Delete
         }
     }
+}
 
+extension Movie {
+    init(title: String) {
+        self.title = title
+    }
 }

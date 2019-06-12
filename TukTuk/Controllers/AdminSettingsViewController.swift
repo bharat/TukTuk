@@ -71,7 +71,7 @@ class AdminSettingsViewController: UITableViewController {
             cell.detail.text = Settings.cuedMovie?.title ?? .emptyTitle
             cell.data = Movies.instance.local.sorted { $0.title < $1.title }
             cell.select = { obj in
-                Settings.cuedMovie = obj as! Movies.Local?
+                Settings.cuedMovie = obj as! Movie?
                 self.redraw()
             }
         case IndexPath(row: 2, section: 0):

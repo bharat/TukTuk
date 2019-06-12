@@ -18,7 +18,7 @@ final class AvengersAssemble: MiniGame {
     var title = "Avengers Assemble!"
     var uivc: UIViewController = UIVC()
 
-    enum Sounds: String, CaseIterable, AudioPlayable {
+    enum Sounds: String, CaseIterable {
         case Assemble
         case ChooseAnAvenger
         case Tada
@@ -41,7 +41,7 @@ final class AvengersAssemble: MiniGame {
         }
     }
 
-    enum Hero: String, CaseIterable, AudioPlayable, VideoPlayable {
+    enum Hero: String, CaseIterable {
         case CaptainAmerica
         case Hawkeye
         case IronMan
@@ -86,7 +86,7 @@ final class AvengersAssemble: MiniGame {
 
     class UIVC: UIViewController {
         override func viewDidLoad() {
-            AudioPlayer.instance.play(Sounds.Assemble)
+            AudioPlayer.instance.play(Sounds.Assemble.audio)
 
             let effect = UIBlurEffect(style: .light)
             let effectView = UIVisualEffectView(effect: effect)
@@ -95,7 +95,7 @@ final class AvengersAssemble: MiniGame {
 
             let scene = AvengersAssemble.Scene()
             scene.completion = { hero in
-                VideoPlayer.instance.play(hero, from: self) {
+                VideoPlayer.instance.play(hero.audio, from: self) {
                     self.dismiss(animated: true)
                 }
             }
@@ -176,7 +176,7 @@ final class AvengersAssemble: MiniGame {
                     $0.enticing = true
                 }
 
-                AudioPlayer.instance.play(Sounds.ChooseAnAvenger)
+                AudioPlayer.instance.play(Sounds.ChooseAnAvenger.audio)
                 completion()
             }
         }
@@ -202,7 +202,7 @@ final class AvengersAssemble: MiniGame {
 
                     // Accelerate to the finish if it's taking too long
                     turnsRemaining -= 1
-                    AudioPlayer.instance.play(new)
+                    AudioPlayer.instance.play(new.audio)
                     if turnsRemaining == 0 {
                         self.blocks.filter { $0 != block }.forEach {
                             $0.show(new)
@@ -228,7 +228,7 @@ final class AvengersAssemble: MiniGame {
         }
         
         func select(hero: Hero, from block: Block) {
-            AudioPlayer.instance.play(Sounds.Tada)
+            AudioPlayer.instance.play(Sounds.Tada.audio)
 
             blocks.filter { $0 != block }.forEach {
                 $0.runAction(SCNAction.fadeOut(duration: 1.0))

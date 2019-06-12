@@ -18,7 +18,7 @@ final class Thor: MiniGame {
     var title = "Thor lost his hammer!"
     var uivc: UIViewController = UIVC()
 
-    enum Sounds: String, CaseIterable, AudioPlayable {
+    enum Sounds: String, CaseIterable {
         case HammerFallingWhistle
         case HammerLandingThud
         case IReallyWishIHadMyHammer
@@ -124,7 +124,7 @@ final class Thor: MiniGame {
         }
 
         func thud() {
-            AudioPlayer.instance.play(Sounds.HammerLandingThud)
+            AudioPlayer.instance.play(Sounds.HammerLandingThud.audio)
         }
     }
 
@@ -154,7 +154,7 @@ final class Thor: MiniGame {
             guard let scene = scene else { return }
 
             run(SKAction.move(to: CGPoint(x: 120, y: scene.frame.height - size.height - 20), duration: 1.0))
-            AudioPlayer.instance.play(Sounds.ILostMyHammer)
+            AudioPlayer.instance.play(Sounds.ILostMyHammer.audio)
         }
 
         func grabHammer() {
@@ -165,7 +165,7 @@ final class Thor: MiniGame {
 
             size = CGSize(width: texture.size().width * 0.5, height: texture.size().height * 0.5)
 
-            AudioPlayer.instance.play(Sounds.IAmTheGodOfThunder)
+            AudioPlayer.instance.play(Sounds.IAmTheGodOfThunder.audio)
 
             run(SKAction.group([
                     SKAction.move(to: CGPoint(x: frame.width * 0.1, y: frame.height * 0.5), duration: 2.0),
@@ -188,11 +188,11 @@ final class Thor: MiniGame {
                 }
             }
 
-            AudioPlayer.instance.play(Sounds.ThankYou)
+            AudioPlayer.instance.play(Sounds.ThankYou.audio)
         }
 
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            AudioPlayer.instance.play(Sounds.IReallyWishIHadMyHammer)
+            AudioPlayer.instance.play(Sounds.IReallyWishIHadMyHammer.audio)
         }
     }
 
@@ -236,7 +236,7 @@ final class Thor: MiniGame {
             physicsWorld.contactDelegate = self
             physicsWorld.gravity = CGVector(dx: 0, dy: -2)
 
-            AudioPlayer.instance.play(Sounds.HammerFallingWhistle)
+            AudioPlayer.instance.play(Sounds.HammerFallingWhistle.audio)
         }
 
         func finish() {

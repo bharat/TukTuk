@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum Sounds: String, CaseIterable, AudioPlayable {
+enum Sounds: String, CaseIterable {
     case Welcome
 
     var audio: URL {

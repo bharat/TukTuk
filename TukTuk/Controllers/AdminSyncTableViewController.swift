@@ -72,6 +72,10 @@ class AdminSyncTableViewController: UITableViewController {
         self.updateUI()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        sync.cancel()
+    }
+
     fileprivate func spin(for outlet: Outlet) {
         spinners[outlet.rawValue].startAnimating()
         spinners[outlet.rawValue].isHidden = false
@@ -135,8 +139,8 @@ class AdminSyncTableViewController: UITableViewController {
         popup.addButtons([
             CancelButton(title: "Cancel") { },
             DestructiveButton(title: "Ok") {
-                Songs.instance.deleteAll()
-                Movies.instance.deleteAll()
+                Songs.instance.deleteAllLocal()
+                Movies.instance.deleteAllLocal()
                 self.updateUI()
             }
             ])

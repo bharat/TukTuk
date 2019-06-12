@@ -9,10 +9,6 @@
 import Foundation
 import AVKit
 
-protocol VideoPlayable {
-    var video: URL { get }
-}
-
 class VideoPlayer {
     static var instance = VideoPlayer()
 
@@ -25,10 +21,10 @@ class VideoPlayer {
         vc.contentOverlayView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pauseOrResume)))
     }
 
-    func play(_ object: VideoPlayable, from sender: UIViewController, completion: @escaping () -> () = {}) {
+    func play(_ url: URL, from sender: UIViewController, completion: @escaping () -> () = {}) {
         self.completion = completion
 
-        vc.player = AVPlayer(url: object.video)
+        vc.player = AVPlayer(url: url)
         sender.present(vc, animated: true) {
             self.vc.player?.play()
         }

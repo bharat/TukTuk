@@ -23,4 +23,8 @@ extension FileManager {
         }
         return url
     }
+
+    func fileSize(_ url: URL) -> UInt64 {
+        return try! attributesOfItem(atPath: url.path)[.size] as! UInt64
+    }
 }

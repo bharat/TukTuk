@@ -11,7 +11,7 @@ import UIKit
 import PopupDialog
 import GoogleSignIn
 
-enum Outlet: Int {
+enum Outlet: Int, CaseIterable {
     case songsLocal = 0
     case songsCloud
     case moviesLocal
@@ -25,8 +25,8 @@ class AdminSyncTableViewController: UITableViewController {
     @IBOutlet var syncButton: UIButton!
     @IBOutlet var syncProgress: UIProgressView!
 
-    let sync = SyncEngine()
     let cloud = GoogleDrive.instance
+    let sync = SyncEngine(cloudProvider: GoogleDrive.instance)
 
     override func viewDidLoad() {
         sync.notify = {
@@ -43,13 +43,24 @@ class AdminSyncTableViewController: UITableViewController {
         super.viewDidAppear(animated)
 
         if cloud.isAuthenticated {
-            cloud.getSongs() { songs in
-                self.sync.cloudSongs = songs
-                self.updateUI()
-            }
-            self.cloud.getMovies() { movies in
-                self.sync.cloudMovies = movies
-                self.updateUI()
+            DispatchQueue.global().async {
+                DispatchQueue.main.async {
+                    Outlet.allCases.forEach { outlet in
+                        self.spin(for: outlet)
+                    }
+                }
+                Songs.instance.load(from: self.cloud)
+                DispatchQueue.main.async {
+                    self.stopSpinning(for: .songsLocal)
+                    self.stopSpinning(for: .songsCloud)
+                    self.updateUI()
+                }
+                Movies.instance.load(from: self.cloud)
+                DispatchQueue.main.async {
+                    self.stopSpinning(for: .moviesLocal)
+                    self.stopSpinning(for: .moviesCloud)
+                    self.updateUI()
+                }
             }
         } else {
             let popup = PopupDialog(title: "Let's get started", message: "It's pretty easy. First, log in to Google, then hit the Synchronize button") {
@@ -61,28 +72,26 @@ class AdminSyncTableViewController: UITableViewController {
         self.updateUI()
     }
 
-    fileprivate func updateCount(for outlet: Outlet, from data: Int?) {
-        let spinner = spinners[outlet.rawValue]
-        let count = counts[outlet.rawValue]
+    fileprivate func spin(for outlet: Outlet) {
+        spinners[outlet.rawValue].startAnimating()
+        spinners[outlet.rawValue].isHidden = false
+    }
 
-        if let data = data {
-            spinner.isHidden = true
-            spinner.stopAnimating()
-            count.isHidden = false
-            count.text = "\(data)"
-        } else {
-            spinner.isHidden = false
-            spinner.startAnimating()
-            count.isHidden = true
-            count.text = "??"
-        }
+    fileprivate func stopSpinning(for outlet: Outlet) {
+        spinners[outlet.rawValue].stopAnimating()
+        spinners[outlet.rawValue].isHidden = true
     }
 
     func updateUI() {
-        updateCount(for: .songsCloud, from: sync.cloudSongs?.count)
-        updateCount(for: .songsLocal, from: LocalStorage.instance.songs?.count)
-        updateCount(for: .moviesCloud, from: sync.cloudMovies?.count)
-        updateCount(for: .moviesLocal, from: LocalStorage.instance.movies?.count)
+        dispatchPrecondition(condition: .onQueue(.main))
+
+        let songs = Songs.instance
+        let movies = Movies.instance
+
+        counts[Outlet.songsCloud.rawValue].text = "\(songs.cloud.count)"
+        counts[Outlet.songsLocal.rawValue].text = "\(songs.local.count)"
+        counts[Outlet.moviesCloud.rawValue].text = "\(movies.cloud.count)"
+        counts[Outlet.moviesLocal.rawValue].text = "\(movies.local.count)"
 
         if sync.inProgress {
             syncProgress.isHidden = false
@@ -97,7 +106,7 @@ class AdminSyncTableViewController: UITableViewController {
             syncCancelButton.setTitle("Cancel", for: .normal)
 
             syncButton.isHidden = false
-            syncButton.isEnabled = sync.syncRequired
+            syncButton.isEnabled = !sync.inSync
         }
     }
 
@@ -126,8 +135,8 @@ class AdminSyncTableViewController: UITableViewController {
         popup.addButtons([
             CancelButton(title: "Cancel") { },
             DestructiveButton(title: "Ok") {
-                LocalStorage.instance.deleteAllSongs()
-                LocalStorage.instance.deleteAllMovies()
+                Songs.instance.deleteAll()
+                Movies.instance.deleteAll()
                 self.updateUI()
             }
             ])

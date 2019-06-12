@@ -25,7 +25,7 @@ class SongViewController: UIViewController {
     @IBOutlet weak var movieTimerLabel: UILabel!
 
     var stats = Stats()
-    var songs: [Song.Local] = [] {
+    var songs: [Songs.Local] = [] {
         didSet {
             AudioPlayer.instance.stop()
             songCollection.reloadData()
@@ -33,7 +33,7 @@ class SongViewController: UIViewController {
         }
     }
 
-    var movies: [Movie.Local] = []
+    var movies: [Movies.Local] = []
     var movieCountdown: TimeInterval = 0 {
         didSet {
             if movieCountdown == 0 {
@@ -69,8 +69,15 @@ class SongViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        loadSongsAndMovies()
-        if songs.count == 0 {
+        songs = Array(Songs.instance.local).sorted {
+            $0.title < $1.title
+        }
+
+        movies = Array(Movies.instance.local).sorted {
+            $0.title < $1.title
+        }
+
+        if songs.isEmpty {
             let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
                 self.performSegue(withIdentifier: "Admin", sender: self)
             }
@@ -79,20 +86,6 @@ class SongViewController: UIViewController {
 
         movieCountdown = UserDefaults.standard.movieCountdown
         movieButton.isHidden = (movieCountdown > 0)
-    }
-
-    fileprivate func loadSongsAndMovies() {
-        if let stored = LocalStorage.instance.songs {
-            if Set(songs.map { $0.title }) != Set(stored.keys) {
-                songs = stored.values.sorted(by: { $0.title < $1.title })
-            }
-        }
-
-        if let stored = LocalStorage.instance.movies {
-            if Set(movies.map { $0.title }) != Set(stored.keys) {
-                movies = stored.values.sorted(by: { $0.title < $1.title })
-            }
-        }
     }
 
     var lastFrame = CGRect(x: 0, y: 0, width: 0, height: 0)
@@ -190,7 +183,7 @@ class SongViewController: UIViewController {
         return false
     }
 
-    func playSong(_ song: Song.Local) {
+    func playSong(_ song: Songs.Local) {
         if AudioPlayer.instance.isPlaying {
             stats.stop()
         }

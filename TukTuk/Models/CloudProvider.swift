@@ -8,12 +8,18 @@
 
 import Foundation
 
+struct CloudFile {
+    let name: String
+    let id: String
+    let size: NSNumber
+}
+
 protocol CloudProvider {
     var isAuthenticated: Bool { get }
+    var songsFolder: String { get }
+    var moviesFolder: String { get }
 
-    func getSongs(done: @escaping (Song.CloudDict) -> ())
-    func download(_ song: Song.Cloud) -> Song.Temporary?
-
-    func getMovies(done: @escaping (Movie.CloudDict) -> ())
-    func download(_ movie: Movie.Cloud) -> Movie.Temporary?
+    func list(folder id: String) -> [CloudFile]?
+    func get(file id: String) -> Data?
+    func get(files ids: [String]) -> [String:Data?]
 }

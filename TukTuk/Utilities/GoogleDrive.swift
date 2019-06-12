@@ -1,5 +1,5 @@
 //
-//  GoogleDRive.swift
+//  GoogleDrive.swift
 //  TukTuk
 //
 //  Created by Bharat Mediratta on 6/4/19.
@@ -11,12 +11,13 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 
 let CLIENT_ID = "519173767662-ca9oluprutan3a2s0n619no01mlnla3a.apps.googleusercontent.com"
-let SONGS_FOLDER_ID = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
-let MOVIES_FOLDER_ID = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
 
 class GoogleDrive: NSObject, CloudProvider {
     static var instance = GoogleDrive()
     let service = GTLRDriveService()
+
+    var songsFolder = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
+    var moviesFolder = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
 
     var isAuthenticated: Bool {
         return GIDSignIn.sharedInstance().currentUser != nil
@@ -43,11 +44,47 @@ class GoogleDrive: NSObject, CloudProvider {
         GIDSignIn.sharedInstance().signOut()
     }
 
-    func getFile(id: String, completion: @escaping (Data?) -> ()) {
-        let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: id)
-        service.executeQuery(query) { (ticket, file, error) in
-            completion((file as? GTLRDataObject)?.data)
+    func list(folder id: String) -> [CloudFile]? {
+        var files: [CloudFile]?
+        let query = GTLRDriveQuery_FilesList.query()
+        query.pageSize = 1000
+        query.q = "\"\(id)\" in parents"
+        query.fields = "files/name,files/id,files/size"
+
+        let ticket = service.executeQuery(query) { (ticket, results, error) in
+            files = (results as? GTLRDrive_FileList)?.files?.map { file in
+                CloudFile(name: file.name!, id: file.identifier!, size: file.size!)
+            }
         }
+        service.wait(for: ticket, timeout: 300)
+
+        return files
+    }
+
+    func get(file id: String) -> Data? {
+        let data = get(files: [id])
+        return data[id]!
+    }
+
+    func get(files ids: [String]) -> [String:Data?] {
+        var data: [String:Data?] = [:]
+        var tickets = [GTLRServiceTicket]()
+
+        ids.forEach { id in
+            let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: id)
+
+            data[id] = nil
+            let ticket = service.executeQuery(query) { (ticket, file, error) in
+                data[id] = (file as? GTLRDataObject)?.data
+            }
+            tickets.append(ticket)
+        }
+
+        tickets.forEach { ticket in
+            service.wait(for: ticket, timeout: 300)
+        }
+
+        return data
     }
 }
 
@@ -60,91 +97,3 @@ extension GoogleDrive: GIDSignInDelegate {
         }
     }
 }
-
-extension GoogleDrive: GIDSignInUIDelegate {
-}
-
-extension GoogleDrive {
-    func getSongs(done: @escaping (Song.CloudDict) -> ()) {
-        let query = GTLRDriveQuery_FilesList.query()
-        query.pageSize = 1000
-        query.q = "\"\(SONGS_FOLDER_ID)\" in parents"
-
-        service.executeQuery(query) { (ticket, results, error) in
-            var songs = Song.CloudDict()
-            if let files = (results as? GTLRDrive_FileList)?.files {
-                var audio: [String:String] = [:]
-                var image: [String:String] = [:]
-                files.forEach { file in
-                    let title = NSString(string: file.name!).deletingPathExtension
-                    if file.mimeType == "audio/mp3" {
-                        audio[title] = file.identifier
-                    } else {
-                        image[title] = file.identifier
-                    }
-                }
-                Set(audio.keys).intersection(Set(image.keys)).forEach { title in
-                    songs[title] = Song.Cloud(title: title, audioId: audio[title]!, imageId: image[title]!, provider: self)
-                }
-            }
-            done(songs)
-        }
-    }
-
-    func download(_ cloudSong: Song.Cloud) -> Song.Temporary? {
-        var tmp: Song.Temporary?
-        let group = DispatchGroup()
-        group.enter()
-        getFile(id: cloudSong.audioId) { audioData in
-            self.getFile(id: cloudSong.imageId) { imageData in
-                if let audioData = audioData, let imageData = imageData {
-                    tmp = Song.Temporary(title: cloudSong.title, audioData: audioData, imageData: imageData)
-                }  else {
-                    print("Error downloading song: \(cloudSong.title)")
-                }
-                group.leave()
-            }
-        }
-        group.wait()
-
-        return tmp
-    }
-}
-
-extension GoogleDrive {
-    func getMovies(done: @escaping (Movie.CloudDict) -> ()) {
-        let query = GTLRDriveQuery_FilesList.query()
-        query.pageSize = 1000
-        query.q = "\"\(MOVIES_FOLDER_ID)\" in parents"
-
-        service.executeQuery(query) { (ticket, results, error) in
-            var movies = Movie.CloudDict()
-            if let files = (results as? GTLRDrive_FileList)?.files {
-                files.forEach { file in
-                    let title = NSString(string: file.name!).deletingPathExtension
-                    movies[title] = Movie.Cloud(title: title, id: file.identifier!, provider: self)
-                }
-            }
-            done(movies)
-        }
-    }
-
-    func download(_ cloudMovie: Movie.Cloud) -> Movie.Temporary? {
-        var tmp: Movie.Temporary?
-        let group = DispatchGroup()
-        group.enter()
-        getFile(id: cloudMovie.id) { data in
-            if let data = data {
-                tmp = Movie.Temporary(title: cloudMovie.title, video: data)
-            } else {
-                print("Error downloading movie: \(cloudMovie.title)")
-            }
-            group.leave()
-        }
-        group.wait()
-
-        return tmp
-    }
-}
-
-

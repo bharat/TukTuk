@@ -11,8 +11,7 @@ import Foundation
 class SyncEngine {
     private let queue = OperationQueue()
 
-    var cloudSongs: Song.CloudDict?
-    var cloudMovies: Movie.CloudDict?
+    var provider: CloudProvider
     var totalOps: Int = 0
     var cancelInProgress: Bool = false
     var notify: ()->() = {}
@@ -25,13 +24,13 @@ class SyncEngine {
         return Float(totalOps - queue.operationCount) / Float(totalOps)
     }
 
-    var syncRequired: Bool {
-        return Set(cloudSongs?.keys ?? Song.CloudDict().keys) != Set(LocalStorage.instance.songs?.keys ?? Song.LocalDict().keys)
-            || Set(cloudMovies?.keys ?? Movie.CloudDict().keys) != Set(LocalStorage.instance.movies?.keys ?? Movie.LocalDict().keys)
+    var inSync: Bool {
+        return Songs.instance.inSync && Movies.instance.inSync
     }
 
-    init(concurrency: Int = 6) {
+    init(cloudProvider: CloudProvider, concurrency: Int = 4) {
         queue.maxConcurrentOperationCount = concurrency
+        self.provider = cloudProvider
     }
 
     func cancel() {
@@ -41,48 +40,31 @@ class SyncEngine {
     func run(complete: @escaping () -> ()) {
         guard !inProgress else { return }
 
-        queueSongs()
-        queueMovies()
+        let songs = Songs.instance
+        songs.extra.forEach { song in
+            enqueue { songs.delete(song) }
+        }
+        songs.missing.forEach { song in
+            enqueue {
+                songs.download(song, from: self.provider)
+            }
+        }
+
+        let movies = Movies.instance
+        movies.extra.forEach { movie in
+            enqueue {
+                movies.delete(movie)
+            }
+        }
+        movies.missing.forEach { movie in
+            enqueue {
+                movies.download(movie, from: self.provider)
+            }
+        }
         queue.addOperation {
             complete()
         }
         totalOps = queue.operationCount
-    }
-
-    fileprivate func queueSongs() {
-        guard let cloudSongs = cloudSongs, let localSongs = LocalStorage.instance.songs else { return }
-        let cloud = Set(cloudSongs.keys)
-        let local = Set(localSongs.keys)
-
-        local.subtracting(cloud).forEach { title in
-            enqueue {
-                localSongs[title]!.delete()
-            }
-        }
-
-        cloud.subtracting(local).forEach { title in
-            enqueue {
-                cloudSongs[title]!.download()
-            }
-        }
-    }
-
-    fileprivate func queueMovies() {
-        guard let cloudMovies = cloudMovies, let localMovies = LocalStorage.instance.movies else { return }
-        let cloud = Set(cloudMovies.keys)
-        let local = Set(localMovies.keys)
-
-        local.subtracting(cloud).forEach { title in
-            enqueue {
-                localMovies[title]!.delete()
-            }
-        }
-
-        cloud.subtracting(local).forEach { title in
-            enqueue {
-                cloudMovies[title]!.download()
-            }
-        }
     }
 
     fileprivate func enqueue(block: @escaping ()->()) {

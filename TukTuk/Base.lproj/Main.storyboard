@@ -303,7 +303,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="djB-zl-k6N">
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="djB-zl-k6N">
                                                     <rect key="frame" x="197" y="11.5" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </activityIndicatorView>
@@ -331,7 +331,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <activityIndicatorView opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="fIr-0O-9fA">
+                                                <activityIndicatorView hidden="YES" opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="fIr-0O-9fA">
                                                     <rect key="frame" x="197" y="11.5" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </activityIndicatorView>
@@ -363,7 +363,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <activityIndicatorView opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PHc-ZO-Cbd">
+                                                <activityIndicatorView hidden="YES" opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PHc-ZO-Cbd">
                                                     <rect key="frame" x="197" y="11.5" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </activityIndicatorView>
@@ -391,7 +391,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <activityIndicatorView opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Zmt-JQ-vJC">
+                                                <activityIndicatorView hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Zmt-JQ-vJC">
                                                     <rect key="frame" x="197" y="11.5" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </activityIndicatorView>
@@ -474,9 +474,9 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Media" image="Admin_Synchronize" id="fQx-QW-5Lf" userLabel="Sync"/>
                     <connections>
+                        <outlet property="cancelButton" destination="1nH-FD-xhg" id="5c3-DR-Wuj"/>
+                        <outlet property="progress" destination="RQQ-0i-pDS" id="OJn-JU-gJq"/>
                         <outlet property="syncButton" destination="LeE-PH-POI" id="LOO-Na-CPz"/>
-                        <outlet property="syncCancelButton" destination="1nH-FD-xhg" id="5c3-DR-Wuj"/>
-                        <outlet property="syncProgress" destination="RQQ-0i-pDS" id="OJn-JU-gJq"/>
                         <outletCollection property="counts" destination="2tL-HM-0cK" collectionClass="NSMutableArray" id="bit-qb-Y3a"/>
                         <outletCollection property="spinners" destination="djB-zl-k6N" collectionClass="NSMutableArray" id="3K3-9w-6py"/>
                         <outletCollection property="counts" destination="T65-x2-7Jz" collectionClass="NSMutableArray" id="uIK-d5-YLa"/>

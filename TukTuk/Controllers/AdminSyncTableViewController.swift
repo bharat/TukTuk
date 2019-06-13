@@ -21,9 +21,9 @@ enum Outlet: Int, CaseIterable {
 class AdminSyncTableViewController: UITableViewController {
     @IBOutlet var counts: [UILabel]!
     @IBOutlet var spinners: [UIActivityIndicatorView]!
-    @IBOutlet var syncCancelButton: UIButton!
+    @IBOutlet var cancelButton: UIButton!
     @IBOutlet var syncButton: UIButton!
-    @IBOutlet var syncProgress: UIProgressView!
+    @IBOutlet var progress: UIProgressView!
 
     let cloudProvider = GoogleDrive.instance
     let sync = SyncEngine(cloudProvider: GoogleDrive.instance)
@@ -34,9 +34,10 @@ class AdminSyncTableViewController: UITableViewController {
                 self.updateUI()
             }
         }
+    }
 
-        counts.sort { $0.tag < $1.tag }
-        spinners.sort { $0.tag < $1.tag }
+    func spinner(_ outlet: Outlet) -> UIActivityIndicatorView {
+        return spinners[outlet.rawValue]
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -46,23 +47,23 @@ class AdminSyncTableViewController: UITableViewController {
             DispatchQueue.global().async {
                 DispatchQueue.main.async {
                     Outlet.allCases.forEach { outlet in
-                        self.spin(for: outlet)
+                        self.spinner(outlet).startAnimating()
                     }
                 }
 
                 SongManager.instance.loadLocal()
                 SongManager.instance.loadCloud(from: self.cloudProvider)
                 DispatchQueue.main.async {
-                    self.stopSpinning(for: .songsLocal)
-                    self.stopSpinning(for: .songsCloud)
+                    self.spinner(.songsLocal).stopAnimating()
+                    self.spinner(.songsCloud).stopAnimating()
                     self.updateUI()
                 }
 
                 MovieManager.instance.loadLocal()
                 MovieManager.instance.loadCloud(from: self.cloudProvider)
                 DispatchQueue.main.async {
-                    self.stopSpinning(for: .moviesLocal)
-                    self.stopSpinning(for: .moviesCloud)
+                    self.spinner(.moviesLocal).stopAnimating()
+                    self.spinner(.moviesCloud).stopAnimating()
                     self.updateUI()
                 }
             }
@@ -80,16 +81,6 @@ class AdminSyncTableViewController: UITableViewController {
         sync.cancel()
     }
 
-    fileprivate func spin(for outlet: Outlet) {
-        spinners[outlet.rawValue].startAnimating()
-        spinners[outlet.rawValue].isHidden = false
-    }
-
-    fileprivate func stopSpinning(for outlet: Outlet) {
-        spinners[outlet.rawValue].stopAnimating()
-        spinners[outlet.rawValue].isHidden = true
-    }
-
     func updateUI() {
         dispatchPrecondition(condition: .onQueue(.main))
 
@@ -102,24 +93,24 @@ class AdminSyncTableViewController: UITableViewController {
         counts[Outlet.moviesLocal.rawValue].text = "\(movies.local.count)"
 
         if songs.local.count == songs.cloud.count || !sync.inProgress {
-            stopSpinning(for: .songsLocal)
+            spinner(.songsLocal).stopAnimating()
         }
 
         if movies.local.count == movies.cloud.count || !sync.inProgress {
-            stopSpinning(for: .moviesLocal)
+            spinner(.moviesLocal).stopAnimating()
         }
 
         if sync.inProgress {
-            syncProgress.isHidden = false
-            syncProgress.setProgress(sync.progress, animated: true)
+            progress.isHidden = false
+            progress.setProgress(sync.progress, animated: true)
             syncButton.isHidden = true
-            syncCancelButton.isHidden = false
+            cancelButton.isHidden = false
         } else {
             UIView.animate(withDuration: 1.0) {
-                self.syncProgress.isHidden = true
+                self.progress.isHidden = true
             }
-            syncCancelButton.isHidden = true
-            syncCancelButton.setTitle("Cancel", for: .normal)
+            cancelButton.isHidden = true
+            cancelButton.setTitle("Cancel", for: .normal)
 
             syncButton.isHidden = false
             syncButton.isEnabled = !sync.inSync
@@ -128,7 +119,7 @@ class AdminSyncTableViewController: UITableViewController {
 
     @IBAction func cancel(_ sender: Any) {
         sync.cancel()
-        syncCancelButton.setTitle("Canceling...", for: .normal)
+        cancelButton.setTitle("Canceling...", for: .normal)
     }
 
     @IBAction func sync(_ sender: Any) {
@@ -136,12 +127,12 @@ class AdminSyncTableViewController: UITableViewController {
 
         UIView.animate(withDuration: 0.5) {
             self.syncButton.isHidden = true
-            self.syncCancelButton.isHidden = false
-            self.syncProgress.isHidden = false
-            self.syncProgress.setProgress(0, animated: false)
+            self.cancelButton.isHidden = false
+            self.progress.isHidden = false
+            self.progress.setProgress(0, animated: false)
         }
-        spin(for: .songsLocal)
-        spin(for: .moviesLocal)
+        spinner(.songsLocal).startAnimating()
+        spinner(.moviesLocal).startAnimating()
         sync.run()
         updateUI()
     }

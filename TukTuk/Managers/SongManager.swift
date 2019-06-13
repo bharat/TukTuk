@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 class SongManager: Manager<Song> {
     static let instance = SongManager()
@@ -66,9 +65,15 @@ class SongManager: Manager<Song> {
         }
     }
 
-    func delete(_ song: Song) {
+    func deleteLocal(_ song: Song) {
         queue.sync {
-            let _ = data.removeValue(forKey: song.title)
+            if var song = data.removeValue(forKey: song.title) {
+                if song.hasCloud {
+                    song.audio = nil
+                    song.image = nil
+                    data[song.title] = song
+                }
+            }
         }
         [song.image?.url.path, song.audio?.url.path].forEach { path in
             if let path = path {
@@ -79,50 +84,8 @@ class SongManager: Manager<Song> {
 
     func deleteAllLocal() {
         local.forEach { song in
-            delete(song)
+            deleteLocal(song)
         }
     }
 }
 
-struct Song: Manageable {
-    var title: String
-    var image: LocalFile?
-    var audio: LocalFile?
-    var cloudImage: CloudFile?
-    var cloudAudio: CloudFile?
-
-    var hasLocal: Bool {
-        return image != nil && audio != nil
-    }
-
-    var hasCloud: Bool {
-        return cloudImage != nil && cloudAudio != nil
-    }
-
-    var uiImage: UIImage? {
-        guard let image = image else { return nil }
-        return UIImage(contentsOfFile: image.url.path)
-    }
-
-    var syncAction: SyncAction {
-        if let cloudImage = cloudImage, let cloudAudio = cloudAudio {
-            if let image = image, let audio = audio {
-                if cloudImage.size == image.size && cloudAudio.size == audio.size {
-                    return .None
-                } else {
-                    return .Download
-                }
-            } else {
-                return .Download
-            }
-        } else {
-            return .Delete
-        }
-    }
-}
-
-extension Song {
-    init(title: String) {
-        self.title = title
-    }
-}

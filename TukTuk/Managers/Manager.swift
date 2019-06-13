@@ -8,12 +8,6 @@
 
 import Foundation
 
-enum SyncAction: Hashable {
-    case Download
-    case Delete
-    case None
-}
-
 protocol Manageable: Titled {
     var hasLocal: Bool { get }
     var hasCloud: Bool { get }

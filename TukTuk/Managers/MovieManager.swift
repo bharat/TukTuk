@@ -53,9 +53,14 @@ class MovieManager: Manager<Movie> {
         }
     }
 
-    func delete(_ movie: Movie) {
+    func deleteLocal(_ movie: Movie) {
         queue.sync {
-            let _ = data.removeValue(forKey: movie.title)
+            if var movie = data.removeValue(forKey: movie.title) {
+                if movie.hasCloud {
+                    movie.video = nil
+                    data[movie.title] = movie
+                }
+            }
         }
         if let path = movie.video?.url.path {
             try! fm.removeItem(atPath: path)
@@ -63,44 +68,8 @@ class MovieManager: Manager<Movie> {
     }
 
     func deleteAllLocal() {
-        local.forEach { obj in
-            delete(obj)
+        local.forEach { movie in
+            deleteLocal(movie)
         }
-    }
-}
-
-struct Movie: Manageable, Titled {
-    var title: String
-    var video: LocalFile?
-    var cloudVideo: CloudFile?
-
-    var hasLocal: Bool {
-        return video != nil
-    }
-
-    var hasCloud: Bool {
-        return cloudVideo != nil
-    }
-
-    var syncAction: SyncAction {
-        if let cloudVideo = cloudVideo {
-            if let video = video {
-                if cloudVideo.size == video.size {
-                    return .None
-                } else {
-                    return .Download
-                }
-            } else {
-                return .Download
-            }
-        } else {
-            return .Delete
-        }
-    }
-}
-
-extension Movie {
-    init(title: String) {
-        self.title = title
     }
 }

@@ -41,26 +41,19 @@ class SyncEngine {
         guard !inProgress else { return }
 
         let songs = SongManager.instance
-        songs.delete.forEach { song in
-            enqueue {
-                songs.delete(song)
-            }
-        }
-        songs.download.forEach { song in
-            enqueue {
-                songs.download(song, from: self.provider)
-            }
-        }
-
         let movies = MovieManager.instance
-        movies.delete.forEach { movie in
-            enqueue {
-                movies.delete(movie)
-            }
-        }
-        movies.download.forEach { movie in
-            enqueue {
-                movies.download(movie, from: self.provider)
+
+        var blocks = [()->()]()
+        blocks += songs.delete.map    { song  in { songs.deleteLocal(song)                     } }
+        blocks += songs.download.map  { song  in { songs.download(song, from: self.provider)   } }
+        blocks += movies.delete.map   { movie in { movies.deleteLocal(movie)                   } }
+        blocks += movies.download.map { movie in { movies.download(movie, from: self.provider) } }
+
+        blocks.shuffled().forEach { block in
+            queue.addOperation {
+                self.enqueue {
+                    block()
+                }
             }
         }
         queue.addOperation {

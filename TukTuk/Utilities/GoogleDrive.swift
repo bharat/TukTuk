@@ -62,8 +62,7 @@ class GoogleDrive: NSObject, CloudProvider {
     }
 
     func get(file id: String) -> Data? {
-        let data = get(files: [id])
-        return data[id]!
+        return get(files: [id])[id] ?? nil
     }
 
     func get(files ids: [String]) -> [String:Data?] {

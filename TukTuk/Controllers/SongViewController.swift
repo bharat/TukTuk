@@ -77,7 +77,7 @@ class SongViewController: UIViewController {
             $0.title < $1.title
         }
 
-        if true || songs.isEmpty {
+        if songs.isEmpty {
             let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
                 self.performSegue(withIdentifier: "Admin", sender: self)
             }

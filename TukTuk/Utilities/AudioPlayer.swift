@@ -13,6 +13,7 @@ class AudioPlayer {
     static var instance = AudioPlayer()
     var player: AVAudioPlayer?
     var timer: Timer?
+    var old: AVAudioPlayer?
 
     fileprivate init() {
     }
@@ -27,7 +28,8 @@ class AudioPlayer {
         try! AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
         try! AVAudioSession.sharedInstance().setActive(true)
 
-        let old = player
+        old?.stop()
+        old = player
         try! player = AVAudioPlayer(contentsOf: url)
 
         guard let player = player else {

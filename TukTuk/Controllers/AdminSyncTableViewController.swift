@@ -101,11 +101,11 @@ class AdminSyncTableViewController: UITableViewController {
         counts[Outlet.moviesCloud.rawValue].text = "\(movies.cloud.count)"
         counts[Outlet.moviesLocal.rawValue].text = "\(movies.local.count)"
 
-        if songs.local.count == songs.cloud.count {
+        if songs.local.count == songs.cloud.count || !sync.inProgress {
             stopSpinning(for: .songsLocal)
         }
 
-        if movies.local.count == movies.cloud.count {
+        if movies.local.count == movies.cloud.count || !sync.inProgress {
             stopSpinning(for: .moviesLocal)
         }
 
@@ -132,6 +132,8 @@ class AdminSyncTableViewController: UITableViewController {
     }
 
     @IBAction func sync(_ sender: Any) {
+        guard !sync.inProgress else { return }
+
         UIView.animate(withDuration: 0.5) {
             self.syncButton.isHidden = true
             self.syncCancelButton.isHidden = false
@@ -140,11 +142,7 @@ class AdminSyncTableViewController: UITableViewController {
         }
         spin(for: .songsLocal)
         spin(for: .moviesLocal)
-        sync.run() {
-            DispatchQueue.main.async {
-                self.updateUI()
-            }
-        }
+        sync.run()
         updateUI()
     }
 

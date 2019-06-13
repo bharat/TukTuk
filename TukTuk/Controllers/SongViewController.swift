@@ -81,6 +81,7 @@ class SongViewController: UIViewController {
             let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
                 self.performSegue(withIdentifier: "Admin", sender: self)
             }
+            popup.addButton(DefaultButton(title: "Ok") { })
             self.present(popup, animated: true, completion: nil)
         }
 

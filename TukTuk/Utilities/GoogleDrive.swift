@@ -15,7 +15,7 @@ let CLIENT_ID = "519173767662-ca9oluprutan3a2s0n619no01mlnla3a.apps.googleuserco
 class GoogleDrive: NSObject, CloudProvider {
     static var instance = GoogleDrive()
     let service = GTLRDriveService()
-    var activeTickets = Set<GTLRServiceTicket>()
+    var queue = DispatchQueue(label: "GoogleDrive")
 
     var songsFolder = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
     var moviesFolder = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
@@ -47,20 +47,23 @@ class GoogleDrive: NSObject, CloudProvider {
 
     func list(folder id: String) -> [CloudFile]? {
         var files: [CloudFile]?
-        let query = GTLRDriveQuery_FilesList.query()
-        query.pageSize = 1000
-        query.q = "\"\(id)\" in parents"
-        query.fields = "files/name,files/id,files/size"
+        let group = DispatchGroup()
 
-        let ticket = service.executeQuery(query) { (ticket, results, error) in
-            files = (results as? GTLRDrive_FileList)?.files?.map { file in
-                CloudFile(name: file.name!, id: file.identifier!, size: file.size!.uint64Value)
+        queue.sync {
+            group.enter()
+
+            let query = GTLRDriveQuery_FilesList.query()
+            query.pageSize = 1000
+            query.q = "\"\(id)\" in parents"
+            query.fields = "files/name,files/id,files/size"
+            service.executeQuery(query) { (ticket, results, error) in
+                files = (results as? GTLRDrive_FileList)?.files?.map { file in
+                    CloudFile(name: file.name!, id: file.identifier!, size: file.size!.uint64Value)
+                }
+                group.leave()
             }
         }
-        activeTickets.insert(ticket)
-
-        service.wait(for: ticket, timeout: 300)
-        activeTickets.remove(ticket)
+        group.wait()
 
         return files
     }
@@ -71,32 +74,25 @@ class GoogleDrive: NSObject, CloudProvider {
 
     func get(files ids: [String]) -> [String:Data?] {
         var data: [String:Data?] = [:]
-        var tickets = [GTLRServiceTicket]()
 
-        ids.forEach { id in
-            let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: id)
+        let group = DispatchGroup()
+        var tickets: [GTLRServiceTicket] = []
+        queue.sync {
+            ids.forEach { id in
+                group.enter()
 
-            data[id] = nil
-            let ticket = service.executeQuery(query) { (ticket, file, error) in
-                data[id] = (file as? GTLRDataObject)?.data
+                data[id] = nil
+                let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: id)
+                let ticket = service.executeQuery(query) { (ticket, file, error) in
+                    data[id] = (file as? GTLRDataObject)?.data
+                    group.leave()
+                }
+                tickets.append(ticket)
             }
-            tickets.append(ticket)
-            activeTickets.insert(ticket)
         }
-
-        tickets.forEach { ticket in
-            service.wait(for: ticket, timeout: 300)
-            activeTickets.remove(ticket)
-        }
+        group.wait()
 
         return data
-    }
-
-    func cancel() {
-        activeTickets.forEach { ticket in
-            ticket.cancel()
-        }
-        activeTickets.removeAll()
     }
 }
 

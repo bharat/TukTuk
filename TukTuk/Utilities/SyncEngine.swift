@@ -13,7 +13,7 @@ class SyncEngine {
 
     var provider: CloudProvider
     var totalOps: Int = 0
-    var cancelInProgress: Bool = false
+    var cancelRequested: Bool = false
     var notify: ()->() = {}
 
     var inProgress: Bool {
@@ -34,11 +34,10 @@ class SyncEngine {
     }
 
     func cancel() {
-        cancelInProgress = true
-        provider.cancel()
+        cancelRequested = true
     }
 
-    func run(complete: @escaping () -> ()) {
+    func run() {
         guard !inProgress else { return }
 
         let songs = SongManager.instance
@@ -50,29 +49,19 @@ class SyncEngine {
         blocks += movies.delete.map   { movie in { movies.deleteLocal(movie)                   } }
         blocks += movies.download.map { movie in { movies.download(movie, from: self.provider) } }
 
-        blocks.shuffled().forEach { block in
+        blocks.forEach { block in
             queue.addOperation {
-                self.enqueue {
+                if !self.cancelRequested {
                     block()
                 }
+
+                if self.queue.operationCount == 1 {
+                    self.cancelRequested = false
+                }
+
+                self.notify()
             }
-        }
-        queue.addOperation {
-            complete()
         }
         totalOps = queue.operationCount
-    }
-
-    fileprivate func enqueue(block: @escaping ()->()) {
-        queue.addOperation {
-            if !self.cancelInProgress {
-                block()
-            }
-            self.notify()
-
-            if self.queue.operationCount == 1 {
-                self.cancelInProgress = false
-            }
-        }
     }
 }

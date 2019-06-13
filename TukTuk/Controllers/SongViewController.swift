@@ -130,8 +130,9 @@ class SongViewController: UIViewController {
 
     @objc func showSettings(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
+            stopSong()
             performSegue(withIdentifier: "Admin", sender: self)
-        }
+        }   
     }
 
     func showMovieButton() {

@@ -15,6 +15,7 @@ let CLIENT_ID = "519173767662-ca9oluprutan3a2s0n619no01mlnla3a.apps.googleuserco
 class GoogleDrive: NSObject, CloudProvider {
     static var instance = GoogleDrive()
     let service = GTLRDriveService()
+    var activeTickets = Set<GTLRServiceTicket>()
 
     var songsFolder = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
     var moviesFolder = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
@@ -56,7 +57,10 @@ class GoogleDrive: NSObject, CloudProvider {
                 CloudFile(name: file.name!, id: file.identifier!, size: file.size!.uint64Value)
             }
         }
+        activeTickets.insert(ticket)
+
         service.wait(for: ticket, timeout: 300)
+        activeTickets.remove(ticket)
 
         return files
     }
@@ -77,13 +81,22 @@ class GoogleDrive: NSObject, CloudProvider {
                 data[id] = (file as? GTLRDataObject)?.data
             }
             tickets.append(ticket)
+            activeTickets.insert(ticket)
         }
 
         tickets.forEach { ticket in
             service.wait(for: ticket, timeout: 300)
+            activeTickets.remove(ticket)
         }
 
         return data
+    }
+
+    func cancel() {
+        activeTickets.forEach { ticket in
+            ticket.cancel()
+        }
+        activeTickets.removeAll()
     }
 }
 

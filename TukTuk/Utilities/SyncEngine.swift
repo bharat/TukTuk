@@ -35,6 +35,7 @@ class SyncEngine {
 
     func cancel() {
         cancelInProgress = true
+        provider.cancel()
     }
 
     func run(complete: @escaping () -> ()) {

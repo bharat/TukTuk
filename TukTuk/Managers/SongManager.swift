@@ -49,8 +49,10 @@ class SongManager: Manager<Song> {
 
     func download(_ song: Song, from provider: CloudProvider) {
         guard let cloudAudio = song.cloudAudio, let cloudImage = song.cloudImage else { return }
-        guard let imageData = provider.get(file: cloudImage.id) else { return }
-        guard let audioData = provider.get(file: cloudAudio.id) else { return }
+
+        let files = provider.get(files: [cloudImage.id, cloudAudio.id])
+        guard let imageData = files[cloudImage.id] else { return }
+        guard let audioData = files[cloudAudio.id] else { return }
 
         let image = LocalFile(url: base.appendingPathComponent("\(song.title).png"))
         let audio = LocalFile(url: base.appendingPathComponent("\(song.title).mp3"))

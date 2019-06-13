@@ -101,6 +101,14 @@ class AdminSyncTableViewController: UITableViewController {
         counts[Outlet.moviesCloud.rawValue].text = "\(movies.cloud.count)"
         counts[Outlet.moviesLocal.rawValue].text = "\(movies.local.count)"
 
+        if songs.local.count == songs.cloud.count {
+            stopSpinning(for: .songsLocal)
+        }
+
+        if movies.local.count == movies.cloud.count {
+            stopSpinning(for: .moviesLocal)
+        }
+
         if sync.inProgress {
             syncProgress.isHidden = false
             syncProgress.setProgress(sync.progress, animated: true)
@@ -130,6 +138,8 @@ class AdminSyncTableViewController: UITableViewController {
             self.syncProgress.isHidden = false
             self.syncProgress.setProgress(0, animated: false)
         }
+        spin(for: .songsLocal)
+        spin(for: .moviesLocal)
         sync.run() {
             DispatchQueue.main.async {
                 self.updateUI()

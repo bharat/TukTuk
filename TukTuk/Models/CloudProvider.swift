@@ -30,4 +30,5 @@ protocol CloudProvider {
     func list(folder id: String) -> [CloudFile]?
     func get(file id: String) -> Data?
     func get(files ids: [String]) -> [String:Data?]
+    func cancel()
 }

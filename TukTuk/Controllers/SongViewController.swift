@@ -69,11 +69,11 @@ class SongViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        songs = Array(Songs.instance.local).sorted {
+        songs = Array(SongManager.instance.local).sorted {
             $0.title < $1.title
         }
 
-        movies = Array(Movies.instance.local).sorted {
+        movies = Array(MovieManager.instance.local).sorted {
             $0.title < $1.title
         }
 

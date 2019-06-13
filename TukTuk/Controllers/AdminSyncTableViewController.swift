@@ -25,7 +25,7 @@ class AdminSyncTableViewController: UITableViewController {
     @IBOutlet var syncButton: UIButton!
     @IBOutlet var syncProgress: UIProgressView!
 
-    let cloud = GoogleDrive.instance
+    let cloudProvider = GoogleDrive.instance
     let sync = SyncEngine(cloudProvider: GoogleDrive.instance)
 
     override func viewDidLoad() {
@@ -42,20 +42,24 @@ class AdminSyncTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if cloud.isAuthenticated {
+        if cloudProvider.isAuthenticated {
             DispatchQueue.global().async {
                 DispatchQueue.main.async {
                     Outlet.allCases.forEach { outlet in
                         self.spin(for: outlet)
                     }
                 }
-                Songs.instance.load(from: self.cloud)
+
+                SongManager.instance.loadLocal()
+                SongManager.instance.loadCloud(from: self.cloudProvider)
                 DispatchQueue.main.async {
                     self.stopSpinning(for: .songsLocal)
                     self.stopSpinning(for: .songsCloud)
                     self.updateUI()
                 }
-                Movies.instance.load(from: self.cloud)
+
+                MovieManager.instance.loadLocal()
+                MovieManager.instance.loadCloud(from: self.cloudProvider)
                 DispatchQueue.main.async {
                     self.stopSpinning(for: .moviesLocal)
                     self.stopSpinning(for: .moviesCloud)
@@ -64,7 +68,7 @@ class AdminSyncTableViewController: UITableViewController {
             }
         } else {
             let popup = PopupDialog(title: "Let's get started", message: "It's pretty easy. First, log in to Google, then hit the Synchronize button") {
-                self.cloud.signIn(uiDelegate: self)
+                self.cloudProvider.signIn(uiDelegate: self)
             }
             self.present(popup, animated: true, completion: nil)
         }
@@ -89,8 +93,8 @@ class AdminSyncTableViewController: UITableViewController {
     func updateUI() {
         dispatchPrecondition(condition: .onQueue(.main))
 
-        let songs = Songs.instance
-        let movies = Movies.instance
+        let songs = SongManager.instance
+        let movies = MovieManager.instance
 
         counts[Outlet.songsCloud.rawValue].text = "\(songs.cloud.count)"
         counts[Outlet.songsLocal.rawValue].text = "\(songs.local.count)"
@@ -139,8 +143,8 @@ class AdminSyncTableViewController: UITableViewController {
         popup.addButtons([
             CancelButton(title: "Cancel") { },
             DestructiveButton(title: "Ok") {
-                Songs.instance.deleteAllLocal()
-                Movies.instance.deleteAllLocal()
+                SongManager.instance.deleteAllLocal()
+                MovieManager.instance.deleteAllLocal()
                 self.updateUI()
             }
             ])

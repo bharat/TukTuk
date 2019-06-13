@@ -9,78 +9,40 @@
 import Foundation
 import UIKit
 
-class Songs {
-    static let instance = Songs()
-    let queue = DispatchQueue(label: "SongsWorker")
-    let base: URL
-    let fm = FileManager.default
-    var data = [String:Song]()
-
-    var inSync: Bool {
-        return queue.sync {
-            data.values.filter { $0.syncAction != .None }.count == 0
-        }
-    }
-
-    var download: [Song] {
-        return queue.sync {
-            data.values.filter { $0.syncAction == .Download }
-        }
-    }
-
-    var delete: [Song] {
-        return queue.sync {
-            data.values.filter { $0.syncAction == .Delete }
-        }
-    }
-
-    var local: [Song] {
-        return queue.sync {
-            data.values.filter { $0.image != nil && $0.audio != nil }
-        }
-    }
-
-    var cloud: [Song] {
-        return queue.sync {
-            data.values.filter { $0.cloudAudio != nil && $0.cloudImage != nil }
-        }
-    }
-
-    var localEmpty: Bool {
-        return local.count == 0
-    }
+class SongManager: Manager<Song> {
+    static let instance = SongManager()
 
     fileprivate init() {
-        base = fm.documentsSubdirectoryUrl("Songs")
+        super.init(subdir: "Songs")
+    }
 
+    func loadLocal() {
         let names = Set(try! fm.contentsOfDirectory(atPath: base.path).map { fileName in
             NSString(string: fileName).deletingPathExtension
         })
         names.forEach { name in
             let image = LocalFile(url: base.appendingPathComponent("\(name).png"))
             let audio = LocalFile(url: base.appendingPathComponent("\(name).mp3"))
-            let song = Song(title: name, image: image, audio: audio, cloudImage: nil, cloudAudio: nil)
             queue.sync {
+                var song = data[name] ?? Song(title: name)
+                song.image = image
+                song.audio = audio
                 data[song.title] = song
             }
         }
     }
 
-    func load(from provider: CloudProvider) {
+    func loadCloud(from provider: CloudProvider) {
         let files = provider.list(folder: provider.songsFolder)
 
         files?.forEach { file in
-            let title = NSString(string: file.name).deletingPathExtension
-            let ext = NSString(string: file.name).pathExtension
-            var song = queue.sync {
-                data[title] ?? Song(title: title)
-            }
-            if ext == "mp3" {
-                song.cloudAudio = file
-            } else {
-                song.cloudImage = file
-            }
             queue.sync {
+                var song = data[file.title] ?? Song(title: file.title)
+                if file.ext == "mp3" {
+                    song.cloudAudio = file
+                } else {
+                    song.cloudImage = file
+                }
                 data[song.title] = song
             }
         }
@@ -122,26 +84,20 @@ class Songs {
     }
 }
 
-struct LocalFile: Hashable {
-    var url: URL
-
-    var size: UInt64 {
-        return FileManager.default.fileSize(url)
-    }
-}
-
-enum SyncAction: Hashable {
-    case Download
-    case Delete
-    case None
-}
-
-struct Song: Titled, Hashable {
+struct Song: Manageable {
     var title: String
     var image: LocalFile?
     var audio: LocalFile?
     var cloudImage: CloudFile?
     var cloudAudio: CloudFile?
+
+    var hasLocal: Bool {
+        return image != nil && audio != nil
+    }
+
+    var hasCloud: Bool {
+        return cloudImage != nil && cloudAudio != nil
+    }
 
     var uiImage: UIImage? {
         guard let image = image else { return nil }

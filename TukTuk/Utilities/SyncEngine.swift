@@ -25,7 +25,7 @@ class SyncEngine {
     }
 
     var inSync: Bool {
-        return Songs.instance.inSync && Movies.instance.inSync
+        return SongManager.instance.inSync && MovieManager.instance.inSync
     }
 
     init(cloudProvider: CloudProvider, concurrency: Int = 4) {
@@ -40,9 +40,11 @@ class SyncEngine {
     func run(complete: @escaping () -> ()) {
         guard !inProgress else { return }
 
-        let songs = Songs.instance
+        let songs = SongManager.instance
         songs.delete.forEach { song in
-            enqueue { songs.delete(song) }
+            enqueue {
+                songs.delete(song)
+            }
         }
         songs.download.forEach { song in
             enqueue {
@@ -50,7 +52,7 @@ class SyncEngine {
             }
         }
 
-        let movies = Movies.instance
+        let movies = MovieManager.instance
         movies.delete.forEach { movie in
             enqueue {
                 movies.delete(movie)

@@ -12,6 +12,14 @@ struct CloudFile: Hashable {
     let name: String
     let id: String
     let size: UInt64
+
+    var title: String {
+        return NSString(string: name).deletingPathExtension
+    }
+
+    var ext: String {
+        return NSString(string: name).pathExtension
+    }
 }
 
 protocol CloudProvider {

@@ -11,6 +11,10 @@ import Foundation
 struct LocalFile {
     var url: URL
 
+    var exists: Bool {
+        return FileManager.default.fileExists(atPath: url.path)
+    }
+
     var size: UInt64 {
         return FileManager.default.fileSize(url)
     }

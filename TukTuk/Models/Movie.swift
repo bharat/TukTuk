@@ -24,7 +24,7 @@ struct Movie: Manageable, Titled {
     var syncAction: SyncAction {
         if let cloudVideo = cloudVideo {
             if let video = video {
-                if cloudVideo.size == video.size {
+                if video.exists && cloudVideo.size == video.size {
                     return .None
                 } else {
                     return .Download

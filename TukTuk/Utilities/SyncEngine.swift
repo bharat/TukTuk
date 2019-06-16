@@ -9,19 +9,21 @@
 import Foundation
 
 class SyncEngine {
-    private let queue = OperationQueue()
+    private let opQueue = OperationQueue()
+    private let syncQueue = DispatchQueue(label: "SyncEngine")
 
     var provider: CloudProvider
     var totalOps: Int = 0
-    var cancelRequested: Bool = false
+    var cancelRequested = false
+    var cancelers = [Canceler]()
     var notify: ()->() = {}
 
     var inProgress: Bool {
-        return queue.operationCount > 0
+        return opQueue.operationCount > 0
     }
     
     var progress: Float {
-        return Float(totalOps - queue.operationCount) / Float(totalOps)
+        return Float(totalOps - opQueue.operationCount) / Float(totalOps)
     }
 
     var inSync: Bool {
@@ -29,39 +31,116 @@ class SyncEngine {
     }
 
     init(cloudProvider: CloudProvider, concurrency: Int = 4) {
-        queue.maxConcurrentOperationCount = concurrency
+        opQueue.maxConcurrentOperationCount = concurrency
         self.provider = cloudProvider
     }
 
     func cancel() {
-        cancelRequested = true
+        syncQueue.async {
+            self.cancelRequested = true
+            self.cancelers.forEach { canceler in
+                canceler.cancel()
+            }
+            self.cancelers.removeAll()
+        }
     }
 
-    func run() {
-        guard !inProgress else { return }
+    func run(complete: @escaping ()->()) {
+        guard inProgress == false else { return }
 
         let songs = SongManager.instance
         let movies = MovieManager.instance
 
-        var blocks = [()->()]()
-        blocks += songs.delete.map    { song  in { songs.deleteLocal(song)                     } }
-        blocks += songs.download.map  { song  in { songs.download(song, from: self.provider)   } }
-        blocks += movies.delete.map   { movie in { movies.deleteLocal(movie)                   } }
-        blocks += movies.download.map { movie in { movies.download(movie, from: self.provider) } }
-
-        blocks.forEach { block in
-            queue.addOperation {
-                if !self.cancelRequested {
-                    block()
-                }
-
-                if self.queue.operationCount == 1 {
-                    self.cancelRequested = false
-                }
-
+        songs.delete.forEach { song in
+            opQueue.addOperation {
+                songs.deleteLocal(song)
                 self.notify()
             }
         }
-        totalOps = queue.operationCount
+
+        movies.delete.forEach { movie in
+            opQueue.addOperation {
+                movies.deleteLocal(movie)
+                self.notify()
+            }
+        }
+
+        songs.download.forEach { song in
+            opQueue.addOperation {
+                let cancelRequested = self.syncQueue.sync {
+                    return self.cancelRequested
+                }
+
+                guard cancelRequested == false else {
+                    return
+                }
+
+                let group = DispatchGroup()
+                group.enter()
+                let canceler = songs.download(song, from: self.provider) {
+                    self.notify()
+                    group.leave()
+                }
+
+                if let canceler = canceler {
+                    self.syncQueue.sync {
+                        self.cancelers.append(canceler)
+                    }
+                }
+
+                while group.wait(timeout: .now() + 1.0) == .timedOut {
+                    let cancelRequested = self.syncQueue.sync {
+                        return self.cancelRequested
+                    }
+                    if cancelRequested {
+                        return
+                    }
+                }
+            }
+        }
+
+        movies.download.forEach { movie in
+            opQueue.addOperation {
+                let cancelRequested = self.syncQueue.sync {
+                    return self.cancelRequested
+                }
+
+                guard cancelRequested == false else {
+                    return
+                }
+
+                let group = DispatchGroup()
+                group.enter()
+                let canceler = movies.download(movie, from: self.provider) {
+                    self.notify()
+                    group.leave()
+                }
+
+                if let canceler = canceler {
+                    self.syncQueue.sync {
+                        self.cancelers.append(canceler)
+                    }
+                }
+
+                while group.wait(timeout: .now() + 1.0) == .timedOut {
+                    let cancelRequested = self.syncQueue.sync {
+                        return self.cancelRequested
+                    }
+                    if cancelRequested {
+                        return
+                    }
+                }
+            }
+        }
+
+        DispatchQueue.global().async {
+            self.opQueue.waitUntilAllOperationsAreFinished()
+            self.syncQueue.sync {
+                self.cancelRequested = false
+            }
+            complete()
+        }
+
+        totalOps = opQueue.operationCount
     }
 }

@@ -28,28 +28,34 @@ class MovieManager: Manager<Movie> {
         }
     }
 
-    func loadCloud(from provider: CloudProvider) {
-        let files = provider.list(folder: provider.moviesFolder)
-        files?.forEach { file in
-            queue.sync {
-                var movie = data[file.title] ?? Movie(title: file.title)
-                movie.cloudVideo = file
-                data[movie.title] = movie
+    func loadCloud(from provider: CloudProvider, notify: @escaping () -> ()) {
+        provider.list(folder: provider.moviesFolder) { files in
+            self.queue.sync {
+                files.forEach { file in
+                    var movie = self.data[file.title] ?? Movie(title: file.title)
+                    movie.cloudVideo = file
+                    self.data[movie.title] = movie
+                }
             }
+            notify()
         }
     }
 
-    func download(_ movie: Movie, from provider: CloudProvider) {
-        guard let cloudVideo = movie.cloudVideo else { return }
-        guard let videoData = provider.get(file: cloudVideo.id) else { return }
+    func download(_ movie: Movie, from provider: CloudProvider, notify: @escaping () -> ()) -> Canceler? {
+        guard movie.hasCloud else { return nil }
 
-        let video = LocalFile(url: base.appendingPathComponent("\(movie.title).mp4"))
-        fm.createNonBackupFile(at: video.url, contents: videoData)
+        return provider.get(file: movie.cloudVideo!.id) { cloudData in
+            if let cloudData = cloudData {
+                let local = LocalFile(url: self.base.appendingPathComponent("\(movie.title).mp4"))
+                self.fm.createNonBackupFile(at: local.url, contents: cloudData)
 
-        queue.sync {
-            var movie = data[movie.title] ?? Movie(title: movie.title)
-            movie.video = video
-            data[movie.title] = movie
+                self.queue.sync {
+                    var movie = self.data[movie.title] ?? Movie(title: movie.title)
+                    movie.video = local
+                    self.data[movie.title] = movie
+                }
+            }
+            notify()
         }
     }
 
@@ -68,7 +74,7 @@ class MovieManager: Manager<Movie> {
     }
 
     func deleteAllLocal() {
-        local.forEach { movie in
+        data.values.forEach { movie in
             deleteLocal(movie)
         }
     }

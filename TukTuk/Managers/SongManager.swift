@@ -31,40 +31,64 @@ class SongManager: Manager<Song> {
         }
     }
 
-    func loadCloud(from provider: CloudProvider) {
-        let files = provider.list(folder: provider.songsFolder)
-
-        files?.forEach { file in
-            queue.sync {
-                var song = data[file.title] ?? Song(title: file.title)
-                if file.ext == "mp3" {
-                    song.cloudAudio = file
-                } else {
-                    song.cloudImage = file
+    func loadCloud(from provider: CloudProvider, notify: @escaping () -> ()) {
+        provider.list(folder: provider.songsFolder) { files in
+            self.queue.sync {
+                files.forEach { file in
+                    var song = self.data[file.title] ?? Song(title: file.title)
+                    if file.ext == "mp3" {
+                        song.cloudAudio = file
+                    } else {
+                        song.cloudImage = file
+                    }
+                    self.data[song.title] = song
                 }
-                data[song.title] = song
             }
+            notify()
         }
     }
 
-    func download(_ song: Song, from provider: CloudProvider) {
-        guard let cloudAudio = song.cloudAudio, let cloudImage = song.cloudImage else { return }
+    func download(_ song: Song, from provider: CloudProvider, notify: @escaping () -> ()) -> Canceler? {
+        guard song.hasCloud else { return nil }
 
-        let files = provider.get(files: [cloudImage.id, cloudAudio.id])
-        guard let imageData = files[cloudImage.id] else { return }
-        guard let audioData = files[cloudAudio.id] else { return }
-
-        let image = LocalFile(url: base.appendingPathComponent("\(song.title).png"))
-        let audio = LocalFile(url: base.appendingPathComponent("\(song.title).mp3"))
-        fm.createNonBackupFile(at: image.url, contents: imageData)
-        fm.createNonBackupFile(at: audio.url, contents: audioData)
-
-        queue.sync {
-            var song = song
-            song.image = image
-            song.audio = audio
-            data[song.title] = song
+        // Call notify() once after both downloads complete
+        var doneCount = 0
+        let notifyWrapper = {
+            doneCount += 1
+            if doneCount == 2 {
+                notify()
+            }
         }
+
+        let canceler1 = provider.get(file: song.cloudImage!.id) { cloudData in
+            if let cloudData = cloudData {
+                let local = LocalFile(url: self.base.appendingPathComponent("\(song.title).png"))
+                self.fm.createNonBackupFile(at: local.url, contents: cloudData)
+
+                self.queue.sync {
+                    var song = self.data[song.title] ?? Song(title: song.title)
+                    song.image = local
+                    self.data[song.title] = song
+                }
+            }
+            notifyWrapper()
+        }
+
+        let canceler2 = provider.get(file: song.cloudAudio!.id) { cloudData in
+            if let cloudData = cloudData {
+                let local = LocalFile(url: self.base.appendingPathComponent("\(song.title).mp3"))
+                self.fm.createNonBackupFile(at: local.url, contents: cloudData)
+
+                self.queue.sync {
+                    var song = self.data[song.title] ?? Song(title: song.title)
+                    song.audio = local
+                    self.data[song.title] = song
+                }
+            }
+            notifyWrapper()
+        }
+
+        return CancelGroup(cancelers: [canceler1, canceler2])
     }
 
     func deleteLocal(_ song: Song) {
@@ -79,13 +103,13 @@ class SongManager: Manager<Song> {
         }
         [song.image?.url.path, song.audio?.url.path].forEach { path in
             if let path = path {
-                try! fm.removeItem(atPath: path)
+                try? fm.removeItem(atPath: path)
             }
         }
     }
 
     func deleteAllLocal() {
-        local.forEach { song in
+        data.values.forEach { song in
             deleteLocal(song)
         }
     }

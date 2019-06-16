@@ -29,11 +29,7 @@ class AdminSyncTableViewController: UITableViewController {
     let sync = SyncEngine(cloudProvider: GoogleDrive.instance)
 
     override func viewDidLoad() {
-        sync.notify = {
-            DispatchQueue.main.async {
-                self.updateUI()
-            }
-        }
+        sync.notify = self.updateUI
     }
 
     func spinner(_ outlet: Outlet) -> UIActivityIndicatorView {
@@ -46,23 +42,20 @@ class AdminSyncTableViewController: UITableViewController {
         if cloudProvider.isAuthenticated {
             DispatchQueue.global().async {
                 DispatchQueue.main.async {
-                    Outlet.allCases.forEach { outlet in
-                        self.spinner(outlet).startAnimating()
-                    }
+                    self.spinner(.songsCloud).startAnimating()
+                    self.spinner(.moviesCloud).startAnimating()
                 }
 
                 SongManager.instance.loadLocal()
-                SongManager.instance.loadCloud(from: self.cloudProvider)
-                DispatchQueue.main.async {
-                    self.spinner(.songsLocal).stopAnimating()
+                MovieManager.instance.loadLocal()
+                self.updateUI()
+
+                SongManager.instance.loadCloud(from: self.cloudProvider) {
                     self.spinner(.songsCloud).stopAnimating()
                     self.updateUI()
                 }
 
-                MovieManager.instance.loadLocal()
-                MovieManager.instance.loadCloud(from: self.cloudProvider)
-                DispatchQueue.main.async {
-                    self.spinner(.moviesLocal).stopAnimating()
+                MovieManager.instance.loadCloud(from: self.cloudProvider) {
                     self.spinner(.moviesCloud).stopAnimating()
                     self.updateUI()
                 }
@@ -82,7 +75,12 @@ class AdminSyncTableViewController: UITableViewController {
     }
 
     func updateUI() {
-        dispatchPrecondition(condition: .onQueue(.main))
+        guard Thread.isMainThread  else {
+            DispatchQueue.main.async {
+                self.updateUI()
+            }
+            return
+        }
 
         let songs = SongManager.instance
         let movies = MovieManager.instance
@@ -92,49 +90,36 @@ class AdminSyncTableViewController: UITableViewController {
         counts[Outlet.moviesCloud.rawValue].text = "\(movies.cloud.count)"
         counts[Outlet.moviesLocal.rawValue].text = "\(movies.local.count)"
 
-        if songs.local.count == songs.cloud.count || !sync.inProgress {
-            spinner(.songsLocal).stopAnimating()
-        }
-
-        if movies.local.count == movies.cloud.count || !sync.inProgress {
-            spinner(.moviesLocal).stopAnimating()
-        }
-
         if sync.inProgress {
-            progress.isHidden = false
             progress.setProgress(sync.progress, animated: true)
-            syncButton.isHidden = true
-            cancelButton.isHidden = false
-        } else {
-            UIView.animate(withDuration: 1.0) {
-                self.progress.isHidden = true
-            }
-            cancelButton.isHidden = true
-            cancelButton.setTitle("Cancel", for: .normal)
-
-            syncButton.isHidden = false
-            syncButton.isEnabled = !sync.inSync
         }
     }
 
     @IBAction func cancel(_ sender: Any) {
-        sync.cancel()
         cancelButton.setTitle("Canceling...", for: .normal)
+        sync.cancel()
     }
 
     @IBAction func sync(_ sender: Any) {
         guard !sync.inProgress else { return }
 
-        UIView.animate(withDuration: 0.5) {
-            self.syncButton.isHidden = true
-            self.cancelButton.isHidden = false
-            self.progress.isHidden = false
-            self.progress.setProgress(0, animated: false)
-        }
+        syncButton.isHidden = true
+        cancelButton.isHidden = false
+        progress.isHidden = false
+        self.progress.setProgress(0, animated: false)
         spinner(.songsLocal).startAnimating()
         spinner(.moviesLocal).startAnimating()
-        sync.run()
-        updateUI()
+
+        sync.run() {
+            DispatchQueue.main.sync {
+                self.syncButton.isHidden = false
+                self.cancelButton.isHidden = true
+                self.progress.isHidden = true
+                self.cancelButton.setTitle("Cancel", for: .normal)
+                self.spinner(.songsLocal).stopAnimating()
+                self.spinner(.moviesLocal).stopAnimating()
+            }
+        }
     }
 
     @IBAction func reset(_ sender: Any) {

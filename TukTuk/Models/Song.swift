@@ -32,7 +32,7 @@ struct Song: Manageable {
     var syncAction: SyncAction {
         if let cloudImage = cloudImage, let cloudAudio = cloudAudio {
             if let image = image, let audio = audio {
-                if cloudImage.size == image.size && cloudAudio.size == audio.size {
+                if image.exists && cloudImage.size == image.size && audio.exists && cloudAudio.size == audio.size {
                     return .None
                 } else {
                     return .Download

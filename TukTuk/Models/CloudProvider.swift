@@ -22,12 +22,25 @@ struct CloudFile: Hashable {
     }
 }
 
+protocol Canceler {
+    func cancel()
+}
+
+struct CancelGroup: Canceler {
+    var cancelers: [Canceler]
+
+    func cancel() {
+        cancelers.forEach { canceler in
+            canceler.cancel()
+        }
+    }
+}
+
 protocol CloudProvider {
     var isAuthenticated: Bool { get }
     var songsFolder: String { get }
     var moviesFolder: String { get }
 
-    func list(folder id: String) -> [CloudFile]?
-    func get(file id: String) -> Data?
-    func get(files ids: [String]) -> [String:Data?]
+    func list(folder id: String, callback: @escaping ([CloudFile])->())
+    func get(file id: String, callback: @escaping (Data?)->()) -> Canceler
 }

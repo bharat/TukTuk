@@ -67,33 +67,9 @@ class SyncEngine {
 
         songs.download.forEach { song in
             opQueue.addOperation {
-                let cancelRequested = self.syncQueue.sync {
-                    return self.cancelRequested
-                }
-
-                guard cancelRequested == false else {
-                    return
-                }
-
-                let group = DispatchGroup()
-                group.enter()
-                let canceler = songs.download(song, from: self.provider) {
-                    self.notify()
-                    group.leave()
-                }
-
-                if let canceler = canceler {
-                    self.syncQueue.sync {
-                        self.cancelers.append(canceler)
-                    }
-                }
-
-                while group.wait(timeout: .now() + 1.0) == .timedOut {
-                    let cancelRequested = self.syncQueue.sync {
-                        return self.cancelRequested
-                    }
-                    if cancelRequested {
-                        return
+                self.wrap { callback in
+                    return songs.download(song, from: self.provider) {
+                        callback()
                     }
                 }
             }
@@ -101,33 +77,9 @@ class SyncEngine {
 
         movies.download.forEach { movie in
             opQueue.addOperation {
-                let cancelRequested = self.syncQueue.sync {
-                    return self.cancelRequested
-                }
-
-                guard cancelRequested == false else {
-                    return
-                }
-
-                let group = DispatchGroup()
-                group.enter()
-                let canceler = movies.download(movie, from: self.provider) {
-                    self.notify()
-                    group.leave()
-                }
-
-                if let canceler = canceler {
-                    self.syncQueue.sync {
-                        self.cancelers.append(canceler)
-                    }
-                }
-
-                while group.wait(timeout: .now() + 1.0) == .timedOut {
-                    let cancelRequested = self.syncQueue.sync {
-                        return self.cancelRequested
-                    }
-                    if cancelRequested {
-                        return
+                self.wrap { callback in
+                    return movies.download(movie, from: self.provider) {
+                        callback()
                     }
                 }
             }
@@ -142,5 +94,37 @@ class SyncEngine {
         }
 
         totalOps = opQueue.operationCount
+    }
+
+    func wrap(block: (_ callback: @escaping ()->())->(Canceler?)) {
+        let cancelRequested = self.syncQueue.sync {
+            return self.cancelRequested
+        }
+
+        guard cancelRequested == false else {
+            return
+        }
+
+        let group = DispatchGroup()
+        group.enter()
+        let canceler = block {
+            self.notify()
+            group.leave()
+        }
+
+        if let canceler = canceler {
+            self.syncQueue.sync {
+                self.cancelers.append(canceler)
+            }
+        }
+
+        while group.wait(timeout: .now() + 1.0) == .timedOut {
+            let cancelRequested = self.syncQueue.sync {
+                return self.cancelRequested
+            }
+            if cancelRequested {
+                return
+            }
+        }
     }
 }

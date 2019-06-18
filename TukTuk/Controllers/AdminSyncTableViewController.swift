@@ -21,7 +21,7 @@ enum Outlet: Int, CaseIterable {
 let DESIRED_CONCURRENCY = 4
 
 class AdminSyncTableViewController: UITableViewController {
-    @IBOutlet var counts: [UILabel]!
+    @IBOutlet var counters: [UILabel]!
     @IBOutlet var spinners: [UIActivityIndicatorView]!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var syncButton: UIButton!
@@ -47,6 +47,10 @@ class AdminSyncTableViewController: UITableViewController {
         return spinners[outlet.rawValue]
     }
 
+    func counter(_ outlet: Outlet) -> UILabel {
+        return counters[outlet.rawValue]
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         syncSectionTitle(on: false)
@@ -54,6 +58,8 @@ class AdminSyncTableViewController: UITableViewController {
         if cloudProvider.isAuthenticated {
             self.spinner(.songsCloud).startAnimating()
             self.spinner(.moviesCloud).startAnimating()
+            counter(.songsLocal).text = ""
+            counter(.moviesLocal).text = ""
 
             DispatchQueue.global().async {
                 SongManager.instance.loadLocal()
@@ -62,11 +68,13 @@ class AdminSyncTableViewController: UITableViewController {
 
                 SongManager.instance.loadCloud(from: self.cloudProvider) {
                     self.spinner(.songsCloud).stopAnimating()
+                    self.counter(.songsCloud).text = "\(SongManager.instance.cloud.count)"
                     self.updateUI()
                 }
 
                 MovieManager.instance.loadCloud(from: self.cloudProvider) {
                     self.spinner(.moviesCloud).stopAnimating()
+                    self.counter(.moviesCloud).text = "\(MovieManager.instance.cloud.count)"
                     self.updateUI()
                 }
             }
@@ -92,13 +100,8 @@ class AdminSyncTableViewController: UITableViewController {
             return
         }
 
-        let songs = SongManager.instance
-        let movies = MovieManager.instance
-
-        counts[Outlet.songsCloud.rawValue].text = "\(songs.cloud.count)"
-        counts[Outlet.songsLocal.rawValue].text = "\(songs.local.count)"
-        counts[Outlet.moviesCloud.rawValue].text = "\(movies.cloud.count)"
-        counts[Outlet.moviesLocal.rawValue].text = "\(movies.local.count)"
+        counter(.songsLocal).text = "\(SongManager.instance.local.count)"
+        counter(.moviesLocal).text = "\(MovieManager.instance.local.count)"
 
         if sync.inProgress {
             progress.setProgress(sync.progress, animated: true)

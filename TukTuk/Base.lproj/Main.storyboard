@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zok-SV-WMn">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,7 +11,7 @@
             <objects>
                 <viewController id="Zok-SV-WMn" customClass="WelcomeViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iac-Vz-FHo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="ebQ-gL-XbM"/>
@@ -34,14 +30,14 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SongViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zSz-j3-eOp">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rKp-9S-RKq" userLabel="Song Collection">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="784"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="546"/>
                                         <collectionViewLayout key="collectionViewLayout" id="5jt-ki-gHy" customClass="CollectionViewSlantedLayout" customModule="CollectionViewSlantedLayout">
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isFirstCellExcluded" value="YES"/>
@@ -50,7 +46,7 @@
                                         </collectionViewLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="SongCell" id="N58-lx-YH0" customClass="SongCell" customModule="TukTuk" customModuleProvider="target">
-                                                <rect key="frame" x="-177" y="0.0" width="768" height="307"/>
+                                                <rect key="frame" x="-84" y="0.0" width="768" height="307"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                     <rect key="frame" x="0.0" y="0.0" width="768" height="307"/>
@@ -94,10 +90,10 @@
                                         </connections>
                                     </collectionView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="7Ly-tq-BV9" userLabel="Buttons Stack View">
-                                        <rect key="frame" x="0.0" y="784" width="414" height="34"/>
+                                        <rect key="frame" x="0.0" y="546" width="600" height="34"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6W-cQ-EmU" userLabel="Stop! Button">
-                                                <rect key="frame" x="0.0" y="0.0" width="138" height="34"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="34"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <state key="normal" title="Stop!">
@@ -111,7 +107,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-Wj-hJe" userLabel="Movie Button">
-                                                <rect key="frame" x="138" y="0.0" width="138" height="34"/>
+                                                <rect key="frame" x="200" y="0.0" width="200" height="34"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <state key="normal" title="Movie">
@@ -125,7 +121,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAS-h3-EvS">
-                                                <rect key="frame" x="276" y="0.0" width="138" height="34"/>
+                                                <rect key="frame" x="400" y="0.0" width="200" height="34"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -164,11 +160,11 @@
             <objects>
                 <viewController id="gLZ-Qy-6sr" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mJo-O6-cad">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fCX-xc-5pl">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
                                     <navigationItem title="Secret Admin Panel!" id="neb-7C-sav">
                                         <barButtonItem key="rightBarButtonItem" title="Done" id="vOE-1Z-vYr">
@@ -180,7 +176,7 @@
                                 </items>
                             </navigationBar>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="911-xc-ZR9">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <connections>
                                     <segue destination="Suq-8V-jhy" kind="embed" id="RJi-HO-tux"/>
                                 </connections>
@@ -510,13 +506,13 @@ line 4</string>
                         <outlet property="status" destination="xtg-hZ-9gj" id="D1U-yU-ZbU"/>
                         <outlet property="statusCell" destination="Ax6-go-Q2e" id="o8Q-ti-R3b"/>
                         <outlet property="syncButton" destination="LeE-PH-POI" id="LOO-Na-CPz"/>
-                        <outletCollection property="counts" destination="2tL-HM-0cK" collectionClass="NSMutableArray" id="bit-qb-Y3a"/>
+                        <outletCollection property="counters" destination="2tL-HM-0cK" collectionClass="NSMutableArray" id="bit-qb-Y3a"/>
                         <outletCollection property="spinners" destination="djB-zl-k6N" collectionClass="NSMutableArray" id="3K3-9w-6py"/>
-                        <outletCollection property="counts" destination="T65-x2-7Jz" collectionClass="NSMutableArray" id="uIK-d5-YLa"/>
+                        <outletCollection property="counters" destination="T65-x2-7Jz" collectionClass="NSMutableArray" id="uIK-d5-YLa"/>
                         <outletCollection property="spinners" destination="fIr-0O-9fA" collectionClass="NSMutableArray" id="nOf-Bh-vi3"/>
-                        <outletCollection property="counts" destination="k2T-1z-5QE" collectionClass="NSMutableArray" id="wfN-ND-MQk"/>
+                        <outletCollection property="counters" destination="k2T-1z-5QE" collectionClass="NSMutableArray" id="wfN-ND-MQk"/>
                         <outletCollection property="spinners" destination="PHc-ZO-Cbd" collectionClass="NSMutableArray" id="RCa-sU-x6y"/>
-                        <outletCollection property="counts" destination="edW-Sn-nhy" collectionClass="NSMutableArray" id="t0G-HR-KgZ"/>
+                        <outletCollection property="counters" destination="edW-Sn-nhy" collectionClass="NSMutableArray" id="t0G-HR-KgZ"/>
                         <outletCollection property="spinners" destination="Zmt-JQ-vJC" collectionClass="NSMutableArray" id="47f-oG-RmY"/>
                     </connections>
                 </tableViewController>

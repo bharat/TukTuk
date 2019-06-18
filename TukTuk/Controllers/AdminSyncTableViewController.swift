@@ -28,6 +28,7 @@ class AdminSyncTableViewController: UITableViewController {
     @IBOutlet weak var progress: UIProgressView!
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var statusCell: UITableViewCell!
+    @IBOutlet weak var resetButton: UIButton!
 
     let cloudProvider = GoogleDrive.instance
     let sync = SyncEngine(cloudProvider: GoogleDrive.instance, concurrency: DESIRED_CONCURRENCY)
@@ -48,6 +49,7 @@ class AdminSyncTableViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        syncSectionTitle(on: false)
 
         if cloudProvider.isAuthenticated {
             self.spinner(.songsCloud).startAnimating()
@@ -112,6 +114,8 @@ class AdminSyncTableViewController: UITableViewController {
         }
 
         status.text = statusMessages.joined(separator: "\n")
+
+        syncButton.isEnabled = !(SongManager.instance.inSync && MovieManager.instance.inSync)
     }
 
     @IBAction func cancel(_ sender: Any) {
@@ -126,21 +130,27 @@ class AdminSyncTableViewController: UITableViewController {
         cancelButton.isHidden = false
         progress.isHidden = false
         statusCell.isHidden = false
+        resetButton.isEnabled = false
         status.numberOfLines = DESIRED_CONCURRENCY
         progress.setProgress(0, animated: false)
         spinner(.songsLocal).startAnimating()
         spinner(.moviesLocal).startAnimating()
+        syncSectionTitle(on: true)
 
         sync.run() {
             DispatchQueue.main.sync {
                 self.syncButton.isHidden = false
+                self.cancelButton.setTitle("Cancel", for: .normal)
                 self.cancelButton.isHidden = true
                 self.progress.isHidden = true
-                self.cancelButton.setTitle("Cancel", for: .normal)
+                self.statusCell.isHidden = true
+                self.resetButton.isEnabled = true
+                self.status.text = nil
+                self.tableView.headerView(forSection: 3)?.textLabel?.text = ""
                 self.spinner(.songsLocal).stopAnimating()
                 self.spinner(.moviesLocal).stopAnimating()
-                self.statusCell.isHidden = true
-                self.status.text = nil
+                self.syncSectionTitle(on: false)
+                self.statusMessages = []
             }
         }
     }
@@ -156,6 +166,16 @@ class AdminSyncTableViewController: UITableViewController {
             }
             ])
         self.present(popup, animated: true, completion: nil)
+    }
+
+    fileprivate func syncSectionTitle(on: Bool) {
+        tableView.headerView(forSection: 3)?.textLabel?.text = {
+            if on {
+                return "SYNCHRONIZATION STATUS"
+            } else {
+                return ""
+            }
+        }()
     }
 }
 

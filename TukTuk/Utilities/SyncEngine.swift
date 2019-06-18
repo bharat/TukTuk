@@ -62,7 +62,7 @@ class SyncEngine {
         songs.download.forEach { song in
             opQueue.addOperation {
                 self.wrap { callback in
-                    let msg = "Song: \(song.title)"
+                    let msg = "Download song: \(song.title)"
                     self.notifyStart(msg)
                     return songs.download(song, from: self.provider) {
                         self.notifyStop(msg)
@@ -75,7 +75,7 @@ class SyncEngine {
         movies.download.forEach { movie in
             opQueue.addOperation {
                 self.wrap { callback in
-                    let msg = "Movie: \(movie.title)"
+                    let msg = "Download movie: \(movie.title)"
                     self.notifyStart(msg)
                     return movies.download(movie, from: self.provider) {
                         self.notifyStop(msg)

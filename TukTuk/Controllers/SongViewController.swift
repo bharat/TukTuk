@@ -172,7 +172,7 @@ class SongViewController: UIViewController {
         if let cuedMiniGame = Settings.cuedMiniGame {
             miniGame = cuedMiniGame
             Settings.cuedMiniGame = nil
-        } else if Array(1...60).randomElement()! == 1 {
+        } else if Array(1...40).randomElement()! == 1 {
             miniGame = MiniGames.all.randomElement()!
         }
 

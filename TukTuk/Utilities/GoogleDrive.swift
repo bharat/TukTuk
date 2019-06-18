@@ -50,7 +50,7 @@ class GoogleDrive: NSObject, CloudProvider {
     func list(folder id: String, callback: @escaping ([CloudFile])->()) {
         let query = GTLRDriveQuery_FilesList.query()
         query.pageSize = 1000
-        query.q = "\"\(id)\" in parents"
+        query.q = "\"\(id)\" in parents and trashed=false"
         query.fields = "files/name,files/id,files/size"
         service.executeQuery(query) { (ticket, results, error) in
             let cloudFiles = (results as? GTLRDrive_FileList)?.files?.map { file in

@@ -17,7 +17,7 @@ struct Song: Manageable {
     var cloudAudio: CloudFile?
 
     var hasLocal: Bool {
-        return image != nil && audio != nil
+        return image != nil && image!.exists && audio != nil && audio!.exists
     }
 
     var hasCloud: Bool {

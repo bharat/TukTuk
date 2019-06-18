@@ -32,6 +32,13 @@ class SongManager: Manager<Song> {
     }
 
     func loadCloud(from provider: CloudProvider, notify: @escaping () -> ()) {
+        cloud.forEach { song in
+            queue.sync {
+                self.data[song.title]?.cloudAudio = nil
+                self.data[song.title]?.cloudImage = nil
+            }
+        }
+
         provider.list(folder: provider.songsFolder) { files in
             self.queue.sync {
                 files.forEach { file in

@@ -29,6 +29,12 @@ class MovieManager: Manager<Movie> {
     }
 
     func loadCloud(from provider: CloudProvider, notify: @escaping () -> ()) {
+        cloud.forEach { movie in
+            queue.sync {
+                self.data[movie.title]?.cloudVideo = nil
+            }
+        }
+        
         provider.list(folder: provider.moviesFolder) { files in
             self.queue.sync {
                 files.forEach { file in

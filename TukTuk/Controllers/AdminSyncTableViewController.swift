@@ -18,18 +18,28 @@ enum Outlet: Int, CaseIterable {
     case moviesCloud
 }
 
+let DESIRED_CONCURRENCY = 4
+
 class AdminSyncTableViewController: UITableViewController {
     @IBOutlet var counts: [UILabel]!
     @IBOutlet var spinners: [UIActivityIndicatorView]!
-    @IBOutlet var cancelButton: UIButton!
-    @IBOutlet var syncButton: UIButton!
-    @IBOutlet var progress: UIProgressView!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var syncButton: UIButton!
+    @IBOutlet weak var progress: UIProgressView!
+    @IBOutlet weak var status: UILabel!
+    @IBOutlet weak var statusCell: UITableViewCell!
 
     let cloudProvider = GoogleDrive.instance
-    let sync = SyncEngine(cloudProvider: GoogleDrive.instance)
+    let sync = SyncEngine(cloudProvider: GoogleDrive.instance, concurrency: DESIRED_CONCURRENCY)
+    var statusMessages: [String] = []
 
     override func viewDidLoad() {
-        sync.notify = self.updateUI
+        sync.notifyStart = { msg in
+            self.updateUI(add: msg)
+        }
+        sync.notifyStop = { msg in
+            self.updateUI(remove: msg)
+        }
     }
 
     func spinner(_ outlet: Outlet) -> UIActivityIndicatorView {
@@ -40,12 +50,10 @@ class AdminSyncTableViewController: UITableViewController {
         super.viewDidAppear(animated)
 
         if cloudProvider.isAuthenticated {
-            DispatchQueue.global().async {
-                DispatchQueue.main.async {
-                    self.spinner(.songsCloud).startAnimating()
-                    self.spinner(.moviesCloud).startAnimating()
-                }
+            self.spinner(.songsCloud).startAnimating()
+            self.spinner(.moviesCloud).startAnimating()
 
+            DispatchQueue.global().async {
                 SongManager.instance.loadLocal()
                 MovieManager.instance.loadLocal()
                 self.updateUI()
@@ -74,10 +82,10 @@ class AdminSyncTableViewController: UITableViewController {
         sync.cancel()
     }
 
-    func updateUI() {
+    func updateUI(add: String? = nil, remove: String? = nil) {
         guard Thread.isMainThread  else {
             DispatchQueue.main.async {
-                self.updateUI()
+                self.updateUI(add: add, remove: remove)
             }
             return
         }
@@ -93,6 +101,17 @@ class AdminSyncTableViewController: UITableViewController {
         if sync.inProgress {
             progress.setProgress(sync.progress, animated: true)
         }
+
+        if let add = add {
+            statusMessages.append(add)
+        }
+        if let remove = remove {
+            statusMessages.removeAll { msg in
+                msg == remove
+            }
+        }
+
+        status.text = statusMessages.joined(separator: "\n")
     }
 
     @IBAction func cancel(_ sender: Any) {
@@ -106,7 +125,9 @@ class AdminSyncTableViewController: UITableViewController {
         syncButton.isHidden = true
         cancelButton.isHidden = false
         progress.isHidden = false
-        self.progress.setProgress(0, animated: false)
+        statusCell.isHidden = false
+        status.numberOfLines = DESIRED_CONCURRENCY
+        progress.setProgress(0, animated: false)
         spinner(.songsLocal).startAnimating()
         spinner(.moviesLocal).startAnimating()
 
@@ -118,6 +139,8 @@ class AdminSyncTableViewController: UITableViewController {
                 self.cancelButton.setTitle("Cancel", for: .normal)
                 self.spinner(.songsLocal).stopAnimating()
                 self.spinner(.moviesLocal).stopAnimating()
+                self.statusCell.isHidden = true
+                self.status.text = nil
             }
         }
     }

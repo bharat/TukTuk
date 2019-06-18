@@ -15,8 +15,8 @@ class SyncEngine {
     var provider: CloudProvider
     var totalOps: Int = 0
     var cancelRequested = false
-    var cancelers = [Canceler]()
-    var notify: ()->() = {}
+    var notifyStart: (String)->() = { _ in }
+    var notifyStop: (String)->() = { _ in }
 
     var inProgress: Bool {
         return opQueue.operationCount > 0
@@ -36,12 +36,8 @@ class SyncEngine {
     }
 
     func cancel() {
-        syncQueue.async {
+        syncQueue.sync {
             self.cancelRequested = true
-            self.cancelers.forEach { canceler in
-                canceler.cancel()
-            }
-            self.cancelers.removeAll()
         }
     }
 
@@ -54,21 +50,22 @@ class SyncEngine {
         songs.delete.forEach { song in
             opQueue.addOperation {
                 songs.deleteLocal(song)
-                self.notify()
             }
         }
 
         movies.delete.forEach { movie in
             opQueue.addOperation {
                 movies.deleteLocal(movie)
-                self.notify()
             }
         }
 
         songs.download.forEach { song in
             opQueue.addOperation {
                 self.wrap { callback in
+                    let msg = "Song: \(song.title)"
+                    self.notifyStart(msg)
                     return songs.download(song, from: self.provider) {
+                        self.notifyStop(msg)
                         callback()
                     }
                 }
@@ -78,7 +75,10 @@ class SyncEngine {
         movies.download.forEach { movie in
             opQueue.addOperation {
                 self.wrap { callback in
+                    let msg = "Movie: \(movie.title)"
+                    self.notifyStart(msg)
                     return movies.download(movie, from: self.provider) {
+                        self.notifyStop(msg)
                         callback()
                     }
                 }
@@ -97,32 +97,24 @@ class SyncEngine {
     }
 
     func wrap(block: (_ callback: @escaping ()->())->(Canceler?)) {
-        let cancelRequested = self.syncQueue.sync {
+        let cancelRequested = syncQueue.sync {
             return self.cancelRequested
         }
-
-        guard cancelRequested == false else {
-            return
-        }
+        guard cancelRequested == false else { return }
 
         let group = DispatchGroup()
         group.enter()
         let canceler = block {
-            self.notify()
             group.leave()
         }
 
-        if let canceler = canceler {
-            self.syncQueue.sync {
-                self.cancelers.append(canceler)
-            }
-        }
-
         while group.wait(timeout: .now() + 1.0) == .timedOut {
-            let cancelRequested = self.syncQueue.sync {
+            let cancelRequested = syncQueue.sync {
                 return self.cancelRequested
             }
+
             if cancelRequested {
+                canceler?.cancel()
                 return
             }
         }

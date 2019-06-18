@@ -14,7 +14,7 @@ struct Movie: Manageable, Titled {
     var cloudVideo: CloudFile?
 
     var hasLocal: Bool {
-        return video != nil
+        return video != nil && video!.exists
     }
 
     var hasCloud: Bool {

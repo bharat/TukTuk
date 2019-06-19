@@ -53,11 +53,11 @@ class AdminSyncTableViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        syncSectionTitle(on: false)
 
         if cloudProvider.isAuthenticated {
             self.spinner(.songsCloud).startAnimating()
             self.spinner(.moviesCloud).startAnimating()
+            syncButton.isEnabled = false
 
             DispatchQueue.global().async {
                 SongManager.instance.loadLocal()
@@ -136,7 +136,6 @@ class AdminSyncTableViewController: UITableViewController {
         progress.setProgress(0, animated: false)
         spinner(.songsLocal).startAnimating()
         spinner(.moviesLocal).startAnimating()
-        syncSectionTitle(on: true)
 
         sync.run() {
             DispatchQueue.main.sync {
@@ -150,7 +149,6 @@ class AdminSyncTableViewController: UITableViewController {
                 self.tableView.headerView(forSection: 3)?.textLabel?.text = ""
                 self.spinner(.songsLocal).stopAnimating()
                 self.spinner(.moviesLocal).stopAnimating()
-                self.syncSectionTitle(on: false)
                 self.statusMessages = []
             }
         }
@@ -167,16 +165,6 @@ class AdminSyncTableViewController: UITableViewController {
             }
             ])
         self.present(popup, animated: true, completion: nil)
-    }
-
-    fileprivate func syncSectionTitle(on: Bool) {
-        tableView.headerView(forSection: 3)?.textLabel?.text = {
-            if on {
-                return "SYNCHRONIZATION STATUS"
-            } else {
-                return ""
-            }
-        }()
     }
 }
 

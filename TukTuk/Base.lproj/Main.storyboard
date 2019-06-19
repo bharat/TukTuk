@@ -400,10 +400,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="ZGA-Fj-MHw">
+                            <tableViewSection headerTitle="SYNCHRONIZE" id="ZGA-Fj-MHw">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="55F-9r-dKg">
-                                        <rect key="frame" x="0.0" y="323.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="343.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="55F-9r-dKg" id="Nv6-Hr-i7m">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -446,7 +446,7 @@
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="YHH-8o-Zsq">
-                                        <rect key="frame" x="0.0" y="367.5" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="387.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YHH-8o-Zsq" id="cbk-RK-bBP">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -468,19 +468,15 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Synchronization Status" id="MMt-Vo-Uuk">
-                                <cells>
                                     <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="120" id="Ax6-go-Q2e">
-                                        <rect key="frame" x="0.0" y="467.5" width="414" height="120"/>
+                                        <rect key="frame" x="0.0" y="431.5" width="414" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ax6-go-Q2e" id="6Xp-ej-rBZ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="clip" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtg-hZ-9gj">
-                                                    <rect key="frame" x="20" y="11" width="560" height="98"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="98"/>
                                                     <string key="text">line 1
 line 2
 line 3

@@ -25,7 +25,7 @@ class Manager<T: Manageable> {
     }
 
     var inSync: Bool {
-        return queue.sync {
+        return cloud.count > 0 && queue.sync {
             data.values.filter { $0.syncAction != .None }.count == 0
         }
     }

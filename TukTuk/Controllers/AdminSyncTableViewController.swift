@@ -58,8 +58,6 @@ class AdminSyncTableViewController: UITableViewController {
         if cloudProvider.isAuthenticated {
             self.spinner(.songsCloud).startAnimating()
             self.spinner(.moviesCloud).startAnimating()
-            counter(.songsLocal).text = ""
-            counter(.moviesLocal).text = ""
 
             DispatchQueue.global().async {
                 SongManager.instance.loadLocal()

@@ -54,7 +54,7 @@ class SongViewController: UIViewController {
 
         // Long press on the stop button will bring up an interface where you can
         // cue up a MiniGame or a Movie
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(showSettings(gesture:)))
+        let long = UILongPressHapticFeedbackGestureRecognizer(target: self, action: #selector(showSettings(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false

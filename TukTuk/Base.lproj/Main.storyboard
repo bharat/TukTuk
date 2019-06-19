@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zok-SV-WMn">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +15,7 @@
             <objects>
                 <viewController id="Zok-SV-WMn" customClass="WelcomeViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iac-Vz-FHo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="ebQ-gL-XbM"/>
@@ -30,14 +34,14 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SongViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zSz-j3-eOp">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rKp-9S-RKq" userLabel="Song Collection">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="546"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="784"/>
                                         <collectionViewLayout key="collectionViewLayout" id="5jt-ki-gHy" customClass="CollectionViewSlantedLayout" customModule="CollectionViewSlantedLayout">
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isFirstCellExcluded" value="YES"/>
@@ -46,7 +50,7 @@
                                         </collectionViewLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="SongCell" id="N58-lx-YH0" customClass="SongCell" customModule="TukTuk" customModuleProvider="target">
-                                                <rect key="frame" x="-84" y="0.0" width="768" height="307"/>
+                                                <rect key="frame" x="-177" y="0.0" width="768" height="307"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                     <rect key="frame" x="0.0" y="0.0" width="768" height="307"/>
@@ -90,10 +94,10 @@
                                         </connections>
                                     </collectionView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="7Ly-tq-BV9" userLabel="Buttons Stack View">
-                                        <rect key="frame" x="0.0" y="546" width="600" height="34"/>
+                                        <rect key="frame" x="0.0" y="784" width="414" height="34"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6W-cQ-EmU" userLabel="Stop! Button">
-                                                <rect key="frame" x="0.0" y="0.0" width="200" height="34"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="138" height="34"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <state key="normal" title="Stop!">
@@ -107,7 +111,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-Wj-hJe" userLabel="Movie Button">
-                                                <rect key="frame" x="200" y="0.0" width="200" height="34"/>
+                                                <rect key="frame" x="138" y="0.0" width="138" height="34"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <state key="normal" title="Movie">
@@ -121,7 +125,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAS-h3-EvS">
-                                                <rect key="frame" x="400" y="0.0" width="200" height="34"/>
+                                                <rect key="frame" x="276" y="0.0" width="138" height="34"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -160,11 +164,11 @@
             <objects>
                 <viewController id="gLZ-Qy-6sr" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mJo-O6-cad">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fCX-xc-5pl">
-                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="Secret Admin Panel!" id="neb-7C-sav">
                                         <barButtonItem key="rightBarButtonItem" title="Done" id="vOE-1Z-vYr">
@@ -176,7 +180,7 @@
                                 </items>
                             </navigationBar>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="911-xc-ZR9">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <connections>
                                     <segue destination="Suq-8V-jhy" kind="embed" id="RJi-HO-tux"/>
                                 </connections>
@@ -216,19 +220,19 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Qu2-oP-vBC" userLabel="Outer Stack View">
-                                            <rect key="frame" x="16" y="16" width="382" height="11.5"/>
+                                            <rect key="frame" x="16" y="16" width="568" height="11.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="N5f-od-IIy" userLabel="Inner Stack View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="11.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="568" height="11.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="This is a title with 35 characters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJp-yh-GHg">
-                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="11.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="284" height="11.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Um die Welt mit Barbapapa – Folge 103 Unsere bunte Stadt - Jetzt geht es los! – deutsch – HD.mov" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wA9-pj-DjG">
-                                                            <rect key="frame" x="191" y="0.0" width="191" height="11.5"/>
+                                                            <rect key="frame" x="284" y="0.0" width="284" height="11.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -236,7 +240,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Xh-kW-f4M">
-                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="568" height="0.0"/>
                                                 </pickerView>
                                             </subviews>
                                         </stackView>
@@ -406,7 +410,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LeE-PH-POI">
-                                                    <rect key="frame" x="159.5" y="5.5" width="95" height="33"/>
+                                                    <rect key="frame" x="252.5" y="5.5" width="95" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Synchronize"/>
                                                     <connections>
@@ -414,7 +418,7 @@
                                                     </connections>
                                                 </button>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1nH-FD-xhg" userLabel="Cancel Button">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Cancel"/>
                                                     <connections>
@@ -423,7 +427,7 @@
                                                     </connections>
                                                 </button>
                                                 <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RQQ-0i-pDS">
-                                                    <rect key="frame" x="0.0" y="41.5" width="414" height="2"/>
+                                                    <rect key="frame" x="0.0" y="41.5" width="600" height="2"/>
                                                 </progressView>
                                             </subviews>
                                             <constraints>
@@ -449,7 +453,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2We-Pk-0vh">
-                                                    <rect key="frame" x="185" y="5.5" width="44" height="33"/>
+                                                    <rect key="frame" x="278" y="5.5" width="44" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="tintColor" red="0.7807741117" green="0.1485671036" blue="0.21640973020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" title="Reset"/>
@@ -476,7 +480,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="clip" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtg-hZ-9gj">
-                                                    <rect key="frame" x="20" y="11" width="374" height="98"/>
+                                                    <rect key="frame" x="20" y="11" width="560" height="98"/>
                                                     <string key="text">line 1
 line 2
 line 3

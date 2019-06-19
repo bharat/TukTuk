@@ -60,19 +60,19 @@ class AdminSyncTableViewController: UITableViewController {
             syncButton.isEnabled = false
 
             DispatchQueue.global().async {
-                SongManager.instance.loadLocal()
-                MovieManager.instance.loadLocal()
+                Manager.songs.loadLocal()
+                Manager.movies.loadLocal()
                 self.updateUI()
 
-                SongManager.instance.loadCloud(from: self.cloudProvider) {
+                Manager.songs.loadCloud(from: self.cloudProvider) {
                     self.spinner(.songsCloud).stopAnimating()
-                    self.counter(.songsCloud).text = "\(SongManager.instance.cloud.count)"
+                    self.counter(.songsCloud).text = "\(Manager.songs.cloud.count)"
                     self.updateUI()
                 }
 
-                MovieManager.instance.loadCloud(from: self.cloudProvider) {
+                Manager.movies.loadCloud(from: self.cloudProvider) {
                     self.spinner(.moviesCloud).stopAnimating()
-                    self.counter(.moviesCloud).text = "\(MovieManager.instance.cloud.count)"
+                    self.counter(.moviesCloud).text = "\(Manager.movies.cloud.count)"
                     self.updateUI()
                 }
             }
@@ -98,8 +98,8 @@ class AdminSyncTableViewController: UITableViewController {
             return
         }
 
-        counter(.songsLocal).text = "\(SongManager.instance.local.count)"
-        counter(.moviesLocal).text = "\(MovieManager.instance.local.count)"
+        counter(.songsLocal).text = "\(Manager.songs.local.count)"
+        counter(.moviesLocal).text = "\(Manager.movies.local.count)"
 
         if sync.inProgress {
             progress.setProgress(sync.progress, animated: true)
@@ -116,7 +116,7 @@ class AdminSyncTableViewController: UITableViewController {
 
         status.text = statusMessages.joined(separator: "\n")
 
-        syncButton.isEnabled = !(SongManager.instance.inSync && MovieManager.instance.inSync)
+        syncButton.isEnabled = !(Manager.songs.inSync && Manager.movies.inSync)
     }
 
     @IBAction func cancel(_ sender: Any) {
@@ -159,8 +159,8 @@ class AdminSyncTableViewController: UITableViewController {
         popup.addButtons([
             CancelButton(title: "Cancel") { },
             DestructiveButton(title: "Ok") {
-                SongManager.instance.deleteAllLocal()
-                MovieManager.instance.deleteAllLocal()
+                Manager.songs.deleteAllLocal()
+                Manager.movies.deleteAllLocal()
                 self.updateUI()
             }
             ])

@@ -44,6 +44,12 @@ struct Song: Manageable {
             return .Delete
         }
     }
+
+    mutating func deleteLocal() {
+        audio?.delete()
+        audio = nil
+        image?.delete()
+    }
 }
 
 extension Song {

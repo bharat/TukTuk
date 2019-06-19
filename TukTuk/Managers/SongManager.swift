@@ -8,9 +8,11 @@
 
 import Foundation
 
-class SongManager: Manager<Song> {
-    static let instance = SongManager()
+extension Manager where T == Song {
+    static let songs = SongManager()
+}
 
+class SongManager: Manager<Song> {
     fileprivate init() {
         super.init(subdir: "Songs")
     }
@@ -96,29 +98,6 @@ class SongManager: Manager<Song> {
         }
 
         return CancelGroup(cancelers: [canceler1, canceler2])
-    }
-
-    func deleteLocal(_ song: Song) {
-        queue.sync {
-            if var song = data.removeValue(forKey: song.title) {
-                if song.hasCloud {
-                    song.audio = nil
-                    song.image = nil
-                    data[song.title] = song
-                }
-            }
-        }
-        [song.image?.url.path, song.audio?.url.path].forEach { path in
-            if let path = path {
-                try? fm.removeItem(atPath: path)
-            }
-        }
-    }
-
-    func deleteAllLocal() {
-        data.values.forEach { song in
-            deleteLocal(song)
-        }
     }
 }
 

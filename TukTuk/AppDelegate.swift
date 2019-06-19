@@ -24,8 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Amplitude.instance()?.initializeApiKey("acf6c06b5191ae9e84ae07c47d02759e")
         EasyAnimation.enable()
         Stats().appLaunched()
-        SongManager.instance.loadLocal()
-        MovieManager.instance.loadLocal()
+        Manager.songs.loadLocal()
+        Manager.movies.loadLocal()
         return true
     }
 }

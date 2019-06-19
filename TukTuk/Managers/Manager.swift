@@ -12,6 +12,7 @@ protocol Manageable: Titled {
     var hasLocal: Bool { get }
     var hasCloud: Bool { get }
     var syncAction: SyncAction { get }
+    mutating func deleteLocal()
 }
 
 class Manager<T: Manageable> {
@@ -57,4 +58,22 @@ class Manager<T: Manageable> {
     var localEmpty: Bool {
         return local.count == 0
     }
+
+    func deleteLocal(_ obj: T) {
+        queue.sync {
+            if var obj = data.removeValue(forKey: obj.title) {
+                obj.deleteLocal()
+                if obj.hasCloud {
+                    data[obj.title] = obj
+                }
+            }
+        }
+    }
+
+    func deleteAllLocal() {
+        data.values.forEach { obj in
+            deleteLocal(obj)
+        }
+    }
+
 }

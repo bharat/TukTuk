@@ -8,9 +8,11 @@
 
 import Foundation
 
-class MovieManager: Manager<Movie> {
-    static let instance = MovieManager()
+extension Manager where T == Movie {
+    static let movies = MovieManager()
+}
 
+class MovieManager: Manager<Movie> {
     fileprivate init() {
         super.init(subdir: "Movies")
     }
@@ -62,26 +64,6 @@ class MovieManager: Manager<Movie> {
                 }
             }
             notify()
-        }
-    }
-
-    func deleteLocal(_ movie: Movie) {
-        queue.sync {
-            if var movie = data.removeValue(forKey: movie.title) {
-                if movie.hasCloud {
-                    movie.video = nil
-                    data[movie.title] = movie
-                }
-            }
-        }
-        if let path = movie.video?.url.path {
-            try! fm.removeItem(atPath: path)
-        }
-    }
-
-    func deleteAllLocal() {
-        data.values.forEach { movie in
-            deleteLocal(movie)
         }
     }
 }

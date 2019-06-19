@@ -36,6 +36,11 @@ struct Movie: Manageable, Titled {
             return .Delete
         }
     }
+
+    mutating func deleteLocal() {
+        video?.delete()
+        video = nil
+    }
 }
 
 extension Movie {

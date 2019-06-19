@@ -27,7 +27,7 @@ class SyncEngine {
     }
 
     var inSync: Bool {
-        return SongManager.instance.inSync && MovieManager.instance.inSync
+        return Manager.songs.inSync && Manager.movies.inSync
     }
 
     init(cloudProvider: CloudProvider, concurrency: Int = 4) {
@@ -44,27 +44,24 @@ class SyncEngine {
     func run(complete: @escaping ()->()) {
         guard inProgress == false else { return }
 
-        let songs = SongManager.instance
-        let movies = MovieManager.instance
-
-        songs.delete.forEach { song in
+        Manager.songs.delete.forEach { song in
             opQueue.addOperation {
-                songs.deleteLocal(song)
+                Manager.songs.deleteLocal(song)
             }
         }
 
-        movies.delete.forEach { movie in
+        Manager.movies.delete.forEach { movie in
             opQueue.addOperation {
-                movies.deleteLocal(movie)
+                Manager.movies.deleteLocal(movie)
             }
         }
 
-        songs.download.forEach { song in
+        Manager.songs.download.forEach { song in
             opQueue.addOperation {
                 self.wrap { callback in
                     let msg = "Download song: \(song.title)"
                     self.notifyStart(msg)
-                    return songs.download(song, from: self.provider) {
+                    return Manager.songs.download(song, from: self.provider) {
                         self.notifyStop(msg)
                         callback()
                     }
@@ -72,12 +69,12 @@ class SyncEngine {
             }
         }
 
-        movies.download.forEach { movie in
+        Manager.movies.download.forEach { movie in
             opQueue.addOperation {
                 self.wrap { callback in
                     let msg = "Download movie: \(movie.title)"
                     self.notifyStart(msg)
-                    return movies.download(movie, from: self.provider) {
+                    return Manager.movies.download(movie, from: self.provider) {
                         self.notifyStop(msg)
                         callback()
                     }

@@ -18,4 +18,10 @@ struct LocalFile {
     var size: UInt64 {
         return FileManager.default.fileSize(url)
     }
+
+    func delete() {
+        if exists {
+            try! FileManager.default.removeItem(atPath: url.path)
+        }
+    }
 }

@@ -21,7 +21,6 @@ enum Outlet: Int, CaseIterable {
 let DESIRED_CONCURRENCY = 4
 
 class AdminSyncTableViewController: UITableViewController {
-    @IBOutlet var counters: [UILabel]!
     @IBOutlet var spinners: [UIActivityIndicatorView]!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var syncButton: UIButton!
@@ -48,7 +47,19 @@ class AdminSyncTableViewController: UITableViewController {
     }
 
     func counter(_ outlet: Outlet) -> UILabel {
-        return counters[outlet.rawValue]
+        let indexPath: IndexPath = {
+            switch outlet {
+            case .songsLocal:
+                return IndexPath(row: 0, section: 0)
+            case .songsCloud:
+                return IndexPath(row: 1, section: 0)
+            case .moviesLocal:
+                return IndexPath(row: 0, section: 1)
+            case .moviesCloud:
+                return IndexPath(row: 1, section: 1)
+            }
+        }()
+        return tableView.cellForRow(at: indexPath)!.detailTextLabel!
     }
 
     override func viewDidAppear(_ animated: Bool) {

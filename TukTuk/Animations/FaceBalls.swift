@@ -18,7 +18,7 @@ class FaceBalls: Animation {
     func animate(view: UIView, completion: @escaping ()->()) {
         AudioPlayer.instance.play(Sounds.Welcome.audio)
 
-        let images = (1...8).map { "FaceBalls_\($0)" }
+        let images = (1...13).map { "FaceBalls_\($0)" }
 
         let skView = SKView(frame: view.frame)
         skView.allowsTransparency = true

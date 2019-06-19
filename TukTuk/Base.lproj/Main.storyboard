@@ -220,19 +220,19 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Qu2-oP-vBC" userLabel="Outer Stack View">
-                                            <rect key="frame" x="16" y="16" width="568" height="11.5"/>
+                                            <rect key="frame" x="16" y="16" width="382" height="11.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="N5f-od-IIy" userLabel="Inner Stack View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="568" height="11.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="11.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="This is a title with 35 characters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJp-yh-GHg">
-                                                            <rect key="frame" x="0.0" y="0.0" width="284" height="11.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="11.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Um die Welt mit Barbapapa – Folge 103 Unsere bunte Stadt - Jetzt geht es los! – deutsch – HD.mov" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wA9-pj-DjG">
-                                                            <rect key="frame" x="284" y="0.0" width="284" height="11.5"/>
+                                                            <rect key="frame" x="191" y="0.0" width="191" height="11.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -240,7 +240,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Xh-kW-f4M">
-                                                    <rect key="frame" x="0.0" y="0.0" width="568" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
                                                 </pickerView>
                                             </subviews>
                                         </stackView>
@@ -296,8 +296,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="##" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2tL-HM-0cK">
-                                                    <rect key="frame" x="373" y="12" width="21" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="        " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2tL-HM-0cK">
+                                                    <rect key="frame" x="358.5" y="12" width="35.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -324,8 +324,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="##" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T65-x2-7Jz">
-                                                    <rect key="frame" x="373" y="12" width="21" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="        " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T65-x2-7Jz">
+                                                    <rect key="frame" x="358.5" y="12" width="35.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -356,8 +356,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="2" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="##" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k2T-1z-5QE">
-                                                    <rect key="frame" x="373" y="12" width="21" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="2" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="        " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k2T-1z-5QE">
+                                                    <rect key="frame" x="358.5" y="12" width="35.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -384,8 +384,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="3" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="##" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="edW-Sn-nhy">
-                                                    <rect key="frame" x="373" y="12" width="21" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="3" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="        " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="edW-Sn-nhy">
+                                                    <rect key="frame" x="358.5" y="12" width="35.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -410,7 +410,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LeE-PH-POI">
-                                                    <rect key="frame" x="252.5" y="5.5" width="95" height="33"/>
+                                                    <rect key="frame" x="159.5" y="5.5" width="95" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Synchronize"/>
                                                     <connections>
@@ -418,7 +418,7 @@
                                                     </connections>
                                                 </button>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1nH-FD-xhg" userLabel="Cancel Button">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Cancel"/>
                                                     <connections>
@@ -427,7 +427,7 @@
                                                     </connections>
                                                 </button>
                                                 <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RQQ-0i-pDS">
-                                                    <rect key="frame" x="0.0" y="41.5" width="600" height="2"/>
+                                                    <rect key="frame" x="0.0" y="41.5" width="414" height="2"/>
                                                 </progressView>
                                             </subviews>
                                             <constraints>
@@ -453,7 +453,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2We-Pk-0vh">
-                                                    <rect key="frame" x="278" y="5.5" width="44" height="33"/>
+                                                    <rect key="frame" x="185" y="5.5" width="44" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="tintColor" red="0.7807741117" green="0.1485671036" blue="0.21640973020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" title="Reset"/>
@@ -506,13 +506,9 @@ line 4</string>
                         <outlet property="status" destination="xtg-hZ-9gj" id="D1U-yU-ZbU"/>
                         <outlet property="statusCell" destination="Ax6-go-Q2e" id="o8Q-ti-R3b"/>
                         <outlet property="syncButton" destination="LeE-PH-POI" id="LOO-Na-CPz"/>
-                        <outletCollection property="counters" destination="2tL-HM-0cK" collectionClass="NSMutableArray" id="bit-qb-Y3a"/>
                         <outletCollection property="spinners" destination="djB-zl-k6N" collectionClass="NSMutableArray" id="3K3-9w-6py"/>
-                        <outletCollection property="counters" destination="T65-x2-7Jz" collectionClass="NSMutableArray" id="uIK-d5-YLa"/>
                         <outletCollection property="spinners" destination="fIr-0O-9fA" collectionClass="NSMutableArray" id="nOf-Bh-vi3"/>
-                        <outletCollection property="counters" destination="k2T-1z-5QE" collectionClass="NSMutableArray" id="wfN-ND-MQk"/>
                         <outletCollection property="spinners" destination="PHc-ZO-Cbd" collectionClass="NSMutableArray" id="RCa-sU-x6y"/>
-                        <outletCollection property="counters" destination="edW-Sn-nhy" collectionClass="NSMutableArray" id="t0G-HR-KgZ"/>
                         <outletCollection property="spinners" destination="Zmt-JQ-vJC" collectionClass="NSMutableArray" id="47f-oG-RmY"/>
                     </connections>
                 </tableViewController>

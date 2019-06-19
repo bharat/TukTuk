@@ -49,6 +49,7 @@ struct Song: Manageable {
         audio?.delete()
         audio = nil
         image?.delete()
+        image = nil
     }
 }
 

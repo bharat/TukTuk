@@ -95,7 +95,7 @@ final class AvengersAssemble: MiniGame {
 
             let scene = AvengersAssemble.Scene()
             scene.completion = { hero in
-                VideoPlayer.instance.play(hero.audio, from: self) {
+                VideoPlayer.instance.play(hero.video, from: self) {
                     self.dismiss(animated: true)
                 }
             }

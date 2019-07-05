@@ -69,11 +69,11 @@ class SongViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        songs = Array(Manager.songs.local).sorted {
+        songs = Manager.songs.local.sorted {
             $0.title < $1.title
         }
 
-        movies = Array(Manager.movies.local).sorted {
+        movies = Manager.movies.local.sorted {
             $0.title < $1.title
         }
 
@@ -87,6 +87,14 @@ class SongViewController: UIViewController {
 
         movieCountdown = UserDefaults.standard.movieCountdown
         movieButton.isHidden = (movieCountdown > 0)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+
+        if Settings.cuedAnimation != nil {
+            self.performSegue(withIdentifier: "Welcome", sender: self)
+        }
     }
 
     var lastFrame = CGRect(x: 0, y: 0, width: 0, height: 0)

@@ -153,6 +153,7 @@
                         <outlet property="songCollectionLayout" destination="5jt-ki-gHy" id="Yld-xE-7ka"/>
                         <outlet property="stopButton" destination="m6W-cQ-EmU" id="xbK-wO-igf"/>
                         <segue destination="gLZ-Qy-6sr" kind="presentation" identifier="Admin" id="dni-4D-7nf"/>
+                        <segue destination="Zok-SV-WMn" kind="show" identifier="Welcome" id="lwy-ak-aQw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -541,6 +542,6 @@ line 4</string>
         <image name="Admin_Synchronize" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="op0-S7-t3V"/>
+        <segue reference="dni-4D-7nf"/>
     </inferredMetricsTieBreakers>
 </document>

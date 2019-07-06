@@ -11,22 +11,19 @@ import UIKit
 import PopupDialog
 import GoogleSignIn
 
-enum Outlet: Int, CaseIterable {
-    case songsLocal = 0
-    case songsCloud
-    case moviesLocal
-    case moviesCloud
-}
-
 let DESIRED_CONCURRENCY = 4
 
+class SyncDataCell: UITableViewCell {
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var syncImage: UIImage!
+}
+
+class ActionButtonCell: UITableViewCell {
+    @IBOutlet weak var button: UIButton!
+}
+
 class AdminSyncTableViewController: UITableViewController {
-    @IBOutlet var spinners: [UIActivityIndicatorView]!
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var syncButton: UIButton!
     @IBOutlet weak var progress: UIProgressView!
-    @IBOutlet weak var status: UILabel!
-    @IBOutlet weak var statusCell: UITableViewCell!
     @IBOutlet weak var resetButton: UIButton!
 
     let cloudProvider = GoogleDrive.instance
@@ -42,33 +39,84 @@ class AdminSyncTableViewController: UITableViewController {
         }
     }
 
-    func spinner(_ outlet: Outlet) -> UIActivityIndicatorView {
-        return spinners[outlet.rawValue]
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
 
-    func counter(_ outlet: Outlet) -> UILabel {
-        let indexPath: IndexPath = {
-            switch outlet {
-            case .songsLocal:
-                return IndexPath(row: 0, section: 0)
-            case .songsCloud:
-                return IndexPath(row: 1, section: 0)
-            case .moviesLocal:
-                return IndexPath(row: 0, section: 1)
-            case .moviesCloud:
-                return IndexPath(row: 1, section: 1)
-            }
-        }()
-        return tableView.cellForRow(at: indexPath)!.detailTextLabel!
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 2
+
+        case 1:
+            return 2
+
+        default:
+            return 0
+        }
     }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Data"
+        case 1:
+            return "Synchronize"
+
+        default:
+            return ""
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SyncDetail", for: indexPath)
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "Songs"
+                cell.detailTextLabel?.text = "..."
+
+            case 1:
+                cell.textLabel?.text = "Movies"
+                cell.detailTextLabel?.text = "..."
+
+            default:
+                break
+            }
+            return cell
+
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ActionButtonCell", for: indexPath) as! ActionButtonCell
+            switch indexPath.row {
+            case 0:
+                cell.button.titleLabel?.text = "Update now"
+
+            case 1:
+                cell.button.titleLabel?.text = "Delete all"
+                cell.button.titleLabel?.tintColor = .red
+
+            default:
+                break
+            }
+            return cell
+
+        default:
+            break
+        }
+
+        fatalError("oops")
+    }
+
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         if cloudProvider.isAuthenticated {
-            self.spinner(.songsCloud).startAnimating()
-            self.spinner(.moviesCloud).startAnimating()
-            syncButton.isEnabled = false
+//            self.spinner(.songsCloud).startAnimating()
+//            self.spinner(.moviesCloud).startAnimating()
+//            syncButton.isEnabled = false
 
             DispatchQueue.global().async {
                 Manager.songs.loadLocal()
@@ -76,14 +124,14 @@ class AdminSyncTableViewController: UITableViewController {
                 self.updateUI()
 
                 Manager.songs.loadCloud(from: self.cloudProvider) {
-                    self.spinner(.songsCloud).stopAnimating()
-                    self.counter(.songsCloud).text = "\(Manager.songs.cloud.count)"
+//                    self.spinner(.songsCloud).stopAnimating()
+//                    self.counter(.songsCloud).text = "\(Manager.songs.cloud.count)"
                     self.updateUI()
                 }
 
                 Manager.movies.loadCloud(from: self.cloudProvider) {
-                    self.spinner(.moviesCloud).stopAnimating()
-                    self.counter(.moviesCloud).text = "\(Manager.movies.cloud.count)"
+//                    self.spinner(.moviesCloud).stopAnimating()
+//                    self.counter(.moviesCloud).text = "\(Manager.movies.cloud.count)"
                     self.updateUI()
                 }
             }
@@ -109,8 +157,8 @@ class AdminSyncTableViewController: UITableViewController {
             return
         }
 
-        counter(.songsLocal).text = "\(Manager.songs.local.count)"
-        counter(.moviesLocal).text = "\(Manager.movies.local.count)"
+//        counter(.songsLocal).text = "\(Manager.songs.local.count)"
+//        counter(.moviesLocal).text = "\(Manager.movies.local.count)"
 
         if sync.inProgress {
             progress.setProgress(sync.progress, animated: true)
@@ -125,42 +173,42 @@ class AdminSyncTableViewController: UITableViewController {
             }
         }
 
-        status.text = statusMessages.joined(separator: "\n")
+//        status.text = statusMessages.joined(separator: "\n")
 
-        syncButton.isEnabled = !(Manager.songs.inSync && Manager.movies.inSync)
+//        syncButton.isEnabled = !(Manager.songs.inSync && Manager.movies.inSync)
     }
 
     @IBAction func cancel(_ sender: Any) {
-        cancelButton.setTitle("Canceling...", for: .normal)
+//        cancelButton.setTitle("Canceling...", for: .normal)
         sync.cancel()
     }
 
     @IBAction func sync(_ sender: Any) {
         guard !sync.inProgress else { return }
 
-        syncButton.isHidden = true
-        cancelButton.isHidden = false
-        progress.isHidden = false
-        statusCell.isHidden = false
-        resetButton.isEnabled = false
-        status.numberOfLines = DESIRED_CONCURRENCY
-        progress.setProgress(0, animated: false)
-        spinner(.songsLocal).startAnimating()
-        spinner(.moviesLocal).startAnimating()
+//        syncButton.isHidden = true
+//        cancelButton.isHidden = false
+//        progress.isHidden = false
+//        statusCell.isHidden = false
+//        resetButton.isEnabled = false
+//        status.numberOfLines = DESIRED_CONCURRENCY
+//        progress.setProgress(0, animated: false)
+//        spinner(.songsLocal).startAnimating()
+//        spinner(.moviesLocal).startAnimating()
 
         sync.run() {
             DispatchQueue.main.sync {
-                self.syncButton.isHidden = false
-                self.cancelButton.setTitle("Cancel", for: .normal)
-                self.cancelButton.isHidden = true
-                self.progress.isHidden = true
-                self.statusCell.isHidden = true
-                self.resetButton.isEnabled = true
-                self.status.text = nil
-                self.tableView.headerView(forSection: 3)?.textLabel?.text = ""
-                self.spinner(.songsLocal).stopAnimating()
-                self.spinner(.moviesLocal).stopAnimating()
-                self.statusMessages = []
+//                self.syncButton.isHidden = false
+//                self.cancelButton.setTitle("Cancel", for: .normal)
+//                self.cancelButton.isHidden = true
+//                self.progress.isHidden = true
+//                self.statusCell.isHidden = true
+//                self.resetButton.isEnabled = true
+//                self.status.text = nil
+//                self.tableView.headerView(forSection: 3)?.textLabel?.text = ""
+//                self.spinner(.songsLocal).stopAnimating()
+//                self.spinner(.moviesLocal).stopAnimating()
+//                self.statusMessages = []
             }
         }
     }

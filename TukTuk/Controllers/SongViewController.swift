@@ -92,6 +92,9 @@ class SongViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
 
+        // Useful for debugging
+        self.performSegue(withIdentifier: "Admin", sender: self)
+
         if Settings.cuedAnimation != nil {
             self.performSegue(withIdentifier: "Welcome", sender: self)
         }

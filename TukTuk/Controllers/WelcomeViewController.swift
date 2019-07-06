@@ -38,13 +38,16 @@ class WelcomeViewController: UIViewController {
 
         // Useful for quickly jumping to a specific minigame
         // show(CaptainAmerica().uivc, sender: self)
+
+        // Useful to quickly jump to the Songs view
+        self.performSegue(withIdentifier: "Songs", sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false
 
         // Useful shortcut for development
-        // Settings.cuedAnimation = FaceBalls()
+        // Settings.cuedAnimation = None()
 
         // Run a random welcome animation, or a preset if specified
         let animation = Settings.cuedAnimation ?? Animations.all.randomElement()!

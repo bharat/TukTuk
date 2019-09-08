@@ -11,6 +11,8 @@ import AVKit
 
 class AudioPlayer {
     static var instance = AudioPlayer()
+    private let queue = DispatchQueue(label: "AudioPlayer")
+
     var player: AVAudioPlayer?
     var timer: Timer?
     var old: AVAudioPlayer?
@@ -19,7 +21,9 @@ class AudioPlayer {
     }
 
     var isPlaying: Bool {
-        return player?.isPlaying ?? false
+        return queue.sync {
+            player?.isPlaying ?? false
+        }
     }
 
     // We purposefully don't do any error handling here because this has never failed in practice
@@ -28,50 +32,46 @@ class AudioPlayer {
         try! AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
         try! AVAudioSession.sharedInstance().setActive(true)
 
-        old?.stop()
-        old = player
-        try! player = AVAudioPlayer(contentsOf: url)
+        queue.sync {
+            old?.stop()
+            old = player
+            old?.setVolume(0.0, fadeDuration: 1.0)
 
-        guard let player = player else {
-            return
-        }
+            try! player = AVAudioPlayer(contentsOf: url)
 
-        player.play()
-        if let old = old {
-            player.volume = 0
-            crossFade(from: old, to: player)
-        } else {
+            guard let player = player else {
+                return
+            }
+
             player.play()
-            player.volume = 1.0
-        }
-
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
-            if player.isPlaying {
-                tick()
+            if old == nil {
+                player.volume = 1.0
             } else {
-                timer.invalidate()
-                done()
+                player.setVolume(1.0, fadeDuration: 1.0)
             }
-        })
-    }
 
-    private func crossFade(from old: AVAudioPlayer, to new: AVAudioPlayer) {
-        if new.volume < 1.0 {
-            old.volume -= 0.1
-            new.volume += 0.1
-
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-                self.crossFade(from: old, to: new)
-            }
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
+                if self.player?.isPlaying ?? false {
+                    tick()
+                } else {
+                    timer.invalidate()
+                    done()
+                }
+            })
         }
     }
     
     func stop() {
-        player?.stop()
-        player = nil
-        
-        timer?.invalidate()
-        timer = nil
+        queue.sync {
+            old?.stop()
+            old = nil
+
+            player?.stop()
+            player = nil
+
+            timer?.invalidate()
+            timer = nil
+        }
     }
 }

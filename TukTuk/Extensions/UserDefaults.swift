@@ -12,12 +12,14 @@ extension UserDefaults {
     enum Key: String {
         case movieCountdown = "movieCountdown"
         case mazeLevel = "mazeLevel"
+        case miniGameFrequency = "miniGameFrequency"
     }
 
     func registerDefaults() {
         register(defaults: [
             Key.movieCountdown.rawValue: TimeInterval.MovieInterval,
-            Key.mazeLevel.rawValue: 1
+            Key.mazeLevel.rawValue: 1,
+            Key.miniGameFrequency.rawValue: 40,
         ])
     }
 
@@ -28,6 +30,15 @@ extension UserDefaults {
 
         set {
             setValue(newValue, forKey: Key.movieCountdown.rawValue)
+        }
+    }
+
+    var miniGameFrequency: Frequency {
+        get {
+            return Frequency(period: integer(forKey: Key.miniGameFrequency.rawValue))
+        }
+        set {
+            setValue(newValue.period, forKey: Key.miniGameFrequency.rawValue)
         }
     }
 

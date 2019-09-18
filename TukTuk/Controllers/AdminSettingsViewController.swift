@@ -25,7 +25,7 @@ class AdminSettingsViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -33,6 +33,8 @@ class AdminSettingsViewController: UITableViewController {
         case 0:
             return 3
         case 1:
+            return 1
+        case 2:
             return 1
         default:
             fatalError("Unknown section: \(section)")
@@ -44,6 +46,8 @@ class AdminSettingsViewController: UITableViewController {
         case 0:
             return "Play Next..."
         case 1:
+            return "Mini Game Settings"
+        case 2:
             return "Captain America Mini Game"
         default:
             fatalError("Unknown section: \(section)")
@@ -57,6 +61,7 @@ class AdminSettingsViewController: UITableViewController {
         cell.picker.delegate = cell
 
         switch indexPath {
+        // Play Next
         case IndexPath(row: 0, section: 0):
             cell.title.text = "Animation"
             cell.detail.text = Settings.cuedAnimation?.title ?? .emptyTitle
@@ -82,7 +87,20 @@ class AdminSettingsViewController: UITableViewController {
                 Settings.cuedMiniGame = obj as! MiniGame?
                 self.redraw()
             }
+
+        // Mini Game Settings
         case IndexPath(row: 0, section: 1):
+            cell.title.text = "MiniGame Frequency"
+            cell.detail.text = Frequency(period: 40).title
+            cell.data = [40, 60, 80, 100].map { Frequency(period: $0) }
+            cell.canBeEmpty = false
+            cell.select = { obj in
+                UserDefaults.standard.miniGameFrequency = obj as! Frequency
+                self.redraw()
+            }
+
+        // Captain America MiniGame
+        case IndexPath(row: 0, section: 2):
             cell.title.text = "Maze Level"
             cell.detail.text = "\(UserDefaults.standard.mazeLevel)"
             cell.data = CaptainAmerica.levels

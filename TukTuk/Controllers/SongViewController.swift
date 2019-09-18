@@ -180,7 +180,7 @@ class SongViewController: UIViewController {
         if let cuedMiniGame = Settings.cuedMiniGame {
             miniGame = cuedMiniGame
             Settings.cuedMiniGame = nil
-        } else if Array(1...40).randomElement()! == 1 {
+        } else if UserDefaults.standard.miniGameFrequency.checkForOccurrence() {
             miniGame = MiniGames.all.randomElement()!
         }
 

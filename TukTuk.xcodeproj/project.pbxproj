@@ -35,6 +35,7 @@
 		4F3270C7225559430063CC32 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3270C6225559430063CC32 /* Stats.swift */; };
 		4F32C6E122ADAFB0000ABDCF /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */; };
 		4F32C6E722ADBC18000ABDCF /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */; };
+		4F59B6412332BD8200E539CB /* Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F59B6402332BD8200E539CB /* Frequency.swift */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
 		4F6FA6C822B9B6DD0081618D /* UILongPressHapticFeedbackGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FA6C722B9B6DD0081618D /* UILongPressHapticFeedbackGestureRecognizer.swift */; };
 		4F75101E225D259B0039AA35 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75101D225D259B0039AA35 /* Maze.swift */; };
@@ -101,6 +102,7 @@
 		4F3270C6225559430063CC32 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
 		4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
+		4F59B6402332BD8200E539CB /* Frequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frequency.swift; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F6FA6C722B9B6DD0081618D /* UILongPressHapticFeedbackGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILongPressHapticFeedbackGestureRecognizer.swift; sourceTree = "<group>"; };
 		4F75101D225D259B0039AA35 /* Maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				4F0F25F622B1F13A006E2CB2 /* Song.swift */,
 				4F0F25F822B1F14C006E2CB2 /* Movie.swift */,
 				4F0F25FC22B1F184006E2CB2 /* SyncAction.swift */,
+				4F59B6402332BD8200E539CB /* Frequency.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				4F8A2A9C209F730E000C2CA5 /* AudioPlayer.swift in Sources */,
 				4F3270C7225559430063CC32 /* Stats.swift in Sources */,
 				4F9DDD41222319D500D3EFAF /* URL.swift in Sources */,
+				4F59B6412332BD8200E539CB /* Frequency.swift in Sources */,
 				4F0F25F422B1E9F7006E2CB2 /* SongManager.swift in Sources */,
 				4FBD0FD420F55DC900BB5E32 /* Bundle.swift in Sources */,
 				4F90EB2820A372F000F8EE87 /* Thor.swift in Sources */,

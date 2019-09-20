@@ -36,6 +36,7 @@
 		4F32C6E122ADAFB0000ABDCF /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */; };
 		4F32C6E722ADBC18000ABDCF /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */; };
 		4F59B6412332BD8200E539CB /* Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F59B6402332BD8200E539CB /* Frequency.swift */; };
+		4F59B64323354AB300E539CB /* Probability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F59B64223354AB200E539CB /* Probability.swift */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
 		4F6FA6C822B9B6DD0081618D /* UILongPressHapticFeedbackGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6FA6C722B9B6DD0081618D /* UILongPressHapticFeedbackGestureRecognizer.swift */; };
 		4F75101E225D259B0039AA35 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75101D225D259B0039AA35 /* Maze.swift */; };
@@ -103,6 +104,7 @@
 		4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
 		4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
 		4F59B6402332BD8200E539CB /* Frequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frequency.swift; sourceTree = "<group>"; };
+		4F59B64223354AB200E539CB /* Probability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Probability.swift; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F6FA6C722B9B6DD0081618D /* UILongPressHapticFeedbackGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILongPressHapticFeedbackGestureRecognizer.swift; sourceTree = "<group>"; };
 		4F75101D225D259B0039AA35 /* Maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				4F0F25F822B1F14C006E2CB2 /* Movie.swift */,
 				4F0F25FC22B1F184006E2CB2 /* SyncAction.swift */,
 				4F59B6402332BD8200E539CB /* Frequency.swift */,
+				4F59B64223354AB200E539CB /* Probability.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */,
 				4F074AE022A5F714008E5F22 /* DismissModalSegue.swift in Sources */,
 				4F11FEF72263BB8500AD777D /* Titled.swift in Sources */,
+				4F59B64323354AB300E539CB /* Probability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

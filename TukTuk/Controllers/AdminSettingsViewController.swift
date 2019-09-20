@@ -33,7 +33,7 @@ class AdminSettingsViewController: UITableViewController {
         case 0:
             return 3
         case 1:
-            return 1
+            return 2
         case 2:
             return 1
         default:
@@ -46,9 +46,9 @@ class AdminSettingsViewController: UITableViewController {
         case 0:
             return "Play Next..."
         case 1:
-            return "Mini Game Settings"
+            return "Movie and MiniGame Settings"
         case 2:
-            return "Captain America Mini Game"
+            return "Captain America MiniGame"
         default:
             fatalError("Unknown section: \(section)")
         }
@@ -80,7 +80,7 @@ class AdminSettingsViewController: UITableViewController {
                 self.redraw()
             }
         case IndexPath(row: 2, section: 0):
-            cell.title.text = "Mini Game"
+            cell.title.text = "MiniGame"
             cell.detail.text = Settings.cuedMiniGame?.title ?? .emptyTitle
             cell.data = MiniGames.all
             cell.select = { obj in
@@ -88,14 +88,24 @@ class AdminSettingsViewController: UITableViewController {
                 self.redraw()
             }
 
-        // Mini Game Settings
+        // Movie And Mini Game Settings
         case IndexPath(row: 0, section: 1):
-            cell.title.text = "MiniGame Frequency"
-            cell.detail.text = Frequency(period: 40).title
-            cell.data = [40, 60, 80, 100].map { Frequency(period: $0) }
+            cell.title.text = "Movie Frequency"
+            cell.detail.text = UserDefaults.standard.movieFrequency.title
+            cell.data = [30, 35, 40, 45, 50, 55, 60].map { Frequency(seconds: $0 * 60) }
             cell.canBeEmpty = false
             cell.select = { obj in
-                UserDefaults.standard.miniGameFrequency = obj as! Frequency
+                UserDefaults.standard.movieFrequency = obj as! Frequency
+                self.redraw()
+            }
+
+        case IndexPath(row: 1, section: 1):
+            cell.title.text = "MiniGame Frequency"
+            cell.detail.text = UserDefaults.standard.miniGameProbability.title
+            cell.data = [40, 60, 80, 100].map { Probability(denominator: $0) }
+            cell.canBeEmpty = false
+            cell.select = { obj in
+                UserDefaults.standard.miniGameProbability = obj as! Probability
                 self.redraw()
             }
 

@@ -12,10 +12,6 @@ import AVKit
 import CollectionViewSlantedLayout
 import PopupDialog
 
-extension TimeInterval {
-    static let MovieInterval: TimeInterval = 2400
-}
-
 class SongViewController: UIViewController {
     @IBOutlet weak var songCollection: UICollectionView!
     @IBOutlet weak var songCollectionLayout: CollectionViewSlantedLayout!
@@ -34,11 +30,11 @@ class SongViewController: UIViewController {
     }
 
     var movies: [Movie] = []
-    var movieCountdown: TimeInterval = 0 {
+    var movieCountdown: Int = 0 {
         didSet {
             if movieCountdown == 0 {
                 showMovieButton()
-                movieCountdown = .MovieInterval
+                movieCountdown = UserDefaults.standard.movieFrequency.seconds
             }
 
             movieTimerLabel.text = "\(Int(movieCountdown))"
@@ -180,7 +176,7 @@ class SongViewController: UIViewController {
         if let cuedMiniGame = Settings.cuedMiniGame {
             miniGame = cuedMiniGame
             Settings.cuedMiniGame = nil
-        } else if UserDefaults.standard.miniGameFrequency.checkForOccurrence() {
+        } else if UserDefaults.standard.miniGameProbability.outcome {
             miniGame = MiniGames.all.randomElement()!
         }
 

@@ -13,19 +13,21 @@ extension UserDefaults {
         case movieCountdown = "movieCountdown"
         case mazeLevel = "mazeLevel"
         case miniGameFrequency = "miniGameFrequency"
+        case movieFrequency = "movieFrequency"
     }
 
     func registerDefaults() {
         register(defaults: [
-            Key.movieCountdown.rawValue: TimeInterval.MovieInterval,
+            Key.movieCountdown.rawValue: 2400,
             Key.mazeLevel.rawValue: 1,
             Key.miniGameFrequency.rawValue: 40,
+            Key.movieFrequency.rawValue: 2400,
         ])
     }
 
-    var movieCountdown: TimeInterval {
+    var movieCountdown: Int {
         get {
-            return double(forKey: Key.movieCountdown.rawValue)
+            return integer(forKey: Key.movieCountdown.rawValue)
         }
 
         set {
@@ -33,12 +35,21 @@ extension UserDefaults {
         }
     }
 
-    var miniGameFrequency: Frequency {
+    var miniGameProbability: Probability {
         get {
-            return Frequency(period: integer(forKey: Key.miniGameFrequency.rawValue))
+            return Probability(denominator: integer(forKey: Key.miniGameFrequency.rawValue))
         }
         set {
-            setValue(newValue.period, forKey: Key.miniGameFrequency.rawValue)
+            setValue(newValue.denominator, forKey: Key.miniGameFrequency.rawValue)
+        }
+    }
+
+    var movieFrequency: Frequency {
+        get {
+            return Frequency(seconds: integer(forKey: Key.movieFrequency.rawValue))
+        }
+        set {
+            setValue(newValue.seconds, forKey: Key.movieFrequency.rawValue)
         }
     }
 

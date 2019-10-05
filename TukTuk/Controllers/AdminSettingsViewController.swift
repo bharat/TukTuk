@@ -92,7 +92,7 @@ class AdminSettingsViewController: UITableViewController {
         case IndexPath(row: 0, section: 1):
             cell.title.text = "Movie Frequency"
             cell.detail.text = UserDefaults.standard.movieFrequency.title
-            cell.data = [30, 35, 40, 45, 50, 55, 60].map { Frequency(seconds: $0 * 60) }
+            cell.data = Array(stride(from:30, through:60, by:5)).map { Frequency(seconds: $0 * 60) }
             cell.canBeEmpty = false
             cell.select = { obj in
                 UserDefaults.standard.movieFrequency = obj as! Frequency
@@ -102,7 +102,7 @@ class AdminSettingsViewController: UITableViewController {
         case IndexPath(row: 1, section: 1):
             cell.title.text = "MiniGame Frequency"
             cell.detail.text = UserDefaults.standard.miniGameProbability.title
-            cell.data = [40, 60, 80, 100].map { Probability(denominator: $0) }
+            cell.data = Array(stride(from:25, through:100, by:5)).map { Probability(denominator: $0) }
             cell.canBeEmpty = false
             cell.select = { obj in
                 UserDefaults.standard.miniGameProbability = obj as! Probability

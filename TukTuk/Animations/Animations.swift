@@ -9,12 +9,8 @@
 import Foundation
 import UIKit
 
-enum Sounds: String, CaseIterable {
-    case Welcome
-
-    var audio: URL {
-        return Media.Player.audio(rawValue)
-    }
+extension Sound {
+    static let Welcome = Media.Player.sound("Welcome")
 }
 
 protocol Animation: Titled {

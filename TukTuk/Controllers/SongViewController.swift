@@ -23,7 +23,7 @@ class SongViewController: UIViewController {
     var stats = Stats()
     var songs: [Song] = [] {
         didSet {
-            AudioPlayer.instance.stop()
+            SongPlayer.instance.stop()
             songCollection.reloadData()
             deselectAllSongs()
         }
@@ -150,7 +150,7 @@ class SongViewController: UIViewController {
 
     func playMovie() {
         deselectAllSongs()
-        AudioPlayer.instance.stop()
+        SongPlayer.instance.stop()
         stats.stop()
         stopButton.isEnabled = false
 
@@ -167,7 +167,7 @@ class SongViewController: UIViewController {
     func stopSong() {
         stats.stop()
         deselectAllSongs()
-        AudioPlayer.instance.stop()
+        SongPlayer.instance.stop()
         stopButton.isEnabled = false
     }
 
@@ -192,23 +192,21 @@ class SongViewController: UIViewController {
     }
 
     func playSong(_ song: Song) {
-        if AudioPlayer.instance.isPlaying {
+        if SongPlayer.instance.isPlaying {
             stats.stop()
         }
 
         print("Playing song: \(song.title)")
-        if let audio = song.audio {
-            stats.start(song: song)
-            AudioPlayer.instance.play(audio.url, whilePlaying: {
-                self.movieCountdown -= 1
-                if Settings.cuedMovie != nil {
-                    self.showMovieButton()
-                }
-            }, whenComplete: {
-                self.stats.complete()
-                self.deselectAllSongs()
-            })
-        }
+        stats.start(song: song)
+        song.play(whilePlaying: {
+            self.movieCountdown -= 1
+            if Settings.cuedMovie != nil {
+                self.showMovieButton()
+            }
+        }, whenComplete: {
+            self.stats.complete()
+            self.deselectAllSongs()
+        })
     }
 
     func deselectAllSongs() {

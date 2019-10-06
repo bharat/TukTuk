@@ -17,8 +17,8 @@ class Media {
         self.bundle = Bundle(path: "\(Bundle.main.resourcePath!)/Media/\(name)")!
     }
 
-    func audio(_ name: String) -> URL {
-        return bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Audio")!
+    func sound(_ name: String) -> Sound {
+        return Sound(url: bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Audio")!)
     }
 
     func video(_ name: String) -> URL {

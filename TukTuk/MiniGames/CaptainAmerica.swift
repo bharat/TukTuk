@@ -59,24 +59,11 @@ final class CaptainAmerica: MiniGame {
         case target = 4
     }
 
-    enum BounceSounds: String, CaseIterable {
-        case Bounce_1
-        case Bounce_2
-        case Bounce_3
-
-        var audio: URL {
-            return Media.CaptainAmerica.audio(rawValue)
-        }
-    }
-
-    enum Sounds: String, CaseIterable {
-        case Rescue
-        case Tada
-
-        var audio: URL {
-            return Media.CaptainAmerica.audio(rawValue)
-        }
-    }
+    static let BounceSounds = [
+        Sound.CaptainAmerica_Bounce_1,
+        Sound.CaptainAmerica_Bounce_2,
+        Sound.CaptainAmerica_Bounce_3
+    ]
 
     enum Videos: String, CaseIterable {
         case LostShield
@@ -149,7 +136,7 @@ final class CaptainAmerica: MiniGame {
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
 
-            AudioPlayer.instance.play(Sounds.Rescue.audio)
+            Sound.CaptainAmerica_Rescue.play()
             let skView = SKView(frame: view.frame.insetBy(dx: 8, dy: 20))
             skView.allowsTransparency = true
             view.addSubview(skView)
@@ -157,7 +144,7 @@ final class CaptainAmerica: MiniGame {
             scene = Scene(size: view.frame.insetBy(dx: 8, dy: 20).size)
             scene.level = level
             scene.completion = {
-                AudioPlayer.instance.play(Sounds.Tada.audio) {
+                Sound.CaptainAmerica_Tada.play() {
                     self.dismiss(animated: animated)
                 }
             }
@@ -432,8 +419,8 @@ final class CaptainAmerica: MiniGame {
                 scene?.isPaused = true
                 done()
             case Collisions.marble.rawValue | Collisions.wall.rawValue:
-                if AudioPlayer.instance.player?.isPlaying == false {
-                    AudioPlayer.instance.play(BounceSounds.allCases.randomElement()!.audio)
+                if SoundPlayer.instance.player?.isPlaying == false {
+                    BounceSounds.randomElement()!.play()
                 }
             default:
                 break

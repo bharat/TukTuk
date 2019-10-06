@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MediaPlayer
 
 struct Song: Manageable {
     var title: String
@@ -15,6 +16,14 @@ struct Song: Manageable {
     var audio: LocalFile?
     var cloudImage: CloudFile?
     var cloudAudio: CloudFile?
+
+    var artist: String {
+        "ARTIST"
+    }
+
+    var duration: Int {
+        100
+    }
 
     var hasLocal: Bool {
         return image != nil && image!.exists && audio != nil && audio!.exists
@@ -50,6 +59,17 @@ struct Song: Manageable {
         audio = nil
         image?.delete()
         image = nil
+    }
+
+    func play(whilePlaying: @escaping ()->()={}, whenComplete: @escaping ()->()={}) {
+        guard let audio = audio else { return }
+        SongPlayer.instance.play(audio.url, whilePlaying: whilePlaying, whenComplete: whenComplete)
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPMediaItemPropertyTitle: title,
+            MPMediaItemPropertyArtist: artist,
+            MPMediaItemPropertyPlaybackDuration: duration,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: 0,
+        ]
     }
 }
 

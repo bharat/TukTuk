@@ -21,7 +21,9 @@ class MovieManager: Manager<Movie> {
         let names = try! fm.contentsOfDirectory(atPath: base.path).map { fileName in
             NSString(string: fileName).deletingPathExtension
         }
-        names.forEach { name in
+
+        names.forEach {
+            let name = $0.replacingOccurrences(of: "%2F", with: "/")
             queue.sync {
                 var movie = data[name] ?? Movie(title: name)
                 movie.video = LocalFile(url: base.appendingPathComponent("\(name).mp4"))
@@ -52,9 +54,10 @@ class MovieManager: Manager<Movie> {
     func download(_ movie: Movie, from provider: CloudProvider, notify: @escaping () -> ()) -> Canceler? {
         guard movie.hasCloud else { return nil }
 
+        let safeTitle = movie.title.replacingOccurrences(of: "/", with: "%2F")
         return provider.get(file: movie.cloudVideo!.id) { cloudData in
             if let cloudData = cloudData {
-                let local = LocalFile(url: self.base.appendingPathComponent("\(movie.title).mp4"))
+                let local = LocalFile(url: self.base.appendingPathComponent("\(safeTitle).mp4"))
                 self.fm.createNonBackupFile(at: local.url, contents: cloudData)
 
                 self.queue.sync {

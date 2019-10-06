@@ -29,9 +29,10 @@ class SongManager: Manager<Song> {
         let names = Set(try! fm.contentsOfDirectory(atPath: base.path).map { fileName in
             NSString(string: fileName).deletingPathExtension
         })
-        names.forEach { name in
-            let image = LocalFile(url: base.appendingPathComponent("\(name).png"))
-            let audio = LocalFile(url: base.appendingPathComponent("\(name).mp3"))
+        names.forEach {
+            let name = $0.replacingOccurrences(of: "%2F", with: "/")
+            let image = LocalFile(url: base.appendingPathComponent("\($0).png"))
+            let audio = LocalFile(url: base.appendingPathComponent("\($0).mp3"))
             queue.sync {
                 var song = data[name] ?? Song(title: name)
                 song.image = image
@@ -77,9 +78,10 @@ class SongManager: Manager<Song> {
             }
         }
 
+        let safeTitle = song.title.replacingOccurrences(of: "/", with: "%2F")
         let canceler1 = provider.get(file: song.cloudImage!.id) { cloudData in
             if let cloudData = cloudData {
-                let local = LocalFile(url: self.base.appendingPathComponent("\(song.title).png"))
+                let local = LocalFile(url: self.base.appendingPathComponent("\(safeTitle).png"))
                 self.fm.createNonBackupFile(at: local.url, contents: cloudData)
 
                 self.queue.sync {
@@ -93,7 +95,7 @@ class SongManager: Manager<Song> {
 
         let canceler2 = provider.get(file: song.cloudAudio!.id) { cloudData in
             if let cloudData = cloudData {
-                let local = LocalFile(url: self.base.appendingPathComponent("\(song.title).mp3"))
+                let local = LocalFile(url: self.base.appendingPathComponent("\(safeTitle).mp3"))
                 self.fm.createNonBackupFile(at: local.url, contents: cloudData)
 
                 self.queue.sync {

@@ -17,6 +17,14 @@ class SongManager: Manager<Song> {
         super.init(subdir: "Songs")
     }
 
+    var brokenCloud: [Song] {
+        return queue.sync {
+            data.values.filter { song in
+                (song.cloudAudio == nil && song.cloudImage != nil) || (song.cloudAudio != nil && song.cloudImage == nil)
+            }
+        }
+    }
+
     func loadLocal() {
         let names = Set(try! fm.contentsOfDirectory(atPath: base.path).map { fileName in
             NSString(string: fileName).deletingPathExtension

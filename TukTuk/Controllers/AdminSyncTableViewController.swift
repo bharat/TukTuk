@@ -65,6 +65,7 @@ class AdminSyncTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        statusMessages = []
         if cloudProvider.isAuthenticated {
             self.spinner(.songsCloud).startAnimating()
             self.spinner(.moviesCloud).startAnimating()
@@ -79,6 +80,14 @@ class AdminSyncTableViewController: UITableViewController {
                     self.spinner(.songsCloud).stopAnimating()
                     self.counter(.songsCloud).text = "\(Manager.songs.cloud.count)"
                     self.updateUI()
+
+                    Manager.songs.brokenCloud.forEach { song in
+                        if song.cloudAudio == nil {
+                            self.updateUI(add: "Missing audio for \"\(song.title)\"")
+                        } else {
+                            self.updateUI(add: "Missing image for \"\(song.title)\"")
+                        }
+                    }
                 }
 
                 Manager.movies.loadCloud(from: self.cloudProvider) {
@@ -125,7 +134,9 @@ class AdminSyncTableViewController: UITableViewController {
             }
         }
 
+        statusCell.isHidden = statusMessages.count == 0
         status.text = statusMessages.joined(separator: "\n")
+
 
         syncButton.isEnabled = !(Manager.songs.inSync && Manager.movies.inSync)
     }
@@ -141,7 +152,6 @@ class AdminSyncTableViewController: UITableViewController {
         syncButton.isHidden = true
         cancelButton.isHidden = false
         progress.isHidden = false
-        statusCell.isHidden = false
         resetButton.isEnabled = false
         status.numberOfLines = DESIRED_CONCURRENCY
         progress.setProgress(0, animated: false)
@@ -154,7 +164,6 @@ class AdminSyncTableViewController: UITableViewController {
                 self.cancelButton.setTitle("Cancel", for: .normal)
                 self.cancelButton.isHidden = true
                 self.progress.isHidden = true
-                self.statusCell.isHidden = true
                 self.resetButton.isEnabled = true
                 self.status.text = nil
                 self.tableView.headerView(forSection: 3)?.textLabel?.text = ""

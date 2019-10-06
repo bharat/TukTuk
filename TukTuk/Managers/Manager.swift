@@ -75,5 +75,4 @@ class Manager<T: Manageable> {
             deleteLocal(obj)
         }
     }
-
 }

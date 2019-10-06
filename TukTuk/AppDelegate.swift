@@ -6,6 +6,7 @@
 //  Copyright © 2017 Menalto. All rights reserved.
 //
 
+import AVKit
 import UIKit
 import EasyAnimation
 import Amplitude_iOS
@@ -26,6 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Stats().appLaunched()
         Manager.songs.loadLocal()
         Manager.movies.loadLocal()
+
+        try! AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+        try! AVAudioSession.sharedInstance().setActive(true)
+
         return true
     }
 }

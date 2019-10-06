@@ -20,9 +20,6 @@ class SongPlayer {
     var timer: Timer?
 
     fileprivate init() {
-        try! AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-        try! AVAudioSession.sharedInstance().setActive(true)
-
         UIApplication.shared.beginReceivingRemoteControlEvents();
         MPRemoteCommandCenter.shared().playCommand.addTarget { event in
             self.player?.play()
@@ -30,12 +27,6 @@ class SongPlayer {
         }
         MPRemoteCommandCenter.shared().pauseCommand.addTarget {event in
             self.player?.pause()
-            return .success
-        }
-        MPRemoteCommandCenter.shared().nextTrackCommand.addTarget {event in
-            return .success
-        }
-        MPRemoteCommandCenter.shared().previousTrackCommand.addTarget {event in
             return .success
         }
     }

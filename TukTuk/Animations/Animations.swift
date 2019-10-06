@@ -9,10 +9,6 @@
 import Foundation
 import UIKit
 
-extension Sound {
-    static let Welcome = Media.Player.sound("Welcome")
-}
-
 protocol Animation: Titled {
     var title: String { get }
 

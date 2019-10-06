@@ -12,18 +12,14 @@ import MediaPlayer
 
 struct Song: Manageable {
     var title: String
+    var displayTitle: String
+    var displayArtist: String
     var image: LocalFile?
     var audio: LocalFile?
     var cloudImage: CloudFile?
     var cloudAudio: CloudFile?
 
-    var artist: String {
-        "ARTIST"
-    }
-
-    var duration: Int {
-        100
-    }
+    var duration: Int = 0
 
     var hasLocal: Bool {
         return image != nil && image!.exists && audio != nil && audio!.exists
@@ -64,17 +60,38 @@ struct Song: Manageable {
     func play(whilePlaying: @escaping ()->()={}, whenComplete: @escaping ()->()={}) {
         guard let audio = audio else { return }
         SongPlayer.instance.play(audio.url, whilePlaying: whilePlaying, whenComplete: whenComplete)
+
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle: title,
-            MPMediaItemPropertyArtist: artist,
-            MPMediaItemPropertyPlaybackDuration: duration,
+            MPMediaItemPropertyTitle: displayTitle,
+            MPMediaItemPropertyArtist: displayArtist,
+            MPMediaItemPropertyPlaybackDuration: SongPlayer.instance.player?.duration ?? 0,
             MPNowPlayingInfoPropertyElapsedPlaybackTime: 0,
         ]
+
+        if let uiImage = uiImage {
+            let art = MPMediaItemArtwork(boundsSize: uiImage.size, requestHandler: { _ in return uiImage })
+            MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = art
+        }
     }
 }
 
 extension Song {
     init(title: String) {
         self.title = title
+
+        let pattern = "^(.*?)\\s+\\((.*)\\)$"
+
+        let regex = try? NSRegularExpression(
+          pattern: pattern,
+          options: .caseInsensitive
+        )
+
+        if let match = regex?.firstMatch(in: title, options: [], range: NSRange(location: 0, length: title.utf16.count)), match.numberOfRanges == 3 {
+            displayTitle = String(title[Range(match.range(at: 1), in: title)!])
+            displayArtist = String(title[Range(match.range(at: 2), in: title)!])
+        } else {
+            displayTitle = title
+            displayArtist = ""
+        }
     }
 }

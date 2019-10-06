@@ -16,7 +16,7 @@ class Hinge: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
-        Sound.Welcome.play()
+        Sound.Player_Welcome.play()
 
         // Animate away the welcome image. Shrink it down to 40% of its size in the
         // center of the screen, then do a "hinge" animation where the top right corner

@@ -30,6 +30,10 @@ class SyncEngine {
         return Manager.songs.inSync && Manager.movies.inSync
     }
 
+    var deleteCount: Int {
+        return Manager.songs.delete.count + Manager.movies.delete.count
+    }
+
     init(cloudProvider: CloudProvider, concurrency: Int = 4) {
         opQueue.maxConcurrentOperationCount = concurrency
         self.provider = cloudProvider

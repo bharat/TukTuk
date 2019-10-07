@@ -149,6 +149,22 @@ class AdminSyncTableViewController: UITableViewController {
     @IBAction func sync(_ sender: Any) {
         guard !sync.inProgress else { return }
 
+        if sync.deleteCount <= 5 {
+            reallySync()
+            return
+        }
+
+        let popup = PopupDialog(title: "Are you sure?", message: "This sync will delete \(sync.deleteCount) songs and movies. Are you sure you want to continue?")
+        popup.addButtons([
+            CancelButton(title: "Cancel") { },
+            DestructiveButton(title: "Ok") {
+                self.reallySync()
+            }
+            ])
+        self.present(popup, animated: true, completion: nil)
+    }
+
+    func reallySync() {
         syncButton.isHidden = true
         cancelButton.isHidden = false
         progress.isHidden = false

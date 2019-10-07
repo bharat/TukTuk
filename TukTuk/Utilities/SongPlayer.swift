@@ -21,12 +21,24 @@ class SongPlayer {
 
     fileprivate init() {
         UIApplication.shared.beginReceivingRemoteControlEvents();
-        MPRemoteCommandCenter.shared().playCommand.addTarget { event in
-            self.player?.play()
+
+        let mprcc = MPRemoteCommandCenter.shared()
+        mprcc.playCommand.addTarget { event in
+            guard let player = self.player else { return .noActionableNowPlayingItem }
+            player.play()
             return .success
         }
-        MPRemoteCommandCenter.shared().pauseCommand.addTarget {event in
-            self.player?.pause()
+        mprcc.pauseCommand.addTarget {event in
+            guard let player = self.player else { return .noActionableNowPlayingItem }
+            MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime
+            player.pause()
+            return .success
+        }
+
+        mprcc.changePlaybackPositionCommand.isEnabled = true
+        mprcc.changePlaybackPositionCommand.addTarget {
+            guard let player = self.player, let event = $0 as? MPChangePlaybackPositionCommandEvent else { return .noActionableNowPlayingItem }
+            player.currentTime = event.positionTime
             return .success
         }
     }

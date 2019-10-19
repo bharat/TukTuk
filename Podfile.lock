@@ -42,7 +42,7 @@ DEPENDENCIES:
   - PopupDialog (~> 1.1)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Amplitude-iOS
     - CollectionViewSlantedLayout
     - DynamicBlurView
@@ -79,4 +79,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 07e4be000570d03b924216a1315dbffd82eb93f3
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4

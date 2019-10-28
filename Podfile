@@ -9,4 +9,5 @@ target 'TukTuk' do
   pod 'GoogleAPIClientForREST/Drive', '~> 1.2.1', :inhibit_warnings => true
   pod 'GoogleSignIn', '~> 4.1.1'
   pod 'PopupDialog', '~> 1.1', :inhibit_warnings => true
+  pod 'SwiftyGif'
 end

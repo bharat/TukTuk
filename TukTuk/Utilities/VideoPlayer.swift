@@ -25,6 +25,7 @@ class VideoPlayer {
         self.completion = completion
 
         vc.player = AVPlayer(url: url)
+        vc.modalPresentationStyle = .fullScreen
         sender.present(vc, animated: true) {
             self.vc.player?.play()
         }

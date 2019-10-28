@@ -17,6 +17,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 .DS_Store
+TukTuk.xcodeproj/project.xcworkspace/xcshareddata/
 
 ## Playgrounds
 *.playground

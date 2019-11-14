@@ -184,6 +184,7 @@ class SongViewController: UIViewController {
             stopSong()
             stats.start(miniGame: miniGame)
 
+            miniGame.uivc.modalPresentationStyle = .fullScreen
             show(miniGame.uivc, sender: self)
             return true
         }

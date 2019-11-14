@@ -35,6 +35,7 @@
 		4F25309F2349456F0018088F /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25309E2349456F0018088F /* Sound.swift */; };
 		4F2530A5234959B90018088F /* Sound+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A4234959B90018088F /* Sound+Generated.swift */; };
 		4F2530A723495B6A0018088F /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A623495B6A0018088F /* SoundPlayer.swift */; };
+		4F2F756E23668B110032865D /* Delight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F756D23668B110032865D /* Delight.swift */; };
 		4F3270C7225559430063CC32 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3270C6225559430063CC32 /* Stats.swift */; };
 		4F32C6E122ADAFB0000ABDCF /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */; };
 		4F32C6E722ADBC18000ABDCF /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */; };
@@ -108,6 +109,7 @@
 		4F2530A1234954360018088F /* GenerateSounds.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = GenerateSounds.py; sourceTree = "<group>"; };
 		4F2530A4234959B90018088F /* Sound+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sound+Generated.swift"; sourceTree = "<group>"; };
 		4F2530A623495B6A0018088F /* SoundPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		4F2F756D23668B110032865D /* Delight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delight.swift; sourceTree = "<group>"; };
 		4F3270C6225559430063CC32 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
 		4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			children = (
 				4FF69123225E9F8800595BDE /* Bezier.swift */,
 				4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */,
+				4F2F756D23668B110032865D /* Delight.swift */,
 				4F074ADF22A5F714008E5F22 /* DismissModalSegue.swift */,
 				4F074AE522A74137008E5F22 /* GoogleDrive.swift */,
 				4F75101D225D259B0039AA35 /* Maze.swift */,
@@ -632,6 +635,7 @@
 				4F84C38F1FC51AC40093801B /* Animations.swift in Sources */,
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
 				4F074AE622A74137008E5F22 /* GoogleDrive.swift in Sources */,
+				4F2F756E23668B110032865D /* Delight.swift in Sources */,
 				4FBD0FE120F587CC00BB5E32 /* UserDefaults.swift in Sources */,
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
 				4FA64A87223D722100AED085 /* SongCell.swift in Sources */,

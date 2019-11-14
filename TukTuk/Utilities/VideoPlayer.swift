@@ -18,7 +18,7 @@ class VideoPlayer {
     fileprivate init() {
         vc = AVPlayerViewController()
         vc.showsPlaybackControls = false
-        vc.contentOverlayView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pauseOrResume)))
+        vc.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pauseOrResume)))
     }
 
     func play(_ url: URL, from sender: UIViewController, completion: @escaping () -> () = {}) {
@@ -26,9 +26,9 @@ class VideoPlayer {
 
         vc.player = AVPlayer(url: url)
         vc.modalPresentationStyle = .fullScreen
-        sender.present(vc, animated: true) {
-            self.vc.player?.play()
-        }
+        vc.player?.play()
+
+        sender.show(vc, sender: sender)
 
         NotificationCenter.default.addObserver(self, selector: #selector(hide), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: vc.player?.currentItem)
     }

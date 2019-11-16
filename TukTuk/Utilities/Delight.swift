@@ -12,54 +12,56 @@ import SwiftyGif
 import CoreHaptics
 
 class BunnyDelight {
-    var haptic: HapticPlayer?
-    var imageView: UIImageView
     var parent: UIView!
-    
-    init() {
-//        let bunnyImage = UIImage(named: "Avenger_Thor")
-//        imageView = UIImageView(image: bunnyImage)
-        let bunnyImage = try! UIImage(gifName: "Delight_BunnyRun.gif")
-        imageView = UIImageView(gifImage: bunnyImage, loopCount: 10)
-        haptic = try? HapticPlayer(pattern: footfallPattern())
-    }
-    
+
     func show(on parent: UIView) {
         self.parent = parent
         
+        let bunnyImage = try! UIImage(gifName: "Delight_BunnyRun.gif")
+        let imageView = UIImageView(gifImage: bunnyImage, loopCount: -1)
+        let haptic = try? HapticPlayer(pattern: footfallPattern())
+        
         let width = CGFloat(370 / 4)
         let height = CGFloat(272 / 4)
-//        imageView.frame = CGRect(x: -width, y: parent.frame.height - height, width: width, height: height)
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:))))
-        parent.addSubview(imageView)
         
-        imageView.frame = CGRect(x: 40, y: parent.frame.height - height, width: width, height: height)
+        let outerView = UIView()
+        outerView.frame = CGRect(x: 0, y: parent.frame.height - height, width: parent.frame.width, height: height)
+        outerView.isUserInteractionEnabled = true
+        outerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:))))
+        parent.addSubview(outerView)
 
-//        haptic?.start()
-//        UIView.animate(withDuration: 10.0, animations: {
-//            self.imageView.layer.position.x = parent.frame.width
-//        }, completion: { _ in
-////            self.imageView.removeFromSuperview()
-//            self.haptic?.stop()
-//        })
+        imageView.isUserInteractionEnabled = false
+        imageView.frame = CGRect(x: -width, y: 0, width: width, height: height)
+        outerView.addSubview(imageView)
+
+        haptic?.start()
+        UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveLinear], animations: {
+            imageView.layer.position.x = parent.frame.width
+        }, completion: { _ in
+            outerView.removeFromSuperview()
+            haptic?.stop()
+        })
     }
 
     @objc func handleTap(sender: UITapGestureRecognizer) {
-        print("tap!")
-//        haptic?.stop()
-//        imageView.stopAnimating()
-//
-//        let heartImage = UIImage(named: "Delight_Heart")
-//        let heartImageView = UIImageView(image: heartImage)
-//        heartImageView.frame = imageView.frame
-//        parent.addSubview(heartImageView)
-//
-//        UIView.animate(withDuration: 5.0, animations: {
-//            heartImageView.layer.position.y = self.parent.frame.height
-//        }, completion: { _ in
-//            heartImageView.removeFromSuperview()
-//        })
+        let tapLocation = sender.location(in: sender.view!)
+        let bunnyView = sender.view!.subviews[0]
+        let animatingLayerPosition = bunnyView.layer.presentation()!.position
+        let bunnyFrame = CGRect(origin: animatingLayerPosition, size: bunnyView.frame.size)
+        
+        if bunnyFrame.contains(tapLocation) {
+            let heartImage = UIImage(named: "Delight_Heart")
+            let heartImageView = UIImageView(image: heartImage)
+            print(bunnyFrame)
+            heartImageView.frame = CGRect(x: bunnyFrame.origin.x, y: parent.frame.height - bunnyFrame.size.height, width: bunnyFrame.size.width, height: bunnyFrame.size.height)
+            parent.addSubview(heartImageView)
+
+            UIView.animate(withDuration: 3.0, delay: 0.0, options: [.curveEaseIn], animations: {
+                heartImageView.layer.position.y = 0
+            }, completion: { _ in
+                heartImageView.removeFromSuperview()
+            })
+        }
     }
     
     func footfallPattern() throws -> CHHapticPattern {

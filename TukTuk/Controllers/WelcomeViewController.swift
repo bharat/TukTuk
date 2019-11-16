@@ -15,22 +15,22 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        welcomeImageView = UIImageView(frame: view.frame)
-//        welcomeImageView.contentMode = .scaleAspectFill
-//        welcomeImageView.clipsToBounds = true
-//        welcomeImageView.image = #imageLiteral(resourceName: "Welcome_BharatAndBettina")
-//        welcomeImageView.layer.borderWidth = 8
-//        welcomeImageView.layer.borderColor = UIColor.black.cgColor
-//        welcomeImageView.layer.cornerRadius = 0
-//        welcomeImageView.isUserInteractionEnabled = true
-//        view.addSubview(welcomeImageView)
-//
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleWelcomeTap(sender:)))
-//        welcomeImageView.addGestureRecognizer(tap)
-//
-//        let long = UILongPressGestureRecognizer(target: self, action: #selector(showSettings(gesture:)))
-//        long.minimumPressDuration = 5.0
-//        welcomeImageView.addGestureRecognizer(long)
+        welcomeImageView = UIImageView(frame: view.frame)
+        welcomeImageView.contentMode = .scaleAspectFill
+        welcomeImageView.clipsToBounds = true
+        welcomeImageView.image = #imageLiteral(resourceName: "Welcome_BharatAndBettina")
+        welcomeImageView.layer.borderWidth = 8
+        welcomeImageView.layer.borderColor = UIColor.black.cgColor
+        welcomeImageView.layer.cornerRadius = 0
+        welcomeImageView.isUserInteractionEnabled = true
+        view.addSubview(welcomeImageView)
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleWelcomeTap(sender:)))
+        welcomeImageView.addGestureRecognizer(tap)
+
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(showSettings(gesture:)))
+        long.minimumPressDuration = 5.0
+        welcomeImageView.addGestureRecognizer(long)
     }
 
     var bunny = BunnyDelight()

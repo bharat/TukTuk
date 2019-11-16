@@ -22,7 +22,7 @@ class AdminTabBarController: UITabBarController {
         print("Bunny delay: \(delay)")
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             if self.view.window != nil {
-                Delight().showBunny(on: self.view)
+                BunnyDelight().show(on: self.view)
             }
         }
     }

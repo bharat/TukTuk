@@ -35,12 +35,12 @@
 		4F25309F2349456F0018088F /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25309E2349456F0018088F /* Sound.swift */; };
 		4F2530A5234959B90018088F /* Sound+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A4234959B90018088F /* Sound+Generated.swift */; };
 		4F2530A723495B6A0018088F /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A623495B6A0018088F /* SoundPlayer.swift */; };
-		4F2B3EB7237F611200E79976 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2B3EB6237F611200E79976 /* Haptic.swift */; };
+		4F2B3EB7237F611200E79976 /* HapticPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2B3EB6237F611200E79976 /* HapticPlayer.swift */; };
 		4F2F756E23668B110032865D /* Delight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F756D23668B110032865D /* Delight.swift */; };
 		4F3270C7225559430063CC32 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3270C6225559430063CC32 /* Stats.swift */; };
 		4F32C6E122ADAFB0000ABDCF /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */; };
 		4F32C6E722ADBC18000ABDCF /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */; };
-		4F5090B8235D410F00C88C61 /* BunnyRun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4F5090B7235D410F00C88C61 /* BunnyRun.gif */; };
+		4F5090B8235D410F00C88C61 /* Delight_BunnyRun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4F5090B7235D410F00C88C61 /* Delight_BunnyRun.gif */; };
 		4F59B6412332BD8200E539CB /* Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F59B6402332BD8200E539CB /* Frequency.swift */; };
 		4F59B64323354AB300E539CB /* Probability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F59B64223354AB200E539CB /* Probability.swift */; };
 		4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6A7BE21F1AE9B300299152 /* Assets.xcassets */; };
@@ -110,12 +110,12 @@
 		4F2530A1234954360018088F /* GenerateSounds.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = GenerateSounds.py; sourceTree = "<group>"; };
 		4F2530A4234959B90018088F /* Sound+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sound+Generated.swift"; sourceTree = "<group>"; };
 		4F2530A623495B6A0018088F /* SoundPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
-		4F2B3EB6237F611200E79976 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
+		4F2B3EB6237F611200E79976 /* HapticPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPlayer.swift; sourceTree = "<group>"; };
 		4F2F756D23668B110032865D /* Delight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delight.swift; sourceTree = "<group>"; };
 		4F3270C6225559430063CC32 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
 		4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
-		4F5090B7235D410F00C88C61 /* BunnyRun.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = BunnyRun.gif; sourceTree = "<group>"; };
+		4F5090B7235D410F00C88C61 /* Delight_BunnyRun.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Delight_BunnyRun.gif; sourceTree = "<group>"; };
 		4F59B6402332BD8200E539CB /* Frequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frequency.swift; sourceTree = "<group>"; };
 		4F59B64223354AB200E539CB /* Probability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Probability.swift; sourceTree = "<group>"; };
 		4F6A7BE21F1AE9B300299152 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 				4F2F756D23668B110032865D /* Delight.swift */,
 				4F074ADF22A5F714008E5F22 /* DismissModalSegue.swift */,
 				4F074AE522A74137008E5F22 /* GoogleDrive.swift */,
-				4F2B3EB6237F611200E79976 /* Haptic.swift */,
+				4F2B3EB6237F611200E79976 /* HapticPlayer.swift */,
 				4F75101D225D259B0039AA35 /* Maze.swift */,
 				4F8A2A9B209F730E000C2CA5 /* SongPlayer.swift */,
 				4F2530A623495B6A0018088F /* SoundPlayer.swift */,
@@ -260,7 +260,7 @@
 		4F5090B6235D40FA00C88C61 /* GIF */ = {
 			isa = PBXGroup;
 			children = (
-				4F5090B7235D410F00C88C61 /* BunnyRun.gif */,
+				4F5090B7235D410F00C88C61 /* Delight_BunnyRun.gif */,
 			);
 			path = GIF;
 			sourceTree = "<group>";
@@ -477,7 +477,7 @@
 				4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */,
 				4F6A7BE31F1AE9B300299152 /* Assets.xcassets in Resources */,
 				4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */,
-				4F5090B8235D410F00C88C61 /* BunnyRun.gif in Resources */,
+				4F5090B8235D410F00C88C61 /* Delight_BunnyRun.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,7 +639,7 @@
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
 				4F074AE622A74137008E5F22 /* GoogleDrive.swift in Sources */,
 				4F2F756E23668B110032865D /* Delight.swift in Sources */,
-				4F2B3EB7237F611200E79976 /* Haptic.swift in Sources */,
+				4F2B3EB7237F611200E79976 /* HapticPlayer.swift in Sources */,
 				4FBD0FE120F587CC00BB5E32 /* UserDefaults.swift in Sources */,
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
 				4FA64A87223D722100AED085 /* SongCell.swift in Sources */,

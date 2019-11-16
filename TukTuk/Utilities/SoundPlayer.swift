@@ -17,14 +17,14 @@ class SoundPlayer: NSObject, AVAudioPlayerDelegate {
     var player: AVAudioPlayer?
     var done: ()->() = {}
 
-    func play(_ sound: Sound, whenComplete done: @escaping ()->()={}) {
+    func play(_ sound: Sound, volume: Float = 1.0, whenComplete done: @escaping ()->()={}) {
         queue.sync {
             print("Playing sound: \(sound)")
             self.done = done
 
             try! player = AVAudioPlayer(contentsOf: sound.url)
+            player?.setVolume(volume, fadeDuration: 0.0)
             player?.play()
-            player?.setVolume(1.0, fadeDuration: 0.0)
             player?.delegate = self
         }
     }

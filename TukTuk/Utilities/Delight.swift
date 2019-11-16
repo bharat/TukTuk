@@ -59,13 +59,11 @@ class BunnyDelight {
             let heartImage = UIImage(named: "Delight_Heart")
             let heartImageView = UIImageView(image: heartImage)
 
-            let size = CGFloat(Array(stride(from:100, through:200, by:5)).randomElement()!)
+            let size = CGFloat(Array(stride(from: 50, through: 100, by: 10)).randomElement()!)
             heartImageView.frame = CGRect(x: bunnyFrame.origin.x, y: parent.frame.height - bunnyFrame.size.height, width: size, height: size)
-            let i = CGFloat(20.0)
-            heartImageView.frame = heartImageView.frame.inset(by: UIEdgeInsets(top: i, left: i, bottom: i, right: i))
             parent.addSubview(heartImageView)
 
-            Sound.BunnyDelight_Coin.play()
+            Sound.BunnyDelight_Coin.play(volume: 0.1)
             UIView.animate(withDuration: 2.0, delay: 0.0, options: [.curveEaseIn], animations: {
                 heartImageView.layer.position.y = 0
                 let angle = [-CGFloat.pi / 2, .pi / 2].randomElement()!

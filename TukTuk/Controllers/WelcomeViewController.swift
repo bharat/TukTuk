@@ -38,7 +38,6 @@ class WelcomeViewController: UIViewController {
 
         // Useful for quickly jumping to a specific minigame
         // show(CaptainAmerica().uivc, sender: self)
-        performSegue(withIdentifier: "Admin", sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {

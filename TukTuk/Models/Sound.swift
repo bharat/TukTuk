@@ -11,7 +11,7 @@ import Foundation
 struct Sound {
     var url: URL
 
-    func play(done: @escaping ()->()={}) {
-        SoundPlayer.instance.play(self, whenComplete: done)
+    func play(volume: Float = 1.0, done: @escaping ()->()={}) {
+        SoundPlayer.instance.play(self, volume: volume, whenComplete: done)
     }
 }

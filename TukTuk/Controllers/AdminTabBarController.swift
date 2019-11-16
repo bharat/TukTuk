@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class AdminTabBarController: UITabBarController {
+    var bunny = BunnyDelight()
+
     override func viewDidLoad() {
         if Manager.songs.localEmpty {
             // Jump to the Sync tab
@@ -18,12 +20,10 @@ class AdminTabBarController: UITabBarController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // let delay = Double(Array(10...30).randomElement()!)
-        let delay = Double(1)
-        print("Bunny delay: \(delay)")
+        let delay = Double(Array(10...30).randomElement()!)
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             if self.view.window != nil {
-                BunnyDelight().show(on: self.view)
+                self.bunny.show(on: self.view)
             }
         }
     }

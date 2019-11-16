@@ -35,6 +35,7 @@
 		4F25309F2349456F0018088F /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25309E2349456F0018088F /* Sound.swift */; };
 		4F2530A5234959B90018088F /* Sound+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A4234959B90018088F /* Sound+Generated.swift */; };
 		4F2530A723495B6A0018088F /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A623495B6A0018088F /* SoundPlayer.swift */; };
+		4F2B3EB7237F611200E79976 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2B3EB6237F611200E79976 /* Haptic.swift */; };
 		4F2F756E23668B110032865D /* Delight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F756D23668B110032865D /* Delight.swift */; };
 		4F3270C7225559430063CC32 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3270C6225559430063CC32 /* Stats.swift */; };
 		4F32C6E122ADAFB0000ABDCF /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */; };
@@ -109,6 +110,7 @@
 		4F2530A1234954360018088F /* GenerateSounds.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = GenerateSounds.py; sourceTree = "<group>"; };
 		4F2530A4234959B90018088F /* Sound+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sound+Generated.swift"; sourceTree = "<group>"; };
 		4F2530A623495B6A0018088F /* SoundPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		4F2B3EB6237F611200E79976 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		4F2F756D23668B110032865D /* Delight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delight.swift; sourceTree = "<group>"; };
 		4F3270C6225559430063CC32 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				4F2F756D23668B110032865D /* Delight.swift */,
 				4F074ADF22A5F714008E5F22 /* DismissModalSegue.swift */,
 				4F074AE522A74137008E5F22 /* GoogleDrive.swift */,
+				4F2B3EB6237F611200E79976 /* Haptic.swift */,
 				4F75101D225D259B0039AA35 /* Maze.swift */,
 				4F8A2A9B209F730E000C2CA5 /* SongPlayer.swift */,
 				4F2530A623495B6A0018088F /* SoundPlayer.swift */,
@@ -636,6 +639,7 @@
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
 				4F074AE622A74137008E5F22 /* GoogleDrive.swift in Sources */,
 				4F2F756E23668B110032865D /* Delight.swift in Sources */,
+				4F2B3EB7237F611200E79976 /* Haptic.swift in Sources */,
 				4FBD0FE120F587CC00BB5E32 /* UserDefaults.swift in Sources */,
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
 				4FA64A87223D722100AED085 /* SongCell.swift in Sources */,
@@ -688,7 +692,6 @@
 				DEVELOPMENT_TEAM = R6DR6B5C8B;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = TukTukTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -712,7 +715,6 @@
 				DEVELOPMENT_TEAM = R6DR6B5C8B;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = TukTukTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.menalto.TukTukTests;
@@ -841,7 +843,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = R6DR6B5C8B;
 				INFOPLIST_FILE = TukTuk/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menalto.TukTuk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -857,7 +858,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = R6DR6B5C8B;
 				INFOPLIST_FILE = TukTuk/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menalto.TukTuk;
 				PRODUCT_NAME = "$(TARGET_NAME)";

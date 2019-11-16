@@ -66,7 +66,6 @@ class AdminSettingsViewController: UITableViewController {
             cell.title.text = "Animation"
             cell.detail.text = Settings.cuedAnimation?.title ?? .emptyTitle
             cell.data = Animations.all
-            cell.picker.showsSelectionIndicator = true
             cell.select = { obj in
                 Settings.cuedAnimation = obj as! Animation?
                 self.redraw()

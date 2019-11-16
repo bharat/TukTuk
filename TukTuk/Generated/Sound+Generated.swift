@@ -8,6 +8,7 @@ extension Sound {
 	static let AvengersAssemble_IronMan = Media.AvengersAssemble.sound("IronMan")
 	static let AvengersAssemble_Tada = Media.AvengersAssemble.sound("Tada")
 	static let AvengersAssemble_Thor = Media.AvengersAssemble.sound("Thor")
+	static let BunnyDelight_Coin = Media.BunnyDelight.sound("Coin")
 	static let CaptainAmerica_Bounce_1 = Media.CaptainAmerica.sound("Bounce_1")
 	static let CaptainAmerica_Bounce_2 = Media.CaptainAmerica.sound("Bounce_2")
 	static let CaptainAmerica_Bounce_3 = Media.CaptainAmerica.sound("Bounce_3")

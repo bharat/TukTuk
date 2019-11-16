@@ -33,14 +33,12 @@ class WelcomeViewController: UIViewController {
         welcomeImageView.addGestureRecognizer(long)
     }
 
-    var bunny = BunnyDelight()
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         // Useful for quickly jumping to a specific minigame
         // show(CaptainAmerica().uivc, sender: self)
-        
-        bunny.show(on: view)
+        performSegue(withIdentifier: "Admin", sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {

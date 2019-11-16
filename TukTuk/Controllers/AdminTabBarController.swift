@@ -18,7 +18,8 @@ class AdminTabBarController: UITabBarController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let delay = Double(Array(10...30).randomElement()!)
+        // let delay = Double(Array(10...30).randomElement()!)
+        let delay = Double(1)
         print("Bunny delay: \(delay)")
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             if self.view.window != nil {

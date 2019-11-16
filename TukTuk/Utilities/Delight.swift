@@ -11,6 +11,10 @@ import UIKit
 import SwiftyGif
 import CoreHaptics
 
+extension Media {
+    static let BunnyDelight = Media("BunnyDelight")
+}
+
 class BunnyDelight {
     var parent: UIView!
 
@@ -24,6 +28,8 @@ class BunnyDelight {
         let width = CGFloat(370 / 4)
         let height = CGFloat(272 / 4)
         
+        // Tap gestures won't work on the animated image because of the way that presentation layers work.
+        // Insead, create an outer view to trap taps and then check to see if they're inside the animating image.
         let outerView = UIView()
         outerView.frame = CGRect(x: 0, y: parent.frame.height - height, width: parent.frame.width, height: height)
         outerView.isUserInteractionEnabled = true
@@ -52,12 +58,18 @@ class BunnyDelight {
         if bunnyFrame.contains(tapLocation) {
             let heartImage = UIImage(named: "Delight_Heart")
             let heartImageView = UIImageView(image: heartImage)
-            print(bunnyFrame)
-            heartImageView.frame = CGRect(x: bunnyFrame.origin.x, y: parent.frame.height - bunnyFrame.size.height, width: bunnyFrame.size.width, height: bunnyFrame.size.height)
+
+            let size = CGFloat(Array(stride(from:100, through:200, by:5)).randomElement()!)
+            heartImageView.frame = CGRect(x: bunnyFrame.origin.x, y: parent.frame.height - bunnyFrame.size.height, width: size, height: size)
+            let i = CGFloat(20.0)
+            heartImageView.frame = heartImageView.frame.inset(by: UIEdgeInsets(top: i, left: i, bottom: i, right: i))
             parent.addSubview(heartImageView)
 
-            UIView.animate(withDuration: 3.0, delay: 0.0, options: [.curveEaseIn], animations: {
+            Sound.BunnyDelight_Coin.play()
+            UIView.animate(withDuration: 2.0, delay: 0.0, options: [.curveEaseIn], animations: {
                 heartImageView.layer.position.y = 0
+                let angle = [-CGFloat.pi / 2, .pi / 2].randomElement()!
+                heartImageView.transform = CGAffineTransform(rotationAngle: angle)
             }, completion: { _ in
                 heartImageView.removeFromSuperview()
             })

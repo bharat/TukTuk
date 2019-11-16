@@ -64,7 +64,8 @@ class BunnyDelight {
             parent.addSubview(heartImageView)
 
             Sound.BunnyDelight_Coin.play(volume: 0.1)
-            UIView.animate(withDuration: 2.0, delay: 0.0, options: [.curveEaseIn], animations: {
+            let duration = [2.0, 3.0, 4.0].randomElement()!
+            UIView.animate(withDuration: duration, delay: 0.0, options: [.curveEaseIn], animations: {
                 heartImageView.layer.position.y = 0
                 let angle = [-CGFloat.pi / 2, .pi / 2].randomElement()!
                 heartImageView.transform = CGAffineTransform(rotationAngle: angle)

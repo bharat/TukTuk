@@ -98,17 +98,21 @@ final class CaptainAmerica: MiniGame {
             let level = Level(UserDefaults.standard.mazeLevel)
             switch state {
             case .Preroll:
-                present(PrerollVC(), animated: animated)
+                let uivc = PrerollVC()
+                uivc.modalPresentationStyle = .fullScreen
+                present(uivc, animated: animated)
                 self.state = .Scene
             case .Scene:
-                let sceneVC = SceneVC()
-                sceneVC.level = level
-                self.present(sceneVC, animated: animated)
+                let uivc = SceneVC()
+                uivc.level = level
+                uivc.modalPresentationStyle = .fullScreen
+                self.present(uivc, animated: animated)
                 self.state = .Reward
             case .Reward:
-                let rewardVC = RewardVC()
-                rewardVC.level = level
-                self.present(rewardVC, animated: animated)
+                let uivc = RewardVC()
+                uivc.level = level
+                uivc.modalPresentationStyle = .fullScreen
+                self.present(uivc, animated: animated)
                 self.state = .Done
             case .Done:
                 UserDefaults.standard.mazeLevel += 1

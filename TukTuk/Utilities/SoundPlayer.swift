@@ -19,7 +19,7 @@ class SoundPlayer: NSObject, AVAudioPlayerDelegate {
 
     func play(_ sound: Sound, volume: Float = 1.0, whenComplete done: @escaping ()->()={}) {
         queue.sync {
-            print("Playing sound: \(sound)")
+            // print("Playing sound: \(sound)")
             self.done = done
 
             try! player = AVAudioPlayer(contentsOf: sound.url)

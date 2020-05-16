@@ -19,6 +19,7 @@ class SongManager: Manager<Song> {
 
     var brokenCloud: [Song] {
         return queue.sync {
+            // TODO: this doesn't handle inconsistencies with missing or malformed cloud video
             data.values.filter { song in
                 (song.cloudAudio == nil && song.cloudImage != nil) || (song.cloudAudio != nil && song.cloudImage == nil)
             }
@@ -33,10 +34,12 @@ class SongManager: Manager<Song> {
             let name = $0.replacingOccurrences(of: "%2F", with: "/")
             let image = LocalFile(url: base.appendingPathComponent("\($0).png"))
             let audio = LocalFile(url: base.appendingPathComponent("\($0).mp3"))
+            let video = LocalFile(url: base.appendingPathComponent("\($0).mp4"))
             queue.sync {
                 var song = data[name] ?? Song(title: name)
                 song.image = image
                 song.audio = audio
+                song.video = video
                 data[song.title] = song
             }
         }
@@ -47,6 +50,7 @@ class SongManager: Manager<Song> {
             queue.sync {
                 self.data[song.title]?.cloudAudio = nil
                 self.data[song.title]?.cloudImage = nil
+                self.data[song.title]?.cloudVideo = nil
             }
         }
 
@@ -54,9 +58,12 @@ class SongManager: Manager<Song> {
             self.queue.sync {
                 files.forEach { file in
                     var song = self.data[file.title] ?? Song(title: file.title)
-                    if file.ext == "mp3" {
+                    switch file.ext {
+                    case "mp3":
                         song.cloudAudio = file
-                    } else {
+                    case "mp4":
+                        song.cloudVideo = file
+                    default:
                         song.cloudImage = file
                     }
                     self.data[song.title] = song
@@ -107,7 +114,22 @@ class SongManager: Manager<Song> {
             notifyWrapper()
         }
 
-        return CancelGroup(cancelers: [canceler1, canceler2])
+        
+        let canceler3 = provider.get(file: song.cloudVideo!.id) { cloudData in
+            if let cloudData = cloudData {
+                let local = LocalFile(url: self.base.appendingPathComponent("\(safeTitle).mp4"))
+                self.fm.createNonBackupFile(at: local.url, contents: cloudData)
+
+                self.queue.sync {
+                    var song = self.data[song.title] ?? Song(title: song.title)
+                    song.video = local
+                    self.data[song.title] = song
+                }
+            }
+            notifyWrapper()
+        }
+
+        return CancelGroup(cancelers: [canceler1, canceler2, canceler3])
     }
 }
 

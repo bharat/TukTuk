@@ -37,9 +37,12 @@ class WelcomeViewController: UIViewController {
         super.viewDidAppear(animated)
 
         // Useful for quickly jumping to a specific minigame
-//        let minigame = CaptainAmerica()
-//        minigame.uivc.modalPresentationStyle = .fullScreen
-//        show(minigame.uivc, sender: self)
+        //        let minigame = CaptainAmerica()
+        //        minigame.uivc.modalPresentationStyle = .fullScreen
+        //        show(minigame.uivc, sender: self)
+        
+        // Or skipping the welcome screen
+        //        self.performSegue(withIdentifier: "Songs", sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {

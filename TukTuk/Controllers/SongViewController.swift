@@ -20,10 +20,11 @@ class SongViewController: UIViewController {
     @IBOutlet weak var movieButton: UIButton!
     @IBOutlet weak var movieTimerLabel: UILabel!
 
+    var songPlayer = SongPlayer()
     var stats = Stats()
     var songs: [Song] = [] {
         didSet {
-            SongPlayer.instance.stop()
+            AudioPlayer.instance.stop()
             songCollection.reloadData()
             deselectAllSongs()
         }
@@ -150,8 +151,7 @@ class SongViewController: UIViewController {
 
     func playMovie() {
         deselectAllSongs()
-        SongPlayer.instance.stop()
-        stats.stop()
+        songPlayer.stop()
         stopButton.isEnabled = false
 
         let movie = Settings.cuedMovie ?? movies.randomElement()!
@@ -164,10 +164,22 @@ class SongViewController: UIViewController {
         movieButton.isHidden = true
     }
 
+    func playSong(_ song: Song, on cell: SongCell) {
+        songPlayer.play(song, on: cell, whilePlaying: {
+            self.movieCountdown -= 1
+            if Settings.cuedMovie != nil {
+                self.showMovieButton()
+            }
+        }, whenComplete: {
+            if song.video != nil {
+                cell.videoLayer.player = nil
+            }
+        })
+    }
+
     func stopSong() {
-        stats.stop()
         deselectAllSongs()
-        SongPlayer.instance.stop()
+        songPlayer.stop()
         stopButton.isEnabled = false
     }
 
@@ -190,24 +202,6 @@ class SongViewController: UIViewController {
         }
 
         return false
-    }
-
-    func playSong(_ song: Song) {
-        if SongPlayer.instance.isPlaying {
-            stats.stop()
-        }
-
-        print("Playing song: \(song.title)")
-        stats.start(song: song)
-        song.play(whilePlaying: {
-            self.movieCountdown -= 1
-            if Settings.cuedMovie != nil {
-                self.showMovieButton()
-            }
-        }, whenComplete: {
-            self.stats.complete()
-            self.deselectAllSongs()
-        })
     }
 
     func deselectAllSongs() {
@@ -244,6 +238,7 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
 
 
 extension SongViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         stopButton.isEnabled = false
 
@@ -257,7 +252,9 @@ extension SongViewController: UICollectionViewDelegate {
 
             stopButton.isEnabled = true
             let song = songs[indexPath.row]
-            playSong(song)
+            let cell = collectionView.cellForItem(at: indexPath) as! SongCell
+
+            playSong(song, on: cell)
         }
     }
 }
@@ -287,11 +284,15 @@ extension SongViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
         let song = songs[indexPath.row]
-
+        let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
+        
         cell.image = song.uiImage ?? UIImage()
         cell.title.text = song.title
+
+        DispatchQueue.main.async {
+            self.songPlayer.maybeReattachVideo(song, to: cell)
+        }
 
         if let layout = collectionView.collectionViewLayout as? CollectionViewSlantedLayout {
             cell.slantingAngle = layout.slantingAngle
@@ -299,5 +300,6 @@ extension SongViewController: UICollectionViewDataSource {
 
         return cell
     }
+
 }
 

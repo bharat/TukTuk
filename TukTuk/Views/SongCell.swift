@@ -9,6 +9,7 @@
 import Foundation
 import CollectionViewSlantedLayout
 import QuartzCore
+import AVKit
 
 
 class SongCell: CollectionViewSlantedCell {
@@ -24,7 +25,7 @@ class SongCell: CollectionViewSlantedCell {
             gradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
             gradient.locations = [0.0, 1.0]
             gradient.frame = backgroundView.bounds
-            backgroundView.layer.addSublayer(gradient)
+//            backgroundView.layer.addSublayer(gradient)
         }
 
         title.layer.shadowColor = UIColor.black.cgColor
@@ -48,7 +49,22 @@ class SongCell: CollectionViewSlantedCell {
             }
         }
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        _videoLayer?.player = nil
+    }
 
+    private var _videoLayer: AVPlayerLayer?
+    var videoLayer: AVPlayerLayer {
+        if _videoLayer == nil {
+            _videoLayer = AVPlayerLayer()
+            _videoLayer!.frame = CGRect(x: -50, y: -100, width: backgroundView!.bounds.width + 170, height: backgroundView!.bounds.height + 170)
+            backgroundView!.layer.addSublayer(_videoLayer!)
+        }
+        return _videoLayer!
+    }
+    
     var image: UIImage = UIImage() {
         didSet {
             imageView.image = image

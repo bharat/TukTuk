@@ -16,8 +16,17 @@ struct Song: Manageable {
     var displayArtist: String
     var image: LocalFile?
     var audio: LocalFile?
+    var video: LocalFile?
     var cloudImage: CloudFile?
     var cloudAudio: CloudFile?
+    var cloudVideo: CloudFile?
+    
+//    var video: URL? {
+//        if displayTitle == "Take On Me" {
+//            return Media.Player.video("TakeOnMe")
+//        }
+//        return nil
+//    }
 
     var duration: Int = 0
 
@@ -35,19 +44,41 @@ struct Song: Manageable {
     }
 
     var syncAction: SyncAction {
-        if let cloudImage = cloudImage, let cloudAudio = cloudAudio {
-            if let image = image, let audio = audio {
-                if image.exists && cloudImage.size == image.size && audio.exists && cloudAudio.size == audio.size {
-                    return .None
-                } else {
-                    return .Download
-                }
-            } else {
-                return .Download
-            }
-        } else {
+        // Image and audio are mandatory
+        guard let cloudImage = cloudImage, let cloudAudio = cloudAudio else {
             return .Delete
         }
+        
+        guard let image = image, let audio = audio else {
+            return .Download
+        }
+        
+        if !image.exists || !audio.exists {
+            return .Download
+        }
+        
+        if cloudImage.size != image.size || cloudAudio.size != audio.size {
+            return .Download
+        }
+
+        // Cloud video is optional- so if there is none then we're up to date
+        guard let cloudVideo = cloudVideo else {
+            return .None
+        }
+
+        guard let video = video else {
+            return .Download
+        }
+        
+        if !video.exists {
+            return .Download
+        }
+        
+        if cloudVideo.size != video.size {
+            return .Download
+        }
+        
+        return .None
     }
 
     mutating func deleteLocal() {
@@ -59,12 +90,12 @@ struct Song: Manageable {
 
     func play(whilePlaying: @escaping ()->()={}, whenComplete: @escaping ()->()={}) {
         guard let audio = audio else { return }
-        SongPlayer.instance.play(audio.url, whilePlaying: whilePlaying, whenComplete: whenComplete)
+        AudioPlayer.instance.play(audio.url, whilePlaying: whilePlaying, whenComplete: whenComplete)
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPMediaItemPropertyTitle: displayTitle,
             MPMediaItemPropertyArtist: displayArtist,
-            MPMediaItemPropertyPlaybackDuration: SongPlayer.instance.player?.duration ?? 0,
+            MPMediaItemPropertyPlaybackDuration: AudioPlayer.instance.player?.duration ?? 0,
             MPNowPlayingInfoPropertyElapsedPlaybackTime: 0,
         ]
 

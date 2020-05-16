@@ -10,15 +10,12 @@ import Foundation
 import Amplitude_iOS
 
 class Stats {
-    var active: Song?
-
     func appLaunched() {
         Amplitude.instance()?.logEvent("AppLaunched")
     }
 
     func start(song: Song) {
         Amplitude.instance()?.logEvent("StartSong", withEventProperties: ["title": song.title])
-        active = song
     }
 
     func start(movie: Movie) {
@@ -35,19 +32,5 @@ class Stats {
 
     func cue(miniGame: MiniGame) {
         Amplitude.instance()?.logEvent("CueMiniGame", withEventProperties: ["title": miniGame.title])
-    }
-
-    func stop() {
-        if let active = active {
-            Amplitude.instance()?.logEvent("StopSong", withEventProperties: ["title": active.title])
-        }
-        active = nil
-    }
-
-    func complete() {
-        if let active = active {
-            Amplitude.instance()?.logEvent("CompleteSong", withEventProperties: ["title": active.title])
-        }
-        active = nil
     }
 }

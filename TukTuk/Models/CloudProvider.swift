@@ -8,7 +8,15 @@
 
 import Foundation
 
-struct CloudFile: Hashable {
+protocol CloudFileProtocol {
+    var name: String { get }
+    var id: String { get }
+    var size: UInt64 { get }
+    var title: String { get }
+    var ext: String { get }
+}
+
+struct CloudFile: CloudFileProtocol, Hashable {
     let name: String
     let id: String
     let size: UInt64

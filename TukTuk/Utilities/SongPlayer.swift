@@ -22,7 +22,7 @@ class SongPlayer {
     func play(_ song: Song, on cell: SongCell, whilePlaying: @escaping ()->(), whenComplete: @escaping ()->()) {
         queue.sync {
             musicVideoPlayer.stop()
-            if song.video!.exists {
+            if song.hasMusicVideo {
                 print("Playing music video: \(song.title)")
                 AudioPlayer.instance.stop()
                 musicVideoPlayer.play(song.video!.url, on: cell.videoLayer, whilePlaying: whilePlaying, whenComplete: whenComplete)

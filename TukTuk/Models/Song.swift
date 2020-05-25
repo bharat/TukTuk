@@ -14,28 +14,25 @@ struct Song: Manageable {
     var title: String
     var displayTitle: String
     var displayArtist: String
-    var image: LocalFile?
-    var audio: LocalFile?
-    var video: LocalFile?
-    var cloudImage: CloudFile?
-    var cloudAudio: CloudFile?
-    var cloudVideo: CloudFile?
-    
-//    var video: URL? {
-//        if displayTitle == "Take On Me" {
-//            return Media.Player.video("TakeOnMe")
-//        }
-//        return nil
-//    }
+    var image: LocalFileProtocol?
+    var audio: LocalFileProtocol?
+    var video: LocalFileProtocol?
+    var cloudImage: CloudFileProtocol?
+    var cloudAudio: CloudFileProtocol?
+    var cloudVideo: CloudFileProtocol?
 
     var duration: Int = 0
 
     var hasLocal: Bool {
-        return image != nil && image!.exists && audio != nil && audio!.exists
+        return image?.exists ?? false && (audio?.exists ?? false || video?.exists ?? false)
     }
 
     var hasCloud: Bool {
-        return cloudImage != nil && cloudAudio != nil
+        return cloudImage != nil && (cloudAudio != nil || cloudVideo != nil)
+    }
+    
+    var hasMusicVideo: Bool {
+        return video?.exists ?? false
     }
 
     var uiImage: UIImage? {
@@ -44,37 +41,12 @@ struct Song: Manageable {
     }
 
     var syncAction: SyncAction {
-        // Image and audio are mandatory
-        guard let cloudImage = cloudImage, let cloudAudio = cloudAudio else {
+        // A well-formed cloud song has an image and either an audio track or a video clip
+        guard let cloudImage = cloudImage, cloudAudio != nil || cloudVideo != nil else {
             return .Delete
         }
-        
-        guard let image = image, let audio = audio else {
-            return .Download
-        }
-        
-        if !image.exists || !audio.exists {
-            return .Download
-        }
-        
-        if cloudImage.size != image.size || cloudAudio.size != audio.size {
-            return .Download
-        }
-
-        // Cloud video is optional- so if there is none then we're up to date
-        guard let cloudVideo = cloudVideo else {
-            return .None
-        }
-
-        guard let video = video else {
-            return .Download
-        }
-        
-        if !video.exists {
-            return .Download
-        }
-        
-        if cloudVideo.size != video.size {
+                        
+        if cloudImage.size != image?.size || cloudAudio?.size != audio?.size || cloudVideo?.size != video?.size {
             return .Download
         }
         

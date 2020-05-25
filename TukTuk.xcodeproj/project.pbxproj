@@ -68,6 +68,15 @@
 		4FBD57B11F098DEB00BDCDE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57AF1F098DEB00BDCDE3 /* Main.storyboard */; };
 		4FBD57B61F098DEB00BDCDE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBD57B41F098DEB00BDCDE3 /* LaunchScreen.storyboard */; };
 		4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */; };
+		4FE50269247B43B400412855 /* SongTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE50268247B43B400412855 /* SongTest.swift */; };
+		4FE5026A247B44D600412855 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F25F622B1F13A006E2CB2 /* Song.swift */; };
+		4FE5026B247B44F300412855 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F25F022B1BEF5006E2CB2 /* Manager.swift */; };
+		4FE5026C247B450800412855 /* Titled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11FEF62263BB8500AD777D /* Titled.swift */; };
+		4FE5026D247B451500412855 /* LocalFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F25F222B1E35F006E2CB2 /* LocalFile.swift */; };
+		4FE5026E247B451A00412855 /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */; };
+		4FE5026F247B452800412855 /* SyncAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F25FC22B1F184006E2CB2 /* SyncAction.swift */; };
+		4FE50270247B453900412855 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0F5A3422AC4A1D0012934B /* FileManager.swift */; };
+		4FE50271247B454C00412855 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2A9B209F730E000C2CA5 /* AudioPlayer.swift */; };
 		4FEEE6F120C10B3F0090EEA1 /* FaceSquares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */; };
 		4FF69124225E9F8800595BDE /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF69123225E9F8800595BDE /* Bezier.swift */; };
 		4FF69126225EB50F00595BDE /* CubicCurveAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */; };
@@ -150,6 +159,8 @@
 		4FBD57B51F098DEB00BDCDE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FBD57B71F098DEB00BDCDE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD10B88211BA83400EF48B1 /* JusticeLeague.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JusticeLeague.swift; sourceTree = "<group>"; };
+		4FE50267247B43B300412855 /* TukTukTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TukTukTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		4FE50268247B43B400412855 /* SongTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTest.swift; sourceTree = "<group>"; };
 		4FEEE6F020C10B3F0090EEA1 /* FaceSquares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceSquares.swift; sourceTree = "<group>"; };
 		4FF69123225E9F8800595BDE /* Bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bezier.swift; sourceTree = "<group>"; };
 		4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubicCurveAlgorithm.swift; sourceTree = "<group>"; };
@@ -289,7 +300,9 @@
 		4F9DDD3522161C3E00D3EFAF /* TukTukTests */ = {
 			isa = PBXGroup;
 			children = (
+				4FE50268247B43B400412855 /* SongTest.swift */,
 				4F9DDD3822161C3E00D3EFAF /* Info.plist */,
+				4FE50267247B43B300412855 /* TukTukTests-Bridging-Header.h */,
 			);
 			path = TukTukTests;
 			sourceTree = "<group>";
@@ -440,6 +453,7 @@
 					4F9DDD3322161C3D00D3EFAF = {
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = R6DR6B5C8B;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 4FBD57A71F098DEB00BDCDE3;
 					};
@@ -593,6 +607,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FE5026F247B452800412855 /* SyncAction.swift in Sources */,
+				4FE5026A247B44D600412855 /* Song.swift in Sources */,
+				4FE50271247B454C00412855 /* AudioPlayer.swift in Sources */,
+				4FE5026D247B451500412855 /* LocalFile.swift in Sources */,
+				4FE5026E247B451A00412855 /* CloudProvider.swift in Sources */,
+				4FE5026C247B450800412855 /* Titled.swift in Sources */,
+				4FE5026B247B44F300412855 /* Manager.swift in Sources */,
+				4FE50269247B43B400412855 /* SongTest.swift in Sources */,
+				4FE50270247B453900412855 /* FileManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,6 +720,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -709,6 +733,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.menalto.TukTukTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TukTukTests/TukTukTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TukTuk.app/TukTuk";
@@ -720,6 +746,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -731,6 +758,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.menalto.TukTukTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TukTukTests/TukTukTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TukTuk.app/TukTuk";

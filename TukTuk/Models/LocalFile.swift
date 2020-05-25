@@ -8,14 +8,21 @@
 
 import Foundation
 
-struct LocalFile {
-    var url: URL
+protocol LocalFileProtocol {
+    var url: URL { get }
+    var exists: Bool { get }
+    var size: UInt64? { get }
+    func delete()
+}
 
+struct LocalFile: LocalFileProtocol {
+    var url: URL
+    
     var exists: Bool {
         return FileManager.default.fileExists(atPath: url.path)
     }
 
-    var size: UInt64 {
+    var size: UInt64? {
         return FileManager.default.fileSize(url)
     }
 

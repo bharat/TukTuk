@@ -12,7 +12,7 @@ import XCTest
 class MockLocalFile: LocalFileProtocol {
     var url: URL
     var exists: Bool
-    var size: UInt64
+    var size: UInt64?
 
     internal init(exists: Bool, size: UInt64) {
         self.url = URL(fileURLWithPath: "")
@@ -57,7 +57,76 @@ class SongTest: XCTestCase {
         song.cloudAudio = nil
         song.cloudVideo = nil
     }
-    
+}
+
+extension SongTest {
+    func testMalformedCloudDiagnosis_MissingImage() {
+        XCTAssertEqual(Optional<String>("Missing image for \"[title]\""), song.malformedCloudDiagnosis)
+    }
+
+    func testMalformedCloudDiagnosis_MissingAudioAndVideo() {
+        song.cloudImage = cloudImage
+
+        XCTAssertEqual(Optional<String>("Missing audio and video for \"[title]\""), song.malformedCloudDiagnosis)
+    }
+
+    func testMalformedCloudDiagnosis_MissingVideo() {
+        song.cloudImage = cloudImage
+        song.cloudAudio = cloudAudio
+
+        XCTAssertEqual(nil, song.malformedCloudDiagnosis)
+    }
+
+    func testMalformedCloudDiagnosis_MissingAudio() {
+        song.cloudImage = cloudImage
+        song.cloudAudio = cloudAudio
+        
+        XCTAssertEqual(nil, song.malformedCloudDiagnosis)
+    }
+
+    func testMalformedCloudDiagnosis_MissingNothing() {
+        song.cloudImage = cloudImage
+        song.cloudAudio = cloudAudio
+        song.cloudVideo = cloudVideo
+        
+        XCTAssertEqual(nil, song.malformedCloudDiagnosis)
+    }
+}
+
+extension SongTest {
+    func testHasWellFormedCloud_MissingImage() {
+        XCTAssertEqual(false, song.hasWellFormedCloud)
+    }
+
+    func testHasWellFormedCloud_MissingVideoAndAudio() {
+        song.cloudImage = cloudImage
+        XCTAssertEqual(false, song.hasWellFormedCloud)
+    }
+
+    func testHasWellFormedCloud_HasImageAndAudio() {
+        song.cloudImage = cloudImage
+        song.cloudAudio = cloudAudio
+        
+        XCTAssertEqual(true, song.hasWellFormedCloud)
+    }
+
+    func testHasWellFormedCloud_HasImageAndVideo() {
+        song.cloudImage = cloudImage
+        song.cloudVideo = cloudVideo
+        
+        XCTAssertEqual(true, song.hasWellFormedCloud)
+    }
+
+    func testHasWellFormedCloud_HasAll() {
+        song.cloudImage = cloudImage
+        song.cloudVideo = cloudVideo
+        song.cloudAudio = cloudAudio
+        
+        XCTAssertEqual(true, song.hasWellFormedCloud)
+    }
+}
+
+extension SongTest {
     func testSyncAction_Delete_NoCloudImage_NoLocalImage_NoLocalAudio_NoLocalVideo() {
         XCTAssertEqual(.Delete, song.syncAction)
     }
@@ -70,14 +139,14 @@ class SongTest: XCTestCase {
         XCTAssertEqual(.Delete, song.syncAction)
     }
 
-    func testSyncAction_Download_HasCloudImage_MissingLocalImage() {
+    func testSyncAction_Download_HasWellFormedCloudImage_MissingLocalImage() {
         song.cloudImage = cloudImage
         song.cloudAudio = cloudAudio
 
         XCTAssertEqual(.Download, song.syncAction)
     }
 
-    func testSyncAction_Download_HasCloudImage_LocalImageDifferent() {
+    func testSyncAction_Download_HasWellFormedCloudImage_LocalImageDifferent() {
         song.cloudImage = cloudImage
         song.cloudAudio = cloudAudio
         song.image = localImage
@@ -93,7 +162,7 @@ class SongTest: XCTestCase {
         XCTAssertEqual(.Delete, song.syncAction)
     }
 
-    func testSyncAction_Download_MatchingImage_HasCloudVideo_MissingLocalVideo() {
+    func testSyncAction_Download_MatchingImage_HasWellFormedCloudVideo_MissingLocalVideo() {
         song.cloudImage = cloudImage
         song.image = localImage
         song.cloudVideo = cloudVideo
@@ -101,7 +170,7 @@ class SongTest: XCTestCase {
         XCTAssertEqual(.Download, song.syncAction)
     }
 
-    func testSyncAction_Download_MatchingImage_HasCloudVideo_LocalVideoDifferent() {
+    func testSyncAction_Download_MatchingImage_HasWellFormedCloudVideo_LocalVideoDifferent() {
         song.cloudImage = cloudImage
         song.image = localImage
         song.cloudVideo = cloudVideo
@@ -120,7 +189,7 @@ class SongTest: XCTestCase {
         XCTAssertEqual(.None, song.syncAction)
     }
     
-    func testSyncAction_Download_MatchingImage_HasCloudAudio_MissingLocalAudio() {
+    func testSyncAction_Download_MatchingImage_HasWellFormedCloudAudio_MissingLocalAudio() {
         song.cloudImage = cloudImage
         song.image = localImage
         song.cloudAudio = cloudAudio
@@ -128,7 +197,7 @@ class SongTest: XCTestCase {
         XCTAssertEqual(.Download, song.syncAction)
     }
 
-    func testSyncAction_Download_MatchingImage_HasCloudAudio_LocalAudioDifferent() {
+    func testSyncAction_Download_MatchingImage_HasWellFormedCloudAudio_LocalAudioDifferent() {
         song.cloudImage = cloudImage
         song.image = localImage
         song.cloudAudio = cloudAudio

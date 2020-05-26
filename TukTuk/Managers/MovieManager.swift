@@ -52,7 +52,7 @@ class MovieManager: Manager<Movie> {
     }
 
     func download(_ movie: Movie, from provider: CloudProvider, notify: @escaping () -> ()) -> Canceler? {
-        guard movie.hasCloud else { return nil }
+        guard movie.hasWellFormedCloud else { return nil }
 
         let safeTitle = movie.title.replacingOccurrences(of: "/", with: "%2F")
         return provider.get(file: movie.cloudVideo!.id) { cloudData in

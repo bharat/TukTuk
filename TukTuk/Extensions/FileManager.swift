@@ -30,6 +30,8 @@ extension FileManager {
     }
 
     func fileSize(_ url: URL) -> UInt64? {
-        return try? attributesOfItem(atPath: url.path)[.size] as? UInt64
+        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        return try! attributesOfItem(atPath: url.path)[.size] as! UInt64
+
     }
 }

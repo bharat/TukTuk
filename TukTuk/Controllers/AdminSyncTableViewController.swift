@@ -82,10 +82,8 @@ class AdminSyncTableViewController: UITableViewController {
                     self.updateUI()
 
                     Manager.songs.brokenCloud.forEach { song in
-                        if song.cloudAudio == nil {
-                            self.updateUI(add: "Missing audio for \"\(song.title)\"")
-                        } else {
-                            self.updateUI(add: "Missing image for \"\(song.title)\"")
+                        if let diagnosis = song.malformedCloudDiagnosis {
+                            self.updateUI(add: diagnosis)
                         }
                     }
                 }

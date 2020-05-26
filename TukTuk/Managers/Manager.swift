@@ -10,7 +10,7 @@ import Foundation
 
 protocol Manageable: Titled {
     var hasLocal: Bool { get }
-    var hasCloud: Bool { get }
+    var hasWellFormedCloud: Bool { get }
     var syncAction: SyncAction { get }
     mutating func deleteLocal()
 }
@@ -51,7 +51,7 @@ class Manager<T: Manageable> {
 
     var cloud: [T] {
         return queue.sync {
-            data.values.filter { $0.hasCloud }
+            data.values.filter { $0.hasWellFormedCloud }
         }
     }
 
@@ -63,7 +63,7 @@ class Manager<T: Manageable> {
         queue.sync {
             if var obj = data.removeValue(forKey: obj.title) {
                 obj.deleteLocal()
-                if obj.hasCloud {
+                if obj.hasWellFormedCloud {
                     data[obj.title] = obj
                 }
             }

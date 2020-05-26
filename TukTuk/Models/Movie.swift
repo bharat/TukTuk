@@ -17,7 +17,7 @@ struct Movie: Manageable, Titled {
         return video != nil && video!.exists
     }
 
-    var hasCloud: Bool {
+    var hasWellFormedCloud: Bool {
         return cloudVideo != nil
     }
 

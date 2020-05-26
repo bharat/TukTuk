@@ -27,10 +27,19 @@ struct Song: Manageable {
         return image?.exists ?? false && (audio?.exists ?? false || video?.exists ?? false)
     }
 
-    var hasCloud: Bool {
+    var hasWellFormedCloud: Bool {
         return cloudImage != nil && (cloudAudio != nil || cloudVideo != nil)
     }
     
+    var malformedCloudDiagnosis: String? {
+        if cloudImage == nil {
+            return "Missing image for \"\(title)\""
+        } else if cloudAudio == nil && cloudVideo == nil {
+            return "Missing audio and video for \"\(title)\""
+        }
+        return nil
+    }
+
     var hasMusicVideo: Bool {
         return video?.exists ?? false
     }

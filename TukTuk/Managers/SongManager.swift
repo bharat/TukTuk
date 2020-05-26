@@ -21,7 +21,7 @@ class SongManager: Manager<Song> {
         return queue.sync {
             // TODO: this doesn't handle inconsistencies with missing or malformed cloud video
             data.values.filter { song in
-                (song.cloudAudio == nil && song.cloudImage != nil) || (song.cloudAudio != nil && song.cloudImage == nil)
+                !song.hasWellFormedCloud
             }
         }
     }
@@ -74,7 +74,7 @@ class SongManager: Manager<Song> {
     }
 
     func download(_ song: Song, from provider: CloudProvider, notify: @escaping () -> ()) -> Canceler? {
-        guard song.hasCloud else { return nil }
+        guard song.hasWellFormedCloud else { return nil }
 
         // Call notify() once after both downloads complete
         var doneCount = 0

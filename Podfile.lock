@@ -1,9 +1,9 @@
 PODS:
-  - Amplitude-iOS (4.8.2)
+  - Amplitude-iOS (4.10.0)
   - CollectionViewSlantedLayout (3.1.1)
-  - DynamicBlurView (4.0.0)
-  - EasyAnimation (2.2)
-  - FLEX (3.0.0)
+  - DynamicBlurView (4.1.0)
+  - EasyAnimation (2.2.1)
+  - FLEX (4.2.1)
   - GoogleAPIClientForREST/Core (1.2.1):
     - GTMSessionFetcher (>= 1.1.7)
   - GoogleAPIClientForREST/Drive (1.2.1):
@@ -14,29 +14,29 @@ PODS:
     - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
     - GTMOAuth2 (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.2.1):
-    - GoogleToolboxForMac/Defines (= 2.2.1)
-  - GoogleToolboxForMac/Defines (2.2.1)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.1)":
-    - GoogleToolboxForMac/DebugUtils (= 2.2.1)
-    - GoogleToolboxForMac/Defines (= 2.2.1)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.1)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.2.1)"
+  - GoogleToolboxForMac/DebugUtils (2.3.0):
+    - GoogleToolboxForMac/Defines (= 2.3.0)
+  - GoogleToolboxForMac/Defines (2.3.0)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.0)":
+    - GoogleToolboxForMac/DebugUtils (= 2.3.0)
+    - GoogleToolboxForMac/Defines (= 2.3.0)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.0)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.3.0)"
   - GTMOAuth2 (1.1.6):
     - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.2.2):
-    - GTMSessionFetcher/Full (= 1.2.2)
-  - GTMSessionFetcher/Core (1.2.2)
-  - GTMSessionFetcher/Full (1.2.2):
-    - GTMSessionFetcher/Core (= 1.2.2)
+  - GTMSessionFetcher (1.5.0):
+    - GTMSessionFetcher/Full (= 1.5.0)
+  - GTMSessionFetcher/Core (1.5.0)
+  - GTMSessionFetcher/Full (1.5.0):
+    - GTMSessionFetcher/Core (= 1.5.0)
   - PopupDialog (1.1.1):
     - DynamicBlurView (~> 4.0)
-  - SwiftyGif (5.2.0)
+  - SwiftyGif (5.3.0)
 
 DEPENDENCIES:
   - Amplitude-iOS
   - CollectionViewSlantedLayout
-  - EasyAnimation (from `https://github.com/bharat/EasyAnimation.git`, branch `swift5`)
+  - EasyAnimation
   - FLEX
   - GoogleAPIClientForREST/Drive (~> 1.2.1)
   - GoogleSignIn (~> 4.1.1)
@@ -48,6 +48,7 @@ SPEC REPOS:
     - Amplitude-iOS
     - CollectionViewSlantedLayout
     - DynamicBlurView
+    - EasyAnimation
     - FLEX
     - GoogleAPIClientForREST
     - GoogleSignIn
@@ -57,30 +58,20 @@ SPEC REPOS:
     - PopupDialog
     - SwiftyGif
 
-EXTERNAL SOURCES:
-  EasyAnimation:
-    :branch: swift5
-    :git: https://github.com/bharat/EasyAnimation.git
-
-CHECKOUT OPTIONS:
-  EasyAnimation:
-    :commit: cf40c08e3b2111e97f7c18cae35b2ab407b5e92c
-    :git: https://github.com/bharat/EasyAnimation.git
-
 SPEC CHECKSUMS:
-  Amplitude-iOS: 46c8e6e65c49bb1ad1909a9add1a68e1f8562b3f
+  Amplitude-iOS: 7d8cdc3408ba35c2e68368fc7c692cd104606b94
   CollectionViewSlantedLayout: 24397455acd2461960bc45d394e0ef99c17d03ce
-  DynamicBlurView: ccf9acd2b20c883cc2c72e3524a04d8d3ee20533
-  EasyAnimation: a5117bc37f18721e30a20a039562d7e232639485
-  FLEX: d66c759bce0f6ebbbf472c742380874d846f2883
+  DynamicBlurView: 58e18fae80bb614e34681a4486870e7d257b62e8
+  EasyAnimation: 226d133d23ef0ef99ddfb8928ff2a9a4a77d1cfd
+  FLEX: 64f134947679a5eab867843aef1f125a5c7c7d77
   GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
   GoogleSignIn: d9ef55b10f0aa401a5de2747f59b725e4b9732ac
-  GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
+  GoogleToolboxForMac: 1350d40e86a76f7863928d63bcb0b89c84c521c5
   GTMOAuth2: e8b6512c896235149df975c41d9a36c868ab7fba
-  GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
+  GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   PopupDialog: 720c92befd8bc23c13442254945213db5612f149
-  SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
+  SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
 
-PODFILE CHECKSUM: 0d3c81345e3c402ad93386011f309903c5fee387
+PODFILE CHECKSUM: 8aaed6967a091c0025f77d1e3b208d5c72752f07
 
 COCOAPODS: 1.8.4

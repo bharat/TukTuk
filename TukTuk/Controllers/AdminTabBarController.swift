@@ -11,13 +11,14 @@ import UIKit
 
 class AdminTabBarController: UITabBarController {
     var bunny = BunnyDelight()
-
-    override func viewDidLoad() {
+        
+    override func viewWillAppear(_ animated: Bool) {
         if Manager.songs.localEmpty {
-            // Jump to the Sync tab
-            // TODO: for some reason this doesn't trigger AdminSyncTableViewController.viewDidAppear
-            //       which means that you have to switch tabs away and back again. I must be missing a step here
-            self.selectedIndex = 1
+            // Jump to the Sync tab. Do it async with a delay otherwise the tab's
+            // viewDidAppear() doesn't get called.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.selectedIndex = 1
+            }
         }
     }
     

@@ -15,20 +15,20 @@
                         <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Welcome_Remy_2" translatesAutoresizingMaskIntoConstraints="NO" id="fB6-LO-mz7">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="Welcome_Remy_2" translatesAutoresizingMaskIntoConstraints="NO" id="fB6-LO-mz7">
+                                <rect key="frame" x="-200" y="-80" width="575" height="827"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="fB6-LO-mz7" secondAttribute="trailing" id="2WO-ya-Oqb"/>
-                            <constraint firstItem="fB6-LO-mz7" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="2iA-dR-rHM"/>
-                            <constraint firstItem="fB6-LO-mz7" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="aFg-oi-XKo"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="fB6-LO-mz7" secondAttribute="bottom" id="kuB-Bq-tMw"/>
+                            <constraint firstItem="fB6-LO-mz7" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="-80" id="md6-wK-Wop"/>
+                            <constraint firstItem="fB6-LO-mz7" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="-200" id="vX6-Fy-308"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="fB6-LO-mz7" secondAttribute="bottom" constant="-80" id="x4p-NZ-ZdR"/>
+                            <constraint firstAttribute="trailing" secondItem="fB6-LO-mz7" secondAttribute="trailing" id="xmp-wF-Uli"/>
                         </constraints>
                     </view>
                 </viewController>

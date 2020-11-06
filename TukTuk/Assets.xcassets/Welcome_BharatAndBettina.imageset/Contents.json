@@ -9,13 +9,13 @@
       "scale" : "2x"
     },
     {
+      "filename" : "Bharat_Bettna_Marble_Canyon.jpg",
       "idiom" : "universal",
-      "filename" : "Screen Shot 2019-02-25 at 10.59.22 AM.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

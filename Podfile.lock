@@ -1,29 +1,25 @@
 PODS:
   - Amplitude-iOS (4.10.0)
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
   - CollectionViewSlantedLayout (3.1.1)
   - DynamicBlurView (4.1.0)
   - EasyAnimation (2.2.1)
-  - FLEX (4.2.1)
-  - GoogleAPIClientForREST/Core (1.2.1):
+  - GoogleAPIClientForREST/Core (1.5.1):
     - GTMSessionFetcher (>= 1.1.7)
-  - GoogleAPIClientForREST/Drive (1.2.1):
+  - GoogleAPIClientForREST/Drive (1.5.1):
     - GoogleAPIClientForREST/Core
     - GTMSessionFetcher (>= 1.1.7)
-  - GoogleSignIn (4.1.2):
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
-    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
-    - GTMOAuth2 (~> 1.0)
+  - GoogleSignIn (5.0.2):
+    - AppAuth (~> 1.2)
+    - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.3.0):
-    - GoogleToolboxForMac/Defines (= 2.3.0)
-  - GoogleToolboxForMac/Defines (2.3.0)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.0)":
-    - GoogleToolboxForMac/DebugUtils (= 2.3.0)
-    - GoogleToolboxForMac/Defines (= 2.3.0)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.0)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.3.0)"
-  - GTMOAuth2 (1.1.6):
-    - GTMSessionFetcher (~> 1.1)
+  - GTMAppAuth (1.1.0):
+    - AppAuth/Core (~> 1.4)
+    - GTMSessionFetcher (~> 1.4)
   - GTMSessionFetcher (1.5.0):
     - GTMSessionFetcher/Full (= 1.5.0)
   - GTMSessionFetcher/Core (1.5.0)
@@ -37,41 +33,38 @@ DEPENDENCIES:
   - Amplitude-iOS
   - CollectionViewSlantedLayout
   - EasyAnimation
-  - FLEX
-  - GoogleAPIClientForREST/Drive (~> 1.2.1)
-  - GoogleSignIn (~> 4.1.1)
-  - PopupDialog (~> 1.1)
+  - GoogleAPIClientForREST/Drive
+  - GoogleSignIn
+  - PopupDialog
   - SwiftyGif
 
 SPEC REPOS:
   trunk:
     - Amplitude-iOS
+    - AppAuth
     - CollectionViewSlantedLayout
     - DynamicBlurView
     - EasyAnimation
-    - FLEX
     - GoogleAPIClientForREST
     - GoogleSignIn
-    - GoogleToolboxForMac
-    - GTMOAuth2
+    - GTMAppAuth
     - GTMSessionFetcher
     - PopupDialog
     - SwiftyGif
 
 SPEC CHECKSUMS:
   Amplitude-iOS: 7d8cdc3408ba35c2e68368fc7c692cd104606b94
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   CollectionViewSlantedLayout: 24397455acd2461960bc45d394e0ef99c17d03ce
   DynamicBlurView: 58e18fae80bb614e34681a4486870e7d257b62e8
   EasyAnimation: 226d133d23ef0ef99ddfb8928ff2a9a4a77d1cfd
-  FLEX: 64f134947679a5eab867843aef1f125a5c7c7d77
-  GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
-  GoogleSignIn: d9ef55b10f0aa401a5de2747f59b725e4b9732ac
-  GoogleToolboxForMac: 1350d40e86a76f7863928d63bcb0b89c84c521c5
-  GTMOAuth2: e8b6512c896235149df975c41d9a36c868ab7fba
+  GoogleAPIClientForREST: 4bb409633efcc2e1b3f945afe7e35039b5a61db2
+  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
+  GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   PopupDialog: 720c92befd8bc23c13442254945213db5612f149
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
 
-PODFILE CHECKSUM: 8aaed6967a091c0025f77d1e3b208d5c72752f07
+PODFILE CHECKSUM: cccfdb2cb3900b730a0fa2adb285b90db9bfb3d8
 
 COCOAPODS: 1.10.0

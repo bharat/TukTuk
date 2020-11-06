@@ -9,6 +9,8 @@
 import Foundation
 import GoogleSignIn
 import GoogleAPIClientForREST
+import GTMSessionFetcher
+import UIKit
 
 let CLIENT_ID = "519173767662-ca9oluprutan3a2s0n619no01mlnla3a.apps.googleusercontent.com"
 
@@ -33,16 +35,19 @@ class GoogleDrive: NSObject, CloudProvider {
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().scopes = [kGTLRAuthScopeDriveReadonly]
     }
-
-    func signIn(uiDelegate: GIDSignInUIDelegate? = nil) {
-        if let uiDelegate = uiDelegate {
-            GIDSignIn.sharedInstance().uiDelegate = uiDelegate
+        
+    func handle(_ url: URL) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url)
+    }
+    
+    func signIn(uiDelegate: UIViewController) {
+        GIDSignIn.sharedInstance().presentingViewController = uiDelegate
+        GIDSignIn.sharedInstance().restorePreviousSignIn()
+        if !isAuthenticated {
             GIDSignIn.sharedInstance().signIn()
-        } else {
-            GIDSignIn.sharedInstance().signInSilently()
         }
     }
-
+    
     func signOut() {
         GIDSignIn.sharedInstance().signOut()
     }
@@ -70,10 +75,16 @@ class GoogleDrive: NSObject, CloudProvider {
 
 extension GoogleDrive: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if let _ = error {
-            GoogleDrive.instance.service.authorizer = nil
-        } else {
-            GoogleDrive.instance.service.authorizer = user.authentication.fetcherAuthorizer()
+        
+        if let error = error {
+          if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
+            print("The user has not signed in before or they have since signed out.")
+          } else {
+            print("\(error.localizedDescription)")
+          }
+          return
         }
+        
+        GoogleDrive.instance.service.authorizer = user.authentication.fetcherAuthorizer()
     }
 }

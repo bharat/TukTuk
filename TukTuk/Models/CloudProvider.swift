@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CloudFileProtocol {
     var name: String { get }
@@ -49,6 +50,7 @@ protocol CloudProvider {
     var songsFolder: String { get }
     var moviesFolder: String { get }
 
+    func signIn(uiDelegate: UIViewController)
     func list(folder id: String, callback: @escaping ([CloudFile])->())
     func get(file id: String, callback: @escaping (Data?)->()) -> Canceler
 }

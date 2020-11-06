@@ -1,13 +1,12 @@
-platform :ios, '11.0'
+platform :ios, '14.0'
 use_frameworks!
 
 target 'TukTuk' do
   pod 'EasyAnimation'
   pod 'CollectionViewSlantedLayout'
-  pod 'FLEX', :configurations => ['Debug'], :inhibit_warnings => true
   pod 'Amplitude-iOS'
-  pod 'GoogleAPIClientForREST/Drive', '~> 1.2.1', :inhibit_warnings => true
-  pod 'GoogleSignIn', '~> 4.1.1'
-  pod 'PopupDialog', '~> 1.1', :inhibit_warnings => true
+  pod 'GoogleAPIClientForREST/Drive'
+  pod 'GoogleSignIn'
+  pod 'PopupDialog'
   pod 'SwiftyGif'
 end

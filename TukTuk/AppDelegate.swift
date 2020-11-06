@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UIApplication.shared.isIdleTimerDisabled = true
 
-        GoogleDrive.instance.signIn()
         Amplitude.instance()?.initializeApiKey("acf6c06b5191ae9e84ae07c47d02759e")
         EasyAnimation.enable()
         Stats().appLaunched()
@@ -37,12 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate {
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
+        return GoogleDrive.instance.handle(url)
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        let sourceApplication = options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String
-        let annotation = options[UIApplication.OpenURLOptionsKey.annotation]
-        return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
+        return GoogleDrive.instance.handle(url)
     }
 }

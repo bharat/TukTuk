@@ -29,7 +29,7 @@ class AdminSyncTableViewController: UITableViewController {
     @IBOutlet weak var statusCell: UITableViewCell!
     @IBOutlet weak var resetButton: UIButton!
 
-    let cloudProvider = GoogleDrive.instance
+    let cloudProvider: CloudProvider = GoogleDrive.instance
     let sync = SyncEngine(cloudProvider: GoogleDrive.instance, concurrency: DESIRED_CONCURRENCY)
     var statusMessages: [String] = []
 
@@ -202,5 +202,5 @@ class AdminSyncTableViewController: UITableViewController {
     }
 }
 
-extension AdminSyncTableViewController: GIDSignInUIDelegate {
-}
+//extension AdminSyncTableViewController: GIDSignInUIDelegate {
+//}

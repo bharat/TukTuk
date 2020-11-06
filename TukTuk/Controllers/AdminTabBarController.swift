@@ -15,7 +15,9 @@ class AdminTabBarController: UITabBarController {
     override func viewDidLoad() {
         if Manager.songs.localEmpty {
             // Jump to the Sync tab
-            selectedIndex = 1
+            // TODO: for some reason this doesn't trigger AdminSyncTableViewController.viewDidAppear
+            //       which means that you have to switch tabs away and back again. I must be missing a step here
+            self.selectedIndex = 1
         }
     }
     

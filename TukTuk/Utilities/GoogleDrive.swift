@@ -40,6 +40,10 @@ class GoogleDrive: NSObject, CloudProvider {
         return GIDSignIn.sharedInstance().handle(url)
     }
     
+    func silentSignIn() {
+        GIDSignIn.sharedInstance().restorePreviousSignIn()
+    }
+    
     func signIn(uiDelegate: UIViewController) {
         GIDSignIn.sharedInstance().presentingViewController = uiDelegate
         GIDSignIn.sharedInstance().restorePreviousSignIn()

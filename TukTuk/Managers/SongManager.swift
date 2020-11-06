@@ -99,21 +99,24 @@ class SongManager: Manager<Song> {
             }
             notifyWrapper()
         }
+        var cancelers = [canceler1]
 
-        let canceler2 = provider.get(file: song.cloudAudio!.id) { cloudData in
-            if let cloudData = cloudData {
-                let local = LocalFile(url: self.base.appendingPathComponent("\(safeTitle).mp3"))
-                self.fm.createNonBackupFile(at: local.url, contents: cloudData)
+        if let cloudAudio = song.cloudAudio {
+            let canceler2 = provider.get(file: cloudAudio.id) { cloudData in
+                if let cloudData = cloudData {
+                    let local = LocalFile(url: self.base.appendingPathComponent("\(safeTitle).mp3"))
+                    self.fm.createNonBackupFile(at: local.url, contents: cloudData)
 
-                self.queue.sync {
-                    var song = self.data[song.title] ?? Song(title: song.title)
-                    song.audio = local
-                    self.data[song.title] = song
+                    self.queue.sync {
+                        var song = self.data[song.title] ?? Song(title: song.title)
+                        song.audio = local
+                        self.data[song.title] = song
+                    }
                 }
+                notifyWrapper()
             }
-            notifyWrapper()
+            cancelers += [canceler2]
         }
-        var cancelers = [canceler1, canceler2]
 
         if let cloudVideo = song.cloudVideo {
             let canceler3 = provider.get(file: cloudVideo.id) { cloudData in

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,19 +25,19 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="fB6-LO-mz7" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="79i-RS-gKx"/>
-                            <constraint firstItem="fB6-LO-mz7" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" id="jzN-69-fQc"/>
-                            <constraint firstItem="fB6-LO-mz7" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="soz-Gd-Fx6"/>
-                            <constraint firstItem="fB6-LO-mz7" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="tT5-Is-jHh"/>
+                            <constraint firstAttribute="trailing" secondItem="fB6-LO-mz7" secondAttribute="trailing" id="2WO-ya-Oqb"/>
+                            <constraint firstItem="fB6-LO-mz7" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="2iA-dR-rHM"/>
+                            <constraint firstItem="fB6-LO-mz7" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="aFg-oi-XKo"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="fB6-LO-mz7" secondAttribute="bottom" id="kuB-Bq-tMw"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Welcome_Remy_2" width="887" height="1139"/>
+        <image name="Welcome_Remy_2" width="681" height="510.66665649414062"/>
     </resources>
 </document>

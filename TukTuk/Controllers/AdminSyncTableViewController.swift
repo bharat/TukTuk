@@ -40,6 +40,7 @@ class AdminSyncTableViewController: UITableViewController {
         sync.notifyStop = { msg in
             self.updateUI(remove: msg)
         }
+        cloudProvider.silentSignIn()
     }
 
     func spinner(_ outlet: Outlet) -> UIActivityIndicatorView {
@@ -201,6 +202,3 @@ class AdminSyncTableViewController: UITableViewController {
         self.present(popup, animated: true, completion: nil)
     }
 }
-
-//extension AdminSyncTableViewController: GIDSignInUIDelegate {
-//}

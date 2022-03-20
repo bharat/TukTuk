@@ -42,7 +42,7 @@ class WelcomeViewController: UIViewController {
         //        show(minigame.uivc, sender: self)
         
         // Or skipping the welcome screen
-        //        self.performSegue(withIdentifier: "Songs", sender: self)
+        self.performSegue(withIdentifier: "Songs", sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {

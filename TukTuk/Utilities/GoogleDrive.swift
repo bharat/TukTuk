@@ -39,33 +39,46 @@ class GoogleDrive: NSObject, CloudProvider {
         return GIDSignIn.sharedInstance.handle(url)
     }
     
-    func silentSignIn() {
-        GIDSignIn.sharedInstance.restorePreviousSignIn() { user, error in 
-            self.setupAuthorizer()
-        }
-    }
-    
-    func signIn(uiDelegate: UIViewController) {
-        if !isAuthenticated {
-            GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: uiDelegate)
-            
-            GIDSignIn.sharedInstance.addScopes([kGTLRAuthScopeDriveReadonly], presenting: uiDelegate) { user, error in
-                guard let user = user else {
-                    print("Error missing user at Google signin")
-                    return
+    func silentSignIn(callback: @escaping (Bool) -> ()) {
+        if GIDSignIn.sharedInstance.hasPreviousSignIn() {
+            GIDSignIn.sharedInstance.restorePreviousSignIn() { user, error in
+                if error != nil {
+                    callback(false)
                 }
                 
-                guard error == nil else {
-                    print("Error signing in as \(user): \(String(describing: error))")
-                    return
+                self.finishSignIn() {
+                    callback(true)
                 }
-
-                self.setupAuthorizer()
             }
         }
     }
     
-    func setupAuthorizer() {
+    func signIn(uiDelegate: UIViewController, callback: @escaping () -> ()) {
+        if isAuthenticated {
+            finishSignIn() {
+                callback()
+            }
+        } else if GIDSignIn.sharedInstance.hasPreviousSignIn() {
+            GIDSignIn.sharedInstance.restorePreviousSignIn() { user, error in
+                guard error == nil else { return }
+
+                self.finishSignIn() {
+                    callback()
+                }
+            }
+        } else {
+            GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: uiDelegate)
+            GIDSignIn.sharedInstance.addScopes([kGTLRAuthScopeDriveReadonly], presenting: uiDelegate) { user, error in
+                guard error == nil else { return }
+
+                self.finishSignIn {
+                    callback()
+                }
+            }
+        }
+    }
+    
+    func finishSignIn(callback: @escaping () -> ()) {
         GIDSignIn.sharedInstance.currentUser?.authentication.do { authentication, error in
             guard error == nil else {
                 print("Error authenticating: \(String(describing: error))")
@@ -76,6 +89,7 @@ class GoogleDrive: NSObject, CloudProvider {
                 return
             }
             self.service.authorizer = authentication.fetcherAuthorizer()
+            callback()
         }
     }
     
@@ -104,19 +118,3 @@ class GoogleDrive: NSObject, CloudProvider {
         }
     }
 }
-
-//extension GoogleDrive: GIDSignInDelegate {
-//    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-//
-//        if let error = error {
-//          if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
-//            print("The user has not signed in before or they have since signed out.")
-//          } else {
-//            print("\(error.localizedDescription)")
-//          }
-//          return
-//        }
-//
-//        GoogleDrive.instance.service.authorizer = user.authentication.fetcherAuthorizer()
-//    }
-//}

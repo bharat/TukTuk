@@ -54,7 +54,6 @@ class SongManager: Manager<Song> {
             }
         }
 
-        print("LOAD SONGS")
         provider.list(folder: provider.songsFolder) { files in
             self.queue.sync {
                 files.forEach { file in

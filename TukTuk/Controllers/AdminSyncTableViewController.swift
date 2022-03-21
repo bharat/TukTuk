@@ -40,7 +40,6 @@ class AdminSyncTableViewController: UITableViewController {
         sync.notifyStop = { msg in
             self.updateUI(remove: msg)
         }
-        cloudProvider.silentSignIn()
     }
 
     func spinner(_ outlet: Outlet) -> UIActivityIndicatorView {
@@ -68,38 +67,52 @@ class AdminSyncTableViewController: UITableViewController {
 
         statusMessages = []
         if cloudProvider.isAuthenticated {
-            self.spinner(.songsCloud).startAnimating()
-            self.spinner(.moviesCloud).startAnimating()
-            syncButton.isEnabled = false
-
-            DispatchQueue.global().async {
-                Manager.songs.loadLocal()
-                Manager.movies.loadLocal()
-                self.updateUI()
-
-                Manager.songs.loadCloud(from: self.cloudProvider) {
-                    self.spinner(.songsCloud).stopAnimating()
-                    self.counter(.songsCloud).text = "\(Manager.songs.cloud.count)"
-                    self.updateUI()
-
-                    Manager.songs.brokenCloud.forEach { song in
-                        if let diagnosis = song.malformedCloudDiagnosis {
-                            self.updateUI(add: diagnosis)
+            self.updateSyncStatus()
+        } else {
+            cloudProvider.silentSignIn() { success in
+                if success {
+                    self.updateSyncStatus()
+                } else {
+                    let popup = PopupDialog(title: "Let's get started", message: "It's pretty easy. First, log in to Google, then hit the Synchronize button") {
+                        self.cloudProvider.signIn(uiDelegate: self) {
+                            self.updateSyncStatus()
                         }
                     }
+                    self.present(popup, animated: true) {
+                        self.updateSyncStatus()
+                    }
                 }
+            }
+        }
+    }
+    
+    func updateSyncStatus() {
+        self.spinner(.songsCloud).startAnimating()
+        self.spinner(.moviesCloud).startAnimating()
+        syncButton.isEnabled = false
 
-                Manager.movies.loadCloud(from: self.cloudProvider) {
-                    self.spinner(.moviesCloud).stopAnimating()
-                    self.counter(.moviesCloud).text = "\(Manager.movies.cloud.count)"
-                    self.updateUI()
+        DispatchQueue.global().async {
+            Manager.songs.loadLocal()
+            Manager.movies.loadLocal()
+            self.updateUI()
+
+            Manager.songs.loadCloud(from: self.cloudProvider) {
+                self.spinner(.songsCloud).stopAnimating()
+                self.counter(.songsCloud).text = "\(Manager.songs.cloud.count)"
+                self.updateUI()
+
+                Manager.songs.brokenCloud.forEach { song in
+                    if let diagnosis = song.malformedCloudDiagnosis {
+                        self.updateUI(add: diagnosis)
+                    }
                 }
             }
-        } else {
-            let popup = PopupDialog(title: "Let's get started", message: "It's pretty easy. First, log in to Google, then hit the Synchronize button") {
-                self.cloudProvider.signIn(uiDelegate: self)
+
+            Manager.movies.loadCloud(from: self.cloudProvider) {
+                self.spinner(.moviesCloud).stopAnimating()
+                self.counter(.moviesCloud).text = "\(Manager.movies.cloud.count)"
+                self.updateUI()
             }
-            self.present(popup, animated: true, completion: nil)
         }
 
         self.updateUI()

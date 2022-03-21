@@ -50,8 +50,8 @@ protocol CloudProvider {
     var songsFolder: String { get }
     var moviesFolder: String { get }
 
-    func silentSignIn()
-    func signIn(uiDelegate: UIViewController)
+    func silentSignIn(callback: @escaping (Bool) -> ())
+    func signIn(uiDelegate: UIViewController, callback: @escaping () -> ())
     func list(folder id: String, callback: @escaping ([CloudFile])->())
     func get(file id: String, callback: @escaping (Data?)->()) -> Canceler
 }

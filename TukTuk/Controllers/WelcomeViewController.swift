@@ -43,6 +43,7 @@ class WelcomeViewController: UIViewController {
         
         // Or skipping the welcome screen
         //        self.performSegue(withIdentifier: "Songs", sender: self)
+        //        self.performSegue(withIdentifier: "Admin", sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {

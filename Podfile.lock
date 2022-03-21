@@ -29,6 +29,7 @@ PODS:
   - PopupDialog (1.1.1):
     - DynamicBlurView (~> 4.0)
   - SwiftyGif (5.4.3)
+  - TOPasscodeViewController (0.0.2)
 
 DEPENDENCIES:
   - Amplitude-iOS
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - PopupDialog
   - SwiftyGif
+  - TOPasscodeViewController
 
 SPEC REPOS:
   trunk:
@@ -52,6 +54,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - PopupDialog
     - SwiftyGif
+    - TOPasscodeViewController
 
 SPEC CHECKSUMS:
   Amplitude-iOS: 7d8cdc3408ba35c2e68368fc7c692cd104606b94
@@ -65,7 +68,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   PopupDialog: 720c92befd8bc23c13442254945213db5612f149
   SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
+  TOPasscodeViewController: 03b5df3762a7be1511102093c644a42275bddf24
 
-PODFILE CHECKSUM: a882013b3f3636af10585b07e9ceb4a5208085f6
+PODFILE CHECKSUM: d077e13aee452583cba8e5f87f14553ecd466eca
 
 COCOAPODS: 1.11.3

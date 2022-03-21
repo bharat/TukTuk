@@ -81,6 +81,7 @@
 		4FF69124225E9F8800595BDE /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF69123225E9F8800595BDE /* Bezier.swift */; };
 		4FF69126225EB50F00595BDE /* CubicCurveAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */; };
 		4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFEB1FC2130BB26008A3723 /* CaptainAmerica.swift */; };
+		766D1B1027E808830043E616 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766D1B0F27E808830043E616 /* AdminViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +167,7 @@
 		4FF69125225EB50E00595BDE /* CubicCurveAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubicCurveAlgorithm.swift; sourceTree = "<group>"; };
 		4FFC1C662208B6FA0019A07B /* Media */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Media; sourceTree = "<group>"; };
 		4FFEB1FC2130BB26008A3723 /* CaptainAmerica.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptainAmerica.swift; sourceTree = "<group>"; };
+		766D1B0F27E808830043E616 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		AB9C99B4DB907A0FA705882B /* Pods_TukTuk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TukTuk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D34EA84987384C2AFDDEEE23 /* Pods-TukTuk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TukTuk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TukTuk/Pods-TukTuk.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -331,6 +333,7 @@
 				4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */,
 				4F24D0DF22A5D7F60039B83E /* AdminSyncTableViewController.swift */,
 				4F0F5A3222AC3A080012934B /* AdminTabBarController.swift */,
+				766D1B0F27E808830043E616 /* AdminViewController.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
 				4F8A2AAA20A0E3B2000C2CA5 /* WelcomeViewController.swift */,
 			);
@@ -524,6 +527,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleSignIn/GoogleSignIn.framework",
 				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
+				"${BUILT_PRODUCTS_DIR}/TOPasscodeViewController/TOPasscodeViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -538,6 +542,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleSignIn.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TOPasscodeViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -652,6 +657,7 @@
 				4F0F25FD22B1F184006E2CB2 /* SyncAction.swift in Sources */,
 				4F2C33DB24709F0500DB7438 /* AVPlayer.swift in Sources */,
 				4F84C38F1FC51AC40093801B /* Animations.swift in Sources */,
+				766D1B1027E808830043E616 /* AdminViewController.swift in Sources */,
 				4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */,
 				4F074AE622A74137008E5F22 /* GoogleDrive.swift in Sources */,
 				4F2F756E23668B110032865D /* Delight.swift in Sources */,

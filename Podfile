@@ -10,6 +10,7 @@ target 'TukTuk' do
   pod 'GoogleSignIn'
   pod 'PopupDialog'
   pod 'SwiftyGif'
+  pod 'TOPasscodeViewController'
 end
 
 # ref https://stackoverflow.com/questions/63056454/xcode-12-deployment-target-warnings-when-use-cocoapods

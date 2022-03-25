@@ -30,6 +30,6 @@ extension AdminViewController: TOPasscodeViewControllerDelegate {
     }
     
     func passcodeViewController(_ passcodeViewController: TOPasscodeViewController, isCorrectCode code: String) -> Bool {
-        return code == "14920"
+        return code == "192837"
     }
 }

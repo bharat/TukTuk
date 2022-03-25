@@ -50,6 +50,8 @@ class GoogleDrive: NSObject, CloudProvider {
                     callback(true)
                 }
             }
+        } else {
+            callback(false)
         }
     }
     

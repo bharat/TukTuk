@@ -31,7 +31,7 @@ class AdminSettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 3
+            return 2
         case 1:
             return 2
         case 2:
@@ -63,14 +63,6 @@ class AdminSettingsViewController: UITableViewController {
         switch indexPath {
         // Play Next
         case IndexPath(row: 0, section: 0):
-            cell.title.text = "Animation"
-            cell.detail.text = Settings.cuedAnimation?.title ?? .emptyTitle
-            cell.data = Animations.all
-            cell.select = { obj in
-                Settings.cuedAnimation = obj as! Animation?
-                self.redraw()
-            }
-        case IndexPath(row: 1, section: 0):
             cell.title.text = "Movie"
             cell.detail.text = Settings.cuedMovie?.title ?? .emptyTitle
             cell.data = Manager.movies.local.sorted { $0.title < $1.title }
@@ -78,7 +70,7 @@ class AdminSettingsViewController: UITableViewController {
                 Settings.cuedMovie = obj as! Movie?
                 self.redraw()
             }
-        case IndexPath(row: 2, section: 0):
+        case IndexPath(row: 1, section: 0):
             cell.title.text = "MiniGame"
             cell.detail.text = Settings.cuedMiniGame?.title ?? .emptyTitle
             cell.data = MiniGames.all

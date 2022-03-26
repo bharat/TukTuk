@@ -20,12 +20,11 @@
                     <navigationItem key="navigationItem" id="dlp-LW-kwh"/>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="Songs" modalPresentationStyle="fullScreen" id="ZEd-IE-Q7m"/>
-                        <segue destination="gLZ-Qy-6sr" kind="presentation" identifier="Admin" id="Kqh-Py-kH0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="00A-Nn-URB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-710" y="138"/>
+            <point key="canvasLocation" x="-2996" y="854"/>
         </scene>
         <!--Song View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -153,13 +152,12 @@
                         <outlet property="songCollection" destination="rKp-9S-RKq" id="QuR-aK-0fC"/>
                         <outlet property="songCollectionLayout" destination="5jt-ki-gHy" id="Yld-xE-7ka"/>
                         <outlet property="stopButton" destination="m6W-cQ-EmU" id="xbK-wO-igf"/>
-                        <segue destination="Zok-SV-WMn" kind="presentation" identifier="Welcome" modalPresentationStyle="fullScreen" id="lwy-ak-aQw"/>
                         <segue destination="gLZ-Qy-6sr" kind="presentation" identifier="Admin" id="iuM-NL-3j5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="133.59375" y="135.9375"/>
+            <point key="canvasLocation" x="-1490" y="854"/>
         </scene>
         <!--Admin View Controller-->
         <scene sceneID="HDf-gt-iry">
@@ -538,9 +536,6 @@ line 4</string>
             <point key="canvasLocation" x="640" y="855"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Kqh-Py-kH0"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="Admin_Settings" width="30" height="30"/>
         <image name="Admin_Synchronize" width="30" height="30"/>

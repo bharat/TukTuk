@@ -88,10 +88,6 @@ class SongViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-
-        if Settings.cuedAnimation != nil {
-            self.performSegue(withIdentifier: "Welcome", sender: self)
-        }
     }
 
     var lastFrame = CGRect(x: 0, y: 0, width: 0, height: 0)

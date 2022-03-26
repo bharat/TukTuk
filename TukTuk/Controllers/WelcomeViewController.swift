@@ -28,19 +28,21 @@ class WelcomeViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleWelcomeTap(sender:)))
         welcomeImageView.addGestureRecognizer(tap)
 
-        let long = UILongPressGestureRecognizer(target: self, action: #selector(showSettings(gesture:)))
-        long.minimumPressDuration = 5.0
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(skipToSongs(gesture:)))
+        long.minimumPressDuration = 2.0
         welcomeImageView.addGestureRecognizer(long)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        // Debug functionality
+        //
         // Useful for quickly jumping to a specific minigame
         //        let minigame = CaptainAmerica()
         //        minigame.uivc.modalPresentationStyle = .fullScreen
         //        show(minigame.uivc, sender: self)
-        
+        //
         // Or skipping the welcome screen
         //        self.performSegue(withIdentifier: "Songs", sender: self)
         //        self.performSegue(withIdentifier: "Admin", sender: self)
@@ -53,9 +55,7 @@ class WelcomeViewController: UIViewController {
         // Settings.cuedAnimation = FaceBalls()
 
         // Run a random welcome animation, or a preset if specified
-        let animation = Settings.cuedAnimation ?? Animations.all.randomElement()!
-        Settings.cuedAnimation = nil
-        animation.animate(view: self.welcomeImageView) {
+        Animations.all.randomElement()!.animate(view: self.welcomeImageView) {
             self.performSegue(withIdentifier: "Songs", sender: self)
 
             // It's useful to re-enable this since in the simulator you can hit escape
@@ -64,9 +64,9 @@ class WelcomeViewController: UIViewController {
         }
     }
 
-    @objc func showSettings(gesture: UIGestureRecognizer) {
+    @objc func skipToSongs(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            performSegue(withIdentifier: "Admin", sender: self)
+            performSegue(withIdentifier: "Songs", sender: self)
         }
     }
 }

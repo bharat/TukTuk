@@ -9,7 +9,6 @@
 import Foundation
 
 class Settings {
-    static var cuedAnimation: Animation?
     static var cuedMovie: Movie?
     static var cuedMiniGame: MiniGame?
 }

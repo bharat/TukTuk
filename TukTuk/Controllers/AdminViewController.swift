@@ -25,7 +25,7 @@ extension AdminViewController: TOPasscodeViewControllerDelegate {
     func didTapCancel(in passcodeViewController: TOPasscodeViewController) {
         // Dismiss the passcode modal, then the admin modal itself
         self.dismiss(animated: true) {
-            self.dismiss(animated: true)
+            self.performSegue(withIdentifier: "unwindToSongs", sender: self)
         }
     }
     

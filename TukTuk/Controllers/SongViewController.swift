@@ -66,24 +66,7 @@ class SongViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        songs = Manager.songs.local.sorted {
-            $0.title < $1.title
-        }
-
-        movies = Manager.movies.local.sorted {
-            $0.title < $1.title
-        }
-
-        if songs.isEmpty {
-            let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
-                self.performSegue(withIdentifier: "Admin", sender: self)
-            }
-            popup.addButton(DefaultButton(title: "Ok") { })
-            self.present(popup, animated: true, completion: nil)
-        }
-
-        movieCountdown = UserDefaults.standard.movieCountdown
-        movieButton.isHidden = (movieCountdown > 0)
+        prepareView()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -112,9 +95,35 @@ class SongViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         UserDefaults.standard.movieCountdown = movieCountdown
     }
-
+    
     @objc func appEnteredBackground() {
         UserDefaults.standard.movieCountdown = movieCountdown
+    }
+    
+    @IBAction func unwindToSongs(unwindSegue: UIStoryboardSegue) {
+        prepareView()
+    }
+    
+    func prepareView() {
+        print("SongView: preparing view")
+        songs = Manager.songs.local.sorted {
+            $0.title < $1.title
+        }
+
+        movies = Manager.movies.local.sorted {
+            $0.title < $1.title
+        }
+
+        if songs.isEmpty {
+            let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
+                self.performSegue(withIdentifier: "Admin", sender: self)
+            }
+            popup.addButton(DefaultButton(title: "Ok") { })
+            self.present(popup, animated: true, completion: nil)
+        }
+
+        movieCountdown = UserDefaults.standard.movieCountdown
+        movieButton.isHidden = (movieCountdown > 0)
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {

@@ -19,12 +19,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="dlp-LW-kwh"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="Songs" modalPresentationStyle="fullScreen" id="ZEd-IE-Q7m"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="Songs" modalPresentationStyle="fullScreen" id="Lpb-wE-qDL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="00A-Nn-URB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2996" y="854"/>
+            <point key="canvasLocation" x="-1890" y="854"/>
         </scene>
         <!--Song View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -145,6 +145,7 @@
                             <constraint firstItem="zSz-j3-eOp" firstAttribute="width" secondItem="gxk-wP-nqV" secondAttribute="width" id="ycb-co-C7V"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="cbI-iR-bMv"/>
                     <connections>
                         <outlet property="buttons" destination="7Ly-tq-BV9" id="rpB-hX-ddr"/>
                         <outlet property="movieButton" destination="Bcl-Wj-hJe" id="e1C-Jr-ZOk"/>
@@ -152,37 +153,37 @@
                         <outlet property="songCollection" destination="rKp-9S-RKq" id="QuR-aK-0fC"/>
                         <outlet property="songCollectionLayout" destination="5jt-ki-gHy" id="Yld-xE-7ka"/>
                         <outlet property="stopButton" destination="m6W-cQ-EmU" id="xbK-wO-igf"/>
-                        <segue destination="gLZ-Qy-6sr" kind="presentation" identifier="Admin" id="iuM-NL-3j5"/>
+                        <segue destination="gLZ-Qy-6sr" kind="presentation" identifier="Admin" modalPresentationStyle="fullScreen" id="o3S-se-pqM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1490" y="854"/>
+            <point key="canvasLocation" x="-1077" y="854"/>
         </scene>
         <!--Admin View Controller-->
         <scene sceneID="HDf-gt-iry">
             <objects>
                 <viewController id="gLZ-Qy-6sr" customClass="AdminViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mJo-O6-cad">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fCX-xc-5pl">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="Secret Admin Panel!" id="neb-7C-sav">
                                         <barButtonItem key="rightBarButtonItem" title="Done" id="vOE-1Z-vYr">
                                             <connections>
-                                                <action selector="done:" destination="gLZ-Qy-6sr" id="bu9-lk-uDT"/>
+                                                <segue destination="tOt-yu-k6J" kind="unwind" identifier="unwindToSongs" unwindAction="unwindToSongsWithUnwindSegue:" id="pHw-ej-ssp"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="911-xc-ZR9">
-                                <rect key="frame" x="0.0" y="56" width="414" height="752"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <connections>
-                                    <segue destination="Suq-8V-jhy" kind="embed" id="RJi-HO-tux"/>
+                                    <segue destination="Suq-8V-jhy" kind="embed" id="tnM-8o-qAs"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -200,6 +201,7 @@
                     <navigationItem key="navigationItem" id="Cxl-CD-pSk"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ycQ-LY-LCs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="tOt-yu-k6J" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-251" y="855"/>
         </scene>
@@ -208,7 +210,7 @@
             <objects>
                 <tableViewController title="Settings" id="E5K-1k-TcD" userLabel="Admin Setting" customClass="AdminSettingsViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="top" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="vgH-pE-Oiz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="752"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -276,7 +278,7 @@
             <objects>
                 <tableViewController title="Media" id="S7w-rP-1Z8" userLabel="Admin Sync" customClass="AdminSyncTableViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Tya-bN-C3z">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="752"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <sections>

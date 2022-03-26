@@ -67,13 +67,17 @@ class AdminSyncTableViewController: UITableViewController {
 
         statusMessages = []
         if cloudProvider.isAuthenticated {
+            print("Cloud: authenticated")
             self.updateSyncStatus()
         } else {
+            print("Cloud: not authenticated")
             cloudProvider.silentSignIn() { success in
+                print("Cloud: silent sign-on returned \(success)")
                 if success {
                     self.updateSyncStatus()
                 } else {
                     let popup = PopupDialog(title: "Let's get started", message: "It's pretty easy. First, log in to Google, then hit the Synchronize button") {
+                        print("Cloud: explicit sign-on requested")
                         self.cloudProvider.signIn(uiDelegate: self) {
                             self.updateSyncStatus()
                         }
@@ -87,6 +91,7 @@ class AdminSyncTableViewController: UITableViewController {
     }
     
     func updateSyncStatus() {
+        print("Sync: updateSyncStatus")
         self.spinner(.songsCloud).startAnimating()
         self.spinner(.moviesCloud).startAnimating()
         syncButton.isEnabled = false

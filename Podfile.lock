@@ -6,6 +6,7 @@ PODS:
   - AppAuth/Core (1.5.0)
   - AppAuth/ExternalUserAgent (1.5.0):
     - AppAuth/Core
+  - BiometricAuthentication (3.1.3)
   - CollectionViewSlantedLayout (3.1.1)
   - DynamicBlurView (4.1.0)
   - EasyAnimation (2.2.1)
@@ -33,6 +34,7 @@ PODS:
 
 DEPENDENCIES:
   - Amplitude-iOS
+  - BiometricAuthentication
   - CollectionViewSlantedLayout
   - EasyAnimation
   - GoogleAPIClientForREST/Drive
@@ -45,6 +47,7 @@ SPEC REPOS:
   trunk:
     - Amplitude-iOS
     - AppAuth
+    - BiometricAuthentication
     - CollectionViewSlantedLayout
     - DynamicBlurView
     - EasyAnimation
@@ -59,6 +62,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Amplitude-iOS: 7d8cdc3408ba35c2e68368fc7c692cd104606b94
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
+  BiometricAuthentication: b63d51be9260ba94165e032829ae78f074b129df
   CollectionViewSlantedLayout: 24397455acd2461960bc45d394e0ef99c17d03ce
   DynamicBlurView: 58e18fae80bb614e34681a4486870e7d257b62e8
   EasyAnimation: 226d133d23ef0ef99ddfb8928ff2a9a4a77d1cfd
@@ -70,6 +74,6 @@ SPEC CHECKSUMS:
   SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   TOPasscodeViewController: 03b5df3762a7be1511102093c644a42275bddf24
 
-PODFILE CHECKSUM: d077e13aee452583cba8e5f87f14553ecd466eca
+PODFILE CHECKSUM: 3bab1155bf3a39caea2a3952b0c9b8aba180abee
 
 COCOAPODS: 1.11.3

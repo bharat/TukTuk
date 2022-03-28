@@ -11,6 +11,7 @@ target 'TukTuk' do
   pod 'PopupDialog'
   pod 'SwiftyGif'
   pod 'TOPasscodeViewController'
+  pod 'BiometricAuthentication'
 end
 
 # ref https://stackoverflow.com/questions/63056454/xcode-12-deployment-target-warnings-when-use-cocoapods

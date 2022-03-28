@@ -12,7 +12,7 @@ import AVKit
 import CollectionViewSlantedLayout
 import PopupDialog
 import TOPasscodeViewController
-
+import BiometricAuthentication
 
 class SongViewController: UIViewController {
     @IBOutlet weak var songCollection: UICollectionView!
@@ -150,10 +150,17 @@ class SongViewController: UIViewController {
     func showSettings() {
         stopSong()
         
-        let passcode = TOPasscodeViewController(style: .translucentDark, passcodeType: .sixDigits)
-        passcode.delegate = self
-        passcode.allowBiometricValidation = true
-        self.present(passcode, animated: true, completion: {})
+        BioMetricAuthenticator.authenticateWithBioMetrics(reason: "") { (result) in
+            switch result {
+            case .success(_):
+                self.performSegue(withIdentifier: "Admin", sender: self)
+            case .failure(_):
+                let passcode = TOPasscodeViewController(style: .translucentDark, passcodeType: .sixDigits)
+                passcode.delegate = self
+                self.present(passcode, animated: true, completion: {})
+            }
+        }
+
     }
 
     func showMovieButton() {
@@ -327,12 +334,6 @@ extension SongViewController: TOPasscodeViewControllerDelegate {
     }
     
     func didInputCorrectPasscode(in passcodeViewController: TOPasscodeViewController) {
-        self.dismiss(animated: true) {
-            self.performSegue(withIdentifier: "Admin", sender: self)
-        }
-    }
-    
-    func didPerformBiometricValidationRequest(in passcodeViewController: TOPasscodeViewController) {
         self.dismiss(animated: true) {
             self.performSegue(withIdentifier: "Admin", sender: self)
         }

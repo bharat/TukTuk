@@ -11,6 +11,8 @@ import AVFoundation
 import AVKit
 import CollectionViewSlantedLayout
 import PopupDialog
+import TOPasscodeViewController
+
 
 class SongViewController: UIViewController {
     @IBOutlet weak var songCollection: UICollectionView!
@@ -51,7 +53,7 @@ class SongViewController: UIViewController {
 
         // Long press on the stop button will bring up an interface where you can
         // cue up a MiniGame or a Movie
-        let long = UILongPressHapticFeedbackGestureRecognizer(target: self, action: #selector(showSettings(gesture:)))
+        let long = UILongPressHapticFeedbackGestureRecognizer(target: self, action: #selector(settingsGesture(gesture:)))
         long.minimumPressDuration = 5.0
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
@@ -116,7 +118,7 @@ class SongViewController: UIViewController {
 
         if songs.isEmpty {
             let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
-                self.performSegue(withIdentifier: "Admin", sender: self)
+                self.showSettings()
             }
             popup.addButton(DefaultButton(title: "Ok") { })
             self.present(popup, animated: true, completion: nil)
@@ -139,11 +141,19 @@ class SongViewController: UIViewController {
         }
     }
 
-    @objc func showSettings(gesture: UIGestureRecognizer) {
+    @objc func settingsGesture(gesture: UIGestureRecognizer) {
         if gesture.state == .began {
-            stopSong()
-            performSegue(withIdentifier: "Admin", sender: self)
-        }   
+            showSettings()
+        }
+    }
+    
+    func showSettings() {
+        stopSong()
+        
+        let passcode = TOPasscodeViewController(style: .translucentDark, passcodeType: .sixDigits)
+        passcode.delegate = self
+        passcode.allowBiometricValidation = true
+        self.present(passcode, animated: true, completion: {})
     }
 
     func showMovieButton() {
@@ -305,6 +315,26 @@ extension SongViewController: UICollectionViewDataSource {
 
         return cell
     }
-
 }
 
+extension SongViewController: TOPasscodeViewControllerDelegate {
+    func didTapCancel(in passcodeViewController: TOPasscodeViewController) {
+        self.dismiss(animated: true, completion: {})
+    }
+    
+    func passcodeViewController(_ passcodeViewController: TOPasscodeViewController, isCorrectCode code: String) -> Bool {
+        return code == "192837"
+    }
+    
+    func didInputCorrectPasscode(in passcodeViewController: TOPasscodeViewController) {
+        self.dismiss(animated: true) {
+            self.performSegue(withIdentifier: "Admin", sender: self)
+        }
+    }
+    
+    func didPerformBiometricValidationRequest(in passcodeViewController: TOPasscodeViewController) {
+        self.dismiss(animated: true) {
+            self.performSegue(withIdentifier: "Admin", sender: self)
+        }
+    }
+}

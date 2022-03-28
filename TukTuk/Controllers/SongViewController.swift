@@ -326,7 +326,8 @@ extension SongViewController: UICollectionViewDataSource {
 
 extension SongViewController: TOPasscodeViewControllerDelegate {
     func didTapCancel(in passcodeViewController: TOPasscodeViewController) {
-        self.dismiss(animated: true, completion: {})
+        passcodeViewController.dismiss(animated: true, completion: {})
+        prepareView()
     }
     
     func passcodeViewController(_ passcodeViewController: TOPasscodeViewController, isCorrectCode code: String) -> Bool {

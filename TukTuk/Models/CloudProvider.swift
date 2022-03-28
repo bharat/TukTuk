@@ -49,9 +49,11 @@ protocol CloudProvider {
     var isAuthenticated: Bool { get }
     var songsFolder: String { get }
     var moviesFolder: String { get }
+    var name: String { get }
 
     func silentSignIn(callback: @escaping (Bool) -> ())
     func signIn(uiDelegate: UIViewController, callback: @escaping () -> ())
+    func signOut()
     func list(folder id: String, callback: @escaping ([CloudFile])->())
     func get(file id: String, callback: @escaping (Data?)->()) -> Canceler
 }

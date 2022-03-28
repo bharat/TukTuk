@@ -17,6 +17,8 @@ let CLIENT_ID = "519173767662-ca9oluprutan3a2s0n619no01mlnla3a.apps.googleuserco
 extension GTLRServiceTicket: Canceler { }
 
 class GoogleDrive: NSObject, CloudProvider {
+    var name = "Google"
+    
     static var instance = GoogleDrive()
     let service = GTLRDriveService()
     let signInConfig = GIDConfiguration.init(clientID: CLIENT_ID)

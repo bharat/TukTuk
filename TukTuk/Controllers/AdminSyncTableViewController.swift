@@ -16,6 +16,7 @@ enum Outlet: Int, CaseIterable {
     case songsCloud
     case moviesLocal
     case moviesCloud
+    case launchImages
 }
 
 let DESIRED_CONCURRENCY = 4
@@ -57,6 +58,8 @@ class AdminSyncTableViewController: UITableViewController {
                 return IndexPath(row: 0, section: 1)
             case .moviesCloud:
                 return IndexPath(row: 1, section: 1)
+            case .launchImages:
+                return IndexPath(row: 0, section: 2)
             }
         }()
         return tableView.cellForRow(at: indexPath)!.detailTextLabel!

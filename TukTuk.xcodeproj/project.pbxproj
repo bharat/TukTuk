@@ -40,6 +40,8 @@
 		4F2C33DB24709F0500DB7438 /* AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C33DA24709F0500DB7438 /* AVPlayer.swift */; };
 		4F2C33DD24709F3200DB7438 /* SongPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C33DC24709F3200DB7438 /* SongPlayer.swift */; };
 		4F2F756E23668B110032865D /* Delight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F756D23668B110032865D /* Delight.swift */; };
+		4F2FB95527F16B8200DF7EF3 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FB95427F16B8200DF7EF3 /* ImageManager.swift */; };
+		4F2FB95727F16BD500DF7EF3 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FB95627F16BD500DF7EF3 /* Image.swift */; };
 		4F3270C7225559430063CC32 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3270C6225559430063CC32 /* Stats.swift */; };
 		4F32C6E122ADAFB0000ABDCF /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */; };
 		4F32C6E722ADBC18000ABDCF /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */; };
@@ -128,6 +130,8 @@
 		4F2C33DA24709F0500DB7438 /* AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayer.swift; sourceTree = "<group>"; };
 		4F2C33DC24709F3200DB7438 /* SongPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayer.swift; sourceTree = "<group>"; };
 		4F2F756D23668B110032865D /* Delight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delight.swift; sourceTree = "<group>"; };
+		4F2FB95427F16B8200DF7EF3 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageManager.swift; path = TukTuk/Managers/ImageManager.swift; sourceTree = SOURCE_ROOT; };
+		4F2FB95627F16BD500DF7EF3 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		4F3270C6225559430063CC32 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
 		4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
@@ -197,6 +201,7 @@
 				4F0F25F022B1BEF5006E2CB2 /* Manager.swift */,
 				4F0F25EE22B1BED1006E2CB2 /* MovieManager.swift */,
 				4F0F25ED22B1BED1006E2CB2 /* SongManager.swift */,
+				4F2FB95427F16B8200DF7EF3 /* ImageManager.swift */,
 			);
 			name = Managers;
 			path = /Users/bharat/local/TukTuk/TukTuk/Managers;
@@ -323,6 +328,7 @@
 				4F59B6402332BD8200E539CB /* Frequency.swift */,
 				4F59B64223354AB200E539CB /* Probability.swift */,
 				4F25309E2349456F0018088F /* Sound.swift */,
+				4F2FB95627F16BD500DF7EF3 /* Image.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -644,6 +650,7 @@
 				4F75101E225D259B0039AA35 /* Maze.swift in Sources */,
 				4FBD57AC1F098DEB00BDCDE3 /* AppDelegate.swift in Sources */,
 				4F08093320AA5A9500CF8767 /* AvengersAssemble.swift in Sources */,
+				4F2FB95727F16BD500DF7EF3 /* Image.swift in Sources */,
 				4F074AEC22A9BCEC008E5F22 /* SyncEngine.swift in Sources */,
 				4F0F25F122B1BEF5006E2CB2 /* Manager.swift in Sources */,
 				4F11FEF52263BB3600AD777D /* Settings.swift in Sources */,
@@ -668,6 +675,7 @@
 				4F8A2AA920A0D550000C2CA5 /* VideoPlayer.swift in Sources */,
 				4FA64A87223D722100AED085 /* SongCell.swift in Sources */,
 				4F1F17CA209E150F00483499 /* FaceBalls.swift in Sources */,
+				4F2FB95527F16B8200DF7EF3 /* ImageManager.swift in Sources */,
 				4F074AE022A5F714008E5F22 /* DismissModalSegue.swift in Sources */,
 				4F11FEF72263BB8500AD777D /* Titled.swift in Sources */,
 				4F59B64323354AB300E539CB /* Probability.swift in Sources */,

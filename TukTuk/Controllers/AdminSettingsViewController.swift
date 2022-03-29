@@ -125,7 +125,7 @@ class AdminSettingsViewController: UITableViewController {
                 self.view.addSubview(welcomeImageView)
 
                 (obj as! Animation).animate(view: self.view) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         welcomeImageView.removeFromSuperview()
                         cell.detail.text = .emptyTitle
                         self.redraw()

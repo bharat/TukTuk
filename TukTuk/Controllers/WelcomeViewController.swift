@@ -18,7 +18,7 @@ class WelcomeViewController: UIViewController {
         welcomeImageView = UIImageView(frame: view.frame)
         welcomeImageView.contentMode = .scaleAspectFill
         welcomeImageView.clipsToBounds = true
-        welcomeImageView.image = #imageLiteral(resourceName: "Welcome_BharatAndBettina")
+        welcomeImageView.image = Manager.images.data["Welcome"]?.uiImage ?? #imageLiteral(resourceName: "Welcome_BharatAndBettina")
         welcomeImageView.layer.borderWidth = 8
         welcomeImageView.layer.borderColor = UIColor.black.cgColor
         welcomeImageView.layer.cornerRadius = 0
@@ -45,7 +45,6 @@ class WelcomeViewController: UIViewController {
         //
         // Or skipping the welcome screen
         //        self.performSegue(withIdentifier: "Songs", sender: self)
-        //        self.performSegue(withIdentifier: "Admin", sender: self)
     }
 
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {

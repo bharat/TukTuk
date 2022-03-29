@@ -49,6 +49,7 @@ protocol CloudProvider {
     var isAuthenticated: Bool { get }
     var songsFolder: String { get }
     var moviesFolder: String { get }
+    var imagesFolder: String { get }
     var name: String { get }
 
     func silentSignIn(callback: @escaping (Bool) -> ())

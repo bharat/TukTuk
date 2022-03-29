@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Stats().appLaunched()
         Manager.songs.loadLocal()
         Manager.movies.loadLocal()
+        Manager.images.loadLocal()
 
         try! AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
         try! AVAudioSession.sharedInstance().setActive(true)

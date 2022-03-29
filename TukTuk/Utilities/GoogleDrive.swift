@@ -27,6 +27,7 @@ class GoogleDrive: NSObject, CloudProvider {
 
     var songsFolder = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
     var moviesFolder = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
+    var imagesFolder = "1bldR2at2O3RdSLQYu9OQaizcdjs7MxFo"
 
     var isAuthenticated: Bool {
         guard let user = GIDSignIn.sharedInstance.currentUser else { return false }

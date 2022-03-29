@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SpriteKit
 
 struct Image: Manageable {
     var title: String
@@ -32,6 +33,11 @@ struct Image: Manageable {
     var uiImage: UIImage? {
         guard let image = image else { return nil }
         return UIImage(contentsOfFile: image.url.path)
+    }
+    
+    var skTexture: SKTexture? {
+        guard let uiImage = uiImage else { return nil }
+        return SKTexture(image: uiImage)
     }
 
     var syncAction: SyncAction {

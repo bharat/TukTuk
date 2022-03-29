@@ -47,7 +47,7 @@ class ImageManager: Manager<Image> {
             }
         }
 
-        provider.list(folder: provider.songsFolder) { files in
+        provider.list(folder: provider.imagesFolder) { files in
             self.queue.sync {
                 files.forEach { file in
                     var image = self.data[file.title] ?? Image(title: file.title)

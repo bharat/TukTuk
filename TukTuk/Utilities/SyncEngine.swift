@@ -59,6 +59,12 @@ class SyncEngine {
                 Manager.movies.deleteLocal(movie)
             }
         }
+        
+        Manager.images.delete.forEach { image in
+            opQueue.addOperation {
+                Manager.images.deleteLocal(image)
+            }
+        }
 
         Manager.songs.download.forEach { song in
             opQueue.addOperation {
@@ -79,6 +85,19 @@ class SyncEngine {
                     let msg = "Download movie: \(movie.title)"
                     self.notifyStart(msg)
                     return Manager.movies.download(movie, from: self.provider) {
+                        self.notifyStop(msg)
+                        callback()
+                    }
+                }
+            }
+        }
+        
+        Manager.images.download.forEach { image in
+            opQueue.addOperation {
+                self.wrap { callback in
+                    let msg = "Download image: \(image.title)"
+                    self.notifyStart(msg)
+                    return Manager.images.download(image, from: self.provider) {
                         self.notifyStop(msg)
                         callback()
                     }

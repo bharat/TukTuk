@@ -47,7 +47,7 @@ class AdminSyncTableViewController: UITableViewController {
         return spinners[outlet.rawValue]
     }
 
-    func counter(_ outlet: Outlet) -> UILabel {
+    func status(_ outlet: Outlet) -> UILabel {
         let indexPath: IndexPath = {
             switch outlet {
             case .songsLocal:
@@ -106,7 +106,7 @@ class AdminSyncTableViewController: UITableViewController {
 
             Manager.songs.loadCloud(from: self.cloudProvider) {
                 self.spinner(.songsCloud).stopAnimating()
-                self.counter(.songsCloud).text = "\(Manager.songs.cloud.count)"
+                self.status(.songsCloud).text = "\(Manager.songs.cloud.count)"
                 self.updateUI()
 
                 Manager.songs.brokenCloud.forEach { song in
@@ -118,8 +118,13 @@ class AdminSyncTableViewController: UITableViewController {
 
             Manager.movies.loadCloud(from: self.cloudProvider) {
                 self.spinner(.moviesCloud).stopAnimating()
-                self.counter(.moviesCloud).text = "\(Manager.movies.cloud.count)"
+                self.status(.moviesCloud).text = "\(Manager.movies.cloud.count)"
                 self.updateUI()
+            }
+            
+            Manager.images.loadCloud(from: self.cloudProvider) {
+                self.spinner(.launchImages).stopAnimating()
+                self.status(.launchImages).text = Manager.images.inSync ? "up to date" : "out of date"
             }
         }
 
@@ -138,8 +143,9 @@ class AdminSyncTableViewController: UITableViewController {
             return
         }
 
-        counter(.songsLocal).text = "\(Manager.songs.local.count)"
-        counter(.moviesLocal).text = "\(Manager.movies.local.count)"
+        status(.songsLocal).text = "\(Manager.songs.local.count)"
+        status(.moviesLocal).text = "\(Manager.movies.local.count)"
+        status(.launchImages).text = Manager.images.inSync ? "up to date" : "out of date"
 
         if sync.inProgress {
             progress.setProgress(sync.progress, animated: true)
@@ -158,7 +164,7 @@ class AdminSyncTableViewController: UITableViewController {
         status.text = statusMessages.joined(separator: "\n")
 
 
-        syncButton.isEnabled = !(Manager.songs.inSync && Manager.movies.inSync)
+        syncButton.isEnabled = !(Manager.songs.inSync && Manager.movies.inSync && Manager.images.inSync)
     }
 
     @IBAction func cancel(_ sender: Any) {
@@ -193,6 +199,7 @@ class AdminSyncTableViewController: UITableViewController {
         progress.setProgress(0, animated: false)
         spinner(.songsLocal).startAnimating()
         spinner(.moviesLocal).startAnimating()
+        spinner(.launchImages).startAnimating()
 
         sync.run() {
             DispatchQueue.main.sync {
@@ -205,6 +212,7 @@ class AdminSyncTableViewController: UITableViewController {
                 self.tableView.headerView(forSection: 3)?.textLabel?.text = ""
                 self.spinner(.songsLocal).stopAnimating()
                 self.spinner(.moviesLocal).stopAnimating()
+                self.spinner(.launchImages).stopAnimating()
                 self.statusMessages = []
             }
         }

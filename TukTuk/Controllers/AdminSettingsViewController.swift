@@ -25,7 +25,7 @@ class AdminSettingsViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,6 +35,8 @@ class AdminSettingsViewController: UITableViewController {
         case 1:
             return 2
         case 2:
+            return 1
+        case 3:
             return 1
         default:
             fatalError("Unknown section: \(section)")
@@ -49,6 +51,8 @@ class AdminSettingsViewController: UITableViewController {
             return "Movie and MiniGame Settings"
         case 2:
             return "Captain America MiniGame"
+        case 3:
+            return "Animations"
         default:
             fatalError("Unknown section: \(section)")
         }
@@ -109,6 +113,24 @@ class AdminSettingsViewController: UITableViewController {
             cell.select = { obj in
                 UserDefaults.standard.mazeLevel = (obj as! CaptainAmerica.Level).level
                 self.redraw()
+            }
+            
+        case IndexPath(row: 0, section: 3):
+            cell.title.text = "Test an animation"
+            cell.detail.text = .emptyTitle
+            cell.data = Animations.all
+            cell.canBeEmpty = false
+            cell.select = { obj in
+                let welcomeImageView = WelcomeViewController.createWelcomeImage(inside: self.view)
+                self.view.addSubview(welcomeImageView)
+
+                (obj as! Animation).animate(view: self.view) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        welcomeImageView.removeFromSuperview()
+                        cell.detail.text = .emptyTitle
+                        self.redraw()
+                    }
+                }
             }
         default:
             fatalError("Bad indexPath: \(indexPath)")

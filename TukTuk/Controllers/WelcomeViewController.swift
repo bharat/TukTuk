@@ -11,18 +11,23 @@ import UIKit
 
 class WelcomeViewController: UIViewController {
     var welcomeImageView = UIImageView()
-
+    
+    static func createWelcomeImage(inside parent: UIView) -> UIImageView {
+        let view = UIImageView(frame: parent.frame)
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.image = Manager.images.data["Welcome"]?.uiImage ?? #imageLiteral(resourceName: "Welcome_BharatAndBettina")
+        view.layer.borderWidth = 8
+        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.cornerRadius = 0
+        view.isUserInteractionEnabled = true
+        return view
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        welcomeImageView = UIImageView(frame: view.frame)
-        welcomeImageView.contentMode = .scaleAspectFill
-        welcomeImageView.clipsToBounds = true
-        welcomeImageView.image = Manager.images.data["Welcome"]?.uiImage ?? #imageLiteral(resourceName: "Welcome_BharatAndBettina")
-        welcomeImageView.layer.borderWidth = 8
-        welcomeImageView.layer.borderColor = UIColor.black.cgColor
-        welcomeImageView.layer.cornerRadius = 0
-        welcomeImageView.isUserInteractionEnabled = true
+        welcomeImageView = WelcomeViewController.createWelcomeImage(inside: view)
         view.addSubview(welcomeImageView)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleWelcomeTap(sender:)))

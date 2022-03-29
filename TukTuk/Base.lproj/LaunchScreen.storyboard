@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,18 +15,18 @@
                         <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="Welcome_Remy_2" translatesAutoresizingMaskIntoConstraints="NO" id="fB6-LO-mz7">
-                                <rect key="frame" x="-200" y="-80" width="575" height="827"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="Welcome_Remy_3" translatesAutoresizingMaskIntoConstraints="NO" id="fB6-LO-mz7">
+                                <rect key="frame" x="0.0" y="-80" width="375" height="827"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="fB6-LO-mz7" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="-80" id="md6-wK-Wop"/>
-                            <constraint firstItem="fB6-LO-mz7" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="-200" id="vX6-Fy-308"/>
+                            <constraint firstItem="fB6-LO-mz7" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="vX6-Fy-308"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="fB6-LO-mz7" secondAttribute="bottom" constant="-80" id="x4p-NZ-ZdR"/>
                             <constraint firstAttribute="trailing" secondItem="fB6-LO-mz7" secondAttribute="trailing" id="xmp-wF-Uli"/>
                         </constraints>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Welcome_Remy_2" width="681" height="510.66665649414062"/>
+        <image name="Welcome_Remy_3" width="355.33334350585938" height="474"/>
     </resources>
 </document>

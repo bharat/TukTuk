@@ -52,7 +52,7 @@ class AdminSettingsViewController: UITableViewController {
         case 2:
             return "Captain America MiniGame"
         case 3:
-            return "Animations"
+            return "Test Animations"
         default:
             fatalError("Unknown section: \(section)")
         }
@@ -116,7 +116,7 @@ class AdminSettingsViewController: UITableViewController {
             }
             
         case IndexPath(row: 0, section: 3):
-            cell.title.text = "Test an animation"
+            cell.title.text = "Welcome animations"
             cell.detail.text = .emptyTitle
             cell.data = Animations.all
             cell.canBeEmpty = false
@@ -125,7 +125,7 @@ class AdminSettingsViewController: UITableViewController {
                 self.view.addSubview(welcomeImageView)
 
                 (obj as! Animation).animate(view: self.view) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .5) {
                         welcomeImageView.removeFromSuperview()
                         cell.detail.text = .emptyTitle
                         self.redraw()

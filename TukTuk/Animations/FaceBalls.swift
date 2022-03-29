@@ -36,7 +36,7 @@ class FaceBalls: Animation {
                 let face = SKShapeNode(circleOfRadius: radius)
                 face.lineWidth = 1
                 face.fillColor = .white
-                face.fillTexture = SKTexture(imageNamed: imageName)
+                face.fillTexture = Manager.images.data[imageName]?.skTexture ?? SKTexture(imageNamed: imageName)
                 let texture = skView.texture(from: face)
 
                 let sprite: SKSpriteNode = SKSpriteNode(texture: texture)

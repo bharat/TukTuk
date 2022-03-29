@@ -26,10 +26,11 @@ class PhotoFlip: Animation {
         Sound.Player_Welcome.play()
 
         let views: [UIView] = Array(1...9).map { i in
+            let imageName = "CurlUp_\(i)"
             let v = UIImageView(frame: view.frame)
             v.contentMode = .scaleAspectFill
             v.clipsToBounds = true
-            v.image = UIImage(named: "CurlUp_\(i)")
+            v.image = Manager.images.data[imageName]?.uiImage ?? UIImage(named: "CurlUp_\(i)")
             v.layer.borderWidth = 8
             v.layer.borderColor = UIColor.black.cgColor
             v.layer.cornerRadius = 0

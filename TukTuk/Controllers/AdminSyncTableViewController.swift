@@ -102,6 +102,7 @@ class AdminSyncTableViewController: UITableViewController {
         DispatchQueue.global().async {
             Manager.songs.loadLocal()
             Manager.movies.loadLocal()
+            Manager.images.loadLocal()
             self.updateUI()
 
             Manager.songs.loadCloud(from: self.cloudProvider) {
@@ -125,6 +126,7 @@ class AdminSyncTableViewController: UITableViewController {
             Manager.images.loadCloud(from: self.cloudProvider) {
                 self.spinner(.launchImages).stopAnimating()
                 self.status(.launchImages).text = Manager.images.inSync ? "up to date" : "out of date"
+                self.updateUI()
             }
         }
 
@@ -163,8 +165,8 @@ class AdminSyncTableViewController: UITableViewController {
         statusCell.isHidden = statusMessages.count == 0
         status.text = statusMessages.joined(separator: "\n")
 
-
-        syncButton.isEnabled = !(Manager.songs.inSync && Manager.movies.inSync && Manager.images.inSync)
+        let areAnySpinnersAnimating = self.spinners.reduce(false) { a, b in a || b.isAnimating }
+        syncButton.isEnabled = !areAnySpinnersAnimating
     }
 
     @IBAction func cancel(_ sender: Any) {

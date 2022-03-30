@@ -66,6 +66,19 @@ class SyncEngine {
             }
         }
 
+        Manager.images.download.forEach { image in
+            opQueue.addOperation {
+                self.wrap { callback in
+                    let msg = "Download image: \(image.title)"
+                    self.notifyStart(msg)
+                    return Manager.images.download(image, from: self.provider) {
+                        self.notifyStop(msg)
+                        callback()
+                    }
+                }
+            }
+        }
+
         Manager.songs.download.forEach { song in
             opQueue.addOperation {
                 self.wrap { callback in
@@ -92,19 +105,6 @@ class SyncEngine {
             }
         }
         
-        Manager.images.download.forEach { image in
-            opQueue.addOperation {
-                self.wrap { callback in
-                    let msg = "Download image: \(image.title)"
-                    self.notifyStart(msg)
-                    return Manager.images.download(image, from: self.provider) {
-                        self.notifyStop(msg)
-                        callback()
-                    }
-                }
-            }
-        }
-
         DispatchQueue.global().async {
             self.opQueue.waitUntilAllOperationsAreFinished()
             self.syncQueue.sync {

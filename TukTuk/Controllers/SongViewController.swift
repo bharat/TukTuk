@@ -306,7 +306,6 @@ extension SongViewController: UIScrollViewDelegate {
 
 extension SongViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("filterd songs count: \(String(describing: filteredSongs?.count)) (vs. \(songs.count))")
         return filteredSongs?.count ?? songs.count
     }
 

@@ -21,14 +21,17 @@ class SongViewController: UIViewController {
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var movieButton: UIButton!
     @IBOutlet weak var movieTimerLabel: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
 
     var songPlayer = SongPlayer()
     var stats = Stats()
+    var filteredSongs: [Song]?
     var songs: [Song] = [] {
         didSet {
             AudioPlayer.instance.stop()
             songCollection.reloadData()
             deselectAllSongs()
+            filteredSongs = nil
         }
     }
 
@@ -59,6 +62,9 @@ class SongViewController: UIViewController {
         stopButton.isEnabled = false
 
         NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
+        searchBar.searchTextField.textColor = .white
+        searchBar.searchTextField.backgroundColor = .gray
     }
 
     deinit {
@@ -260,7 +266,6 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
 
 
 extension SongViewController: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         stopButton.isEnabled = false
 
@@ -301,12 +306,13 @@ extension SongViewController: UIScrollViewDelegate {
 
 extension SongViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return songs.count
+        print("filterd songs count: \(String(describing: filteredSongs?.count)) (vs. \(songs.count))")
+        return filteredSongs?.count ?? songs.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let song = songs[indexPath.row]
+        let song = filteredSongs?[indexPath.row] ?? songs[indexPath.row]
         let cell = songCollection.dequeueReusableCell(withReuseIdentifier: "SongCell", for: indexPath) as! SongCell
         
         cell.image = song.uiImage ?? UIImage()
@@ -321,6 +327,19 @@ extension SongViewController: UICollectionViewDataSource {
         }
 
         return cell
+    }
+
+    func filterSongs(by pattern: String) {
+        let trimmedPattern = pattern.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if trimmedPattern.isEmpty {
+            filteredSongs = nil
+        } else {
+            filteredSongs = songs.filter { song in
+                song.displayTitle.lowercased().contains(trimmedPattern) ||
+                song.displayArtist.lowercased().contains(trimmedPattern)
+            }
+        }
+        songCollection.reloadData()
     }
 }
 
@@ -338,5 +357,11 @@ extension SongViewController: TOPasscodeViewControllerDelegate {
         self.dismiss(animated: true) {
             self.performSegue(withIdentifier: "Admin", sender: self)
         }
+    }
+}
+
+extension SongViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterSongs(by: searchText)
     }
 }

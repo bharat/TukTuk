@@ -28,8 +28,6 @@ class SongViewController: UIViewController {
     var stats = Stats()
     var filteredSongs: [Song]? {
         didSet {
-            songCollection.reloadData()
-
             if let filteredSongs = filteredSongs, filteredSongs.isEmpty {
                 songCollection.isHidden = true
             } else {
@@ -39,12 +37,21 @@ class SongViewController: UIViewController {
                     songCollection.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
                 }
             }
+
+            songCollection.reloadData()
+            songCollectionLayout.invalidateLayout()
+
+            // This is a hack to force SongCollectionLayout to invalidate its internal cache
+            // which avoids warnings like this:
+            // 2022-03-30 19:29:10.344602-0700 TukTuk[91415:1543678] [CollectionView] Layout attributes <CollectionViewSlantedLayout.CollectionViewSlantedLayoutAttributes: 0x11ad510c0> index path: (<NSIndexPath: 0x93cf238d4382900c> {length = 2, path = 0 - 5}); frame = (0 1175; 834 300); zIndex = 5;  were received from the layout <CollectionViewSlantedLayout.CollectionViewSlantedLayout: 0x12af1aa60> but are not valid for the data source counts. Attributes will be ignored.
+            songCollectionLayout.zIndexOrder = songCollectionLayout.zIndexOrder
         }
     }
     var actualSongs: [Song] = [] {
         didSet {
             AudioPlayer.instance.stop()
             songCollection.reloadData()
+            songCollectionLayout.invalidateLayout()
             deselectAllSongs()
             filteredSongs = nil
         }
@@ -357,7 +364,6 @@ extension SongViewController: UICollectionViewDataSource {
                 song.displayArtist.lowercased().contains(trimmedPattern)
             }
         }
-        songCollection.reloadData()
     }
 }
 

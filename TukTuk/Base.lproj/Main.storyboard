@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -37,8 +38,19 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zSz-j3-eOp">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
+                                    <searchBar contentMode="redraw" barStyle="black" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="bOA-lK-vo6">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="51"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="J9i-oe-xGy"/>
+                                        </connections>
+                                    </searchBar>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Search_No_Results" translatesAutoresizingMaskIntoConstraints="NO" id="WHP-Fk-ii5">
+                                        <rect key="frame" x="0.0" y="51" width="414" height="0.0"/>
+                                    </imageView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rKp-9S-RKq" userLabel="Song Collection">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="784"/>
+                                        <rect key="frame" x="0.0" y="51" width="414" height="733"/>
+                                        <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <collectionViewLayout key="collectionViewLayout" id="5jt-ki-gHy" customClass="CollectionViewSlantedLayout" customModule="CollectionViewSlantedLayout">
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isFirstCellExcluded" value="YES"/>
@@ -135,12 +147,15 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="rKp-9S-RKq" firstAttribute="top" secondItem="bOA-lK-vo6" secondAttribute="bottom" id="hBj-KO-hYe"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gxk-wP-nqV"/>
                         <constraints>
+                            <constraint firstItem="gxk-wP-nqV" firstAttribute="bottom" secondItem="zSz-j3-eOp" secondAttribute="bottom" id="J1X-l0-2q5"/>
                             <constraint firstItem="zSz-j3-eOp" firstAttribute="centerX" secondItem="gxk-wP-nqV" secondAttribute="centerX" id="WCY-i9-oNj"/>
-                            <constraint firstItem="zSz-j3-eOp" firstAttribute="height" secondItem="gxk-wP-nqV" secondAttribute="height" id="YI0-4w-IvC"/>
                             <constraint firstItem="zSz-j3-eOp" firstAttribute="centerY" secondItem="gxk-wP-nqV" secondAttribute="centerY" id="lX2-lA-dYp"/>
                             <constraint firstItem="zSz-j3-eOp" firstAttribute="width" secondItem="gxk-wP-nqV" secondAttribute="width" id="ycb-co-C7V"/>
                         </constraints>
@@ -150,6 +165,7 @@
                         <outlet property="buttons" destination="7Ly-tq-BV9" id="rpB-hX-ddr"/>
                         <outlet property="movieButton" destination="Bcl-Wj-hJe" id="e1C-Jr-ZOk"/>
                         <outlet property="movieTimerLabel" destination="sAS-h3-EvS" id="iqk-qq-yun"/>
+                        <outlet property="searchBar" destination="bOA-lK-vo6" id="fH0-fq-UL8"/>
                         <outlet property="songCollection" destination="rKp-9S-RKq" id="QuR-aK-0fC"/>
                         <outlet property="songCollectionLayout" destination="5jt-ki-gHy" id="Yld-xE-7ka"/>
                         <outlet property="stopButton" destination="m6W-cQ-EmU" id="xbK-wO-igf"/>
@@ -574,8 +590,12 @@ line 4</string>
     <resources>
         <image name="Admin_Settings" width="30" height="30"/>
         <image name="Admin_Synchronize" width="30" height="30"/>
+        <image name="Search_No_Results" width="978" height="1200"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

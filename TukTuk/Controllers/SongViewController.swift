@@ -293,6 +293,7 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
 
 extension SongViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        searchBar.resignFirstResponder()
         stopButton.isEnabled = false
 
         songCollectionLayout.redraw()
@@ -317,6 +318,7 @@ let xOffsetSpeed: CGFloat = 100.0
 
 extension SongViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
         guard let collectionView = songCollection else { return }
         guard let visibleCells = collectionView.visibleCells as? [SongCell] else { return }
 

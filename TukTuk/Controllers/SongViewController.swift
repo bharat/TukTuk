@@ -28,14 +28,19 @@ class SongViewController: UIViewController {
     var stats = Stats()
     var filteredSongs: [Song]? {
         didSet {
-            if let filteredSongs = filteredSongs, filteredSongs.isEmpty {
-                songCollection.isHidden = true
+            if let filteredSongs = filteredSongs {
+                if filteredSongs.isEmpty {
+                    songCollection.isHidden = true
+                } else {
+                    songCollection.isHidden = false
+                    if songCollection.visibleCells.count == 0 {
+                        DispatchQueue.main.async {
+                            self.songCollection.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: false)
+                        }
+                    }
+                }
             } else {
                 songCollection.isHidden = false
-
-                if songCollection.visibleCells.count == 0 {
-                    songCollection.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-                }
             }
 
             songCollection.reloadData()
@@ -266,6 +271,7 @@ class SongViewController: UIViewController {
     }
 }
 
+// MARK: CollectionViewDelegateSlantedLayout
 extension SongViewController: CollectionViewDelegateSlantedLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: CollectionViewSlantedLayout,
@@ -290,7 +296,7 @@ extension SongViewController: CollectionViewDelegateSlantedLayout {
     }
 }
 
-
+// MARK: UICollectionViewDelegate
 extension SongViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         searchBar.resignFirstResponder()
@@ -316,9 +322,9 @@ extension SongViewController: UICollectionViewDelegate {
 let yOffsetSpeed: CGFloat = 150.0
 let xOffsetSpeed: CGFloat = 100.0
 
+// MARK: UIScrollViewDelegate
 extension SongViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
         guard let collectionView = songCollection else { return }
         guard let visibleCells = collectionView.visibleCells as? [SongCell] else { return }
 
@@ -330,8 +336,13 @@ extension SongViewController: UIScrollViewDelegate {
             }
         }
     }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
 }
 
+// MARK: UICollectionViewDataSource
 extension SongViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return songs.count
@@ -369,6 +380,7 @@ extension SongViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: TOPasscodeViewControllerDelegate
 extension SongViewController: TOPasscodeViewControllerDelegate {
     func didTapCancel(in passcodeViewController: TOPasscodeViewController) {
         passcodeViewController.dismiss(animated: true, completion: {})
@@ -386,6 +398,7 @@ extension SongViewController: TOPasscodeViewControllerDelegate {
     }
 }
 
+// MARK: UISearchBarDelegate
 extension SongViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterSongs(by: searchText)

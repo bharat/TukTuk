@@ -165,8 +165,9 @@ class AdminSyncTableViewController: UITableViewController {
         statusCell.isHidden = statusMessages.count == 0
         status.text = statusMessages.joined(separator: "\n")
 
-        let areAnySpinnersAnimating = self.spinners.reduce(false) { a, b in a || b.isAnimating }
-        syncButton.isEnabled = !areAnySpinnersAnimating
+        let allDone = !self.spinners.reduce(false) { a, b in a || b.isAnimating }
+        let allInSync = (Manager.songs.inSync && Manager.movies.inSync && Manager.images.inSync)
+        syncButton.isEnabled = allDone && !allInSync
     }
 
     @IBAction func cancel(_ sender: Any) {

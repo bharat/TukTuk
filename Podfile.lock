@@ -10,23 +10,21 @@ PODS:
   - CollectionViewSlantedLayout (3.1.1)
   - DynamicBlurView (4.1.0)
   - EasyAnimation (2.2.1)
-  - GoogleAPIClientForREST/Core (1.7.0):
-    - GTMSessionFetcher (< 2.0, >= 1.6.1)
-  - GoogleAPIClientForREST/Drive (1.7.0):
+  - GoogleAPIClientForREST/Core (2.0.0):
+    - GTMSessionFetcher/Full (< 3.0, >= 1.6.1)
+  - GoogleAPIClientForREST/Drive (2.0.0):
     - GoogleAPIClientForREST/Core
-    - GTMSessionFetcher (< 2.0, >= 1.6.1)
-  - GoogleSignIn (6.1.0):
-    - AppAuth (~> 1.4)
-    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Full (< 3.0, >= 1.6.1)
+  - GoogleSignIn (6.2.3):
+    - AppAuth (~> 1.5)
+    - GTMAppAuth (~> 1.3)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GTMAppAuth (1.2.2):
+  - GTMAppAuth (1.3.0):
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
-  - GTMSessionFetcher (1.7.0):
-    - GTMSessionFetcher/Full (= 1.7.0)
-  - GTMSessionFetcher/Core (1.7.0)
-  - GTMSessionFetcher/Full (1.7.0):
-    - GTMSessionFetcher/Core (= 1.7.0)
+  - GTMSessionFetcher/Core (1.7.2)
+  - GTMSessionFetcher/Full (1.7.2):
+    - GTMSessionFetcher/Core (= 1.7.2)
   - PopupDialog (1.1.1):
     - DynamicBlurView (~> 4.0)
   - SwiftyGif (5.4.3)
@@ -66,14 +64,14 @@ SPEC CHECKSUMS:
   CollectionViewSlantedLayout: 24397455acd2461960bc45d394e0ef99c17d03ce
   DynamicBlurView: 58e18fae80bb614e34681a4486870e7d257b62e8
   EasyAnimation: 226d133d23ef0ef99ddfb8928ff2a9a4a77d1cfd
-  GoogleAPIClientForREST: 2d4140915e2ec6d1bcb39c9df4a534c75706c595
-  GoogleSignIn: c90b5bec45e780f54c6a8e1e3c182a86e3dda69d
-  GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
-  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  GoogleAPIClientForREST: 2abe83bae1085d28f94ccc30a49fc7950d721fb9
+  GoogleSignIn: f4d3939cc0d9264d7509c4b9a924a6c987e30b54
+  GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
+  GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   PopupDialog: 720c92befd8bc23c13442254945213db5612f149
   SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   TOPasscodeViewController: 03b5df3762a7be1511102093c644a42275bddf24
 
 PODFILE CHECKSUM: 3bab1155bf3a39caea2a3952b0c9b8aba180abee
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.10.1

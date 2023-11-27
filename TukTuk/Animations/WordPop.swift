@@ -19,7 +19,7 @@ class WordPop: Animation {
         Sound.Player_Welcome.play()
 
         let cadence: [(words: String, duration: CFTimeInterval)] = [
-            ("Hi,\nRemy!",                           1.0),
+            ("Hi,\nMaryse!",                         1.0),
             ("Welcome\nto\nTukTuk!",                 1.0),
             ("You can\nlisten to some\nmusic here!", 2.0),
             ("Woohoooooo!",                          1.0)

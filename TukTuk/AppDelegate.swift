@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UIApplication.shared.isIdleTimerDisabled = true
 
-        Amplitude.instance()?.initializeApiKey("acf6c06b5191ae9e84ae07c47d02759e")
+        // Amplitude.instance()?.initializeApiKey("acf6c06b5191ae9e84ae07c47d02759e")
         EasyAnimation.enable()
         Stats().appLaunched()
         Manager.songs.loadLocal()

@@ -2,12 +2,15 @@ platform :ios, '15.0'
 use_frameworks!
 inhibit_all_warnings!
 
+# Work around issue #10580: https://github.com/CocoaPods/CocoaPods/issues/10580
+source 'https://github.com/CocoaPods/Specs.git'
+
 target 'TukTuk' do
   pod 'EasyAnimation'
   pod 'CollectionViewSlantedLayout'
   pod 'Amplitude-iOS'
   pod 'GoogleAPIClientForREST/Drive'
-  pod 'GoogleSignIn'
+  pod 'GoogleSignIn', '6.2.4'
   pod 'PopupDialog'
   pod 'SwiftyGif'
   pod 'TOPasscodeViewController'

@@ -25,9 +25,15 @@ class GoogleDrive: NSObject, CloudProvider {
     var authorizer: GTMFetcherAuthorizationProtocol?
     var queue = DispatchQueue(label: "GoogleDrive")
 
-    var songsFolder = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
-    var moviesFolder = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
-    var imagesFolder = "1bldR2at2O3RdSLQYu9OQaizcdjs7MxFo"
+//    // Remy's folders
+//    var songsFolder = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
+//    var moviesFolder = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
+//    var imagesFolder = "1bldR2at2O3RdSLQYu9OQaizcdjs7MxFo"
+
+    // Maryse's folders
+    var songsFolder = "1RzHgHCfvXB_0AutKblmCW48ilqe7yRR7"
+    var moviesFolder = "1PgpU3qJPcBi67AIxwuHWCWs85zpDQipw"
+    var imagesFolder = "1IxjPhWKbi5V5m5JyDTmlDLx1IsS-RGpa"
 
     var isAuthenticated: Bool {
         guard let user = GIDSignIn.sharedInstance.currentUser else { return false }
@@ -65,16 +71,21 @@ class GoogleDrive: NSObject, CloudProvider {
             }
         } else if GIDSignIn.sharedInstance.hasPreviousSignIn() {
             GIDSignIn.sharedInstance.restorePreviousSignIn() { user, error in
-                guard error == nil else { return }
+                guard error == nil else {
+                    print("Error restoring previous signin: \(String(describing: error))")
+                    return
+                }
 
                 self.finishSignIn() {
                     callback()
                 }
             }
         } else {
-            GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: uiDelegate)
-            GIDSignIn.sharedInstance.addScopes([kGTLRAuthScopeDriveReadonly], presenting: uiDelegate) { user, error in
-                guard error == nil else { return }
+            GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: uiDelegate, hint: nil, additionalScopes: [kGTLRAuthScopeDriveReadonly]) { user, error in
+                guard error == nil else {
+                    print("Error \(String(describing: error)) signing in with scopes")
+                    return
+                }
 
                 self.finishSignIn {
                     callback()
@@ -109,6 +120,10 @@ class GoogleDrive: NSObject, CloudProvider {
         query.fields = "files/name,files/id,files/size"
 
         service.executeQuery(query) { (ticket, results, error) in
+            if error != nil {
+                print("Error executing query: \(query) with ticket \(ticket) and results \(String(describing: results)), error is \(String(describing: error))")
+            }
+
             let cloudFiles = (results as? GTLRDrive_FileList)?.files?.map { file in
                 CloudFile(name: file.name!, id: file.identifier!, size: file.size!.uint64Value)
             } ?? []

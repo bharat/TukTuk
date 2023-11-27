@@ -226,6 +226,7 @@ class AdminSyncTableViewController: UITableViewController {
         popup.addButtons([
             CancelButton(title: "Cancel") { },
             DestructiveButton(title: "Ok") {
+                self.cloudProvider.signOut()
                 Manager.songs.deleteAllLocal()
                 Manager.movies.deleteAllLocal()
                 self.updateUI()

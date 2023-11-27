@@ -1,10 +1,10 @@
 PODS:
   - Amplitude-iOS (4.10.0)
-  - AppAuth (1.5.0):
-    - AppAuth/Core (= 1.5.0)
-    - AppAuth/ExternalUserAgent (= 1.5.0)
-  - AppAuth/Core (1.5.0)
-  - AppAuth/ExternalUserAgent (1.5.0):
+  - AppAuth (1.6.2):
+    - AppAuth/Core (= 1.6.2)
+    - AppAuth/ExternalUserAgent (= 1.6.2)
+  - AppAuth/Core (1.6.2)
+  - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
   - BiometricAuthentication (3.1.3)
   - CollectionViewSlantedLayout (3.1.1)
@@ -15,13 +15,13 @@ PODS:
   - GoogleAPIClientForREST/Drive (2.0.0):
     - GoogleAPIClientForREST/Core
     - GTMSessionFetcher/Full (< 3.0, >= 1.6.1)
-  - GoogleSignIn (6.2.3):
+  - GoogleSignIn (6.2.4):
     - AppAuth (~> 1.5)
     - GTMAppAuth (~> 1.3)
-    - GTMSessionFetcher/Core (~> 1.1)
-  - GTMAppAuth (1.3.0):
-    - AppAuth/Core (~> 1.4)
-    - GTMSessionFetcher/Core (~> 1.5)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.1)
+  - GTMAppAuth (1.3.1):
+    - AppAuth/Core (~> 1.6)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (1.7.2)
   - GTMSessionFetcher/Full (1.7.2):
     - GTMSessionFetcher/Core (= 1.7.2)
@@ -36,13 +36,13 @@ DEPENDENCIES:
   - CollectionViewSlantedLayout
   - EasyAnimation
   - GoogleAPIClientForREST/Drive
-  - GoogleSignIn
+  - GoogleSignIn (= 6.2.4)
   - PopupDialog
   - SwiftyGif
   - TOPasscodeViewController
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Amplitude-iOS
     - AppAuth
     - BiometricAuthentication
@@ -59,19 +59,19 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Amplitude-iOS: 7d8cdc3408ba35c2e68368fc7c692cd104606b94
-  AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
+  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   BiometricAuthentication: b63d51be9260ba94165e032829ae78f074b129df
   CollectionViewSlantedLayout: 24397455acd2461960bc45d394e0ef99c17d03ce
   DynamicBlurView: 58e18fae80bb614e34681a4486870e7d257b62e8
   EasyAnimation: 226d133d23ef0ef99ddfb8928ff2a9a4a77d1cfd
   GoogleAPIClientForREST: 2abe83bae1085d28f94ccc30a49fc7950d721fb9
-  GoogleSignIn: f4d3939cc0d9264d7509c4b9a924a6c987e30b54
-  GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
+  GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
+  GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   PopupDialog: 720c92befd8bc23c13442254945213db5612f149
   SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   TOPasscodeViewController: 03b5df3762a7be1511102093c644a42275bddf24
 
-PODFILE CHECKSUM: 3bab1155bf3a39caea2a3952b0c9b8aba180abee
+PODFILE CHECKSUM: 6f03c0f539948d717c76d4a99965f77b65b39b7a
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.14.3

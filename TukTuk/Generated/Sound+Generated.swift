@@ -23,7 +23,7 @@ extension Sound {
 	static let JusticeLeague_Superman = Media.JusticeLeague.sound("Superman")
 	static let JusticeLeague_Tada = Media.JusticeLeague.sound("Tada")
 	static let JusticeLeague_WonderWoman = Media.JusticeLeague.sound("WonderWoman")
-	static let Player_Welcome = Media.Player.sound("Welcome")
+	static let Player_Welcome = Media.Player.sound("Welcome Maryse")
 	static let Thor_HammerFallingWhistle = Media.Thor.sound("HammerFallingWhistle")
 	static let Thor_HammerLandingThud = Media.Thor.sound("HammerLandingThud")
 	static let Thor_IAmTheGodOfThunder = Media.Thor.sound("IAmTheGodOfThunder")

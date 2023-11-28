@@ -55,11 +55,9 @@ class WelcomeViewController: UIViewController {
     @objc func handleWelcomeTap(sender: UITapGestureRecognizer) {
         sender.isEnabled = false
 
-        // Useful shortcut for development
-        // Settings.cuedAnimation = FaceBalls()
-
-        // Run a random welcome animation, or a preset if specified
-        Animations.all.randomElement()!.animate(view: self.welcomeImageView) {
+        // Run a random welcome animation
+        let animation = Animations.all.randomElement()!
+        animation.animate(view: self.welcomeImageView) {
             self.performSegue(withIdentifier: "Songs", sender: self)
 
             // It's useful to re-enable this since in the simulator you can hit escape

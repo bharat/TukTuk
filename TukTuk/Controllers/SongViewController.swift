@@ -153,16 +153,14 @@ class SongViewController: UIViewController {
             $0.title < $1.title
         }
 
-        if songs.isEmpty {
-            if UserDefaults.standard.child == nil {
+        if UserDefaults.standard.child == nil {
+            self.showSettings()
+        } else if songs.isEmpty {
+            let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
                 self.showSettings()
-            } else {
-                let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
-                    self.showSettings()
-                }
-                popup.addButton(DefaultButton(title: "Ok") { })
-                self.present(popup, animated: true, completion: nil)
             }
+            popup.addButton(DefaultButton(title: "Ok") { })
+            self.present(popup, animated: true, completion: nil)
         }
 
         movieCountdown = UserDefaults.standard.movieCountdown

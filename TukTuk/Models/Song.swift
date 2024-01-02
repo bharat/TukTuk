@@ -67,6 +67,8 @@ struct Song: Manageable {
         audio = nil
         image?.delete()
         image = nil
+        video?.delete()
+        video = nil
     }
 
     func play(whilePlaying: @escaping ()->()={}, whenComplete: @escaping ()->()={}) {

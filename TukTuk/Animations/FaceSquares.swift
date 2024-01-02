@@ -16,7 +16,7 @@ class FaceSquares: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
-        Sound.Player_Welcome_Maryse.play()
+        Sound.PlayWelcome()
 
         let images = (1...12).map { "FaceSquares_\($0)" }
 

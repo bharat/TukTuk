@@ -74,5 +74,6 @@ class Manager<T: Manageable> {
         data.values.forEach { obj in
             deleteLocal(obj)
         }
+        data.removeAll()
     }
 }

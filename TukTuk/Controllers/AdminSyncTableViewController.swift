@@ -33,6 +33,7 @@ class AdminSyncTableViewController: UITableViewController {
     let cloudProvider: CloudProvider = GoogleDrive.instance
     let sync = SyncEngine(cloudProvider: GoogleDrive.instance, concurrency: DESIRED_CONCURRENCY)
     var statusMessages: [String] = []
+    var fullSyncNeeded: Bool = false
 
     override func viewDidLoad() {
         sync.notifyStart = { msg in
@@ -68,21 +69,42 @@ class AdminSyncTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        if UserDefaults.standard.child == nil {
+            let popup = PopupDialog(title: "Uh oh!", message: "We need to know which child this is for. Let's start there.")
+            self.present(popup, animated: true) {
+                self.tabBarController?.selectedIndex = 2
+            }
+            return
+        }
+
         statusMessages = []
         if cloudProvider.isAuthenticated {
             print("Cloud: authenticated")
             self.updateSyncStatus()
+
+            if Manager.songs.localEmpty {
+                let popup = PopupDialog(title: "We need some music!", message: "Press the Synchronize button to start downloading songs and movies!")
+                self.present(popup, animated: true)
+            }
         } else {
             print("Cloud: not authenticated")
             cloudProvider.silentSignIn() { success in
                 print("Cloud: silent sign-on returned \(success)")
                 if success {
                     self.updateSyncStatus()
+
+                    if Manager.songs.localEmpty {
+                        let popup = PopupDialog(title: "We need some music!", message: "Press the Synchronize button to start downloading songs and movies!")
+                        self.present(popup, animated: true)
+                    }
                 } else {
-                    let popup = PopupDialog(title: "Let's get started", message: "It's pretty easy. First, log in to Google, then hit the Synchronize button") {
+                    let popup = PopupDialog(title: "We need some music!", message: "It's pretty easy. First, you need to log in to Google.") {
                         print("Cloud: explicit sign-on requested")
                         self.cloudProvider.signIn(uiDelegate: self) {
                             self.updateSyncStatus()
+
+                            let popup = PopupDialog(title: "We need some music!", message: "Now you need to press the Synchronize button to start downloading songs and movies!")
+                            self.present(popup, animated: true)
                         }
                     }
                     self.present(popup, animated: true) {
@@ -168,6 +190,11 @@ class AdminSyncTableViewController: UITableViewController {
         let allDone = !self.spinners.reduce(false) { a, b in a || b.isAnimating }
         let allInSync = (Manager.songs.inSync && Manager.movies.inSync && Manager.images.inSync)
         syncButton.isEnabled = allDone && !allInSync
+
+        if allDone && fullSyncNeeded {
+            fullSyncNeeded = false
+            let popup = PopupDialog(title: "Good job!", message: "Now you're ready to go! You can click the Done button in the top right corner to listen to music. To get back to this screen you must hold down the Stop button for 5 seconds while a song is playing!")
+        }
     }
 
     @IBAction func cancel(_ sender: Any) {
@@ -222,7 +249,7 @@ class AdminSyncTableViewController: UITableViewController {
     }
 
     @IBAction func reset(_ sender: Any) {
-        let popup = PopupDialog(title: "Are you sure?", message: "This will delete all downloaded songs and videos!")
+        let popup = PopupDialog(title: "Are you sure?", message: "This will delete all downloaded songs and videos and log you out of the cloud!")
         popup.addButtons([
             CancelButton(title: "Cancel") { },
             DestructiveButton(title: "Ok") {

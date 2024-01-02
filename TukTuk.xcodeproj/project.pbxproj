@@ -35,6 +35,9 @@
 		4F25309F2349456F0018088F /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25309E2349456F0018088F /* Sound.swift */; };
 		4F2530A5234959B90018088F /* Sound+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A4234959B90018088F /* Sound+Generated.swift */; };
 		4F2530A723495B6A0018088F /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A623495B6A0018088F /* SoundPlayer.swift */; };
+		4F26EF7A2B40E54B00156717 /* Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F26EF792B40E54B00156717 /* Children.swift */; };
+		4F26EF812B4378EE00156717 /* AdminChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F26EF802B4378EE00156717 /* AdminChildViewController.swift */; };
+		4F26EF832B43858400156717 /* ChildCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F26EF822B43858400156717 /* ChildCell.swift */; };
 		4F2B3EB7237F611200E79976 /* HapticPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2B3EB6237F611200E79976 /* HapticPlayer.swift */; };
 		4F2C33D924709EED00DB7438 /* MusicVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C33D824709EED00DB7438 /* MusicVideoPlayer.swift */; };
 		4F2C33DB24709F0500DB7438 /* AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C33DA24709F0500DB7438 /* AVPlayer.swift */; };
@@ -45,6 +48,7 @@
 		4F3270C7225559430063CC32 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3270C6225559430063CC32 /* Stats.swift */; };
 		4F32C6E122ADAFB0000ABDCF /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */; };
 		4F32C6E722ADBC18000ABDCF /* CloudProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */; };
+		4F4A05082B449FC8008D930E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A05072B449FC8008D930E /* String.swift */; };
 		4F5090B8235D410F00C88C61 /* Delight_BunnyRun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4F5090B7235D410F00C88C61 /* Delight_BunnyRun.gif */; };
 		4F59B6412332BD8200E539CB /* Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F59B6402332BD8200E539CB /* Frequency.swift */; };
 		4F59B64323354AB300E539CB /* Probability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F59B64223354AB200E539CB /* Probability.swift */; };
@@ -125,6 +129,9 @@
 		4F2530A1234954360018088F /* GenerateSounds.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = GenerateSounds.py; sourceTree = "<group>"; };
 		4F2530A4234959B90018088F /* Sound+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sound+Generated.swift"; sourceTree = "<group>"; };
 		4F2530A623495B6A0018088F /* SoundPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		4F26EF792B40E54B00156717 /* Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Children.swift; sourceTree = "<group>"; };
+		4F26EF802B4378EE00156717 /* AdminChildViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminChildViewController.swift; sourceTree = "<group>"; };
+		4F26EF822B43858400156717 /* ChildCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildCell.swift; sourceTree = "<group>"; };
 		4F2B3EB6237F611200E79976 /* HapticPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPlayer.swift; sourceTree = "<group>"; };
 		4F2C33D824709EED00DB7438 /* MusicVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicVideoPlayer.swift; sourceTree = "<group>"; };
 		4F2C33DA24709F0500DB7438 /* AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayer.swift; sourceTree = "<group>"; };
@@ -135,6 +142,7 @@
 		4F3270C6225559430063CC32 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
 		4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudProvider.swift; sourceTree = "<group>"; };
+		4F4A05072B449FC8008D930E /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4F5090B7235D410F00C88C61 /* Delight_BunnyRun.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Delight_BunnyRun.gif; sourceTree = "<group>"; };
 		4F59B6402332BD8200E539CB /* Frequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frequency.swift; sourceTree = "<group>"; };
 		4F59B64223354AB200E539CB /* Probability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Probability.swift; sourceTree = "<group>"; };
@@ -210,6 +218,7 @@
 		4F1F17C5209E10E100483499 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4F4A05072B449FC8008D930E /* String.swift */,
 				4F81D5F120A53E7C00CB68D8 /* CGPoint.swift */,
 				4F89557820B47B8600E37E53 /* UIImage.swift */,
 				4FBD0FD320F55DC900BB5E32 /* Bundle.swift */,
@@ -280,6 +289,7 @@
 			children = (
 				4FA64A86223D722100AED085 /* SongCell.swift */,
 				4F32C6E022ADAFB0000ABDCF /* PickerCell.swift */,
+				4F26EF822B43858400156717 /* ChildCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -317,18 +327,19 @@
 		4FBD0FD520F55DFC00BB5E32 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4F26EF792B40E54B00156717 /* Children.swift */,
 				4F32C6E622ADBC18000ABDCF /* CloudProvider.swift */,
-				4F074AE322A5FD04008E5F22 /* Media.swift */,
-				4F11FEF42263BB3600AD777D /* Settings.swift */,
-				4F11FEF62263BB8500AD777D /* Titled.swift */,
-				4F0F25F222B1E35F006E2CB2 /* LocalFile.swift */,
-				4F0F25F622B1F13A006E2CB2 /* Song.swift */,
-				4F0F25F822B1F14C006E2CB2 /* Movie.swift */,
-				4F0F25FC22B1F184006E2CB2 /* SyncAction.swift */,
 				4F59B6402332BD8200E539CB /* Frequency.swift */,
-				4F59B64223354AB200E539CB /* Probability.swift */,
-				4F25309E2349456F0018088F /* Sound.swift */,
 				4F2FB95627F16BD500DF7EF3 /* Image.swift */,
+				4F0F25F222B1E35F006E2CB2 /* LocalFile.swift */,
+				4F074AE322A5FD04008E5F22 /* Media.swift */,
+				4F0F25F822B1F14C006E2CB2 /* Movie.swift */,
+				4F59B64223354AB200E539CB /* Probability.swift */,
+				4F11FEF42263BB3600AD777D /* Settings.swift */,
+				4F0F25F622B1F13A006E2CB2 /* Song.swift */,
+				4F25309E2349456F0018088F /* Sound.swift */,
+				4F0F25FC22B1F184006E2CB2 /* SyncAction.swift */,
+				4F11FEF62263BB8500AD777D /* Titled.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -336,6 +347,7 @@
 		4FBD0FDF20F5678A00BB5E32 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4F26EF802B4378EE00156717 /* AdminChildViewController.swift */,
 				4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */,
 				4F24D0DF22A5D7F60039B83E /* AdminSyncTableViewController.swift */,
 				4F0F5A3222AC3A080012934B /* AdminTabBarController.swift */,
@@ -617,16 +629,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F26EF832B43858400156717 /* ChildCell.swift in Sources */,
 				4F074AE422A5FD04008E5F22 /* Media.swift in Sources */,
 				4F0F5A3322AC3A080012934B /* AdminTabBarController.swift in Sources */,
 				4F0F5A3522AC4A1D0012934B /* FileManager.swift in Sources */,
 				4F24D0E022A5D7F60039B83E /* AdminSyncTableViewController.swift in Sources */,
+				4F26EF812B4378EE00156717 /* AdminChildViewController.swift in Sources */,
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4F0F25F522B1E9FA006E2CB2 /* MovieManager.swift in Sources */,
 				4FB27EF4229724D100A44CE6 /* PhotoFlip.swift in Sources */,
 				4F11FEF122616D0C00AD777D /* AdminSettingsViewController.swift in Sources */,
 				4FFEB1FD2130BB26008A3723 /* CaptainAmerica.swift in Sources */,
 				4F81D5F620A6776D00CB68D8 /* MiniGames.swift in Sources */,
+				4F4A05082B449FC8008D930E /* String.swift in Sources */,
 				4F0F25F722B1F13A006E2CB2 /* Song.swift in Sources */,
 				4FF69124225E9F8800595BDE /* Bezier.swift in Sources */,
 				4F074AE822A74767008E5F22 /* None.swift in Sources */,
@@ -643,6 +658,7 @@
 				4F2530A723495B6A0018088F /* SoundPlayer.swift in Sources */,
 				4F81D5F220A53E7C00CB68D8 /* CGPoint.swift in Sources */,
 				4FBD57AE1F098DEB00BDCDE3 /* SongViewController.swift in Sources */,
+				4F26EF7A2B40E54B00156717 /* Children.swift in Sources */,
 				4F6FA6C822B9B6DD0081618D /* UILongPressHapticFeedbackGestureRecognizer.swift in Sources */,
 				4FD10B89211BA83400EF48B1 /* JusticeLeague.swift in Sources */,
 				4F8A2AAB20A0E3B3000C2CA5 /* WelcomeViewController.swift in Sources */,
@@ -880,6 +896,7 @@
 			baseConfigurationReference = D34EA84987384C2AFDDEEE23 /* Pods-TukTuk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = R6DR6B5C8B;
 				INFOPLIST_FILE = TukTuk/Info.plist;
@@ -887,7 +904,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.menalto.TukTuk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -900,6 +917,7 @@
 			baseConfigurationReference = 313AAED39EC65E1F2E3920D7 /* Pods-TukTuk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = R6DR6B5C8B;
 				INFOPLIST_FILE = TukTuk/Info.plist;
@@ -907,7 +925,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.menalto.TukTuk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

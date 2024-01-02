@@ -14,6 +14,7 @@ extension UserDefaults {
         case mazeLevel = "mazeLevel"
         case miniGameFrequency = "miniGameFrequency"
         case movieFrequency = "movieFrequency"
+        case childName = "childName"
     }
 
     func registerDefaults() {
@@ -22,7 +23,19 @@ extension UserDefaults {
             Key.mazeLevel.rawValue: 1,
             Key.miniGameFrequency.rawValue: 40,
             Key.movieFrequency.rawValue: 2400,
+            Key.childName.rawValue: "",
         ])
+    }
+
+    var child: Child? {
+        get {
+            let childName = string(forKey: Key.childName.rawValue)
+            return Children.all.first(where: {$0.name == childName})
+        }
+
+        set {
+            setValue(newValue?.name ?? "", forKey: Key.childName.rawValue)
+        }
     }
 
     var movieCountdown: Int {

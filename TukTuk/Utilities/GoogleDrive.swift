@@ -17,6 +17,24 @@ let CLIENT_ID = "519173767662-ca9oluprutan3a2s0n619no01mlnla3a.apps.googleuserco
 extension GTLRServiceTicket: Canceler { }
 
 class GoogleDrive: NSObject, CloudProvider {
+    var songsFolder: String {
+        get {
+            return UserDefaults.standard.child!.songsFolderId
+        }
+    }
+
+    var moviesFolder: String {
+        get {
+            return UserDefaults.standard.child!.moviesFolderId
+        }
+    }
+
+    var imagesFolder: String {
+        get {
+            return UserDefaults.standard.child!.imagesFolderId
+        }
+    }
+
     var name = "Google"
     
     static var instance = GoogleDrive()
@@ -24,16 +42,6 @@ class GoogleDrive: NSObject, CloudProvider {
     let signInConfig = GIDConfiguration.init(clientID: CLIENT_ID)
     var authorizer: GTMFetcherAuthorizationProtocol?
     var queue = DispatchQueue(label: "GoogleDrive")
-
-//    // Remy's folders
-//    var songsFolder = "1cE63ZqcSU8cY6nnZ7RPG4Z5EPV0nwuMz"
-//    var moviesFolder = "1vbYHlO5bQbym9g8wSg8GYlF42-LMIv2W"
-//    var imagesFolder = "1bldR2at2O3RdSLQYu9OQaizcdjs7MxFo"
-
-    // Maryse's folders
-    var songsFolder = "1RzHgHCfvXB_0AutKblmCW48ilqe7yRR7"
-    var moviesFolder = "1PgpU3qJPcBi67AIxwuHWCWs85zpDQipw"
-    var imagesFolder = "1IxjPhWKbi5V5m5JyDTmlDLx1IsS-RGpa"
 
     var isAuthenticated: Bool {
         guard let user = GIDSignIn.sharedInstance.currentUser else { return false }

@@ -13,11 +13,19 @@ class AdminTabBarController: UITabBarController {
     var bunny = BunnyDelight()
         
     override func viewWillAppear(_ animated: Bool) {
-        if Manager.songs.localEmpty {
-            // Jump to the Sync tab. Do it async with a delay otherwise the tab's
+        var desiredIndex: Int?
+
+        if UserDefaults.standard.child == nil {
+            desiredIndex = 2
+        } else if Manager.songs.localEmpty {
+            desiredIndex = 1
+        }
+
+        if let desiredIndex = desiredIndex {
+            // Jump to the specific tab. Do it async with a delay otherwise the tab's
             // viewDidAppear() doesn't get called.
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.selectedIndex = 1
+                self.selectedIndex = desiredIndex
             }
         }
     }

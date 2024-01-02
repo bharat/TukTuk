@@ -41,6 +41,10 @@ class WelcomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        if UserDefaults.standard.child == nil {
+            self.performSegue(withIdentifier: "Songs", sender: self)
+        }
+
         // Debug functionality
         //
         // Useful for quickly jumping to a specific minigame

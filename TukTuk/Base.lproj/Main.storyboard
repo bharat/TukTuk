@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zok-SV-WMn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zok-SV-WMn">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -219,7 +220,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ycQ-LY-LCs" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="tOt-yu-k6J" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-251" y="855"/>
+            <point key="canvasLocation" x="-232" y="854"/>
         </scene>
         <!--Admin Setting-->
         <scene sceneID="mhR-ZL-Y1o">
@@ -287,7 +288,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Kc-YN-Mn2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1402" y="513"/>
+            <point key="canvasLocation" x="2151" y="854"/>
         </scene>
         <!--Admin Sync-->
         <scene sceneID="OEe-BJ-Q53">
@@ -565,7 +566,7 @@ line 4</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HAU-Af-bP5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1402" y="1205"/>
+            <point key="canvasLocation" x="1401" y="1205"/>
         </scene>
         <!--Admin Tab Bar Controller-->
         <scene sceneID="Ibg-mu-cOm">
@@ -580,22 +581,88 @@ line 4</string>
                     <connections>
                         <segue destination="E5K-1k-TcD" kind="relationship" relationship="viewControllers" id="oG5-75-5qb"/>
                         <segue destination="S7w-rP-1Z8" kind="relationship" relationship="viewControllers" id="gsC-Jp-sfu"/>
+                        <segue destination="TNS-s7-Vl5" kind="relationship" relationship="viewControllers" id="FIe-zA-ovO"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fYo-jE-200" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="640" y="855"/>
         </scene>
+        <!--Admin Child-->
+        <scene sceneID="VPo-5Z-W5t">
+            <objects>
+                <collectionViewController id="TNS-s7-Vl5" userLabel="Admin Child" customClass="AdminChildViewController" customModule="TukTuk" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="PNz-m2-cZa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WDp-o1-Kvc">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChildCell" id="v8H-ip-rqF" customClass="ChildCell" customModule="TukTuk" customModuleProvider="target">
+                                <rect key="frame" x="79" y="0.0" width="256" height="256"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1nR-2e-EmT">
+                                    <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EWR-VO-nyr">
+                                            <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
+                                        </imageView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Admin_Check" translatesAutoresizingMaskIntoConstraints="NO" id="IbH-oW-fRT">
+                                            <rect key="frame" x="16" y="16" width="120" height="120"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="120" id="2PL-o6-KSH"/>
+                                                <constraint firstAttribute="width" constant="120" id="2XJ-Vm-BlF"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="IbH-oW-fRT" firstAttribute="leading" secondItem="1nR-2e-EmT" secondAttribute="leading" constant="16" id="1us-Dj-k5g"/>
+                                        <constraint firstAttribute="bottom" secondItem="EWR-VO-nyr" secondAttribute="bottom" id="4en-GA-BKp"/>
+                                        <constraint firstAttribute="trailing" secondItem="EWR-VO-nyr" secondAttribute="trailing" id="8T9-3H-RBJ"/>
+                                        <constraint firstItem="EWR-VO-nyr" firstAttribute="top" secondItem="1nR-2e-EmT" secondAttribute="top" id="qsJ-Vb-fbd"/>
+                                        <constraint firstItem="IbH-oW-fRT" firstAttribute="top" secondItem="1nR-2e-EmT" secondAttribute="top" constant="16" id="tZc-KV-gHB"/>
+                                        <constraint firstItem="EWR-VO-nyr" firstAttribute="leading" secondItem="1nR-2e-EmT" secondAttribute="leading" id="uoc-Pw-ctw"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="256" height="256"/>
+                                <connections>
+                                    <outlet property="childImage" destination="EWR-VO-nyr" id="l1m-HO-QdB"/>
+                                    <outlet property="selectedOverlayImage" destination="IbH-oW-fRT" id="RCn-bR-8Cc"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="TNS-s7-Vl5" id="TGO-ad-LwC"/>
+                            <outlet property="delegate" destination="TNS-s7-Vl5" id="14B-9b-XaD"/>
+                        </connections>
+                    </collectionView>
+                    <tabBarItem key="tabBarItem" title="Child" image="Admin_Child" id="HKt-Cg-Gda" userLabel="Child"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hC6-Cb-lV0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1400" y="514"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Admin_Check" width="512" height="512"/>
+        <image name="Admin_Child" width="30" height="30"/>
         <image name="Admin_Settings" width="30" height="30"/>
         <image name="Admin_Synchronize" width="30" height="30"/>
         <image name="Search_No_Results" width="978" height="1200"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

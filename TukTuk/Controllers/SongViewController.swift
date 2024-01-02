@@ -154,11 +154,15 @@ class SongViewController: UIViewController {
         }
 
         if songs.isEmpty {
-            let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
+            if UserDefaults.standard.child == nil {
                 self.showSettings()
+            } else {
+                let popup = PopupDialog(title: "Oh no, there are no songs!", message: "Let's download some from the cloud!") {
+                    self.showSettings()
+                }
+                popup.addButton(DefaultButton(title: "Ok") { })
+                self.present(popup, animated: true, completion: nil)
             }
-            popup.addButton(DefaultButton(title: "Ok") { })
-            self.present(popup, animated: true, completion: nil)
         }
 
         movieCountdown = UserDefaults.standard.movieCountdown
@@ -187,6 +191,11 @@ class SongViewController: UIViewController {
     func showSettings() {
         stopSong()
         
+        if songs.isEmpty {
+            self.performSegue(withIdentifier: "Admin", sender: self)
+            return
+        }
+
         BioMetricAuthenticator.authenticateWithBioMetrics(reason: "") { (result) in
             switch result {
             case .success(_):

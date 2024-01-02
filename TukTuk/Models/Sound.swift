@@ -14,4 +14,11 @@ struct Sound {
     func play(volume: Float = 1.0, done: @escaping ()->()={}) {
         SoundPlayer.instance.play(self, volume: volume, whenComplete: done)
     }
+
+    static func PlayWelcome() {
+        let child = UserDefaults.standard.child
+        if let child = child {
+            Media.Player.sound("Welcome_\(child.name)").play()
+        }
+    }
 }

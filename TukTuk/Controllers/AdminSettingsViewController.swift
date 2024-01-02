@@ -8,10 +8,7 @@
 
 import Foundation
 import UIKit
-
-extension String {
-    static var emptyTitle = "--"
-}
+import PopupDialog
 
 class AdminSettingsViewController: UITableViewController {
     @IBAction func done() {

@@ -21,7 +21,7 @@ enum Outlet: Int, CaseIterable {
 
 let DESIRED_CONCURRENCY = 4
 
-class AdminSyncTableViewController: UITableViewController {
+class AdminSyncViewController: UITableViewController {
     @IBOutlet var spinners: [UIActivityIndicatorView]!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var syncButton: UIButton!
@@ -33,7 +33,6 @@ class AdminSyncTableViewController: UITableViewController {
     let cloudProvider: CloudProvider = GoogleDrive.instance
     let sync = SyncEngine(cloudProvider: GoogleDrive.instance, concurrency: DESIRED_CONCURRENCY)
     var statusMessages: [String] = []
-    var fullSyncNeeded: Bool = false
 
     override func viewDidLoad() {
         sync.notifyStart = { msg in
@@ -77,6 +76,10 @@ class AdminSyncTableViewController: UITableViewController {
             return
         }
 
+        verifyCloudStatus()
+    }
+
+    func verifyCloudStatus() {
         statusMessages = []
         if cloudProvider.isAuthenticated {
             print("Cloud: authenticated")
@@ -190,11 +193,6 @@ class AdminSyncTableViewController: UITableViewController {
         let allDone = !self.spinners.reduce(false) { a, b in a || b.isAnimating }
         let allInSync = (Manager.songs.inSync && Manager.movies.inSync && Manager.images.inSync)
         syncButton.isEnabled = allDone && !allInSync
-
-        if allDone && fullSyncNeeded {
-            fullSyncNeeded = false
-            let popup = PopupDialog(title: "Good job!", message: "Now you're ready to go! You can click the Done button in the top right corner to listen to music. To get back to this screen you must hold down the Stop button for 5 seconds while a song is playing!")
-        }
     }
 
     @IBAction func cancel(_ sender: Any) {
@@ -210,7 +208,7 @@ class AdminSyncTableViewController: UITableViewController {
             return
         }
 
-        let popup = PopupDialog(title: "Are you sure?", message: "This sync will delete \(sync.deleteCount) songs and movies. Are you sure you want to continue?")
+        let popup = PopupDialog(title: "Are you sure?", message: "This sync will delete \(sync.deleteCount) songs and movies. If this doesn't sound right to you, then you might have a problem with your cloud data... Are you sure you want to continue?")
         popup.addButtons([
             CancelButton(title: "Cancel") { },
             DestructiveButton(title: "Ok") {
@@ -256,6 +254,8 @@ class AdminSyncTableViewController: UITableViewController {
                 self.cloudProvider.signOut()
                 Manager.songs.deleteAllLocal()
                 Manager.movies.deleteAllLocal()
+                Manager.images.deleteAllLocal()
+                self.verifyCloudStatus()
                 self.updateUI()
             }
             ])

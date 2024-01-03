@@ -89,6 +89,7 @@ class SongViewController: UIViewController {
         // cue up a MiniGame or a Movie
         let long = UILongPressHapticFeedbackGestureRecognizer(target: self, action: #selector(settingsGesture(gesture:)))
         long.minimumPressDuration = 5.0
+        long.allowableMovement = 30
         stopButton.addGestureRecognizer(long)
         stopButton.isEnabled = false
 

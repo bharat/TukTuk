@@ -31,7 +31,7 @@
 		4F1F17CC209E159F00483499 /* WordPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CB209E159F00483499 /* WordPop.swift */; };
 		4F1F17CE209E15B000483499 /* RollAway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CD209E15B000483499 /* RollAway.swift */; };
 		4F1F17D0209E15BB00483499 /* Hinge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F17CF209E15BB00483499 /* Hinge.swift */; };
-		4F24D0E022A5D7F60039B83E /* AdminSyncTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F24D0DF22A5D7F60039B83E /* AdminSyncTableViewController.swift */; };
+		4F24D0E022A5D7F60039B83E /* AdminSyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F24D0DF22A5D7F60039B83E /* AdminSyncViewController.swift */; };
 		4F25309F2349456F0018088F /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25309E2349456F0018088F /* Sound.swift */; };
 		4F2530A5234959B90018088F /* Sound+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A4234959B90018088F /* Sound+Generated.swift */; };
 		4F2530A723495B6A0018088F /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2530A623495B6A0018088F /* SoundPlayer.swift */; };
@@ -124,7 +124,7 @@
 		4F1F17CB209E159F00483499 /* WordPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPop.swift; sourceTree = "<group>"; };
 		4F1F17CD209E15B000483499 /* RollAway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollAway.swift; sourceTree = "<group>"; };
 		4F1F17CF209E15BB00483499 /* Hinge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hinge.swift; sourceTree = "<group>"; };
-		4F24D0DF22A5D7F60039B83E /* AdminSyncTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSyncTableViewController.swift; sourceTree = "<group>"; };
+		4F24D0DF22A5D7F60039B83E /* AdminSyncViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminSyncViewController.swift; sourceTree = "<group>"; };
 		4F25309E2349456F0018088F /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		4F2530A1234954360018088F /* GenerateSounds.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = GenerateSounds.py; sourceTree = "<group>"; };
 		4F2530A4234959B90018088F /* Sound+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sound+Generated.swift"; sourceTree = "<group>"; };
@@ -349,7 +349,7 @@
 			children = (
 				4F26EF802B4378EE00156717 /* AdminChildViewController.swift */,
 				4F11FEF022616D0C00AD777D /* AdminSettingsViewController.swift */,
-				4F24D0DF22A5D7F60039B83E /* AdminSyncTableViewController.swift */,
+				4F24D0DF22A5D7F60039B83E /* AdminSyncViewController.swift */,
 				4F0F5A3222AC3A080012934B /* AdminTabBarController.swift */,
 				766D1B0F27E808830043E616 /* AdminViewController.swift */,
 				4FBD57AD1F098DEB00BDCDE3 /* SongViewController.swift */,
@@ -633,7 +633,7 @@
 				4F074AE422A5FD04008E5F22 /* Media.swift in Sources */,
 				4F0F5A3322AC3A080012934B /* AdminTabBarController.swift in Sources */,
 				4F0F5A3522AC4A1D0012934B /* FileManager.swift in Sources */,
-				4F24D0E022A5D7F60039B83E /* AdminSyncTableViewController.swift in Sources */,
+				4F24D0E022A5D7F60039B83E /* AdminSyncViewController.swift in Sources */,
 				4F26EF812B4378EE00156717 /* AdminChildViewController.swift in Sources */,
 				4FA64A89223D87CB00AED085 /* CollectionViewSlantedLayout.swift in Sources */,
 				4F0F25F522B1E9FA006E2CB2 /* MovieManager.swift in Sources */,

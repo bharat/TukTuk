@@ -11,7 +11,7 @@ import Amplitude_iOS
 
 class Stats {
     func appLaunched() {
-        Amplitude.instance()?.logEvent("AppLaunched")
+        Amplitude.instance()?.logEvent("AppLaunched", withEventProperties: ["child": UserDefaults.standard.child?.name ?? ""])
     }
 
     func props(title: String) -> [String:String] {

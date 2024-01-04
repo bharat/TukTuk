@@ -140,7 +140,8 @@ final class CaptainAmerica: MiniGame {
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
 
-            Sound.CaptainAmerica_Rescue.play()
+            Media.CaptainAmerica.play("Rescue", for: UserDefaults.standard.child)
+
             let skView = SKView(frame: view.frame.insetBy(dx: 8, dy: 20))
             skView.allowsTransparency = true
             view.addSubview(skView)

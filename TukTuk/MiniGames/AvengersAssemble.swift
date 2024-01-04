@@ -173,7 +173,7 @@ final class AvengersAssemble: MiniGame {
                     $0.enticing = true
                 }
 
-                Sound.AvengersAssemble_ChooseAnAvenger.play()
+                Media.AvengersAssemble.play("ChooseAnAvenger", for: UserDefaults.standard.child)
                 completion()
             }
         }

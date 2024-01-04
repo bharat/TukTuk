@@ -16,7 +16,7 @@ class WordPop: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
-        Sound.PlayWelcome()
+        Media.Player.play("Welcome", for: UserDefaults.standard.child)
 
         let childName = UserDefaults.standard.child?.name ?? "little one"
 

@@ -24,4 +24,10 @@ class Media {
     func video(_ name: String) -> URL {
         return bundle.url(forResource: name, withExtension: "mp4", subdirectory: "Video")!
     }
+
+    func play(_ name: String, for child: Child?) {
+        if let child = child {
+            sound("\(name)_\(child.name)").play()
+        }
+    }
 }

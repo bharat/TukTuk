@@ -23,7 +23,7 @@ class PhotoFlip: Animation {
     }
 
     func animate(view: UIView, completion: @escaping ()->()) {
-        Sound.PlayWelcome()
+        Media.Player.play("Welcome", for: UserDefaults.standard.child)
 
         let views: [UIView] = Array(1...9).map { i in
             let imageName = "PhotoFlip_\(i)"

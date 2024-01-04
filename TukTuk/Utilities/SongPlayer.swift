@@ -11,9 +11,14 @@ import Foundation
 class SongPlayer {
     let musicVideoPlayer = MusicVideoPlayer()
     private let queue = DispatchQueue(label: "SongPlayer")
-    
+    private var activeSong: Song?
+
     func stop() {
         queue.sync {
+            if let activeSong = activeSong {
+                Stats().stop(song: activeSong)
+            }
+
             AudioPlayer.instance.stop()
             musicVideoPlayer.stop()
         }
@@ -30,6 +35,7 @@ class SongPlayer {
                 print("Playing song: \(song.title)")
                 song.play(whilePlaying: whilePlaying, whenComplete: whenComplete)
             }
+            activeSong = song
         }
     }
     

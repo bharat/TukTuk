@@ -11,6 +11,8 @@ import UIKit
 import PopupDialog
 
 class AdminSettingsViewController: UITableViewController {
+    var stats = Stats()
+
     @IBAction func done() {
         dismiss(animated: true, completion: {})
     }
@@ -68,7 +70,10 @@ class AdminSettingsViewController: UITableViewController {
             cell.detail.text = Settings.cuedMovie?.title ?? .emptyTitle
             cell.data = Manager.movies.local.sorted { $0.title < $1.title }
             cell.select = { obj in
-                Settings.cuedMovie = obj as! Movie?
+                if let movie = obj as? Movie {
+                    Settings.cuedMovie = movie
+                    self.stats.cue(movie: movie)
+                }
                 self.redraw()
             }
         case IndexPath(row: 1, section: 0):
@@ -76,6 +81,11 @@ class AdminSettingsViewController: UITableViewController {
             cell.detail.text = Settings.cuedMiniGame?.title ?? .emptyTitle
             cell.data = MiniGames.all
             cell.select = { obj in
+                if let miniGame = obj as? MiniGame {
+                    Settings.cuedMiniGame = miniGame
+                    self.stats.cue(miniGame: miniGame)
+                }
+
                 Settings.cuedMiniGame = obj as! MiniGame?
                 self.redraw()
             }

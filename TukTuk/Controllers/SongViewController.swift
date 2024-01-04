@@ -232,12 +232,14 @@ class SongViewController: UIViewController {
     }
 
     func playSong(_ song: Song, on cell: SongCell) {
+        stats.start(song: song)
         songPlayer.play(song, on: cell, whilePlaying: {
             self.movieCountdown -= 1
             if Settings.cuedMovie != nil {
                 self.showMovieButton()
             }
         }, whenComplete: {
+            self.stats.complete(song: song)
             if song.video != nil {
                 cell.videoLayer.player = nil
             }

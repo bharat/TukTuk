@@ -14,23 +14,35 @@ class Stats {
         Amplitude.instance()?.logEvent("AppLaunched")
     }
 
+    func props(title: String) -> [String:String] {
+        return ["title": title, "child": UserDefaults.standard.child?.name ?? ""]
+    }
+
     func start(song: Song) {
-        Amplitude.instance()?.logEvent("StartSong", withEventProperties: ["title": song.title])
+        Amplitude.instance()?.logEvent("StartSong", withEventProperties: props(title: song.title))
+    }
+
+    func complete(song: Song) {
+        Amplitude.instance()?.logEvent("CompleteSong", withEventProperties: props(title: song.title))
+    }
+
+    func stop(song: Song) {
+        Amplitude.instance()?.logEvent("StopSong", withEventProperties: props(title: song.title))
     }
 
     func start(movie: Movie) {
-        Amplitude.instance()?.logEvent("StartMovie", withEventProperties: ["title": movie.title])
+        Amplitude.instance()?.logEvent("StartMovie", withEventProperties: props(title: movie.title))
     }
 
     func start(miniGame: MiniGame) {
-        Amplitude.instance()?.logEvent("StartMiniGame", withEventProperties: ["title": miniGame.title])
+        Amplitude.instance()?.logEvent("StartMiniGame", withEventProperties: props(title: miniGame.title))
     }
 
     func cue(movie: Movie) {
-        Amplitude.instance()?.logEvent("CueMovie", withEventProperties: ["title": movie.title])
+        Amplitude.instance()?.logEvent("CueMovie", withEventProperties: props(title: movie.title))
     }
 
     func cue(miniGame: MiniGame) {
-        Amplitude.instance()?.logEvent("CueMiniGame", withEventProperties: ["title": miniGame.title])
+        Amplitude.instance()?.logEvent("CueMiniGame", withEventProperties: props(title: miniGame.title))
     }
 }

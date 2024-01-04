@@ -10,39 +10,50 @@ import Foundation
 import Amplitude_iOS
 
 class Stats {
-    func appLaunched() {
-        Amplitude.instance()?.logEvent("AppLaunched", withEventProperties: ["child": UserDefaults.standard.child?.name ?? ""])
+    func log(_ eventType: String, titled: Titled? = nil) {
+        var props = [
+            "child": UserDefaults.standard.child?.name ?? ""
+        ]
+
+        if let titled = titled {
+            props["title"] = titled.title
+        }
+        Amplitude.instance()?.logEvent(eventType, withEventProperties: props)
     }
 
-    func props(title: String) -> [String:String] {
-        return ["title": title, "child": UserDefaults.standard.child?.name ?? ""]
+    func appLaunched() {
+        log("AppLaunched")
+    }
+
+    func synchronize() {
+        log("Synchronize")
     }
 
     func start(song: Song) {
-        Amplitude.instance()?.logEvent("StartSong", withEventProperties: props(title: song.title))
+        log("StartSong", titled: song)
     }
 
     func complete(song: Song) {
-        Amplitude.instance()?.logEvent("CompleteSong", withEventProperties: props(title: song.title))
+        log("CompleteSong", titled: song)
     }
 
     func stop(song: Song) {
-        Amplitude.instance()?.logEvent("StopSong", withEventProperties: props(title: song.title))
+        log("StopSong", titled: song)
     }
 
     func start(movie: Movie) {
-        Amplitude.instance()?.logEvent("StartMovie", withEventProperties: props(title: movie.title))
+        log("StartMovie", titled: movie)
     }
 
     func start(miniGame: MiniGame) {
-        Amplitude.instance()?.logEvent("StartMiniGame", withEventProperties: props(title: miniGame.title))
+        log("StartMiniGame", titled: miniGame)
     }
 
     func cue(movie: Movie) {
-        Amplitude.instance()?.logEvent("CueMovie", withEventProperties: props(title: movie.title))
+        log("CueMovie", titled: movie)
     }
 
     func cue(miniGame: MiniGame) {
-        Amplitude.instance()?.logEvent("CueMiniGame", withEventProperties: props(title: miniGame.title))
+        log("CueMiniGame", titled: miniGame)
     }
 }

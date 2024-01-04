@@ -48,6 +48,8 @@ class SyncEngine {
     func run(complete: @escaping ()->()) {
         guard inProgress == false else { return }
 
+        Stats().synchronize()
+
         Manager.songs.delete.forEach { song in
             opQueue.addOperation {
                 Manager.songs.deleteLocal(song)
